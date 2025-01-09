@@ -138,6 +138,9 @@ namespace DataAccessObject.Migrations
                     b.Property<int>("numberOfChildren")
                         .HasColumnType("int");
 
+                    b.Property<string>("transactionID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("BookingID");
 
                     b.HasIndex("AccountID");
@@ -145,6 +148,10 @@ namespace DataAccessObject.Migrations
                     b.HasIndex("ReportID")
                         .IsUnique()
                         .HasFilter("[ReportID] IS NOT NULL");
+
+                    b.HasIndex("transactionID")
+                        .IsUnique()
+                        .HasFilter("[transactionID] IS NOT NULL");
 
                     b.ToTable("Bookings");
                 });
@@ -216,11 +223,18 @@ namespace DataAccessObject.Migrations
                     b.Property<double>("Total")
                         .HasColumnType("float");
 
+                    b.Property<string>("transactionID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("BookingServicesID");
 
                     b.HasIndex("AccountID");
 
                     b.HasIndex("BookingID");
+
+                    b.HasIndex("transactionID")
+                        .IsUnique()
+                        .HasFilter("[transactionID] IS NOT NULL");
 
                     b.ToTable("BookingServices");
                 });
@@ -798,6 +812,66 @@ namespace DataAccessObject.Migrations
                     b.ToTable("Streets");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.Transaction", b =>
+                {
+                    b.Property<string>("ResponseId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<long>("Amount")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("BankCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BankTranNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderInfo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PayDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ResponseCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecureHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TmnCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TxnRef")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ResponseId");
+
+                    b.ToTable("Transactions");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.Ward", b =>
                 {
                     b.Property<int>("WardID")
@@ -845,26 +919,6 @@ namespace DataAccessObject.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "a1a0deac-1eaf-45ea-8209-15b0384889a3",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "edf64c66-6ba9-444f-8259-d0f1378c1528",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
-                        },
-                        new
-                        {
-                            Id = "6c17d153-a9da-492b-bb4d-ee364d5701f3",
-                            Name = "Owner",
-                            NormalizedName = "OWNER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -985,9 +1039,15 @@ namespace DataAccessObject.Migrations
                         .WithOne("Booking")
                         .HasForeignKey("BusinessObject.Model.Booking", "ReportID");
 
+                    b.HasOne("BusinessObject.Model.Transaction", "Transaction")
+                        .WithOne("Booking")
+                        .HasForeignKey("BusinessObject.Model.Booking", "transactionID");
+
                     b.Navigation("Account");
 
                     b.Navigation("Report");
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.BookingDetail", b =>
@@ -1023,9 +1083,15 @@ namespace DataAccessObject.Migrations
                         .WithMany("BookingServices")
                         .HasForeignKey("BookingID");
 
+                    b.HasOne("BusinessObject.Model.Transaction", "Transaction")
+                        .WithOne("BookingService")
+                        .HasForeignKey("BusinessObject.Model.BookingServices", "transactionID");
+
                     b.Navigation("Account");
 
                     b.Navigation("Booking");
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.BookingServicesDetail", b =>
@@ -1406,6 +1472,13 @@ namespace DataAccessObject.Migrations
             modelBuilder.Entity("BusinessObject.Model.Street", b =>
                 {
                     b.Navigation("Locations");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.Transaction", b =>
+                {
+                    b.Navigation("Booking");
+
+                    b.Navigation("BookingService");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Ward", b =>

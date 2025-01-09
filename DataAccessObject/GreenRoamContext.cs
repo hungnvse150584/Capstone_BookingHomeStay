@@ -21,6 +21,17 @@ namespace DataAccessObject
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(e => e.Booking)
+            .WithOne(e => e.Transaction)
+                .HasForeignKey<Booking>(e => e.transactionID);
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(e => e.BookingService)
+            .WithOne(e => e.Transaction)
+                .HasForeignKey<BookingServices>(e => e.transactionID);
+
             modelBuilder.Entity<Report>()
                 .HasOne(e => e.Booking)
                 .WithOne(e => e.Report)
@@ -61,6 +72,7 @@ namespace DataAccessObject
         public DbSet<Report> Reports { set; get; }
         public DbSet<Review> Reviews { set; get; }
         public DbSet<RefreshToken> RefreshTokens { set; get; }
+        public DbSet<Transaction> Transactions { set; get; }
 
         public DbSet<Location> Locations { set; get; }
         public DbSet<Province> Provinces { set; get; }
@@ -68,11 +80,11 @@ namespace DataAccessObject
         public DbSet<Ward> Wards { set; get; }
         public DbSet<Street> Streets { set; get; }
 
-        
-           private const string ConnectString = "server=(local);database=GreenRoam;uid=sa;pwd=12345;Integrated Security=true;Trusted_Connection=false;TrustServerCertificate=True";
-           protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-           {
-             optionsBuilder.UseSqlServer(ConnectString);
-           }
+
+        private const string ConnectString = "server=DESKTOP-88329MO\\KHANHVU21;database=GreenRoam;uid=sa;pwd=12345;Integrated Security=true;Trusted_Connection=false;TrustServerCertificate=True";
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(ConnectString);
+        }
     }
 }

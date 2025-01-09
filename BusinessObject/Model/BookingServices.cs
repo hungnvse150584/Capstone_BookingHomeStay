@@ -25,6 +25,10 @@ namespace BusinessObject.Model
         public string AccountID { get; set; }
         public Account Account { get; set; }
 
+        public string? transactionID { get; set; }
+        public Transaction? Transaction { get; set; }
+
+
         [EnumDataType(typeof(BookingServicesStatus))]
         public BookingServicesStatus Status { get; set; }
 
