@@ -1,0 +1,6 @@
+@GreenRoam_HostAddress = http://localhost:5139
+
+GET {{GreenRoam_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

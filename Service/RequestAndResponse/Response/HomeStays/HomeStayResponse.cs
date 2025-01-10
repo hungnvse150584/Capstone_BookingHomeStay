@@ -27,6 +27,8 @@ namespace Service.RequestAndResponse.Response.HomeStays
         
         public HomeStayStatus Status { get; set; }
 
+        public RentalType TypeOfRental { get; set; }
+
         public string Area { get; set; }
 
         

@@ -35,6 +35,9 @@ namespace BusinessObject.Model;
         public int LocationID { get; set; }
         public Location Location { get; set; }
 
+        [EnumDataType(typeof(RentalType))]
+        public RentalType TypeOfRental { get; set; } 
+
         public ICollection<Report> Reports { get; set; }
 
         public ICollection<HomeStayTypes> HomeStayTypes { get; set; }
@@ -52,5 +55,23 @@ namespace BusinessObject.Model;
         Accepted = 1,        // Chấp nhận
         Rejected = 2,        // Từ chối
         Cancelled = 3        // Hủy
+    }
+
+    public enum RentalType
+    {
+        [Display(Name = "Nhà nghỉ")]
+        GuestHouse = 1,
+
+        [Display(Name = "Lều cắm trại")]
+        CampingTent = 2,
+
+        [Display(Name = "Resort")]
+        Resort = 3,
+
+        [Display(Name = "Căn hộ")]
+        Apartment = 4,
+
+        [Display(Name = "Khách sạn")]
+        Hotel = 5
     }
 

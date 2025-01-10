@@ -98,6 +98,7 @@ namespace Service.Service
                     CreateAt = DateTime.Now,
                     UpdateAt = DateTime.Now,
                     Status = HomeStayStatus.PendingApproval,
+                    TypeOfRental = request.RentalType,
                     Area = request.Area,
                     Location = new Location
                     {
@@ -138,6 +139,7 @@ namespace Service.Service
             updatedHomeStay.Status = homeStayExist.Status;     // Keep the original Status
             updatedHomeStay.UpdateAt = DateTime.Now;
             updatedHomeStay.Location.FullAddress = fullAddress;
+            updatedHomeStay.TypeOfRental = request.RentalType;
             await _homeStayRepository.UpdateAsync(updatedHomeStay);
 
             return new BaseResponse<HomeStay>("Update HomeStay successfully", StatusCodeEnum.OK_200, updatedHomeStay);

@@ -25,6 +25,8 @@ namespace Service.RequestAndResponse.Request.HomeStay
        
         public HomeStayStatus Status { get; set; }
 
+        public RentalType RentalType { get; set; }
+
         public string Area { get; set; }
 
         [Required(ErrorMessage = "Must Include AccountID")]
