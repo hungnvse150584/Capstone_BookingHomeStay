@@ -28,7 +28,7 @@ namespace Repository
             services.AddScoped<IBookingServiceRepository, BookingServiceRepository>();
 
             services.AddScoped<INotificationRepository, NotificationRepository>();
-
+            
             services.AddScoped<IRatingRepository, RatingRepository>();
             
             services.AddScoped<IReportRepository, ReportRepository>();
@@ -39,6 +39,7 @@ namespace Repository
             services.AddTransient<IWardRepository, WardRepository>();
             services.AddTransient<IDistrictRepository, DistrictRepository>();
             services.AddTransient<IProvinceRepository, ProvinceRepository>();
+            services.AddScoped<IImageServicesRepository, ImageServicesRepository>();
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
@@ -56,7 +57,7 @@ namespace Repository
             services.AddScoped<RatingDAO>();
         
             services.AddScoped<ReportDAO>();
-
+            services.AddScoped<ImageServicesDAO>();
             services.AddScoped<LocationDAO>();
             services.AddScoped<StreetDAO>();
             services.AddScoped<WardDAO>();

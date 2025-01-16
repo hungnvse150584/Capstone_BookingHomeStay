@@ -2,12 +2,14 @@
 using BusinessObject.Model;
 using Service.RequestAndResponse.Request.District;
 using Service.RequestAndResponse.Request.HomeStay;
+using Service.RequestAndResponse.Request.ImageService;
 using Service.RequestAndResponse.Request.Location;
 using Service.RequestAndResponse.Request.Province;
 using Service.RequestAndResponse.Request.Street;
 using Service.RequestAndResponse.Request.Ward;
 using Service.RequestAndResponse.Response.Districts;
 using Service.RequestAndResponse.Response.HomeStays;
+using Service.RequestAndResponse.Response.ImageService;
 using Service.RequestAndResponse.Response.Locations;
 using Service.RequestAndResponse.Response.Provinces;
 using Service.RequestAndResponse.Response.Streets;
@@ -44,7 +46,10 @@ namespace Service.Mapping
             CreateMap<Province, GetProvince>();
             CreateMap<AddProvinceRequest, Province>().ReverseMap();
             CreateMap<UpdateProvinceRequest, Province>().ReverseMap();
-
+            CreateMap<ImageServices, GetAllImageService>();
+            CreateMap<ImageServices, GetImageService>();
+            CreateMap<AddImageServicesRequest, ImageServices>().ReverseMap();
+            CreateMap<UpdateImageServicesRequest, ImageServices>().ReverseMap();
             CreateMap<District, GetAllDistrict>();
             CreateMap<District, GetDistrict>();
             CreateMap<AddDistrictRequest, District>().ReverseMap();

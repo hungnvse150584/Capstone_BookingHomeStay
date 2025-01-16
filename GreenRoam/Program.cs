@@ -32,6 +32,7 @@ builder.Services.ConfigureRepositoryService(builder.Configuration);
 builder.Services.ConfigureServiceService(builder.Configuration);
 builder.Services.ConfigureDataAccessObjectService(builder.Configuration);
 
+
 //Add SwaggerGen for Authentication
 builder.Services.AddSwaggerGen(option =>
 {
