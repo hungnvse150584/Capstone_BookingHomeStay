@@ -15,6 +15,8 @@ namespace BusinessObject.Model;
 
         public double rentPrice { get; set; }
 
+        public int Quantity { get; set; }
+
         public DateTime CheckInDate { get; set; }
 
         public DateTime CheckOutDate { get; set; }
@@ -28,11 +30,5 @@ namespace BusinessObject.Model;
         public int? BookingID { get; set; }
         [ForeignKey("BookingID ")]
         public Booking? Booking { get; set; }
-
-        public int? RoomID { get; set; }
-        [ForeignKey("RoomID ")]
-        public Room? Rooms { get; set; }
-
-
     }
 

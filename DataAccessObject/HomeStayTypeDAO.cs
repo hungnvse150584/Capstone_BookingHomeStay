@@ -27,7 +27,7 @@ namespace DataAccessObject
         }
 
 
-        public async Task<HomeStayTypes> GetHomeStayTypeByIdAsync(int id)
+        public async Task<HomeStayTypes> GetHomeStayTypeByIdAsync(int? id)
         {
             if (id <= 0)
             {

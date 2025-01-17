@@ -11,6 +11,7 @@ namespace Repository.IRepositories
     {
         Task<IEnumerable<Booking>> GetAllBookingAsync(string? search, DateTime? date = null, BookingStatus? status = null);
         Task<IEnumerable<Booking>> GetBookingsByAccountId(string accountId);
+        Task<Booking?> GetBookingStatusByAccountId(string accountId);
         Task<Booking?> ChangeBookingStatus(int bookingId, BookingStatus status);
         Task AddBookingAsync(Booking booking);
         Task UpdateBookingAsync(Booking booking);

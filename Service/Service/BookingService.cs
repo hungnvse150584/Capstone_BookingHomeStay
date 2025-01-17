@@ -1,0 +1,289 @@
+﻿using AutoMapper;
+using Azure;
+using BusinessObject.Model;
+using Repository.IRepositories;
+using Service.IService;
+using Service.RequestAndResponse.BaseResponse;
+using Service.RequestAndResponse.Enums;
+using Service.RequestAndResponse.Request.Booking;
+using Service.RequestAndResponse.Request.BookingDetail;
+using Service.RequestAndResponse.Request.BookingServices;
+using Service.RequestAndResponse.Request.District;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Service.Service
+{
+    public class BookingService : IBookingService
+    {
+        private readonly IMapper _mapper;
+        private readonly IBookingRepository _bookingRepository;
+        private readonly IHomeStayTypeRepository _homeStayTypeRepository;
+        private readonly IServiceRepository _serviceRepository;
+        private readonly IBookingServiceRepository _bookingServiceRepository;
+
+
+        public BookingService(IMapper mapper, IBookingRepository bookingRepository, 
+                              IHomeStayTypeRepository homeStayTypeRepository,
+                              IServiceRepository serviceRepository,
+                              IBookingServiceRepository bookingServiceRepository)
+        {
+            _mapper = mapper;
+            _bookingRepository = bookingRepository;
+            _homeStayTypeRepository = homeStayTypeRepository;
+            _serviceRepository = serviceRepository;
+            _bookingServiceRepository = bookingServiceRepository;
+        }
+
+        public async Task<BaseResponse<Booking>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod)
+        {
+            var UnpaidBooking = await _bookingRepository.GetBookingStatusByAccountId(createBookingRequest.AccountID);
+            if (UnpaidBooking != null)
+            {
+                return new BaseResponse<Booking>("There still have a booking need to pay, complete before start a new Booking",
+                    StatusCodeEnum.Conflict_409, UnpaidBooking);
+            }
+
+            Booking booking = new Booking
+            {
+                BookingDate = DateTime.Now,
+                numberOfAdults = createBookingRequest.numberOfAdults,
+                numberOfChildren = createBookingRequest.numberOfChildren,
+                Status = BookingStatus.ToPay,
+                PaymentMethod = paymentMethod == PaymentMethod.Cod ? PaymentMethod.Cod : PaymentMethod.PayOS,
+                AccountID = createBookingRequest.AccountID,
+                BookingDetails = new List<BookingDetail>()
+            };
+
+            foreach (var bookingDetail in createBookingRequest.BookingDetails)
+            {
+                var homeStayType = await _homeStayTypeRepository.GetHomeStayTypesByIdAsync(bookingDetail.homeStayTypeID);
+                if (homeStayType == null)
+                {
+                    return new BaseResponse<Booking>("Cannot find your Type, please try again!",
+                        StatusCodeEnum.Conflict_409, null);
+                }
+                if (bookingDetail.CheckOutDate.Date <= bookingDetail.CheckInDate.Date)
+                {
+                    return new BaseResponse<Booking>("Check-out date must be after check-in date.",
+                        StatusCodeEnum.Conflict_409, null);
+                }
+                var dateLiving = bookingDetail.CheckOutDate - bookingDetail.CheckInDate;
+                int numberOfDays = dateLiving.Days;
+                if (numberOfDays <= 0)
+                {
+                    return new BaseResponse<Booking>("Invalid booking dates. Check-out date must be after check-in date.",
+                        StatusCodeEnum.Conflict_409, null);
+                }
+
+                var bookingDetails = new BookingDetail
+                {
+                    CheckInDate = bookingDetail.CheckInDate,
+                    CheckOutDate = bookingDetail.CheckOutDate,
+                    Quantity = bookingDetail.Quantity,
+                    HomeStayTypesID = homeStayType.HomeStayTypesID,
+                    rentPrice = homeStayType.RentPrice,
+                    TotalAmount = homeStayType.RentPrice * numberOfDays * bookingDetail.Quantity
+                };
+                booking.BookingDetails.Add(bookingDetails);
+            }
+
+            booking.Total = booking.BookingDetails.Sum(detail => detail.TotalAmount);
+
+
+            //For Add BookingServices, it can be null if user don't want to add Services
+            if (createBookingRequest.BookingOfServices != null && createBookingRequest.BookingOfServices.BookingServicesDetails?.Any() == true)
+            {
+                var bookingServices = new BookingServices
+                {
+                    BookingServicesDate = DateTime.Now,
+                    Status = BookingServicesStatus.ToPay,
+                    BookingServicesDetails = new List<BookingServicesDetail>()
+                };
+                foreach (var serviceDetailRequest in createBookingRequest.BookingOfServices.BookingServicesDetails)
+                {
+                    var service = await _serviceRepository.GetByIdAsync(serviceDetailRequest.ServicesID);
+                    if (service == null)
+                    {
+                        return new BaseResponse<Booking>("Service not found, please check the service ID.",
+                            StatusCodeEnum.NotFound_404, null);
+                    }
+
+                    var bookingServiceDetail = new BookingServicesDetail
+                    {
+                        Quantity = serviceDetailRequest.Quantity,
+                        unitPrice = service.servicesPrice,
+                        TotalAmount = serviceDetailRequest.Quantity * service.servicesPrice,
+                        ServicesID = serviceDetailRequest.ServicesID
+                    };
+                    bookingServices.BookingServicesDetails.Add(bookingServiceDetail); 
+                }
+                bookingServices.Total = bookingServices.BookingServicesDetails.Sum(detail => detail.TotalAmount);
+                /*foreach (var bookingServices in createBookingRequest.BookingOfServices)
+                {
+                    if (bookingServices != null && bookingServices.BookingServicesDetails.Any())
+                    {
+                        var bookingService = new BookingServices
+                        {
+                            BookingServicesDate = bookingServices.BookingServicesDate,
+                            Status = BookingServicesStatus.ToPay,
+                            BookingServicesDetails = new List<BookingServicesDetail>()
+                        };
+
+                        foreach (var serviceDetailRequest in bookingServices.BookingServicesDetails)
+                        {
+                            var service = await _serviceRepository.GetByIdAsync(serviceDetailRequest.ServicesID);
+                            if (service == null)
+                            {
+                                return new BaseResponse<Booking>("Service not found, please check the service ID.",
+                                    StatusCodeEnum.NotFound_404, null);
+                            }
+
+                            var bookingServiceDetail = new BookingServicesDetail
+                            {
+                                Quantity = serviceDetailRequest.Quantity,
+                                unitPrice = service.servicesPrice,
+                                TotalAmount = serviceDetailRequest.Quantity * service.servicesPrice,
+                                ServicesID = serviceDetailRequest.ServicesID
+                            };
+                            bookingService.BookingServicesDetails.Add(bookingServiceDetail);
+                        }
+                        bookingService.Total = bookingService.BookingServicesDetails.Sum(detail => detail.TotalAmount);
+
+                        booking.BookingServices.Add(bookingService);
+                    }
+                }*/
+            }
+
+            await _bookingRepository.AddBookingAsync(booking);
+            return new BaseResponse<Booking>("Create Booking Successfully!!!", StatusCodeEnum.Created_201, booking);
+
+        }
+
+        public async Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int bookingServiceID, BookingStatus status, BookingServicesStatus servicesStatus)
+        {
+            var bookingExist = await _bookingRepository.GetBookingByIdAsync(bookingId);
+            if (bookingExist == null)
+            {
+                return new BaseResponse<Booking>("Cannot find your Booking!",
+                         StatusCodeEnum.NotFound_404, null);
+            }
+            else
+            {
+                if (bookingServiceID != null || bookingServiceID > 0)
+                {
+                    var bookingServiceExist = await _bookingServiceRepository.GetBookingServicesByIdAsync(bookingServiceID);
+                    if (bookingServiceExist == null)
+                    {
+                        return new BaseResponse<Booking>("Cannot find your BookingServices!",
+                                 StatusCodeEnum.NotFound_404, null);
+                    }
+
+                    var bookingService = await _bookingServiceRepository.ChangeBookingServicesStatus(bookingServiceExist.BookingServicesID, servicesStatus);
+                }
+                var booking = await _bookingRepository.ChangeBookingStatus(bookingExist.BookingID, status);
+
+                return new BaseResponse<Booking>("Change status ok", StatusCodeEnum.OK_200, booking);
+            }
+        }
+
+        public async Task<BaseResponse<BookingServices>> CreateServiceBooking(CreateBookingServices bookingServiceRequest, PaymentServicesMethod paymentServicesMethod)
+        {
+            var bookingExist = await _bookingRepository.GetBookingByIdAsync(bookingServiceRequest.BookingID);
+            if (bookingExist == null)
+            {
+                /*if (bookingExist.Status == BookingStatus.Cancelled)
+                {
+                    return new BaseResponse<BookingServices>("This Booking was canceled, cannot add more services!",
+                    StatusCodeEnum.Conflict_409, null);
+                }
+                if (bookingExist.Status == BookingStatus.Completed)
+                {
+                    return new BaseResponse<BookingServices>("This Booking was completed, cannot add more services!",
+                    StatusCodeEnum.Conflict_409, null);
+                }
+                if (bookingExist.Status == BookingStatus.ReturnRefund)
+                {
+                    return new BaseResponse<BookingServices>("This Booking was refunded, cannot add more services!",
+                    StatusCodeEnum.Conflict_409, null);
+                }
+                if (bookingExist.Status == BookingStatus.RequestReturn)
+                {
+                    return new BaseResponse<BookingServices>("You are trying to take the refund of this booking, cannot add more services!",
+                    StatusCodeEnum.Conflict_409, null);
+                }*/
+                
+
+                return new BaseResponse<BookingServices>("Cannot Find any Booking!",
+                    StatusCodeEnum.NotFound_404, null);
+            }
+            
+                switch (bookingExist.Status)
+                {
+                    case BookingStatus.Cancelled:
+                        return new BaseResponse<BookingServices>("This booking was canceled, cannot add more services!", StatusCodeEnum.Conflict_409, null);
+                    case BookingStatus.Completed:
+                        return new BaseResponse<BookingServices>("This booking was completed, cannot add more services!", StatusCodeEnum.Conflict_409, null);
+                    case BookingStatus.ReturnRefund:
+                        return new BaseResponse<BookingServices>("This booking was refunded, cannot add more services!", StatusCodeEnum.Conflict_409, null);
+                    case BookingStatus.RequestReturn:
+                        return new BaseResponse<BookingServices>("You are trying to take a refund for this booking, cannot add more services!", StatusCodeEnum.Conflict_409, null);
+                    default:
+                        break;
+                }
+            
+
+            var UnpaidServices = await _bookingServiceRepository.GetUnpaidServicesByAccountId(bookingServiceRequest.AccountID);
+            if (UnpaidServices != null)
+            {
+                return new BaseResponse<BookingServices>("There still have a booking services need to pay, complete before start a new BookingServices",
+                    StatusCodeEnum.Conflict_409, UnpaidServices);
+            }
+
+            var bookingServices = new BookingServices
+            {
+                BookingServicesDate = DateTime.Now,
+                Status = BookingServicesStatus.ToPay,
+                BookingServicesDetails = new List<BookingServicesDetail>()
+            };
+            foreach (var serviceDetailRequest in bookingServiceRequest.BookingServicesDetails)
+            {
+                var service = await _serviceRepository.GetByIdAsync(serviceDetailRequest.ServicesID);
+                if (service == null)
+                {
+                    return new BaseResponse<BookingServices>("Service not found, please check the service ID.",
+                        StatusCodeEnum.NotFound_404, null);
+                }
+
+                var bookingServiceDetail = new BookingServicesDetail
+                {
+                    Quantity = serviceDetailRequest.Quantity,
+                    unitPrice = service.servicesPrice,
+                    TotalAmount = serviceDetailRequest.Quantity * service.servicesPrice,
+                    ServicesID = serviceDetailRequest.ServicesID
+                };
+                bookingServices.BookingServicesDetails.Add(bookingServiceDetail);
+            }
+            bookingServices.Total = bookingServices.BookingServicesDetails.Sum(detail => detail.TotalAmount);
+            await _bookingServiceRepository.AddBookingServicesAsync(bookingServices);
+            return new BaseResponse<BookingServices>("Booking Services Successfully!!!", StatusCodeEnum.Created_201, bookingServices);
+        }
+
+        /*public async Task<BaseResponse<Booking>> CanncelledBooking(int bookingID, int bookingServiceID)
+        {
+            var booking = await _bookingRepository.GetBookingByIdAsync(bookingID);
+            if (booking == null)
+            {
+                return new BaseResponse<Booking>("Cannot find your Booking!",
+                        StatusCodeEnum.NotFound_404, null);
+            }
+
+
+
+
+        }*/
+    }
+}

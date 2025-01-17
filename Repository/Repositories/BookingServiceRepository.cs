@@ -53,6 +53,11 @@ namespace Repository.Repositories
             return await _bookingservicesDao.GetBookingServicesByStatusAsync(status);
         }
 
+        public async Task<BookingServices?> GetUnpaidServicesByAccountId(string accountId)
+        {
+            return await _bookingservicesDao.GetUnpaidServicesByAccountId(accountId);
+        }
+
         public async Task UpdateBookingServicesAsync(BookingServices booking)
         {
            await _bookingservicesDao.UpdateAsync(booking);
