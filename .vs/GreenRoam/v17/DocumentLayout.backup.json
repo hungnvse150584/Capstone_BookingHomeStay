@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "D:\\FPT\\SEP490\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490\\greenroam\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490\\dataaccessobject\\greenroamcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\greenroamcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490\\greenroam\\controllers\\imageservicescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\imageservicescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -47,20 +55,12 @@
       "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\wardrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490\\greenroam\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490\\dataaccessobject\\homestaytypedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\homestaytypedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490\\dataaccessobject\\migrations\\greenroamcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\migrations\\greenroamcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490\\dataaccessobject\\greenroamcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\greenroamcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490\\service\\requestandresponse\\response\\imageservice\\getimageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -294,33 +294,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490\\GreenRoam\\Program.cs",
-              "RelativeDocumentMoniker": "GreenRoam\\Program.cs",
-              "ToolTip": "D:\\FPT\\SEP490\\GreenRoam\\Program.cs",
-              "RelativeToolTip": "GreenRoam\\Program.cs",
-              "ViewState": "AgIAAF4AAAAAAAAAAAAgwIQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-14T11:54:54.959Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ConfigureService.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490\\Repository\\ConfigureService.cs",
-              "RelativeDocumentMoniker": "Repository\\ConfigureService.cs",
-              "ToolTip": "D:\\FPT\\SEP490\\Repository\\ConfigureService.cs",
-              "RelativeToolTip": "Repository\\ConfigureService.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAYwCoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-14T12:12:01.176Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "ConfigureService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490\\Service\\ConfigureService.cs",
               "RelativeDocumentMoniker": "Service\\ConfigureService.cs",
@@ -333,7 +307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "ImageServicesService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490\\Service\\Service\\ImageServicesService.cs",
               "RelativeDocumentMoniker": "Service\\Service\\ImageServicesService.cs",
@@ -346,7 +320,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "ImageServicesController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490\\GreenRoam\\Controllers\\ImageServicesController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\ImageServicesController.cs",
@@ -359,7 +333,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "GreenRoamContext.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490\\DataAccessObject\\GreenRoamContext.cs",
+              "RelativeDocumentMoniker": "DataAccessObject\\GreenRoamContext.cs",
+              "ToolTip": "D:\\FPT\\SEP490\\DataAccessObject\\GreenRoamContext.cs*",
+              "RelativeToolTip": "DataAccessObject\\GreenRoamContext.cs*",
+              "ViewState": "AgIAAEMAAAAAAAAAAAA6wE0AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-10T12:50:23.291Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\FPT\\SEP490\\GreenRoam\\appsettings.json",
+              "RelativeDocumentMoniker": "GreenRoam\\appsettings.json",
+              "ToolTip": "D:\\FPT\\SEP490\\GreenRoam\\appsettings.json*",
+              "RelativeToolTip": "GreenRoam\\appsettings.json*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-01-14T11:54:20.433Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ConfigureService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490\\Repository\\ConfigureService.cs",
+              "RelativeDocumentMoniker": "Repository\\ConfigureService.cs",
+              "ToolTip": "D:\\FPT\\SEP490\\Repository\\ConfigureService.cs",
+              "RelativeToolTip": "Repository\\ConfigureService.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAYwCoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-14T12:12:01.176Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490\\GreenRoam\\Program.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Program.cs",
+              "ToolTip": "D:\\FPT\\SEP490\\GreenRoam\\Program.cs",
+              "RelativeToolTip": "GreenRoam\\Program.cs",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAgwIQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-14T11:54:54.959Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ImageServicesRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490\\Repository\\Repositories\\ImageServicesRepository.cs",
               "RelativeDocumentMoniker": "Repository\\Repositories\\ImageServicesRepository.cs",
@@ -372,7 +398,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "ImageServicesDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490\\DataAccessObject\\ImageServicesDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\ImageServicesDAO.cs",
@@ -385,7 +411,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "LocationDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490\\DataAccessObject\\LocationDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\LocationDAO.cs",
@@ -398,7 +424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "NotificationDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490\\DataAccessObject\\NotificationDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\NotificationDAO.cs",
@@ -411,20 +437,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\FPT\\SEP490\\GreenRoam\\appsettings.json",
-              "RelativeDocumentMoniker": "GreenRoam\\appsettings.json",
-              "ToolTip": "D:\\FPT\\SEP490\\GreenRoam\\appsettings.json",
-              "RelativeToolTip": "GreenRoam\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-01-14T11:54:20.433Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "HomeStayTypeDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490\\DataAccessObject\\HomeStayTypeDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\HomeStayTypeDAO.cs",
@@ -437,7 +450,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "MappingProfile.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490\\Service\\Mapping\\MappingProfile.cs",
               "RelativeDocumentMoniker": "Service\\Mapping\\MappingProfile.cs",
@@ -450,7 +463,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "WardRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490\\Repository\\Repositories\\WardRepository.cs",
               "RelativeDocumentMoniker": "Repository\\Repositories\\WardRepository.cs",
@@ -463,7 +476,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "GreenRoamContextModelSnapshot.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490\\DataAccessObject\\Migrations\\GreenRoamContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\Migrations\\GreenRoamContextModelSnapshot.cs",
@@ -472,19 +485,6 @@
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-14T06:22:29.978Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "GreenRoamContext.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490\\DataAccessObject\\GreenRoamContext.cs",
-              "RelativeDocumentMoniker": "DataAccessObject\\GreenRoamContext.cs",
-              "ToolTip": "D:\\FPT\\SEP490\\DataAccessObject\\GreenRoamContext.cs",
-              "RelativeToolTip": "DataAccessObject\\GreenRoamContext.cs",
-              "ViewState": "AgIAAEMAAAAAAAAAAAA6wE4AAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-10T12:50:23.291Z",
               "EditorCaption": ""
             },
             {
