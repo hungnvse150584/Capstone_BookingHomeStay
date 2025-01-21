@@ -21,8 +21,7 @@ namespace DataAccessObject
         {
             IQueryable<Booking> bookings = _context.Bookings
                 .Include(b => b.Account)
-                .Include(b => b.BookingDetails)
-                .ThenInclude(bd => bd.Rooms);
+                .Include(b => b.BookingDetails);
             //.Include(o => o.Transaction)
             // Apply date filter if provided
             if (date.HasValue)
@@ -50,10 +49,18 @@ namespace DataAccessObject
         {
             return await _context.Bookings
                 .Include(b => b.BookingDetails)
-                .ThenInclude(bd => bd.Rooms)
                 .Where(b => b.AccountID == accountId)
                 .ToListAsync();
         }
+
+        public async Task<Booking?> GetBookingStatusByAccountId(string accountId)
+        {
+            return await _context.Bookings
+                .Include(b => b.BookingDetails)
+                .FirstOrDefaultAsync(b => b.AccountID == accountId && b.Status == BookingStatus.ToPay);
+        }
+
+
 
         public async Task<Booking?> ChangeBookingStatus(int bookingId, BookingStatus status)
         {
@@ -78,7 +85,6 @@ namespace DataAccessObject
             return await _context.Bookings
                 .Include(o => o.Account)
                 .Include(o => o.BookingDetails)
-                .ThenInclude(o => o.Rooms)
                 .Where(o => o.BookingDate.Date == date.Date)
                 .ToListAsync();
         }
@@ -88,7 +94,6 @@ namespace DataAccessObject
             return await _context.Bookings
                 .Include(o => o.Account)
                 .Include(o => o.BookingDetails)
-                .ThenInclude(o => o.Rooms)
                 .Where(o => o.Status == status)
                 .ToListAsync();
         }
@@ -98,7 +103,6 @@ namespace DataAccessObject
             return await _context.Bookings
                 .Include(o => o.Account)
                 .Include(o => o.BookingDetails)
-                .ThenInclude(o => o.Rooms)
                 .FirstOrDefaultAsync(o => o.BookingID == bookingId);
         }
 

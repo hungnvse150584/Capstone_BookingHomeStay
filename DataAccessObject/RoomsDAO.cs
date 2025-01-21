@@ -33,7 +33,6 @@ namespace DataAccessObject
         public async Task<IEnumerable<Room>> GetRoomsWithBookingsAsync()
         {
             return await _context.Rooms
-           .Include(r => r.BookingDetails)
            .ToListAsync();
         }
 

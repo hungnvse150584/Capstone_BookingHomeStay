@@ -176,7 +176,7 @@ namespace DataAccessObject.Migrations
                     b.Property<int?>("HomeStayTypesID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoomID")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<double>("TotalAmount")
@@ -190,8 +190,6 @@ namespace DataAccessObject.Migrations
                     b.HasIndex("BookingID");
 
                     b.HasIndex("HomeStayTypesID");
-
-                    b.HasIndex("RoomID");
 
                     b.ToTable("BookingDetails");
                 });
@@ -926,19 +924,31 @@ namespace DataAccessObject.Migrations
                     b.HasData(
                         new
                         {
+<<<<<<< HEAD
                             Id = "2b286b8b-c597-4d04-9e45-45763908f695",
+=======
+                            Id = "19bf5a20-587b-4ccc-92c2-16dbf618660f",
+>>>>>>> main
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = "d5f5dbf7-d1aa-4a57-8e8a-e16e00d67fbf",
+=======
+                            Id = "d5e8b00f-237d-4d69-928b-544f47f031ce",
+>>>>>>> main
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
+<<<<<<< HEAD
                             Id = "764d322d-c245-4514-94d6-d53243e27514",
+=======
+                            Id = "5a96659f-a7d5-41be-b4e4-209ba11a6573",
+>>>>>>> main
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         });
@@ -1083,15 +1093,9 @@ namespace DataAccessObject.Migrations
                         .WithMany("BookingDetails")
                         .HasForeignKey("HomeStayTypesID");
 
-                    b.HasOne("BusinessObject.Model.Room", "Rooms")
-                        .WithMany("BookingDetails")
-                        .HasForeignKey("RoomID");
-
                     b.Navigation("Booking");
 
                     b.Navigation("HomeStayTypes");
-
-                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.BookingServices", b =>
@@ -1478,11 +1482,6 @@ namespace DataAccessObject.Migrations
             modelBuilder.Entity("BusinessObject.Model.Report", b =>
                 {
                     b.Navigation("Booking");
-                });
-
-            modelBuilder.Entity("BusinessObject.Model.Room", b =>
-                {
-                    b.Navigation("BookingDetails");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Services", b =>

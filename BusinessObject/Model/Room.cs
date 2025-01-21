@@ -21,7 +21,5 @@ namespace BusinessObject.Model;
         public int? HomeStayTypesID { get; set; }
         [ForeignKey("HomeStayTypesID ")]
         public HomeStayTypes? HomeStayTypes { get; set; }
-
-        public ICollection<BookingDetail> BookingDetails { get; set; }
     }
 

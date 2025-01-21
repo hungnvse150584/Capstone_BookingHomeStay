@@ -62,5 +62,10 @@ namespace Repository.Repositories
         {
            return await _bookingDao.UpdateBookingWithReportAsync(bookingId, booking);
         }
+
+        public async Task<Booking?> GetBookingStatusByAccountId(string accountId)
+        {
+            return await _bookingDao.GetBookingStatusByAccountId(accountId);
+        }
     }
 }

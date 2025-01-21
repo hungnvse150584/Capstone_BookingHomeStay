@@ -39,7 +39,7 @@ namespace Repository.Repositories
             return _homestaytypeDao.GetAllHomeStayTypesAsync(homestayId);
         }
 
-        public Task<HomeStayTypes> GetByIdAsync(int id)
+        public Task<HomeStayTypes> GetHomeStayTypesByIdAsync(int? id)
         {
             return _homestaytypeDao.GetHomeStayTypeByIdAsync(id);
         }
