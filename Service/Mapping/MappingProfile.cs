@@ -2,14 +2,24 @@
 using BusinessObject.Model;
 using Service.RequestAndResponse.Request.District;
 using Service.RequestAndResponse.Request.HomeStay;
+using Service.RequestAndResponse.Request.HomeStayType;
 using Service.RequestAndResponse.Request.Location;
+using Service.RequestAndResponse.Request.Properties;
 using Service.RequestAndResponse.Request.Province;
+using Service.RequestAndResponse.Request.Services;
 using Service.RequestAndResponse.Request.Street;
 using Service.RequestAndResponse.Request.Ward;
+using Service.RequestAndResponse.Response.BookingDetails;
+using Service.RequestAndResponse.Response.BookingOfServices;
+using Service.RequestAndResponse.Response.BookingOfServicesDetails;
+using Service.RequestAndResponse.Response.Bookings;
 using Service.RequestAndResponse.Response.Districts;
 using Service.RequestAndResponse.Response.HomeStays;
+using Service.RequestAndResponse.Response.HomeStayType;
 using Service.RequestAndResponse.Response.Locations;
+using Service.RequestAndResponse.Response.Properties;
 using Service.RequestAndResponse.Response.Provinces;
+using Service.RequestAndResponse.Response.Services;
 using Service.RequestAndResponse.Response.Streets;
 using Service.RequestAndResponse.Response.Wards;
 using System;
@@ -30,6 +40,21 @@ namespace Service.Mapping
             /*CreateMap<Street, GetStreet>();*/
             CreateMap<CreateHomeStayRequest, HomeStay>().ReverseMap();
             CreateMap<UpdateHomeStayRequest, HomeStay>().ReverseMap();
+
+            CreateMap<HomeStayTypes, GetAllHomeStayType>();
+            CreateMap<CreateHomeStayTypeRequest, HomeStayTypes>().ReverseMap();
+
+            CreateMap<Property, GetAllProperties>();
+            CreateMap<Property, CreatePropertyRequest>().ReverseMap();
+
+            CreateMap<Services, GetAllServices>();
+            CreateMap<Services, CreateServices>().ReverseMap();
+
+            CreateMap<BookingDetail, GetBookingDetails>();
+            CreateMap<BookingServices, GetAllBookingServices>();
+            CreateMap<Booking, GetAllBookings>();
+            CreateMap<BookingServicesDetail, GetAllDetailOfServices>();
+
 
             CreateMap<Location, GetLocation>()
                 .ForMember(dest => dest.Street, opt => opt.MapFrom(src => src.Street))

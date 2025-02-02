@@ -20,6 +20,8 @@ namespace Service
             services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddScoped<IHomeStayService, HomeStayService>();
+            services.AddScoped<IHomeStayTypeService, HomeStayTypeService>();
+            services.AddScoped<IBookingService, BookingService>();
 
             services.AddScoped<IVnPayService, VnPayService>();
 

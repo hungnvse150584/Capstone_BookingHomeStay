@@ -67,5 +67,15 @@ namespace Repository.Repositories
         {
             return await _bookingDao.GetBookingStatusByAccountId(accountId);
         }
+
+        public async Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)> GetStaticBookings()
+        {
+            return await _bookingDao.GetStaticBookings();
+        }
+
+        public async Task<List<(string homeStayName, int QuantityOfBooking)>> GetTopHomeStayBookingInMonthAsync()
+        {
+           return await _bookingDao.GetTopHomeStayBookingInMonthAsync();
+        }
     }
 }
