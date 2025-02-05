@@ -23,9 +23,12 @@ namespace Repository
 
             services.AddScoped<IHomeStayRepository, HomeStayRepository>();
             services.AddScoped<IHomeStayTypeRepository, HomeStayTypeRepository>();
+            services.AddScoped<IPropertyRepository, PropertyRepository>();
 
             services.AddScoped<IBookingRepository, BookingRepository>();
             services.AddScoped<IBookingServiceRepository, BookingServiceRepository>();
+            services.AddScoped<IServiceRepository, ServiceRepository>();
+
 
             services.AddScoped<INotificationRepository, NotificationRepository>();
             
@@ -48,6 +51,7 @@ namespace Repository
 
             services.AddScoped<HomeStayDAO>();
             services.AddScoped<HomeStayTypeDAO>();
+            services.AddScoped<PropertyDAO>();
 
             services.AddScoped<BookingDAO>();
             services.AddScoped<BookingServicesDAO>();

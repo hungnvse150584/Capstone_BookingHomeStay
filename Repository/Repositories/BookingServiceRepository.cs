@@ -28,6 +28,11 @@ namespace Repository.Repositories
            return await _bookingservicesDao.ChangeBookingServicesStatus(bookingId, status);
         }
 
+        public async Task<BookingServices?> FindBookingServicesByIdAsync(int? bookingId)
+        {
+            return await _bookingservicesDao.FindBookingServicesByIdAsync(bookingId);
+        }
+
         public async Task<IEnumerable<BookingServices>> GetAllBookingServicesAsync(string? search, DateTime? date = null, BookingServicesStatus? status = null)
         {
            return await _bookingservicesDao.GetAllBookingServicesAsync(search, date, status);

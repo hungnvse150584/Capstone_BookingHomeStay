@@ -17,7 +17,7 @@
             public string? Image { get; set; }
 
             public int? ServicesID { get; set; }
-            [ForeignKey("ServicesID ")]
+            [ForeignKey("ServicesID")]
             public Services? Services { get; set; }
         }
 

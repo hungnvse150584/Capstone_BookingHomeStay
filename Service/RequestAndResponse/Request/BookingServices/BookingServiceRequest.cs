@@ -12,9 +12,6 @@ namespace Service.RequestAndResponse.Request.BookingServices
 {
     public class BookingServiceRequest
     {
-        public DateTime BookingServicesDate { get; set; }
-
-        public double Total { get; set; }
 
         public ICollection<BookingServiceDetailRequest> BookingServicesDetails { get; set; }
 

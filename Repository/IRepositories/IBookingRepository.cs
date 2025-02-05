@@ -19,5 +19,10 @@ namespace Repository.IRepositories
         Task<IEnumerable<Booking>> GetBookingsByStatusAsync(BookingStatus status);
         Task<Booking?> GetBookingByIdAsync(int bookingId);
         Task<Booking?> UpdateBookingWithReportAsync(int bookingId, Booking booking);
+
+
+        //For AdminDashBoard
+        Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)> GetStaticBookings();
+        Task<List<(string homeStayName, int QuantityOfBooking)>> GetTopHomeStayBookingInMonthAsync();
     }
 }

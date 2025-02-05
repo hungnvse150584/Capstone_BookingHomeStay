@@ -11,6 +11,7 @@ namespace Service.RequestAndResponse.Response.ImageService
 {
     public class GetAllImageService
     {
+
         [Key]
         public int ImageServicesID { get; set; }
 
@@ -18,7 +19,8 @@ namespace Service.RequestAndResponse.Response.ImageService
         public string? Image { get; set; }
 
         public int? ServicesID { get; set; }
-        [ForeignKey("ServicesID ")]
-        public Services? Services { get; set; }
+       
+        //[ForeignKey("ServicesID")]
+        //public Services? Services { get; set; }
     }
 }

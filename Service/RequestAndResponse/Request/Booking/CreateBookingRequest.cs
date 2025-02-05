@@ -17,11 +17,9 @@ namespace Service.RequestAndResponse.Request.Booking
 
         public int numberOfAdults { get; set; }
 
-        public double Total { get; set; }
-
         public string AccountID { get; set; }
 
         public ICollection<BookingDetailRequest>  BookingDetails { get; set; }
-        public BookingServiceRequest BookingOfServices { get; set; }
+        public BookingServiceRequest? BookingOfServices { get; set; }
     }
 }

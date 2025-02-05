@@ -2,6 +2,7 @@
 using Azure;
 using BusinessObject.Model;
 using Repository.IRepositories;
+using Repository.Repositories;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
@@ -9,6 +10,8 @@ using Service.RequestAndResponse.Request.Booking;
 using Service.RequestAndResponse.Request.BookingDetail;
 using Service.RequestAndResponse.Request.BookingServices;
 using Service.RequestAndResponse.Request.District;
+using Service.RequestAndResponse.Response.Bookings;
+using Service.RequestAndResponse.Response.Districts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +39,24 @@ namespace Service.Service
             _homeStayTypeRepository = homeStayTypeRepository;
             _serviceRepository = serviceRepository;
             _bookingServiceRepository = bookingServiceRepository;
+        }
+
+        public async Task<BaseResponse<IEnumerable<GetAllBookings>>> GetAllBooking(string? search, DateTime? date = null, BookingStatus? status = null)
+        {
+            IEnumerable<Booking> booking = await _bookingRepository.GetAllBookingAsync(search, date, status);
+            if (booking == null || !booking.Any())
+            {
+                return new BaseResponse<IEnumerable<GetAllBookings>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            var bookings = _mapper.Map<IEnumerable<GetAllBookings>>(booking);
+            if (bookings == null || !bookings.Any())
+            {
+                return new BaseResponse<IEnumerable<GetAllBookings>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            return new BaseResponse<IEnumerable<GetAllBookings>>("Get all bookings as base success",
+                StatusCodeEnum.OK_200, bookings);
         }
 
         public async Task<BaseResponse<Booking>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod)
@@ -101,6 +122,7 @@ namespace Service.Service
                 {
                     BookingServicesDate = DateTime.Now,
                     Status = BookingServicesStatus.ToPay,
+                    AccountID = createBookingRequest.AccountID,
                     BookingServicesDetails = new List<BookingServicesDetail>()
                 };
                 foreach (var serviceDetailRequest in createBookingRequest.BookingOfServices.BookingServicesDetails)
@@ -122,40 +144,12 @@ namespace Service.Service
                     bookingServices.BookingServicesDetails.Add(bookingServiceDetail); 
                 }
                 bookingServices.Total = bookingServices.BookingServicesDetails.Sum(detail => detail.TotalAmount);
-                /*foreach (var bookingServices in createBookingRequest.BookingOfServices)
+
+                if (bookingServices.BookingServicesDetails.Any())
                 {
-                    if (bookingServices != null && bookingServices.BookingServicesDetails.Any())
-                    {
-                        var bookingService = new BookingServices
-                        {
-                            BookingServicesDate = bookingServices.BookingServicesDate,
-                            Status = BookingServicesStatus.ToPay,
-                            BookingServicesDetails = new List<BookingServicesDetail>()
-                        };
-
-                        foreach (var serviceDetailRequest in bookingServices.BookingServicesDetails)
-                        {
-                            var service = await _serviceRepository.GetByIdAsync(serviceDetailRequest.ServicesID);
-                            if (service == null)
-                            {
-                                return new BaseResponse<Booking>("Service not found, please check the service ID.",
-                                    StatusCodeEnum.NotFound_404, null);
-                            }
-
-                            var bookingServiceDetail = new BookingServicesDetail
-                            {
-                                Quantity = serviceDetailRequest.Quantity,
-                                unitPrice = service.servicesPrice,
-                                TotalAmount = serviceDetailRequest.Quantity * service.servicesPrice,
-                                ServicesID = serviceDetailRequest.ServicesID
-                            };
-                            bookingService.BookingServicesDetails.Add(bookingServiceDetail);
-                        }
-                        bookingService.Total = bookingService.BookingServicesDetails.Sum(detail => detail.TotalAmount);
-
-                        booking.BookingServices.Add(bookingService);
-                    }
-                }*/
+                    booking.BookingServices ??= new List<BookingServices>(); 
+                    booking.BookingServices.Add(bookingServices); 
+                }
             }
 
             await _bookingRepository.AddBookingAsync(booking);
@@ -163,7 +157,7 @@ namespace Service.Service
 
         }
 
-        public async Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int bookingServiceID, BookingStatus status, BookingServicesStatus servicesStatus)
+        public async Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, BookingServicesStatus servicesStatus)
         {
             var bookingExist = await _bookingRepository.GetBookingByIdAsync(bookingId);
             if (bookingExist == null)
@@ -175,7 +169,7 @@ namespace Service.Service
             {
                 if (bookingServiceID != null || bookingServiceID > 0)
                 {
-                    var bookingServiceExist = await _bookingServiceRepository.GetBookingServicesByIdAsync(bookingServiceID);
+                    var bookingServiceExist = await _bookingServiceRepository.FindBookingServicesByIdAsync(bookingServiceID);
                     if (bookingServiceExist == null)
                     {
                         return new BaseResponse<Booking>("Cannot find your BookingServices!",
@@ -246,6 +240,8 @@ namespace Service.Service
             var bookingServices = new BookingServices
             {
                 BookingServicesDate = DateTime.Now,
+                AccountID = bookingServiceRequest.AccountID,
+                BookingID = bookingServiceRequest.BookingID,
                 Status = BookingServicesStatus.ToPay,
                 BookingServicesDetails = new List<BookingServicesDetail>()
             };
@@ -271,6 +267,45 @@ namespace Service.Service
             await _bookingServiceRepository.AddBookingServicesAsync(bookingServices);
             return new BaseResponse<BookingServices>("Booking Services Successfully!!!", StatusCodeEnum.Created_201, bookingServices);
         }
+
+
+        // For Admin and Owner DashBoard
+        public async Task<BaseResponse<GetStaticBookings>> GetStaticBookings()
+        {
+            var booking = await _bookingRepository.GetStaticBookings();
+            var response = new GetStaticBookings
+            {
+                bookings = booking.bookings,
+                bookingsReturnOrCancell = booking.bookingsReturnOrCancell,
+                bookingsCancell = booking.bookingsCancell,
+                bookingsComplete = booking.bookingsComplete,
+                bookingsReport = booking.bookingsReport,
+                bookingsReturnRefund = booking.bookingsReturnRefund
+            };
+            if (response == null)
+            {
+                return new BaseResponse<GetStaticBookings>("Get All Fail", StatusCodeEnum.BadGateway_502, response);
+            }
+            return new BaseResponse<GetStaticBookings>("Get All Success", StatusCodeEnum.OK_200, response);
+        }
+
+        public async Task<BaseResponse<GetTopHomeStayBookingInMonth>> GetTopHomeStayBookingInMonth()
+        {
+            var bookings = await _bookingRepository.GetTopHomeStayBookingInMonthAsync();
+            var response = new GetTopHomeStayBookingInMonth
+            {
+                topHomeStays = bookings.Select(o => (o.homeStayName, o.QuantityOfBooking)).ToList()
+            };
+            if (response == null)
+            {
+                return new BaseResponse<GetTopHomeStayBookingInMonth>("Get All Fail", StatusCodeEnum.BadGateway_502, response);
+            }
+            return new BaseResponse<GetTopHomeStayBookingInMonth>("Get All Success", StatusCodeEnum.OK_200, response);
+        }
+
+
+
+
 
         /*public async Task<BaseResponse<Booking>> CanncelledBooking(int bookingID, int bookingServiceID)
         {

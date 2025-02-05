@@ -1,4 +1,9 @@
-﻿using System;
+﻿using BusinessObject.Model;
+using Service.RequestAndResponse.BaseResponse;
+using Service.RequestAndResponse.Request.Booking;
+using Service.RequestAndResponse.Request.BookingServices;
+using Service.RequestAndResponse.Response.Bookings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +13,11 @@ namespace Service.IService
 {
     public interface IBookingService
     {
-
+        Task<BaseResponse<Booking>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod);
+        Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, BookingServicesStatus servicesStatus);
+        Task<BaseResponse<BookingServices>> CreateServiceBooking(CreateBookingServices bookingServiceRequest, PaymentServicesMethod paymentServicesMethod);
+        Task<BaseResponse<IEnumerable<GetAllBookings>>> GetAllBooking(string? search, DateTime? date = null, BookingStatus? status = null);
+        Task<BaseResponse<GetStaticBookings>> GetStaticBookings();
+        Task<BaseResponse<GetTopHomeStayBookingInMonth>> GetTopHomeStayBookingInMonth();
     }
 }

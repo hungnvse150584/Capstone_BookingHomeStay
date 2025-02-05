@@ -12,10 +12,6 @@ namespace Service.RequestAndResponse.Request.BookingServiceDetails
     {
         public int Quantity { get; set; }
 
-        public double unitPrice { get; set; }
-
-        public double TotalAmount { get; set; }
-
         public int ServicesID { get; set; }
     }
 }
