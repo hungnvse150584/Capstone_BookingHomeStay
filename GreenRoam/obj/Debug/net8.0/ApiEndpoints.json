@@ -1,0 +1,1054 @@
+[
+  {
+    "ContainingType": "GreenRoam.Controllers.AccountController",
+    "Method": "ChangePassword",
+    "RelativePath": "api/account/Change-Password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "changePassword",
+        "Type": "BusinessObject.IdentityModel.ChangePasswordModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.AccountController",
+    "Method": "Confirmation",
+    "RelativePath": "api/account/confirmation/{email}/{code}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "code",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.AccountController",
+    "Method": "CreateAccount",
+    "RelativePath": "api/account/create account",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createAccountDto",
+        "Type": "BusinessObject.IdentityModel.CreateAccountDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.AccountController",
+    "Method": "GetAllAccounts",
+    "RelativePath": "api/account/Get-all-accounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.AccountController",
+    "Method": "Login",
+    "RelativePath": "api/account/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginDto",
+        "Type": "BusinessObject.IdentityModel.LoginDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.AccountController",
+    "Method": "RegisterCustomer",
+    "RelativePath": "api/account/register-Customer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registerDto",
+        "Type": "BusinessObject.IdentityModel.RegisterDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.AccountController",
+    "Method": "RegisterOwner",
+    "RelativePath": "api/account/register-Owner",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registerDto",
+        "Type": "BusinessObject.IdentityModel.RegisterDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.AccountController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/account/Reset-Password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "resetToken",
+        "Type": "BusinessObject.IdentityModel.ResetToken",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.AccountController",
+    "Method": "ResetPasswordToken",
+    "RelativePath": "api/account/Reset-Password-Token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "resetTokenModel",
+        "Type": "BusinessObject.IdentityModel.ResetTokenModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.AccountController",
+    "Method": "RenewToken",
+    "RelativePath": "api/account/resetToken",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "BusinessObject.IdentityModel.TokenModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.AccountController",
+    "Method": "UpdateAccount",
+    "RelativePath": "api/account/Update-Account",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "updateAccountDto",
+        "Type": "BusinessObject.IdentityModel.UpdateAccountDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.AccountController",
+    "Method": "UpdateAccount",
+    "RelativePath": "api/account/Update-Account-Status",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userEmail",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "updateAccountStatusDto",
+        "Type": "BusinessObject.IdentityModel.UpdateAccountStatusDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.DistrictController",
+    "Method": "CreateDistrict",
+    "RelativePath": "api/district/CreateDistrict",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "districtRequest",
+        "Type": "Service.RequestAndResponse.Request.District.AddDistrictRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.District.AddDistrictRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.DistrictController",
+    "Method": "GetAllDistrict",
+    "RelativePath": "api/district/GetAllDistrict",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.Districts.GetAllDistrict, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.DistrictController",
+    "Method": "GetDistrictById",
+    "RelativePath": "api/district/GetDistrict/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Districts.GetAllDistrict, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.DistrictController",
+    "Method": "UpdateDistrict",
+    "RelativePath": "api/district/UpdateDistrict",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "districtRequest",
+        "Type": "Service.RequestAndResponse.Request.District.UpdateDistrictRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.District.UpdateDistrictRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.HomeStayController",
+    "Method": "ChangeHomeStayStatus",
+    "RelativePath": "api/homestay/ChangeHomeStayStatus",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "homestayId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.HomeStays.HomeStayResponse, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.HomeStayController",
+    "Method": "RegisterHomeStay",
+    "RelativePath": "api/homestay/CreateHomeStay",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Service.RequestAndResponse.Request.HomeStay.CreateHomeStayRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.List\u00601[[BusinessObject.Model.HomeStay, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.HomeStayController",
+    "Method": "GetAllHomeStayRegister",
+    "RelativePath": "api/homestay/GetAllRegisterHomeStay",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.HomeStays.HomeStayResponse, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.HomeStayController",
+    "Method": "GetOwnerHomeStayById",
+    "RelativePath": "api/homestay/GetOwnerHomeStay/{accountId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "accountId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.HomeStays.HomeStayResponse, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.HomeStayController",
+    "Method": "GetHomeStayDetailById",
+    "RelativePath": "api/homestay/GetRegisterHomeStay/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.HomeStays.HomeStayResponse, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.HomeStayController",
+    "Method": "UpdateHomeStay",
+    "RelativePath": "api/homestay/UpdateHomeStay",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "homestayId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "request",
+        "Type": "Service.RequestAndResponse.Request.HomeStay.UpdateHomeStayRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[BusinessObject.Model.HomeStay, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "Method": "CreateImageHomeStayType",
+    "RelativePath": "api/ImageHomeStayTypes/CreateImageHomeStayType",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "imageTypeRequest",
+        "Type": "Service.RequestAndResponse.Request.ImageHomeStayTypes.AddImageHomeStayTypesRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.ImageHomeStayTypes.AddImageHomeStayTypesRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "Method": "DeleteImageHomeStayTypes",
+    "RelativePath": "api/ImageHomeStayTypes/DeleteImageService/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "Method": "GetAllImageHomeStayTypes",
+    "RelativePath": "api/ImageHomeStayTypes/GetAllImageHomeStayType",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.ImageHomeStayTypes.GetAllImageHomeStayType, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "Method": "GetImageHomeStayTypesById",
+    "RelativePath": "api/ImageHomeStayTypes/GetAllImageHomeStayType/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.ImageHomeStayTypes.GetAllImageHomeStayType, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "Method": "UpdateImageService",
+    "RelativePath": "api/ImageHomeStayTypes/UpdateImageService/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "imageTypeRequest",
+        "Type": "Service.RequestAndResponse.Request.ImageHomeStayTypes.UpdateImageHomeStayTypesRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.ImageHomeStayTypes.UpdateImageHomeStayTypesRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageServicesController",
+    "Method": "CreateImageService",
+    "RelativePath": "api/imageservice/CreateImageService",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "imageServiceRequest",
+        "Type": "Service.RequestAndResponse.Request.ImageService.AddImageServicesRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.ImageService.AddImageServicesRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageServicesController",
+    "Method": "DeleteImageService",
+    "RelativePath": "api/imageservice/DeleteImageService/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageServicesController",
+    "Method": "GetAllImageServices",
+    "RelativePath": "api/imageservice/GetAllImageServices",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.ImageService.GetAllImageService, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageServicesController",
+    "Method": "GetImageServiceById",
+    "RelativePath": "api/imageservice/GetImageService/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.ImageService.GetAllImageService, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageServicesController",
+    "Method": "UpdateImageService",
+    "RelativePath": "api/imageservice/UpdateImageService/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "imageServiceRequest",
+        "Type": "Service.RequestAndResponse.Request.ImageService.UpdateImageServicesRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.ImageService.UpdateImageServicesRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ProvinceController",
+    "Method": "CreateProvince",
+    "RelativePath": "api/province/CreateProvince",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "provinceRequest",
+        "Type": "Service.RequestAndResponse.Request.Province.AddProvinceRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Province.AddProvinceRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ProvinceController",
+    "Method": "GetAllProvinces",
+    "RelativePath": "api/province/GetAllProvince",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.Provinces.GetAllProvince, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ProvinceController",
+    "Method": "GetProvinceById",
+    "RelativePath": "api/province/GetProvince/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Provinces.GetAllProvince, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ProvinceController",
+    "Method": "UpdateProvince",
+    "RelativePath": "api/province/UpdateProvince",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "provinceRequest",
+        "Type": "Service.RequestAndResponse.Request.Province.UpdateProvinceRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Province.UpdateProvinceRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.StreetController",
+    "Method": "CreateStreet",
+    "RelativePath": "api/street/CreateStreet",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "streetRequest",
+        "Type": "Service.RequestAndResponse.Request.Street.AddStreetRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Street.AddStreetRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.StreetController",
+    "Method": "GetAllStreet",
+    "RelativePath": "api/street/GetAllStreet",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.Streets.GetAllStreet, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.StreetController",
+    "Method": "GetStreetById",
+    "RelativePath": "api/street/GetStreet/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Streets.GetAllStreet, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.StreetController",
+    "Method": "UpdateStreet",
+    "RelativePath": "api/street/UpdateStreet",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "streetRequest",
+        "Type": "Service.RequestAndResponse.Request.Street.UpdateStreetRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Street.UpdateStreetRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.WardController",
+    "Method": "CreateWardFromBase",
+    "RelativePath": "api/ward/CreateWard",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "wardRequest",
+        "Type": "Service.RequestAndResponse.Request.Ward.AddWardRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Ward.AddWardRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.WardController",
+    "Method": "GetAllWard",
+    "RelativePath": "api/ward/GetAllWard",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.Wards.GetAllWard, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.WardController",
+    "Method": "GetWardById",
+    "RelativePath": "api/ward/GetWard/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Wards.GetAllWard, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.WardController",
+    "Method": "UpdateWardFromBase",
+    "RelativePath": "api/ward/UpdateWard",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "wardRequest",
+        "Type": "Service.RequestAndResponse.Request.Ward.UpdateWardRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Ward.UpdateWardRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[GreenRoam.WeatherForecast, GreenRoam, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]

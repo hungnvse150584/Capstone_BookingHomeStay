@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Repository.IRepositories;
+using Repository.Repositories;
 using Service.IService;
 using Service.Mapping;
 using Service.Service;
@@ -20,6 +22,8 @@ namespace Service
             services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddScoped<IHomeStayService, HomeStayService>();
+            services.AddScoped<IImageServicesService, ImageServicesService>();
+            services.AddScoped<IImageHomeStayTypesService, ImageHomeStayTypesService>();
             services.AddScoped<IHomeStayTypeService, HomeStayTypeService>();
             services.AddScoped<IBookingService, BookingService>();
 
