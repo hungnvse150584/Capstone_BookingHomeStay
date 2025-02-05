@@ -464,6 +464,135 @@
     ]
   },
   {
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "Method": "CreateImageHomeStayType",
+    "RelativePath": "api/ImageHomeStayTypes/CreateImageHomeStayType",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "imageTypeRequest",
+        "Type": "Service.RequestAndResponse.Request.ImageHomeStayTypes.AddImageHomeStayTypesRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.ImageHomeStayTypes.AddImageHomeStayTypesRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "Method": "DeleteImageHomeStayTypes",
+    "RelativePath": "api/ImageHomeStayTypes/DeleteImageService/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "Method": "GetAllImageHomeStayTypes",
+    "RelativePath": "api/ImageHomeStayTypes/GetAllImageHomeStayType",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.ImageHomeStayTypes.GetAllImageHomeStayType, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "Method": "GetImageHomeStayTypesById",
+    "RelativePath": "api/ImageHomeStayTypes/GetAllImageHomeStayType/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.ImageHomeStayTypes.GetAllImageHomeStayType, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "Method": "UpdateImageService",
+    "RelativePath": "api/ImageHomeStayTypes/UpdateImageService/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "imageTypeRequest",
+        "Type": "Service.RequestAndResponse.Request.ImageHomeStayTypes.UpdateImageHomeStayTypesRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.ImageHomeStayTypes.UpdateImageHomeStayTypesRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "GreenRoam.Controllers.ImageServicesController",
     "Method": "CreateImageService",
     "RelativePath": "api/imageservice/CreateImageService",

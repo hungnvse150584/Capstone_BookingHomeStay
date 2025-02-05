@@ -1,0 +1,14 @@
+# Ignore build files and binaries
+bin/
+obj/
+*.pdb
+*.cache
+*.dll
+*.exe
+*.json
+*.suo
+*.vscode/
+*.user
+*.db
+*.log
+.vs/
