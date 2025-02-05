@@ -36,10 +36,10 @@ namespace Service.Service
                     null);
             }
 
-            // Ánh xạ kết quả sang kiểu GetAllImageService
+
             var response = _mapper.Map<IEnumerable<GetAllImageService>>(imageServices);
 
-            // Kiểm tra xem kết quả ánh xạ có null không
+
             if (response == null)
             {
                 return new BaseResponse<IEnumerable<GetAllImageService>>(
@@ -48,7 +48,6 @@ namespace Service.Service
                     null);
             }
 
-            // Trả về kết quả thành công
             return new BaseResponse<IEnumerable<GetAllImageService>>(
                 "Get all image services success",
                 StatusCodeEnum.OK_200,
