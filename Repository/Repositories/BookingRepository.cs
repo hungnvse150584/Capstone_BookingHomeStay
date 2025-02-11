@@ -77,5 +77,10 @@ namespace Repository.Repositories
         {
            return await _bookingDao.GetTopHomeStayBookingInMonthAsync();
         }
+
+        public async Task<List<(object span, int totalBookings, double totalBookingsAmount)>> GetTotalBookingsTotalBookingsAmount(DateTime startDate, DateTime endDate, string? timeSpanType)
+        {
+            return await _bookingDao.GetTotalBookingsTotalBookingsAmountAsync(startDate, endDate, timeSpanType);
+        }
     }
 }

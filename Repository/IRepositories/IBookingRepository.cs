@@ -24,5 +24,7 @@ namespace Repository.IRepositories
         //For AdminDashBoard
         Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)> GetStaticBookings();
         Task<List<(string homeStayName, int QuantityOfBooking)>> GetTopHomeStayBookingInMonthAsync();
+        Task<List<(object span, int totalBookings, double totalBookingsAmount)>> GetTotalBookingsTotalBookingsAmount
+        (DateTime startDate, DateTime endDate, string? timeSpanType);
     }
 }

@@ -184,6 +184,106 @@ namespace Service.Service
             }
         }
 
+        public async Task<BaseResponse<UpdateBookingRequest>> UpdateBooking(int bookingID, UpdateBookingRequest request)
+        {
+            var existingBooking = await _bookingRepository.GetBookingByIdAsync(bookingID);
+            if (existingBooking == null)
+            {
+                return new BaseResponse<UpdateBookingRequest>("Cannot find your Booking!",
+                         StatusCodeEnum.NotFound_404, null);
+            }
+
+            bool isPaid = !string.IsNullOrEmpty(existingBooking.transactionID);
+            bool isCompleted = existingBooking.Status == BookingStatus.Completed;
+            bool isCancelled = existingBooking.Status == BookingStatus.Cancelled;
+
+            if (isCompleted)
+            {
+                return new BaseResponse<UpdateBookingRequest>("This booking is already completed and cannot be modified.",
+                           StatusCodeEnum.NotFound_404, null);
+            }
+
+            if (isCancelled)
+            {
+                return new BaseResponse<UpdateBookingRequest>("This booking is already cancelled and cannot be modified.",
+                           StatusCodeEnum.NotFound_404, null);
+            }
+            if (isPaid)
+            {
+                foreach (var updatedBookingDetails in request.BookingDetails)
+                {
+                    var existingDetail = existingBooking.BookingDetails
+                    .FirstOrDefault(d => d.HomeStayTypesID == updatedBookingDetails.homeStayTypeID);
+
+                    if (existingDetail != null)
+                    {   //Tính số đêm thay đồi ngày
+                        int newNumberOfNights = (updatedBookingDetails.CheckOutDate - updatedBookingDetails.CheckInDate).Days;
+
+                        // Tính số đêm cũ (trước khi update)
+                        int oldNumberOfNights = (existingDetail.CheckOutDate - existingDetail.CheckInDate).Days;
+
+                        // Kiểm tra nếu số đêm bị thay đổi
+                        if (newNumberOfNights != oldNumberOfNights)
+                        {
+                            return new BaseResponse<UpdateBookingRequest>("You should change check-in/check-out dates as it affects the paid amount.",
+                                StatusCodeEnum.BadRequest_400, null);
+                        }
+                        existingDetail.CheckInDate = updatedBookingDetails.CheckInDate;
+                        existingDetail.CheckOutDate = updatedBookingDetails.CheckOutDate;
+                    }
+                }
+            }
+            else
+            {
+                var existingDetails = existingBooking.BookingDetails.ToList();
+                foreach (var updatedBookingDetails in request.BookingDetails)
+                {
+                    var homeStayType = await _homeStayTypeRepository.GetHomeStayTypesByIdAsync(updatedBookingDetails.homeStayTypeID);
+                    if (homeStayType == null)
+                    {
+                        return new BaseResponse<UpdateBookingRequest>("Cannot Find Your Type",
+                                StatusCodeEnum.BadRequest_400, null);
+                    }
+                    int numberOfDays = (updatedBookingDetails.CheckOutDate - updatedBookingDetails.CheckInDate).Days;
+                    if (updatedBookingDetails.BookingDetailID.HasValue)
+                    {
+                        // 🔹 CẬP NHẬT: Tìm BookingDetail theo ID
+                        var existingDetail = existingDetails
+                            .FirstOrDefault(d => d.BookingDetailID == updatedBookingDetails.BookingDetailID.Value);
+
+                        if (existingDetail != null)
+                        {
+                            existingDetail.HomeStayTypesID = updatedBookingDetails.homeStayTypeID;
+                            existingDetail.CheckInDate = updatedBookingDetails.CheckInDate;
+                            existingDetail.CheckOutDate = updatedBookingDetails.CheckOutDate;
+                            existingDetail.Quantity = updatedBookingDetails.Quantity;
+                            existingDetail.rentPrice = homeStayType.RentPrice;
+                            existingDetail.TotalAmount = homeStayType.RentPrice * numberOfDays * updatedBookingDetails.Quantity;
+                        }
+                    }
+
+                    else
+                    {
+                        // 🔹 THÊM MỚI: Nếu không có BookingDetailID, nghĩa là thêm mới
+                        existingBooking.BookingDetails.Add(new BookingDetail
+                        {
+                            HomeStayTypesID = updatedBookingDetails.homeStayTypeID,
+                            CheckInDate = updatedBookingDetails.CheckInDate,
+                            CheckOutDate = updatedBookingDetails.CheckOutDate,
+                            Quantity = updatedBookingDetails.Quantity,
+                            rentPrice = homeStayType.RentPrice,
+                            TotalAmount = homeStayType.RentPrice * numberOfDays * updatedBookingDetails.Quantity
+                        });
+                    }
+                }
+                existingBooking.Total = existingBooking.BookingDetails.Sum(detail => detail.TotalAmount);
+            }
+            existingBooking.numberOfAdults = request.numberOfAdults;
+            existingBooking.numberOfChildren = request.numberOfChildren;
+            await _bookingRepository.UpdateBookingAsync(existingBooking);
+            return new BaseResponse<UpdateBookingRequest>("Booking updated successfully!", StatusCodeEnum.OK_200, request);
+        }
+
         public async Task<BaseResponse<BookingServices>> CreateServiceBooking(CreateBookingServices bookingServiceRequest, PaymentServicesMethod paymentServicesMethod)
         {
             var bookingExist = await _bookingRepository.GetBookingByIdAsync(bookingServiceRequest.BookingID);
@@ -303,7 +403,31 @@ namespace Service.Service
             return new BaseResponse<GetTopHomeStayBookingInMonth>("Get All Success", StatusCodeEnum.OK_200, response);
         }
 
+        public async Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmount>>> GetTotalBookingsTotalBookingsAmount(DateTime startDate, DateTime endDate, string? timeSpanType)
+        {
+            if (startDate == default(DateTime).Date || endDate == default(DateTime).Date)
+            {
+                return new BaseResponse<List<GetTotalBookingsTotalBookingsAmount>>("Please input time", StatusCodeEnum.NotImplemented_501, null);
+            }
 
+            if (startDate >= endDate)
+            {
+                return new BaseResponse<List<GetTotalBookingsTotalBookingsAmount>>("Please input endDate > startDate", StatusCodeEnum.NotAcceptable_406, null);
+            }
+
+            var total = await _bookingRepository.GetTotalBookingsTotalBookingsAmount(startDate, endDate, timeSpanType);
+            var response = total.Select(p => new GetTotalBookingsTotalBookingsAmount
+            {
+                span = p.span,
+                totalBookings = p.totalBookings,
+                totalBookingsAmount = p.totalBookingsAmount
+            }).ToList();
+            if (response == null || !response.Any())
+            {
+                return new BaseResponse<List<GetTotalBookingsTotalBookingsAmount>>("Get Total Fail", StatusCodeEnum.BadRequest_400, null);
+            }
+            return new BaseResponse<List<GetTotalBookingsTotalBookingsAmount>>("Get All Success", StatusCodeEnum.OK_200, response);
+        }
 
 
 

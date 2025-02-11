@@ -231,5 +231,139 @@ namespace DataAccessObject
 
             return topHomeStay;
         }
+
+        public async Task<List<(object span, int totalBookings, double totalBookingsAmount)>> GetTotalBookingsTotalBookingsAmountAsync
+        (DateTime startDate, DateTime endDate, string? timeSpanType)
+        {
+            if (startDate > endDate)
+            {
+                throw new ArgumentException($"startDate <= endDate");
+            }
+            List<(object span, int totalBookings, double totalBookingsAmount)> result = new List<(object, int, double)>();
+
+            switch (timeSpanType?.ToLower())
+            {
+                case "day":
+                    // Show results for each day in the specified range
+                    for (DateTime date = startDate.Date; date <= endDate.Date; date = date.AddDays(1))
+                    {
+                        DateTime currentDayStart = date.Date;
+                        DateTime currentDayEnd = date.Date.AddDays(1).AddTicks(-1);
+
+                        int totalBookings = await _context.Bookings
+                            .Where(o => o.BookingDetails
+                            .Any(d => (d.CheckInDate >= currentDayStart && d.CheckInDate <= currentDayEnd)
+                                   || (d.CheckOutDate >= currentDayStart && d.CheckOutDate <= currentDayEnd)))
+                            .Where(o => o.Status == BookingStatus.Completed)
+                            .CountAsync();
+
+                        double totalBookingsAmount = await _context.Bookings
+                            .Where(o => o.BookingDetails
+                            .Any(d => (d.CheckInDate >= currentDayStart && d.CheckInDate <= currentDayEnd)
+                                   || (d.CheckOutDate >= currentDayStart && d.CheckOutDate <= currentDayEnd)))
+                            .Where(o => o.Status == BookingStatus.Completed)
+                            .SumAsync(o => o.Total);
+
+                        result.Add((date.Date, totalBookings, totalBookingsAmount));
+                    }
+                    break;
+                case "week":
+                    // Show results for each week in the specified range
+                    DateTime currentWeekStart = startDate.Date.AddDays(-(int)startDate.DayOfWeek + (int)DayOfWeek.Monday);
+                    if (currentWeekStart > startDate.Date)
+                    {
+                        currentWeekStart = startDate.Date.AddDays(-(int)startDate.DayOfWeek - 6);
+                    }
+                    while (currentWeekStart <= endDate.Date)
+                    {
+                        DateTime currentWeekEnd = currentWeekStart.AddDays(6);
+
+                        if (currentWeekEnd > endDate.Date)
+                        {
+                            currentWeekEnd = endDate.Date.AddDays(-(int)endDate.DayOfWeek + 7);
+                        }
+
+                        int totalBookings = await _context.Bookings
+                            .Where(o => o.BookingDetails
+                            .Any(d => (d.CheckInDate >= currentWeekStart && d.CheckInDate <= currentWeekEnd)
+                                   || (d.CheckOutDate >= currentWeekStart && d.CheckOutDate <= currentWeekEnd)))
+                            .Where(o => o.Status == BookingStatus.Completed)
+                            .CountAsync();
+
+                        double totalBookingsAmount = await _context.Bookings
+                            .Where(o => o.BookingDetails
+                            .Any(d => (d.CheckInDate >= currentWeekStart && d.CheckInDate <= currentWeekEnd)
+                                   || (d.CheckOutDate >= currentWeekStart && d.CheckOutDate <= currentWeekEnd)))
+                            .Where(o => o.Status == BookingStatus.Completed)
+                            .SumAsync(o => o.Total);
+
+                        // Format the week string as "MM/dd/yyyy - MM/dd/yyyy"
+                        string weekRange = $"{currentWeekStart.ToString("MM/dd/yyyy")} - {currentWeekEnd.ToString("MM/dd/yyyy")}";
+
+                        result.Add((weekRange, totalBookings, totalBookingsAmount));
+
+                        // Move to the start of the next week
+                        currentWeekStart = currentWeekEnd.AddDays(1);
+                    }
+                    break;
+                case "month":
+                    // Show results for each month in the specified range
+                    DateTime currentMonthStart = new DateTime(startDate.Year, startDate.Month, 1);
+
+                    while (currentMonthStart <= endDate.Date)
+                    {
+                        DateTime currentMonthEnd = currentMonthStart.AddMonths(1).AddDays(-1);
+
+                        int totalBookings = await _context.Bookings
+                            .Where(o => o.BookingDetails
+                            .Any(d => (d.CheckInDate >= currentMonthStart && d.CheckInDate <= currentMonthEnd)
+                                   || (d.CheckOutDate >= currentMonthStart && d.CheckOutDate <= currentMonthEnd)))
+                            .Where(o => o.Status == BookingStatus.Completed)
+                            .CountAsync();
+
+                        double totalBookingsAmount = await _context.Bookings
+                            .Where(o => o.BookingDetails
+                            .Any(d => (d.CheckInDate >= currentMonthStart && d.CheckInDate <= currentMonthEnd)
+                                   || (d.CheckOutDate >= currentMonthStart && d.CheckOutDate <= currentMonthEnd)))
+                            .Where(o => o.Status == BookingStatus.Completed)
+                            .SumAsync(o => o.Total);
+
+                        // Format the month string as "MM/yyyy"
+                        string monthName = currentMonthStart.ToString("MM/yyyy");
+
+                        result.Add((monthName, totalBookings, totalBookingsAmount));
+
+                        // Move to the start of the next month
+                        currentMonthStart = currentMonthStart.AddMonths(1);
+                    }
+                    break;
+                default:
+                    // Default to "ngày" if timeSpanType is unrecognized
+                    for (DateTime date = startDate.Date; date <= endDate.Date; date = date.AddDays(1))
+                    {
+                        DateTime currentDayStart = date.Date;
+                        DateTime currentDayEnd = date.Date.AddDays(1).AddTicks(-1);
+
+                        int totalBookings = await _context.Bookings
+                            .Where(o => o.BookingDetails
+                            .Any(d => (d.CheckInDate >= currentDayStart && d.CheckInDate <= currentDayEnd)
+                                   || (d.CheckOutDate >= currentDayStart && d.CheckOutDate <= currentDayEnd)))
+                            .Where(o => o.Status == BookingStatus.Completed)
+                            .CountAsync();
+
+                        double totalBookingsAmount = await _context.Bookings
+                            .Where(o => o.BookingDetails
+                            .Any(d => (d.CheckInDate >= currentDayStart && d.CheckInDate <= currentDayEnd)
+                                   || (d.CheckOutDate >= currentDayStart && d.CheckOutDate <= currentDayEnd)))
+                            .Where(o => o.Status == BookingStatus.Completed)
+                            .SumAsync(o => o.Total);
+
+                        result.Add((date.Date, totalBookings, totalBookingsAmount));
+                    }
+                    break;
+            }
+
+            return result;
+        }
     }
 }

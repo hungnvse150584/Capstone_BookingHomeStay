@@ -41,6 +41,13 @@ namespace GreenRoam.Controllers
             return await _bookingService.GetTopHomeStayBookingInMonth();
         }
 
+        [HttpGet("adminDashBoard/GetTotalBookingsTotalBookingsAmount")]
+        public async Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmount>>> GetTotalBookingsTotalBookingsAmount
+           (DateTime startDate, DateTime endDate, string? timeSpanType)
+        {
+            return await _bookingService.GetTotalBookingsTotalBookingsAmount(startDate, endDate, timeSpanType);
+        }
+
         [HttpPost]
         [Route("CreateBooking")]
         public async Task<ActionResult<BaseResponse<Booking>>> CreateBooking([FromBody] CreateBookingRequest bookingRequest, PaymentMethod paymentMethod)
@@ -50,6 +57,18 @@ namespace GreenRoam.Controllers
                 return BadRequest("Please Implement all Information");
             }
             var booking = await _bookingService.CreateBooking(bookingRequest, paymentMethod);
+            return booking;
+        }
+
+        [HttpPut]
+        [Route("UpdateBooking")]
+        public async Task<ActionResult<BaseResponse<UpdateBookingRequest>>> UpdateBooking(int bookingID, UpdateBookingRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Please Implement all Information");
+            }
+            var booking = await _bookingService.UpdateBooking(bookingID, request);
             return booking;
         }
 
