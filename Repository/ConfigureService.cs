@@ -57,7 +57,7 @@ namespace Repository
             services.AddScoped<BookingServicesDAO>();
             services.AddScoped<ReviewDAO>();
             services.AddScoped<NotificationDAO>();
-
+            services.AddScoped<ServicesDAO>();
             services.AddScoped<RatingDAO>();
             services.AddScoped<ImageHomeStayTypesDAO>();
             services.AddScoped<ReportDAO>();
