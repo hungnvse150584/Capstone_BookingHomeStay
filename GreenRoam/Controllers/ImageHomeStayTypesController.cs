@@ -37,6 +37,7 @@ namespace GreenRoam.Controllers
             }
             return await _imageHomeStayTypesService.GetImageHomeStayTypesById(id);
         }
+
         [HttpPost]
         [Route("CreateImageHomeStayType")]
         public async Task<ActionResult<BaseResponse<AddImageHomeStayTypesRequest>>> CreateImageHomeStayType([FromBody] AddImageHomeStayTypesRequest imageTypeRequest)

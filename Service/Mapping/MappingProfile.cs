@@ -3,6 +3,7 @@ using BusinessObject.Model;
 using Service.RequestAndResponse.Request.District;
 using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Request.HomeStayType;
+using Service.RequestAndResponse.Request.ImageHomeStayTypes;
 using Service.RequestAndResponse.Request.ImageService;
 using Service.RequestAndResponse.Request.Location;
 using Service.RequestAndResponse.Request.Properties;
@@ -17,6 +18,7 @@ using Service.RequestAndResponse.Response.Bookings;
 using Service.RequestAndResponse.Response.Districts;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.HomeStayType;
+using Service.RequestAndResponse.Response.ImageHomeStayTypes;
 using Service.RequestAndResponse.Response.ImageService;
 using Service.RequestAndResponse.Response.Locations;
 using Service.RequestAndResponse.Response.Properties;
@@ -51,7 +53,9 @@ namespace Service.Mapping
 
             CreateMap<Services, GetAllServices>();
             CreateMap<Services, CreateServices>().ReverseMap();
-
+            CreateMap<ImageHomeStayTypes, AddImageHomeStayTypesRequest>().ReverseMap();
+            CreateMap<ImageHomeStayTypes, UpdateImageHomeStayTypesRequest>().ReverseMap();
+            CreateMap<ImageHomeStayTypes, GetAllImageHomeStayType>();
             CreateMap<BookingDetail, GetBookingDetails>();
             CreateMap<BookingServices, GetAllBookingServices>();
             CreateMap<Booking, GetAllBookings>();
@@ -73,8 +77,8 @@ namespace Service.Mapping
             CreateMap<UpdateProvinceRequest, Province>().ReverseMap();
             CreateMap<ImageServices, GetAllImageService>();
             CreateMap<ImageServices, GetImageService>();
-            CreateMap<AddImageServicesRequest, ImageServices>().ReverseMap();
-            CreateMap<UpdateImageServicesRequest, ImageServices>().ReverseMap();
+            CreateMap<ImageServices, AddImageServicesRequest>().ReverseMap();
+            CreateMap<ImageServices, UpdateImageServicesRequest>().ReverseMap();
             CreateMap<District, GetAllDistrict>();
             CreateMap<District, GetDistrict>();
             CreateMap<AddDistrictRequest, District>().ReverseMap();
