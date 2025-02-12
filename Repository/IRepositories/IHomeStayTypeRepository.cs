@@ -11,5 +11,8 @@ namespace Repository.IRepositories
     public interface IHomeStayTypeRepository : IBaseRepository<HomeStayTypes>
     {
         Task<HomeStayTypes> GetHomeStayTypesByIdAsync(int? id);
+        
+        Task<IEnumerable<HomeStayTypes>> GetAllHomeStayTypesAsync(int typeId);
+       
     }
 }

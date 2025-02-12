@@ -18,6 +18,7 @@ namespace Service.IService
         Task<BaseResponse<IEnumerable<GetAllHomeStayType>>> GetAllHomeStayTypes();
 
         Task<BaseResponse<CreateHomeStayTypeRequest>> CreateHomeStayType(CreateHomeStayTypeRequest typeRequest);
+        Task<BaseResponse<UpdateHomeStayTypeRequest>> UpdateHomeStayType(int id, UpdateHomeStayTypeRequest updateRequest);
 
         Task<BaseResponse<IEnumerable<GetAllProperties>>> GetAllProperties();
 

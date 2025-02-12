@@ -11,6 +11,8 @@ namespace Service.RequestAndResponse.Request.Services
 {
     public class CreateServices
     {
+        [Key]
+        public int ServicesID { get; set; }
         [Required]
         public string servicesName { get; set; }
 

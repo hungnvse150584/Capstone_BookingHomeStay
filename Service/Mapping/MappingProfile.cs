@@ -8,6 +8,7 @@ using Service.RequestAndResponse.Request.ImageService;
 using Service.RequestAndResponse.Request.Location;
 using Service.RequestAndResponse.Request.Properties;
 using Service.RequestAndResponse.Request.Province;
+using Service.RequestAndResponse.Request.Report;
 using Service.RequestAndResponse.Request.Services;
 using Service.RequestAndResponse.Request.Street;
 using Service.RequestAndResponse.Request.Ward;
@@ -23,6 +24,7 @@ using Service.RequestAndResponse.Response.ImageService;
 using Service.RequestAndResponse.Response.Locations;
 using Service.RequestAndResponse.Response.Properties;
 using Service.RequestAndResponse.Response.Provinces;
+using Service.RequestAndResponse.Response.Reports;
 using Service.RequestAndResponse.Response.Services;
 using Service.RequestAndResponse.Response.Streets;
 using Service.RequestAndResponse.Response.Wards;
@@ -47,14 +49,20 @@ namespace Service.Mapping
 
             CreateMap<HomeStayTypes, GetAllHomeStayType>();
             CreateMap<CreateHomeStayTypeRequest, HomeStayTypes>().ReverseMap();
+            CreateMap<UpdateHomeStayTypeRequest, HomeStayTypes>().ReverseMap();
 
             CreateMap<Property, GetAllProperties>();
             CreateMap<Property, CreatePropertyRequest>().ReverseMap();
 
             CreateMap<Services, GetAllServices>();
             CreateMap<Services, CreateServices>().ReverseMap();
+            CreateMap<Services, UpdateServices>().ReverseMap();
+            CreateMap<Report, GetAllReport>();
+            CreateMap<Report, CreateReport>().ReverseMap();
+            CreateMap<Report, UpdateReport>().ReverseMap();
             CreateMap<ImageHomeStayTypes, AddImageHomeStayTypesRequest>().ReverseMap();
             CreateMap<ImageHomeStayTypes, UpdateImageHomeStayTypesRequest>().ReverseMap();
+
             CreateMap<ImageHomeStayTypes, GetAllImageHomeStayType>();
             CreateMap<BookingDetail, GetBookingDetails>();
             CreateMap<BookingServices, GetAllBookingServices>();

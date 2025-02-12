@@ -43,5 +43,15 @@ namespace Repository.Repositories
         {
             return _serviceDao.GetByIdAsync(id);
         }
+
+        public Task<IEnumerable<Services>> GetAllServicesAsync(int homestayId)
+        {
+            return _serviceDao.GetAllServicesAsync(homestayId);
+        }
+
+        public Task<Services> GetServiceByIdAsync(int id)
+        {
+            return _serviceDao.GetServiceByIdAsync(id);
+        }
     }
 }

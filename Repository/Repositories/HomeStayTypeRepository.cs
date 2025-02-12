@@ -43,5 +43,10 @@ namespace Repository.Repositories
         {
             return _homestaytypeDao.GetHomeStayTypeByIdAsync(id);
         }
+
+        public Task<IEnumerable<HomeStayTypes>> GetAllHomeStayTypesAsync(int typeId)
+        {
+            return _homestaytypeDao.GetAllHomeStayTypesAsync(typeId);
+        }
     }
 }

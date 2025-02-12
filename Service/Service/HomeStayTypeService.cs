@@ -117,5 +117,20 @@ namespace Service.Service
             return new BaseResponse<IEnumerable<GetAllServices>>("Get all services as base success",
                 StatusCodeEnum.OK_200, services);
         }
+
+        public async Task<BaseResponse<UpdateHomeStayTypeRequest>> UpdateHomeStayType(int id, UpdateHomeStayTypeRequest updateRequest)
+        {
+            HomeStayTypes homeStayType = await _homeStayTypeRepository.GetByIdAsync(id);
+            if (homeStayType == null)
+            {
+                return new BaseResponse<UpdateHomeStayTypeRequest>("HomeStayType not found", StatusCodeEnum.NotFound_404, null);
+            }
+
+            _mapper.Map(updateRequest, homeStayType);
+            await _homeStayTypeRepository.UpdateAsync(homeStayType);
+
+            var response = _mapper.Map<UpdateHomeStayTypeRequest>(homeStayType);
+            return new BaseResponse<UpdateHomeStayTypeRequest>("Update HomeStayType success", StatusCodeEnum.OK_200, response);
+        }
     }
 }

@@ -4,6 +4,7 @@ using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.HomeStayType;
 using Service.RequestAndResponse.Request.Properties;
 using Service.RequestAndResponse.Request.Province;
+using Service.RequestAndResponse.Request.Report;
 using Service.RequestAndResponse.Request.Services;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.HomeStayType;
@@ -81,6 +82,16 @@ namespace GreenRoam.Controllers
             }
             var services = await _homeStayTypeService.CreateServices(serviceRequest);
             return services;
+        }
+        [HttpPut]
+        [Route("UpdateHomeStayType/{id}")]
+        public async Task<ActionResult<BaseResponse<UpdateHomeStayTypeRequest>>> UpdateHomeStayType(int id, [FromBody] UpdateHomeStayTypeRequest updateRequest)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("Please provide a valid Id.");
+            }
+            return await _homeStayTypeService.UpdateHomeStayType(id, updateRequest);
         }
     }
 }
