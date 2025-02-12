@@ -82,12 +82,12 @@ namespace DataAccessObject
         public DbSet<Street> Streets { set; get; }
 
 
-        /*private const string ConnectString = "server=DESKTOP-88329MO\\KHANHVU21;database=GreenRoam;uid=sa;pwd=12345;Integrated Security=true;Trusted_Connection=false;TrustServerCertificate=True";
+        private const string ConnectString = "server=DESKTOP-88329MO\\KHANHVU21;database=GreenRoam;uid=sa;pwd=12345;Integrated Security=true;Trusted_Connection=false;TrustServerCertificate=True";
         //private const string ConnectString = "server=(local);database=GreenRoam;uid=sa;pwd=12345;Integrated Security=true;Trusted_Connection=false;TrustServerCertificate=True";
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(ConnectString);
-        }*/
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(ConnectString);
+        //}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
