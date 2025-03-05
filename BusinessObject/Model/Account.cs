@@ -15,8 +15,10 @@ namespace BusinessObject.Model;
 
         public string Phone { get; set; }
 
-        //public string? Image { get; set; }
+        public string? TaxCode { get; set; }
 
+        public string BankAccountNumber { get; set; }
+        
         public bool Status { get; set; }
 
         public DateTime DateOfBirth { get; set; }
@@ -31,8 +33,8 @@ namespace BusinessObject.Model;
 
         public ICollection<BookingServices> BookingServices { get; set; }
 
-        public ICollection<Property> Properties { get; set; }
-
         public ICollection<Notification> Notifications { get; set; }
+
+        public ICollection<CultureExperience> CultureExperiences { get; set; }
     }
 

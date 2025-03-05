@@ -28,12 +28,12 @@ namespace Repository.Repositories
             await _bookingDao.UpdateAsync(booking);
         }
 
-        public async Task<Booking?> ChangeBookingStatus(int bookingId, BookingStatus status)
+        public async Task<Booking?> ChangeBookingStatus(int bookingId, BookingStatus status, PaymentStatus paymentStatus)
         {
-            return await _bookingDao.ChangeBookingStatus(bookingId, status);
+            return await _bookingDao.ChangeBookingStatus(bookingId, status, paymentStatus);
         }
 
-        public async Task<IEnumerable<Booking>> GetAllBookingAsync(string? search, DateTime? date = null, BookingStatus? status = null)
+        public async Task<IEnumerable<Booking>> GetAllBookingAsync(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
         {
            return await _bookingDao.GetAllBookingAsync(search, date);
         }

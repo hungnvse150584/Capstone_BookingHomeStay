@@ -9,9 +9,7 @@ using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.HomeStay;
-using Service.RequestAndResponse.Request.Province;
 using Service.RequestAndResponse.Response.HomeStays;
-using Service.RequestAndResponse.Response.Provinces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,20 +23,13 @@ namespace Service.Service
     {
         private readonly IMapper _mapper;
         private readonly IHomeStayRepository _homeStayRepository;
-        private readonly IStreetRepository _streetRepository;
-        private readonly IWardRepository _wardRepository;
-        private readonly IDistrictRepository _districtRepository;
-        private readonly IProvinceRepository _provinceRepository;
+        
 
 
-        public HomeStayService(IMapper mapper, IHomeStayRepository homeStayRepository, IStreetRepository streetRepository, IWardRepository wardRepository, IDistrictRepository districtRepository, IProvinceRepository provinceRepository)
+        public HomeStayService(IMapper mapper, IHomeStayRepository homeStayRepository)
         {
             _mapper = mapper;
             _homeStayRepository = homeStayRepository;
-            _streetRepository = streetRepository;
-            _wardRepository = wardRepository;
-            _districtRepository = districtRepository;
-            _provinceRepository = provinceRepository;
         }
 
         public async Task<BaseResponse<HomeStayResponse>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status)
@@ -82,13 +73,6 @@ namespace Service.Service
 
         public async Task<BaseResponse<List<HomeStay>>> RegisterHomeStay(CreateHomeStayRequest request)
         {
-            var streetName = await _streetRepository.GetStreetNameById(request.Location.StreetID);
-            var wardName = await _wardRepository.GetWardNameById(request.Location.WardID);
-            var districtName = await _districtRepository.GetDistrictNameById(request.Location.DistrictID);
-            var provinceName = await _provinceRepository.GetProvinceNameById(request.Location.ProvinceID);
-
-            var fullAddress = $"{request.Location.numberHouse}, {streetName}, {wardName}, {districtName}, {provinceName}, {request.Location.postalCode}, {request.Location.Cooordinate}";
-
             var homestayRegister = new List<HomeStay>
             {
                 new HomeStay
@@ -100,17 +84,7 @@ namespace Service.Service
                     Status = HomeStayStatus.PendingApproval,
                     TypeOfRental = request.RentalType,
                     Area = request.Area,
-                    Location = new Location
-                    {
-                        numberHouse = request.Location.numberHouse,
-                        postalCode = request.Location.postalCode,
-                        Cooordinate = request.Location.Cooordinate,
-                        StreetID = request.Location.StreetID,
-                        WardID = request.Location.WardID,
-                        DistrictID = request.Location.DistrictID,
-                        ProvinceID = request.Location.ProvinceID,
-                        FullAddress = fullAddress
-                    },
+                    Address = request.Address,
                     AccountID = request.AccountID,
 
                 }
@@ -122,13 +96,6 @@ namespace Service.Service
 
         public async Task<BaseResponse<HomeStay>> UpdateHomeStay(int homestayId, UpdateHomeStayRequest request)
         {
-            var streetName = await _streetRepository.GetStreetNameById(request.Location.StreetID);
-            var wardName = await _wardRepository.GetWardNameById(request.Location.WardID);
-            var districtName = await _districtRepository.GetDistrictNameById(request.Location.DistrictID);
-            var provinceName = await _provinceRepository.GetProvinceNameById(request.Location.ProvinceID);
-
-            var fullAddress = $"{request.Location.numberHouse}, {streetName}, {wardName}, {districtName}, {provinceName}, {request.Location.postalCode}, {request.Location.Cooordinate}";
-
             var homeStayExist = await _homeStayRepository.GetHomeStayDetailByIdAsync(homestayId);
           if (homeStayExist == null) 
           {
@@ -138,7 +105,7 @@ namespace Service.Service
             updatedHomeStay.CreateAt = homeStayExist.CreateAt; // Keep the original CreateAt
             updatedHomeStay.Status = homeStayExist.Status;     // Keep the original Status
             updatedHomeStay.UpdateAt = DateTime.Now;
-            updatedHomeStay.Location.FullAddress = fullAddress;
+            updatedHomeStay.Address = request.Address;
             updatedHomeStay.TypeOfRental = request.RentalType;
             await _homeStayRepository.UpdateAsync(updatedHomeStay);
 

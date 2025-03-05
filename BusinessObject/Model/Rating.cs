@@ -24,7 +24,7 @@ namespace BusinessObject.Model;
         public Account Account { get; set; }
 
         public int? HomeStayID { get; set; }
-        [ForeignKey("HomeStayID ")]
+        [ForeignKey("HomeStayID")]
         public HomeStay? HomeStay { get; set; }
     }
 

@@ -1,9 +1,7 @@
 ﻿using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.HomeStayType;
-using Service.RequestAndResponse.Request.Properties;
 using Service.RequestAndResponse.Request.Services;
 using Service.RequestAndResponse.Response.HomeStayType;
-using Service.RequestAndResponse.Response.Properties;
 using Service.RequestAndResponse.Response.Services;
 using System;
 using System.Collections.Generic;
@@ -18,10 +16,6 @@ namespace Service.IService
         Task<BaseResponse<IEnumerable<GetAllHomeStayType>>> GetAllHomeStayTypes();
 
         Task<BaseResponse<CreateHomeStayTypeRequest>> CreateHomeStayType(CreateHomeStayTypeRequest typeRequest);
-
-        Task<BaseResponse<IEnumerable<GetAllProperties>>> GetAllProperties();
-
-        Task<BaseResponse<CreatePropertyRequest>> CreateProperties(CreatePropertyRequest propertyRequest);
 
         Task<BaseResponse<IEnumerable<GetAllServices>>> GetAllServices();
 

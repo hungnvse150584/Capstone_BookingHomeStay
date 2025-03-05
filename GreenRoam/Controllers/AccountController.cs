@@ -89,6 +89,7 @@ namespace GreenRoam.Controllers
                     Email = registerDto.Email,
                     Address = registerDto.Address,
                     Phone = registerDto.Phone,
+                    BankAccountNumber = registerDto.BankAccountNumber,
                     Status = true
                 };
 
@@ -158,6 +159,8 @@ namespace GreenRoam.Controllers
                     Email = registerDto.Email,
                     Address = registerDto.Address,
                     Phone = registerDto.Phone,
+                    TaxCode = registerDto.TaxCode,
+                    BankAccountNumber = registerDto.BankAccountNumber,
                     Status = true
                 };
 
@@ -188,6 +191,7 @@ namespace GreenRoam.Controllers
                                     Name = accountApp.Name,
                                     Address = accountApp.Address,
                                     Phone = accountApp.Phone,
+                                    Taxcode = accountApp.TaxCode,
                                     Roles = userRoles.ToList(),
                                     Token = token.AccessToken,
                                     RefreshToken = token.RefreshToken

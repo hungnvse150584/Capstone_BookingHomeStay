@@ -18,6 +18,8 @@ namespace BusinessObject.Model;
         [Required]
         public string Description { get; set; }
 
+        [Required]
+        public string Address { get; set; }
         public DateTime CreateAt { get; set; }
 
         public DateTime UpdateAt { get; set; }
@@ -31,16 +33,14 @@ namespace BusinessObject.Model;
         public string AccountID { get; set; }
         public Account Account { get; set; }
 
-        [ForeignKey("LocationID")]
-        public int LocationID { get; set; }
-        public Location Location { get; set; }
-
         [EnumDataType(typeof(RentalType))]
         public RentalType TypeOfRental { get; set; } 
 
         public ICollection<Report> Reports { get; set; }
 
-        public ICollection<HomeStayTypes> HomeStayTypes { get; set; }
+        public ICollection<HomeStayRentals> HomeStayRentals { get; set; }
+
+        public ICollection<CultureExperience> CultureExperiences { get; set; }
 
         public ICollection<Services> Services { get; set; }
 

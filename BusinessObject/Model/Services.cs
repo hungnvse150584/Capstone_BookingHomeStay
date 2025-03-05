@@ -32,7 +32,7 @@ namespace BusinessObject.Model;
         public bool Status { get; set; }
 
         public int? HomeStayID { get; set; }
-        [ForeignKey("HomeStayID ")]
+        [ForeignKey("HomeStayID")]
         public HomeStay? HomeStay { get; set; }
 
         public ICollection<ImageServices> ImageServices { get; set; }

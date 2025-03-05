@@ -22,8 +22,7 @@ namespace Repository
             services.AddScoped<ITokenRepository, TokenRepository>();
 
             services.AddScoped<IHomeStayRepository, HomeStayRepository>();
-            services.AddScoped<IHomeStayTypeRepository, HomeStayTypeRepository>();
-            services.AddScoped<IPropertyRepository, PropertyRepository>();
+            services.AddScoped<IHomeStayRentalRepository, HomeStayRentalRepository>();
 
             services.AddScoped<IBookingRepository, BookingRepository>();
             services.AddScoped<IBookingServiceRepository, BookingServiceRepository>();
@@ -37,11 +36,7 @@ namespace Repository
             services.AddScoped<IReportRepository, ReportRepository>();
             services.AddTransient<IReportRepository, ReportRepository>();
 
-            services.AddTransient < ILocationRepository, LocationRepository>();
-            services.AddTransient<IStreetRepository, StreetRepository>();
-            services.AddTransient<IWardRepository, WardRepository>();
-            services.AddTransient<IDistrictRepository, DistrictRepository>();
-            services.AddTransient<IProvinceRepository, ProvinceRepository>();
+            
             services.AddScoped<IImageServicesRepository, ImageServicesRepository>();
             services.AddScoped<IImageHomeStayTypesRepository, ImageHomeStayTypesRepository>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -50,8 +45,8 @@ namespace Repository
             services.AddScoped<AccountDAO>();
 
             services.AddScoped<HomeStayDAO>();
-            services.AddScoped<HomeStayTypeDAO>();
-            services.AddScoped<PropertyDAO>();
+            services.AddScoped<HomeStayRentalDAO>();
+            
 
             services.AddScoped<BookingDAO>();
             services.AddScoped<BookingServicesDAO>();
@@ -59,14 +54,9 @@ namespace Repository
             services.AddScoped<NotificationDAO>();
             services.AddScoped<ServicesDAO>();
             services.AddScoped<RatingDAO>();
-            services.AddScoped<ImageHomeStayTypesDAO>();
+            services.AddScoped<ImageHomeStayRentalsDAO>();
             services.AddScoped<ReportDAO>();
             services.AddScoped<ImageServicesDAO>();
-            services.AddScoped<LocationDAO>();
-            services.AddScoped<StreetDAO>();
-            services.AddScoped<WardDAO>();
-            services.AddScoped<DistrictDAO>();
-            services.AddScoped<ProvinceDAO>();
 
             //
 

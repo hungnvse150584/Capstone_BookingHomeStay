@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Service.RequestAndResponse.Request.Location;
 
 namespace Service.RequestAndResponse.Request.HomeStay
 {
@@ -17,6 +16,9 @@ namespace Service.RequestAndResponse.Request.HomeStay
 
         [Required(ErrorMessage = "HomeStay must have Description")]
         public string Description { get; set; }
+
+        [Required(ErrorMessage = "HomeStay must have Address")]
+        public string Address { get; set; }
 
         public DateTime CreateAt { get; set; }
 
@@ -30,10 +32,7 @@ namespace Service.RequestAndResponse.Request.HomeStay
         public string Area { get; set; }
 
         [Required(ErrorMessage = "Must Include AccountID")]
-        public string AccountID { get; set; }
-
-
-        [Required(ErrorMessage = "Must Include Location")]
-        public LocationRequest Location { get; set; }
+        public string AccountID { get; set; } 
+        
     }
 }

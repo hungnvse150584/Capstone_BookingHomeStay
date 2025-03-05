@@ -10,6 +10,8 @@ namespace Service.RequestAndResponse.Request.BookingServiceDetails
 {
     public class BookingServiceDetailRequest
     {
+        public int? ServiceDetailID { get; set; }
+
         public int Quantity { get; set; }
 
         public int ServicesID { get; set; }

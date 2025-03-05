@@ -24,15 +24,11 @@ namespace Service
             services.AddScoped<IHomeStayService, HomeStayService>();
             services.AddScoped<IImageServicesService, ImageServicesService>();
             services.AddScoped<IImageHomeStayTypesService, ImageHomeStayTypesService>();
-            services.AddScoped<IHomeStayTypeService, HomeStayTypeService>();
+            services.AddScoped<IHomeStayTypeService, HomeStayRentalService>();
+            services.AddScoped<IRoomTypeService, RoomTypeService>();
             services.AddScoped<IBookingService, BookingService>();
 
             services.AddScoped<IVnPayService, VnPayService>();
-
-            services.AddScoped<IProvinceService, ProvinceService>();
-            services.AddScoped<IDistrictService, DistrictService>();
-            services.AddScoped<IWardService, WardService>();
-            services.AddScoped<IStreetService, StreetService>();
 
             services.AddScoped<ITokenService, TokenService>();
 

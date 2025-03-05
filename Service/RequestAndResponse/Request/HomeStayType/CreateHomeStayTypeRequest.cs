@@ -18,11 +18,17 @@ namespace Service.RequestAndResponse.Request.HomeStayType
 
         public int? HomeStayID { get; set; }
 
-        public int? PropertyID { get; set; }
-
         public double UnitPrice { get; set; }
 
         public double RentPrice { get; set; }
+
+        public int numberBedRoom { get; set; }
+
+        public int numberBathRoom { get; set; }
+
+        public int numberKitchen { get; set; }
+
+        public int numberWifi { get; set; }
 
         public bool Status { get; set; }
 

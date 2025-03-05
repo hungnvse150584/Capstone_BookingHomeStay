@@ -14,6 +14,8 @@ namespace BusinessObject.Model;
         public int BookingID { get; set; }
 
         public DateTime BookingDate { get; set; }
+    
+        public DateTime ExpiredTime { get; set; }
 
         public int numberOfChildren { get; set; }
 
@@ -22,6 +24,11 @@ namespace BusinessObject.Model;
 
         [EnumDataType(typeof(BookingStatus))]
         public BookingStatus Status { get; set; }
+
+
+        [EnumDataType(typeof(PaymentStatus))]
+        public PaymentStatus paymentStatus { get; set; }
+
 
         public double Total { get; set; }
 
@@ -47,20 +54,27 @@ namespace BusinessObject.Model;
 
     public enum BookingStatus
     {
-        ToPay = 0,
-        ToConfirm = 1,
+        Pending = 0,
+        Confirmed = 1,
         InProgress = 2,
         Completed = 3,
         Cancelled = 4,
-        ReturnRefund = 5,
-        RequestReturn = 6,
-        NoShow = 7
+        NoShow = 5
 
     }
+
+    public enum PaymentStatus
+    {
+        Pending = 0,
+        Paid = 1,
+        Refunded = 2
+    }
+
+    
 
     public enum PaymentMethod
     {
         Cod = 0,
-        PayOS = 1
+        VnPay = 1
     }
 

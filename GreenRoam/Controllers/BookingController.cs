@@ -4,7 +4,6 @@ using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.Booking;
 using Service.RequestAndResponse.Request.BookingServices;
-using Service.RequestAndResponse.Request.District;
 using Service.RequestAndResponse.Response.Bookings;
 using Service.Service;
 
@@ -74,9 +73,9 @@ namespace GreenRoam.Controllers
 
         [HttpPut]
         [Route("ChangeBookingStatus")]
-        public async Task<ActionResult<BaseResponse<Booking>>> ChangeTheBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, BookingServicesStatus servicesStatus)
+        public async Task<ActionResult<BaseResponse<Booking>>> ChangeTheBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus)
         {
-            var booking = await _bookingService.ChangeBookingStatus(bookingId, bookingServiceID, status, servicesStatus);
+            var booking = await _bookingService.ChangeBookingStatus(bookingId, bookingServiceID, status, paymentStatus, servicesStatus);
             return Ok(booking);
         }
 
@@ -91,6 +90,18 @@ namespace GreenRoam.Controllers
             }
             var booking = await _bookingService.CreateServiceBooking(bookingServiceRequest, paymentServicesMethod);
             return booking;
+        }
+
+        [HttpPut]
+        [Route("UpdateBookingServices")]
+        public async Task<ActionResult<BaseResponse<UpdateBookingService>>> UpdateBookingServices(int bookingServiceID, UpdateBookingService request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Please Implement all Information");
+            }
+            var bookingServices = await _bookingService.UpdateBookingServices(bookingServiceID, request);
+            return bookingServices;
         }
 
 

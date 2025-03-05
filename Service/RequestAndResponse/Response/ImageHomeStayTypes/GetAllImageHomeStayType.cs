@@ -19,6 +19,6 @@ namespace Service.RequestAndResponse.Response.ImageHomeStayTypes
 
         public int? HomeStayTypesID { get; set; }
         [ForeignKey("HomeStayTypesID ")]
-        public HomeStayTypes? HomeStayTypes { get; set; }
+        public HomeStayRentals? HomeStayTypes { get; set; }
     }
 }

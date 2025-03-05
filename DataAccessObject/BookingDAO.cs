@@ -17,7 +17,7 @@ namespace DataAccessObject
             _context = context;
         }
 
-        public async Task<IEnumerable<Booking>> GetAllBookingAsync(string? search, DateTime? date = null, BookingStatus? status = null)
+        public async Task<IEnumerable<Booking>> GetAllBookingAsync(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
         {
             IQueryable<Booking> bookings = _context.Bookings
                 .Include(b => b.Account)
@@ -34,6 +34,11 @@ namespace DataAccessObject
             if (status.HasValue)
             {
                 bookings = bookings.Where(o => o.Status == status.Value);
+            }
+
+            if (paymentStatus.HasValue)
+            {
+                bookings = bookings.Where(o => o.paymentStatus == paymentStatus.Value);
             }
 
             if (!string.IsNullOrEmpty(search))
@@ -58,17 +63,18 @@ namespace DataAccessObject
         {
             return await _context.Bookings
                 .Include(b => b.BookingDetails)
-                .FirstOrDefaultAsync(b => b.AccountID == accountId && b.Status == BookingStatus.ToPay);
+                .FirstOrDefaultAsync(b => b.AccountID == accountId && b.Status == BookingStatus.Pending);
         }
 
 
 
-        public async Task<Booking?> ChangeBookingStatus(int bookingId, BookingStatus status)
+        public async Task<Booking?> ChangeBookingStatus(int bookingId, BookingStatus status, PaymentStatus paymentStatus)
         {
             var booking = await _context.Bookings.FindAsync(bookingId);
             if (booking != null)
-            {
+            {    
                 booking.Status = status;
+                booking.paymentStatus = paymentStatus;
                 await _context.SaveChangesAsync();
             }
 
@@ -138,8 +144,7 @@ namespace DataAccessObject
                      .Any(d => (d.CheckInDate >= startOfWeek && d.CheckInDate <= endOfWeek)
                             || (d.CheckOutDate >= startOfWeek && d.CheckOutDate <= endOfWeek)))
                  .Where(o => o.Status == BookingStatus.Cancelled
-                          || o.Status == BookingStatus.RequestReturn
-                          || o.Status == BookingStatus.ReturnRefund)
+                          || o.paymentStatus == PaymentStatus.Refunded)
                  .CountAsync();
 
             int bookings = await _context.Bookings
@@ -166,7 +171,7 @@ namespace DataAccessObject
                                 .Where(o => o.BookingDetails
                                 .Any(d => (d.CheckInDate >= startOfWeek && d.CheckInDate <= endOfWeek)
                                         || (d.CheckOutDate >= startOfWeek && d.CheckOutDate <= endOfWeek)))
-                                .Where(o => o.Status == BookingStatus.ReturnRefund)
+                                .Where(o => o.paymentStatus == PaymentStatus.Refunded)
                                 .CountAsync();
 
             int bookingsReport = await _context.Bookings
@@ -193,13 +198,13 @@ namespace DataAccessObject
                 .Any(d => (d.CheckInDate >= startOfMonth && d.CheckInDate <= endOfMonth)
                        || (d.CheckOutDate >= startOfMonth && d.CheckOutDate <= endOfMonth)))
                 .Include(o => o.BookingDetails) // Include BookingRoomDetails
-                .ThenInclude(d => d.HomeStayTypes) // Include HomeStayPlaces from BookingRoomDetails
+                .ThenInclude(d => d.HomeStayRentals) // Include HomeStayPlaces from BookingRoomDetails
                 .ToListAsync();
 
             // Tính tổng số lượng bookings đã đặt của từng homestay
             var homeStayQuantities = bookingsInMonth
                 .SelectMany(b => b.BookingDetails)
-                .GroupBy(bd => bd.HomeStayTypes.HomeStayID)
+                .GroupBy(bd => bd.HomeStayRentals.HomeStayID)
                 .Select(g => new
                 {
                     HomeStayID = g.Key,

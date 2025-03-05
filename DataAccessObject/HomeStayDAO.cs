@@ -34,11 +34,6 @@ namespace DataAccessObject
         {
             return await _context.HomeStays
                         .Include(c => c.Account)
-                        .Include(C => C.Location)
-                        .ThenInclude(c => c.Street)
-                        .ThenInclude(c => c.Ward)
-                        .ThenInclude(c => c.District)
-                        .ThenInclude(c => c.Province)
                         .ToListAsync();
         }
 
@@ -50,11 +45,6 @@ namespace DataAccessObject
             }
             var entity = await _context.Set<HomeStay>()
                         .Include(c => c.Account)
-                        .Include(C => C.Location)
-                        .ThenInclude(c => c.Street)
-                        .ThenInclude(c => c.Ward)
-                        .ThenInclude(c => c.District)
-                        .ThenInclude(c => c.Province)
                .SingleOrDefaultAsync(c => c.HomeStayID == id);
             if (entity == null)
             {
@@ -67,7 +57,6 @@ namespace DataAccessObject
         {
             return await _context.HomeStays
                         .Include(c => c.Account)
-                        .Include(C => C.Location)
                         .Include(c => c.Services)
                         .ToListAsync();
         }
@@ -80,7 +69,6 @@ namespace DataAccessObject
             }
             var entity = await _context.Set<HomeStay>()
                         .Include(c => c.Account)
-                        .Include(C => C.Location)
                         .Include(c => c.Services)
                .SingleOrDefaultAsync(c => c.HomeStayID == id);
             if (entity == null)
@@ -98,11 +86,6 @@ namespace DataAccessObject
             }
             var entity = await _context.Set<HomeStay>()
                         .Include(c => c.Account)
-                        .Include(C => C.Location)
-                        .ThenInclude(c => c.Street)
-                        .ThenInclude(c => c.Ward)
-                        .ThenInclude(c => c.District)
-                        .ThenInclude(c => c.Province)
                .SingleOrDefaultAsync(c => c.AccountID == accountId);
             if (entity == null)
             {

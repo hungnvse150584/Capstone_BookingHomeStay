@@ -1,5 +1,4 @@
 ﻿using BusinessObject.Model;
-using Service.RequestAndResponse.Request.Location;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,6 +16,10 @@ namespace Service.RequestAndResponse.Request.HomeStay
         [Required(ErrorMessage = "HomeStay must have Description")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "HomeStay must have Address")]
+        public string Address { get; set; }
+
+
         public DateTime UpdateAt { get; set; }
 
         public HomeStayStatus Status { get; set; }
@@ -27,9 +30,6 @@ namespace Service.RequestAndResponse.Request.HomeStay
 
         [Required(ErrorMessage = "Must Include AccountID")]
         public string AccountID { get; set; }
-
-
-        [Required(ErrorMessage = "Must Include Location")]
-        public UpdateLocationRequest Location { get; set; }
+        
     }
 }

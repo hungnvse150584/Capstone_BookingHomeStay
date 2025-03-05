@@ -23,12 +23,16 @@ namespace BusinessObject.Model;
 
         public double TotalAmount { get; set; }
 
-        public int? HomeStayTypesID { get; set; }
-        [ForeignKey("HomeStayTypesID ")]
-        public HomeStayTypes? HomeStayTypes { get; set; }
+        public int? HomeStayRentalID { get; set; }
+        [ForeignKey("HomeStayRentalID")]
+        public HomeStayRentals? HomeStayRentals { get; set; }
+
+        public int? RoomTypesID { get; set; }
+        [ForeignKey("RoomTypesID")]
+        public RoomTypes? RoomTypes { get; set; }
 
         public int? BookingID { get; set; }
-        [ForeignKey("BookingID ")]
+        [ForeignKey("BookingID")]
         public Booking? Booking { get; set; }
     }
 
