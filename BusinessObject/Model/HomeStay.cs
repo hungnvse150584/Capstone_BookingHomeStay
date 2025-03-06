@@ -33,6 +33,10 @@ namespace BusinessObject.Model;
         public string AccountID { get; set; }
         public Account Account { get; set; }
 
+        [ForeignKey("CommissionRateID")]
+        public int CommissionRateID { get; set; }
+        public CommissionRate CommissionRate { get; set; }
+
         [EnumDataType(typeof(RentalType))]
         public RentalType TypeOfRental { get; set; } 
 
@@ -40,13 +44,13 @@ namespace BusinessObject.Model;
 
         public ICollection<HomeStayRentals> HomeStayRentals { get; set; }
 
+        public ICollection<Booking> Bookings { get; set; }
+
         public ICollection<CultureExperience> CultureExperiences { get; set; }
 
         public ICollection<Services> Services { get; set; }
 
         public ICollection<Rating> Ratings { get; set; }
-
-
     }
 
     public enum HomeStayStatus

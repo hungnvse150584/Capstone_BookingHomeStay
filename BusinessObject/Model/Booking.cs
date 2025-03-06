@@ -29,8 +29,9 @@ namespace BusinessObject.Model;
         [EnumDataType(typeof(PaymentStatus))]
         public PaymentStatus paymentStatus { get; set; }
 
-
         public double Total { get; set; }
+
+        public double bookingDeposit { get; set; }
 
         public int? ReportID { get; set; }
         public Report? Report { get; set; }
@@ -38,6 +39,10 @@ namespace BusinessObject.Model;
         [ForeignKey("AccountID")]
         public string AccountID { get; set; }    
         public Account Account { get; set; }
+
+        public int? HomeStayID { get; set; }
+        [ForeignKey("HomeStayID")]
+        public HomeStay? HomeStay { get; set; }
 
         [EnumDataType(typeof(PaymentMethod))]
         public PaymentMethod PaymentMethod { get; set; }

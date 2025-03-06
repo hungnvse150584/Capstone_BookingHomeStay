@@ -11,16 +11,22 @@ namespace BusinessObject.Model;
     public class RoomAvailability
     {
         [Key]
-        public int RoomID { get; set; }
+        public int RoomAvailabilityID { get; set; }
 
         public DateTime DateTime { get; set; }
         
         public int AvailableRooms { get; set; }
+
+        public int UsedRooms { get; set; }
+
+        public int RemainingRooms { get; set; }
 
         public bool Status { get; set; }
 
         public int? RoomTypesID { get; set; }
         [ForeignKey("RoomTypesID")]
         public RoomTypes? RoomTypes { get; set; }
+
+        public ICollection<Room> Rooms { get; set; }
     }
 

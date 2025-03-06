@@ -130,6 +130,9 @@ namespace DataAccessObject.Migrations
                     b.Property<DateTime>("ExpiredTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("HomeStayID")
+                        .HasColumnType("int");
+
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
@@ -140,6 +143,9 @@ namespace DataAccessObject.Migrations
                         .HasColumnType("int");
 
                     b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.Property<double>("bookingDeposit")
                         .HasColumnType("float");
 
                     b.Property<int>("numberOfAdults")
@@ -157,6 +163,8 @@ namespace DataAccessObject.Migrations
                     b.HasKey("BookingID");
 
                     b.HasIndex("AccountID");
+
+                    b.HasIndex("HomeStayID");
 
                     b.HasIndex("ReportID")
                         .IsUnique()
@@ -287,6 +295,31 @@ namespace DataAccessObject.Migrations
                     b.ToTable("BookingServicesDetails");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.CommissionRate", b =>
+                {
+                    b.Property<int>("CommissionRateID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommissionRateID"));
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("HostShare")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlatformShare")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CommissionRateID");
+
+                    b.ToTable("CommissionRates");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.CultureExperience", b =>
                 {
                     b.Property<int>("CultureExperienceID")
@@ -351,6 +384,9 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CommissionRateID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
@@ -374,6 +410,8 @@ namespace DataAccessObject.Migrations
                     b.HasKey("HomeStayID");
 
                     b.HasIndex("AccountID");
+
+                    b.HasIndex("CommissionRateID");
 
                     b.ToTable("HomeStays");
                 });
@@ -727,7 +765,7 @@ namespace DataAccessObject.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.RoomAvailability", b =>
+            modelBuilder.Entity("BusinessObject.Model.Room", b =>
                 {
                     b.Property<int>("RoomID")
                         .ValueGeneratedOnAdd()
@@ -735,11 +773,39 @@ namespace DataAccessObject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomID"));
 
+                    b.Property<int?>("RoomAvailabilityID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("roomNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoomID");
+
+                    b.HasIndex("RoomAvailabilityID");
+
+                    b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.RoomAvailability", b =>
+                {
+                    b.Property<int>("RoomAvailabilityID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomAvailabilityID"));
+
                     b.Property<int>("AvailableRooms")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("RemainingRooms")
+                        .HasColumnType("int");
 
                     b.Property<int?>("RoomTypesID")
                         .HasColumnType("int");
@@ -747,7 +813,10 @@ namespace DataAccessObject.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.HasKey("RoomID");
+                    b.Property<int>("UsedRooms")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoomAvailabilityID");
 
                     b.HasIndex("RoomTypesID");
 
@@ -939,26 +1008,6 @@ namespace DataAccessObject.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "71803413-785b-4df2-8f05-c63c63ed679c",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "087fbdba-d016-41a8-988e-e40786ddb262",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
-                        },
-                        new
-                        {
-                            Id = "becdd5ce-7c86-4b98-8b25-3d5b0fd25eb5",
-                            Name = "Owner",
-                            NormalizedName = "OWNER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1075,6 +1124,10 @@ namespace DataAccessObject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BusinessObject.Model.HomeStay", "HomeStay")
+                        .WithMany("Bookings")
+                        .HasForeignKey("HomeStayID");
+
                     b.HasOne("BusinessObject.Model.Report", "Report")
                         .WithOne("Booking")
                         .HasForeignKey("BusinessObject.Model.Booking", "ReportID");
@@ -1084,6 +1137,8 @@ namespace DataAccessObject.Migrations
                         .HasForeignKey("BusinessObject.Model.Booking", "transactionID");
 
                     b.Navigation("Account");
+
+                    b.Navigation("HomeStay");
 
                     b.Navigation("Report");
 
@@ -1174,7 +1229,15 @@ namespace DataAccessObject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BusinessObject.Model.CommissionRate", "CommissionRate")
+                        .WithMany("HomeStays")
+                        .HasForeignKey("CommissionRateID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Account");
+
+                    b.Navigation("CommissionRate");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.HomeStayRentals", b =>
@@ -1307,6 +1370,15 @@ namespace DataAccessObject.Migrations
                     b.Navigation("HomeStay");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.Room", b =>
+                {
+                    b.HasOne("BusinessObject.Model.RoomAvailability", "RoomAvailability")
+                        .WithMany("Rooms")
+                        .HasForeignKey("RoomAvailabilityID");
+
+                    b.Navigation("RoomAvailability");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.RoomAvailability", b =>
                 {
                     b.HasOne("BusinessObject.Model.RoomTypes", "RoomTypes")
@@ -1418,6 +1490,11 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Notifications");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.CommissionRate", b =>
+                {
+                    b.Navigation("HomeStays");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.CultureExperience", b =>
                 {
                     b.Navigation("ImageCultureExperiences");
@@ -1425,6 +1502,8 @@ namespace DataAccessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Model.HomeStay", b =>
                 {
+                    b.Navigation("Bookings");
+
                     b.Navigation("CultureExperiences");
 
                     b.Navigation("HomeStayRentals");
@@ -1448,6 +1527,11 @@ namespace DataAccessObject.Migrations
             modelBuilder.Entity("BusinessObject.Model.Report", b =>
                 {
                     b.Navigation("Booking");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.RoomAvailability", b =>
+                {
+                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.RoomTypes", b =>

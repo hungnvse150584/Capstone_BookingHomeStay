@@ -59,12 +59,14 @@ namespace DataAccessObject
             modelBuilder.Entity<IdentityRole>().HasData(roles);
         }
         public DbSet<HomeStay> HomeStays { get; set; }
+        public DbSet<CommissionRate> CommissionRates { get; set; }
         public DbSet<CultureExperience> CultureExperiences { get; set; }
         public DbSet<HomeStayRentals> HomeStayRentals { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<BookingDetail> BookingDetails { get; set; }
         public DbSet<RoomAvailability> RoomAvailabilities { get; set; }
         public DbSet<RoomTypes> RoomTypes { get; set; }
+        public DbSet<Room> Rooms { get; set; }
         public DbSet<Services> Services { get; set; }
         public DbSet<BookingServices> BookingServices { get; set; }
         public DbSet<BookingServicesDetail> BookingServicesDetails { get; set; }
