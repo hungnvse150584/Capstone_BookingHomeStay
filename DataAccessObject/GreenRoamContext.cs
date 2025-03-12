@@ -23,7 +23,7 @@ namespace DataAccessObject
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Transaction>()
+            /*modelBuilder.Entity<Transaction>()
                 .HasOne(e => e.Booking)
             .WithOne(e => e.Transaction)
                 .HasForeignKey<Booking>(e => e.transactionID);
@@ -31,7 +31,7 @@ namespace DataAccessObject
             modelBuilder.Entity<Transaction>()
                 .HasOne(e => e.BookingService)
             .WithOne(e => e.Transaction)
-                .HasForeignKey<BookingServices>(e => e.transactionID);
+                .HasForeignKey<BookingServices>(e => e.transactionID);*/
 
             modelBuilder.Entity<Report>()
                 .HasOne(e => e.Booking)
@@ -64,7 +64,6 @@ namespace DataAccessObject
         public DbSet<HomeStayRentals> HomeStayRentals { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<BookingDetail> BookingDetails { get; set; }
-        public DbSet<RoomAvailability> RoomAvailabilities { get; set; }
         public DbSet<RoomTypes> RoomTypes { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Services> Services { get; set; }

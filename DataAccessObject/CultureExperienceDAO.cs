@@ -9,20 +9,18 @@ using System.Threading.Tasks;
 
 namespace DataAccessObject
 {
-    public class RoomAvailabilityDAO : BaseDAO<RoomAvailability>
+    public class CultureExperienceDAO : BaseDAO<CultureExperience>
     {
         private readonly GreenRoamContext _context;
-        public RoomAvailabilityDAO(GreenRoamContext context) : base(context)
+        public CultureExperienceDAO(GreenRoamContext context) : base(context)
         {
             _context = context;
         }
 
-
-        public async Task<IEnumerable<RoomAvailability>> GetAvailableRoomsAsync()
+        public async Task<IEnumerable<CultureExperience>> GetAllCommissionRateAsync()
         {
-            return await _context.RoomAvailabilities
-           .Include(ra => ra.RoomTypes)
-           .ToListAsync();
+            return await _context.CultureExperiences
+                        .ToListAsync();
         }
     }
 }

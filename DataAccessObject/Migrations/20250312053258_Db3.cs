@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccessObject.Migrations
 {
     /// <inheritdoc />
-    public partial class FixDb : Migration
+    public partial class Db3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -243,7 +243,7 @@ namespace DataAccessObject.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     Area = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CommissionRateID = table.Column<int>(type: "int", nullable: false),
+                    CommissionRateID = table.Column<int>(type: "int", nullable: true),
                     TypeOfRental = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -259,8 +259,7 @@ namespace DataAccessObject.Migrations
                         name: "FK_HomeStays_CommissionRates_CommissionRateID",
                         column: x => x.CommissionRateID,
                         principalTable: "CommissionRates",
-                        principalColumn: "CommissionRateID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CommissionRateID");
                 });
 
             migrationBuilder.CreateTable(
@@ -602,6 +601,7 @@ namespace DataAccessObject.Migrations
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AvailableRooms = table.Column<int>(type: "int", nullable: false),
                     UsedRooms = table.Column<int>(type: "int", nullable: false),
+                    RemainingRooms = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     RoomTypesID = table.Column<int>(type: "int", nullable: true)
                 },
@@ -773,9 +773,9 @@ namespace DataAccessObject.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0220ff71-788d-4d7a-b1d8-b0223f47c9e5", null, "Owner", "OWNER" },
-                    { "380f43d7-6d1d-41ae-a028-4237a9916610", null, "Customer", "CUSTOMER" },
-                    { "6cc48218-c375-4dfc-99f3-173fc928e109", null, "Admin", "ADMIN" }
+                    { "53511dd3-e47a-4858-b96c-eddba78bdf46", null, "Admin", "ADMIN" },
+                    { "952952ce-e13f-4c7d-aeb4-27554578a86d", null, "Owner", "OWNER" },
+                    { "e268cc3e-69a1-435b-99fa-6baba1159b91", null, "Customer", "CUSTOMER" }
                 });
 
             migrationBuilder.CreateIndex(

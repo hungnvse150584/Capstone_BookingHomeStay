@@ -108,7 +108,6 @@ namespace Service.Service
                     {
                         CheckInDate = bookingDetail.CheckInDate,
                         CheckOutDate = bookingDetail.CheckOutDate,
-                        Quantity = 1,
                         HomeStayRentalID = homeStayType.HomeStayRentalID,
                         rentPrice = homeStayType.RentPrice,
                         TotalAmount = homeStayType.RentPrice * numberOfDays
@@ -137,9 +136,9 @@ namespace Service.Service
                     {
                         CheckInDate = bookingDetail.CheckInDate,
                         CheckOutDate = bookingDetail.CheckOutDate,
-                        Quantity = bookingDetail.Quantity,
+                        
                         HomeStayRentalID = homeStayType.HomeStayRentalID,
-                        RoomTypesID = roomType.RoomTypesID,
+                       
                         rentPrice = roomType.RentPrice,
                         TotalAmount = roomType.RentPrice * numberOfDays * bookingDetail.Quantity
                     };
@@ -156,7 +155,7 @@ namespace Service.Service
                 var bookingServices = new BookingServices
                 {
                     BookingServicesDate = DateTime.Now,
-                    Status = BookingServicesStatus.ToPay,
+                    Status = BookingServicesStatus.Pending,
                     AccountID = createBookingRequest.AccountID,
                     BookingServicesDetails = new List<BookingServicesDetail>()
                 };
@@ -186,6 +185,9 @@ namespace Service.Service
                     booking.BookingServices.Add(bookingServices);
                 }
             }
+            double totalBookingAmount = booking.Total + (booking.BookingServices?.Sum(bs => bs.Total) ?? 0);
+
+            booking.bookingDeposit = totalBookingAmount * 0.3;
 
             await _bookingRepository.AddBookingAsync(booking);
             return new BaseResponse<Booking>("Create Booking Successfully!!!", StatusCodeEnum.Created_201, booking);
@@ -227,7 +229,7 @@ namespace Service.Service
                          StatusCodeEnum.NotFound_404, null);
             }
 
-            bool isPaid = !string.IsNullOrEmpty(existingBooking.transactionID);
+            bool isPaid = existingBooking.paymentStatus == PaymentStatus.Deposited;
             bool isCompleted = existingBooking.Status == BookingStatus.Completed;
             bool isCancelled = existingBooking.Status == BookingStatus.Cancelled;
 
@@ -298,7 +300,6 @@ namespace Service.Service
                                 existingDetail.HomeStayRentalID = updatedBookingDetails.homeStayTypeID;
                                 existingDetail.CheckInDate = updatedBookingDetails.CheckInDate;
                                 existingDetail.CheckOutDate = updatedBookingDetails.CheckOutDate;
-                                existingDetail.Quantity = 1;
                                 existingDetail.rentPrice = homeStayType.RentPrice;
                                 existingDetail.TotalAmount = homeStayType.RentPrice * numberOfDays;
                             }
@@ -322,12 +323,11 @@ namespace Service.Service
                                 }
 
                                 existingDetail.HomeStayRentalID = updatedBookingDetails.homeStayTypeID;
-                                existingDetail.RoomTypesID = roomType.RoomTypesID;
+
                                 existingDetail.CheckInDate = updatedBookingDetails.CheckInDate;
                                 existingDetail.CheckOutDate = updatedBookingDetails.CheckOutDate;
-                                existingDetail.Quantity = updatedBookingDetails.Quantity;
                                 existingDetail.rentPrice = roomType.RentPrice;
-                                existingDetail.TotalAmount = roomType.RentPrice * numberOfDays * updatedBookingDetails.Quantity;
+                                existingDetail.TotalAmount = roomType.RentPrice * numberOfDays;
                             }
                         }
                     }
@@ -338,7 +338,7 @@ namespace Service.Service
                         .Any(d => d.HomeStayRentalID == updatedBookingDetails.homeStayTypeID);
 
                         bool isRoomTypeExists = existingBooking.BookingDetails
-                        .Any(d => d.RoomTypesID == updatedBookingDetails.roomTypeID);
+                        .Any(d => d.RoomID == updatedBookingDetails.roomTypeID);
 
                         if (isHomeStayRentalExists)
                         {
@@ -360,7 +360,6 @@ namespace Service.Service
                                 HomeStayRentalID = updatedBookingDetails.homeStayTypeID,
                                 CheckInDate = updatedBookingDetails.CheckInDate,
                                 CheckOutDate = updatedBookingDetails.CheckOutDate,
-                                Quantity = 1,
                                 rentPrice = homeStayType.RentPrice,
                                 TotalAmount = homeStayType.RentPrice * numberOfDays
                             });
@@ -387,12 +386,10 @@ namespace Service.Service
                             existingBooking.BookingDetails.Add(new BookingDetail
                             {
                                 HomeStayRentalID = updatedBookingDetails.homeStayTypeID,
-                                RoomTypesID = roomType.RoomTypesID,
                                 CheckInDate = updatedBookingDetails.CheckInDate,
                                 CheckOutDate = updatedBookingDetails.CheckOutDate,
-                                Quantity = updatedBookingDetails.Quantity,
                                 rentPrice = roomType.RentPrice,
-                                TotalAmount = roomType.RentPrice * numberOfDays * updatedBookingDetails.Quantity
+                                TotalAmount = roomType.RentPrice * numberOfDays 
                             });
                         }
                             
@@ -469,7 +466,7 @@ namespace Service.Service
                 BookingServicesDate = DateTime.Now,
                 AccountID = bookingServiceRequest.AccountID,
                 BookingID = bookingServiceRequest.BookingID,
-                Status = BookingServicesStatus.ToPay,
+                Status = BookingServicesStatus.Pending,
                 BookingServicesDetails = new List<BookingServicesDetail>()
             };
             foreach (var serviceDetailRequest in bookingServiceRequest.BookingServicesDetails)
@@ -536,7 +533,7 @@ namespace Service.Service
                 return new BaseResponse<UpdateBookingService>("The booking service does not belong to this booking!", StatusCodeEnum.Conflict_409, null);
             }
 
-            if (existingBookingService.Status != BookingServicesStatus.ToPay)
+            if (existingBookingService.Status != BookingServicesStatus.Pending)
             {
                 return new BaseResponse<UpdateBookingService>("This booking service is not eligible for updates!", StatusCodeEnum.Conflict_409, null);
             }

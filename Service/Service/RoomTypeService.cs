@@ -20,9 +20,9 @@ namespace Service.Service
     public class RoomTypeService : IRoomTypeService
     {
         private readonly IMapper _mapper;
-        private readonly RoomTypeRepository _roomTypeRepository;
+        private readonly IRoomTypeRepository _roomTypeRepository;
 
-        public RoomTypeService(IMapper mapper, RoomTypeRepository roomTypeRepository)
+        public RoomTypeService(IMapper mapper, IRoomTypeRepository roomTypeRepository)
         {
             _mapper = mapper;
             _roomTypeRepository = roomTypeRepository; 

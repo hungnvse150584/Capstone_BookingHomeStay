@@ -16,10 +16,14 @@ namespace BusinessObject.Model
         [Required]
         public string roomNumber { get; set; }
 
-        public bool Status { get; set; }
+        public bool isUsed { get; set; }
 
-        public int? RoomAvailabilityID { get; set; }
-        [ForeignKey("RoomAvailabilityID")]
-        public RoomAvailability? RoomAvailability { get; set; }
+        public bool isActive { get; set; }
+
+        public int? RoomTypesID { get; set; }
+        [ForeignKey("RoomTypesID")]
+        public RoomTypes? RoomTypes { get; set; }
+
+        public ICollection<BookingDetail> BookingDetails { get; set; }
     }
 }

@@ -91,7 +91,7 @@ namespace Service.Service
             };
                 
             await _homeStayRepository.AddRange(homestayRegister);
-            return new BaseResponse<List<HomeStay>>("Add province as base success", StatusCodeEnum.Created_201, homestayRegister);
+            return new BaseResponse<List<HomeStay>>("Register HomeStay as base success, Please Wait for Accepting", StatusCodeEnum.Created_201, homestayRegister);
         }
 
         public async Task<BaseResponse<HomeStay>> UpdateHomeStay(int homestayId, UpdateHomeStayRequest request)

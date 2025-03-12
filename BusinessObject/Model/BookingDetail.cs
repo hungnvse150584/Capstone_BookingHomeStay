@@ -15,8 +15,6 @@ namespace BusinessObject.Model;
 
         public double rentPrice { get; set; }
 
-        public int Quantity { get; set; }
-
         public DateTime CheckInDate { get; set; }
 
         public DateTime CheckOutDate { get; set; }
@@ -27,9 +25,9 @@ namespace BusinessObject.Model;
         [ForeignKey("HomeStayRentalID")]
         public HomeStayRentals? HomeStayRentals { get; set; }
 
-        public int? RoomTypesID { get; set; }
-        [ForeignKey("RoomTypesID")]
-        public RoomTypes? RoomTypes { get; set; }
+        public int? RoomID { get; set; }
+        [ForeignKey("RoomID")]
+        public Room? Rooms { get; set; }
 
         public int? BookingID { get; set; }
         [ForeignKey("BookingID")]

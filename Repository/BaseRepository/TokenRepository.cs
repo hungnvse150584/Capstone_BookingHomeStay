@@ -40,6 +40,8 @@ namespace Repository.BaseRepository
                 new Claim(JwtRegisteredClaimNames.Sub, account.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.GivenName, account.UserName),
+                new Claim("AccountID", account.Id.ToString())
+                //new Claim(JwtRegisteredClaimNames.Sub, account.Id.ToString())
             };
 
             var userRoles = await _userManager.GetRolesAsync(user);
@@ -95,6 +97,9 @@ namespace Repository.BaseRepository
             {
                 rng.GetBytes(randomNumber);
                 return Convert.ToBase64String(randomNumber);
+                    /*.TrimEnd('=')    // ✅ Remove padding '='
+                    .Replace('+', '-') // ✅ Convert to Base64 URL encoding
+                    .Replace('/', '_')*/
             }
         }
 

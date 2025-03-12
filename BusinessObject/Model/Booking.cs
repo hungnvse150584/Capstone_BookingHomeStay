@@ -33,6 +33,8 @@ namespace BusinessObject.Model;
 
         public double bookingDeposit { get; set; }
 
+        public double remainingBalance { get; set; }
+
         public int? ReportID { get; set; }
         public Report? Report { get; set; }
 
@@ -47,8 +49,7 @@ namespace BusinessObject.Model;
         [EnumDataType(typeof(PaymentMethod))]
         public PaymentMethod PaymentMethod { get; set; }
 
-        public string? transactionID { get; set; }
-        public Transaction? Transaction { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
 
         public ICollection<BookingDetail> BookingDetails { get; set; }
 
@@ -70,9 +71,10 @@ namespace BusinessObject.Model;
 
     public enum PaymentStatus
     {
-        Pending = 0,
-        Paid = 1,
-        Refunded = 2
+        Pending = 0,       
+        Deposited = 1,      
+        FullyPaid = 2,     
+        Refunded = 3
     }
 
     

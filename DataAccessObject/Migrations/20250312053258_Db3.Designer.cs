@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessObject.Migrations
 {
     [DbContext(typeof(GreenRoamContext))]
-    [Migration("20250306160420_FixDb3")]
-    partial class FixDb3
+    [Migration("20250312053258_Db3")]
+    partial class Db3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -387,7 +387,7 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CommissionRateID")
+                    b.Property<int?>("CommissionRateID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateAt")
@@ -1011,6 +1011,26 @@ namespace DataAccessObject.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "53511dd3-e47a-4858-b96c-eddba78bdf46",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "e268cc3e-69a1-435b-99fa-6baba1159b91",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "952952ce-e13f-4c7d-aeb4-27554578a86d",
+                            Name = "Owner",
+                            NormalizedName = "OWNER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1234,9 +1254,7 @@ namespace DataAccessObject.Migrations
 
                     b.HasOne("BusinessObject.Model.CommissionRate", "CommissionRate")
                         .WithMany("HomeStays")
-                        .HasForeignKey("CommissionRateID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CommissionRateID");
 
                     b.Navigation("Account");
 

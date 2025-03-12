@@ -199,16 +199,18 @@ namespace DataAccessObject
                        || (d.CheckOutDate >= startOfMonth && d.CheckOutDate <= endOfMonth)))
                 .Include(o => o.BookingDetails) // Include BookingRoomDetails
                 .ThenInclude(d => d.HomeStayRentals) // Include HomeStayPlaces from BookingRoomDetails
+                .Include(o => o.BookingDetails)
+                .ThenInclude(d => d.Rooms) // Include Room (nếu đặt phòng)
                 .ToListAsync();
 
             // Tính tổng số lượng bookings đã đặt của từng homestay
             var homeStayQuantities = bookingsInMonth
                 .SelectMany(b => b.BookingDetails)
-                .GroupBy(bd => bd.HomeStayRentals.HomeStayID)
+                .GroupBy(bd => bd.HomeStayRentals != null ? bd.HomeStayRentals.HomeStayID : bd.Rooms.RoomTypes.HomeStayRentals.HomeStayID)
                 .Select(g => new
                 {
                     HomeStayID = g.Key,
-                    QuantityOfBooking = g.Sum(bd => bd.Quantity)
+                    BookingCount = g.Count()
                 })
                 .ToList();
 
@@ -223,15 +225,15 @@ namespace DataAccessObject
                 {
                     var homeStayName = homeStayNames
                         .FirstOrDefault(hs => hs.HomeStayID == h.HomeStayID)?.Name; // Tìm tên HomeStay
-                    return (homeStayName, h.QuantityOfBooking);
+                    return (homeStayName, h.BookingCount);
                 })
-                .OrderByDescending(h => h.QuantityOfBooking)
+                .OrderByDescending(h => h.BookingCount)
                 .Take(4)
                 .ToList();
 
             // Chuyển đổi kết quả sang List<(string homeStayName, int QuantityOfBooking)>
             List<(string homeStayName, int QuantityOfBooking)> topHomeStay = result
-                .Select(p => (p.homeStayName, p.QuantityOfBooking))
+                .Select(p => (p.homeStayName, p.BookingCount))
                 .ToList();
 
             return topHomeStay;

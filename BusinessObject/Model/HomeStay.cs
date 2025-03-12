@@ -34,8 +34,8 @@ namespace BusinessObject.Model;
         public Account Account { get; set; }
 
         [ForeignKey("CommissionRateID")]
-        public int CommissionRateID { get; set; }
-        public CommissionRate CommissionRate { get; set; }
+        public int? CommissionRateID { get; set; }
+        public CommissionRate? CommissionRate { get; set; }
 
         [EnumDataType(typeof(RentalType))]
         public RentalType TypeOfRental { get; set; } 

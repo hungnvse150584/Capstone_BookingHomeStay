@@ -20,7 +20,8 @@ namespace DataAccessObject
         {
             return await _context.HomeStayRentals
                         .Where(c => c.HomeStayID == homestayId)              
-                        .Include(c => c.ImageHomeStayRentals)      
+                        .Include(c => c.ImageHomeStayRentals)
+                        .Include(c => c.HomeStay)
                         .ToListAsync();                          
         }
 

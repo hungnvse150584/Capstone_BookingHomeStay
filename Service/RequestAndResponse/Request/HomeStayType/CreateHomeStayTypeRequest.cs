@@ -32,6 +32,8 @@ namespace Service.RequestAndResponse.Request.HomeStayType
 
         public bool Status { get; set; }
 
+        public bool RentWhole { get; set; }
+
         public int MaxAdults { get; set; }
 
         public int MaxChildren { get; set; }

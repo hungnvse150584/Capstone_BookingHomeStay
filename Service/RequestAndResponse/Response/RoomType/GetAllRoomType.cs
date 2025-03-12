@@ -1,4 +1,5 @@
-﻿using Service.RequestAndResponse.Response.HomeStayType;
+﻿using BusinessObject.Model;
+using Service.RequestAndResponse.Response.HomeStayType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,5 +40,7 @@ namespace Service.RequestAndResponse.Response.RoomType
         public int? HomeStayRentalID { get; set; }
 
         public GetAllHomeStayType HomeStayRental { get; set; }
+
+        /*public ICollection<GetAllRoomAvaibility> RoomAvaibilities { get; set; }*/
     }
 }

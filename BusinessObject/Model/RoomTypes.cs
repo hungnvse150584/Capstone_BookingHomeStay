@@ -50,10 +50,8 @@ namespace BusinessObject.Model;
         [ForeignKey("HomeStayRentalID")]
         public HomeStayRentals? HomeStayRentals { get; set; }
 
-        public ICollection<BookingDetail> BookingDetails { get; set; }
-
         public ICollection<ImageRoomTypes> ImageRoomTypes { get; set; }
 
-        public ICollection<RoomAvailability> RoomAvailabilities { get; set; }
+        public ICollection<Room> Rooms { get; set; }
     }
 

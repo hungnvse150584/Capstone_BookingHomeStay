@@ -1,7 +1,5 @@
 ﻿using Service.RequestAndResponse.BaseResponse;
-using Service.RequestAndResponse.Request.HomeStayType;
 using Service.RequestAndResponse.Request.RoomType;
-using Service.RequestAndResponse.Response.HomeStayType;
 using Service.RequestAndResponse.Response.RoomType;
 using System;
 using System.Collections.Generic;
