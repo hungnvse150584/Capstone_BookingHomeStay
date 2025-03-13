@@ -188,7 +188,6 @@ C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.AssemblyInfoInputs.cache
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.AssemblyInfo.cs
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.csproj.CoreCompileInputs.cache
-C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.sourcelink.json
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\staticwebassets.build.json
@@ -308,3 +307,7 @@ D:\FPT\SEP490\GreenRoam\obj\Debug\net8.0\refint\GreenRoam.dll
 D:\FPT\SEP490\GreenRoam\obj\Debug\net8.0\GreenRoam.pdb
 D:\FPT\SEP490\GreenRoam\obj\Debug\net8.0\GreenRoam.genruntimeconfig.cache
 D:\FPT\SEP490\GreenRoam\obj\Debug\net8.0\ref\GreenRoam.dll
+<<<<<<< HEAD
+=======
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.MvcApplicationPartsAssemblyInfo.cs
+>>>>>>> main

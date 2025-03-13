@@ -7,39 +7,39 @@ using System.Threading.Tasks;
 
 namespace Repository.Repositories
 {
-    public class ImageHomeStayTypesRepository : BaseRepository<ImageHomeStayTypes>, IImageHomeStayTypesRepository
+    public class ImageHomeStayTypesRepository : BaseRepository<ImageHomeStayRentals>, IImageHomeStayTypesRepository
     {
-        private readonly ImageHomeStayTypesDAO _imageHomeStayTypesDAO;
-        public ImageHomeStayTypesRepository(ImageHomeStayTypesDAO imageHomeStayTypesDAO) : base(imageHomeStayTypesDAO)
+        private readonly ImageHomeStayRentalsDAO _imageHomeStayTypesDAO;
+        public ImageHomeStayTypesRepository(ImageHomeStayRentalsDAO imageHomeStayTypesDAO) : base(imageHomeStayTypesDAO)
         {
             _imageHomeStayTypesDAO = imageHomeStayTypesDAO;
         }
-        public Task<ImageHomeStayTypes> AddAsync(ImageHomeStayTypes entity)
+        public Task<ImageHomeStayRentals> AddAsync(ImageHomeStayRentals entity)
         {
             return _imageHomeStayTypesDAO.AddAsync(entity);
         }
 
-        public Task<ImageHomeStayTypes> UpdateAsync(ImageHomeStayTypes entity)
+        public Task<ImageHomeStayRentals> UpdateAsync(ImageHomeStayRentals entity)
         {
             return _imageHomeStayTypesDAO.UpdateAsync(entity);
         }
 
-        public Task<ImageHomeStayTypes> DeleteAsync(ImageHomeStayTypes entity)
+        public Task<ImageHomeStayRentals> DeleteAsync(ImageHomeStayRentals entity)
         {
             return _imageHomeStayTypesDAO.DeleteAsync(entity);
         }
-        public Task<IEnumerable<ImageHomeStayTypes>> GetAllAsync()
+        public Task<IEnumerable<ImageHomeStayRentals>> GetAllAsync()
         {
             return _imageHomeStayTypesDAO.GetAllAsync();
         }
 
-        public Task<IEnumerable<ImageHomeStayTypes>> GetAllByImageIdAsync(int imageId)
+        public Task<IEnumerable<ImageHomeStayRentals>> GetAllByImageIdAsync(int imageId)
         {
             return _imageHomeStayTypesDAO.GetAllByImageIdAsync(imageId);
         }
 
 
-        public Task<ImageHomeStayTypes> GetImageHomeStayTypesByIdAsync(int id)
+        public Task<ImageHomeStayRentals> GetImageHomeStayTypesByIdAsync(int id)
         {
             return _imageHomeStayTypesDAO.GetImageHomeStayTypesByIdAsync(id);
         }

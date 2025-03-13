@@ -122,7 +122,7 @@ namespace DataAccessObject
             return await _context.BookingServices
                 .Include(b => b.BookingServicesDetails)
                 .ThenInclude(bd => bd.Services)
-                .FirstOrDefaultAsync(b => b.AccountID == accountId && b.Status == BookingServicesStatus.ToPay);
+                .FirstOrDefaultAsync(b => b.AccountID == accountId && b.Status == BookingServicesStatus.Pending);
         }
 
         /*public async Task<Booking?> UpdateBookingWithReportAsync(int bookingId, Booking booking)

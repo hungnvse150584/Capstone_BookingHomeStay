@@ -1,6 +1,5 @@
 ﻿using BusinessObject.Model;
 using Service.RequestAndResponse.Response.HomeStays;
-using Service.RequestAndResponse.Response.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,6 +26,14 @@ namespace Service.RequestAndResponse.Response.HomeStayType
 
         public double RentPrice { get; set; }
 
+        public int numberBedRoom { get; set; }
+
+        public int numberBathRoom { get; set; }
+
+        public int numberKitchen { get; set; }
+
+        public int numberWifi { get; set; }
+
         public bool Status { get; set; }
 
         public int MaxAdults { get; set; }
@@ -37,8 +44,5 @@ namespace Service.RequestAndResponse.Response.HomeStayType
 
         public int? HomeStayID { get; set; }
         public HomeStayResponse? HomeStay { get; set; }
-
-        public int? PropertyID { get; set; }
-        public GetAllProperties? Property { get; set; }
     }
 }

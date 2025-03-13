@@ -8,6 +8,10 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Repository
+<<<<<<< HEAD
 build_property.ProjectDir = D:\FPT\SEP490\Repository\
+=======
+build_property.ProjectDir = C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\Repository\
+>>>>>>> main
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

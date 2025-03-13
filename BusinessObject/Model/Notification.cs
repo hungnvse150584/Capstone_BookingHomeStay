@@ -24,11 +24,11 @@ namespace BusinessObject.Model;
         public DateTime CreateAt { get; set; }
 
         public int? BookingID { get; set; }
-        [ForeignKey("BookingID ")]
+        [ForeignKey("BookingID")]
         public Booking? Booking { get; set; }
 
         public int? BookingServicesID { get; set; }
-        [ForeignKey("BookingServicesID ")]
+        [ForeignKey("BookingServicesID")]
         public BookingServices? BookingService { get; set; }
 
         public bool IsRead { get; set; }

@@ -21,19 +21,21 @@ namespace BusinessObject.Model
 
         public double Total { get; set; }
 
+        public double bookingServiceDeposit { get; set; }
+
+        public double remainingBalance { get; set; }
+
         [ForeignKey("AccountID")]
         public string AccountID { get; set; }
         public Account Account { get; set; }
-
-        public string? transactionID { get; set; }
-        public Transaction? Transaction { get; set; }
-
 
         [EnumDataType(typeof(BookingServicesStatus))]
         public BookingServicesStatus Status { get; set; }
 
         [EnumDataType(typeof(PaymentServicesMethod))]
         public PaymentServicesMethod PaymentServicesMethod { get; set; }
+
+        public ICollection<Transaction> Transactions { get; set; }
 
         public ICollection<BookingServicesDetail> BookingServicesDetails { get; set; }
 
@@ -43,16 +45,22 @@ namespace BusinessObject.Model
     public enum PaymentServicesMethod
     {
         Cod = 0,
-        PayOS = 1
+        VnPay = 1
+    }
+
+    public enum PaymentServicesStatus
+    {
+        Pending = 0,
+        Deposited = 1,
+        FullyPaid = 2,
+        Refunded = 3
     }
 
     public enum BookingServicesStatus
     {
-        ToPay = 0,
-        ToConfirm = 1,
+        Pending = 0,
+        Confirmed = 1,
         Completed = 3,
-        Cancelled = 4,
-        ReturnRefund = 5,
-        RequestReturn = 6
+        Cancelled = 4
     }
 }

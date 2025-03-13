@@ -9,6 +9,8 @@ namespace Service.RequestAndResponse.Request.BookingDetail
     public class BookingDetailRequest
     {
         public int homeStayTypeID { get; set; }
+
+        public int roomTypeID { get; set; }
         
         public int Quantity { get; set; }
 

@@ -20,11 +20,11 @@ namespace BusinessObject.Model;
         public double TotalAmount { get; set; }
 
         public int? ServicesID { get; set; }
-        [ForeignKey("ServicesID ")]
+        [ForeignKey("ServicesID")]
         public Services? Services { get; set; }
 
         public int? BookingServicesID { get; set; }
-        [ForeignKey("BookingServicesID ")]
+        [ForeignKey("BookingServicesID")]
         public BookingServices? BookingService { get; set; }
     }
 

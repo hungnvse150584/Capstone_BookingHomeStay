@@ -89,6 +89,7 @@ namespace GreenRoam.Controllers
                     Email = registerDto.Email,
                     Address = registerDto.Address,
                     Phone = registerDto.Phone,
+                    BankAccountNumber = registerDto.BankAccountNumber,
                     Status = true
                 };
 
@@ -158,6 +159,8 @@ namespace GreenRoam.Controllers
                     Email = registerDto.Email,
                     Address = registerDto.Address,
                     Phone = registerDto.Phone,
+                    TaxCode = registerDto.TaxCode,
+                    BankAccountNumber = registerDto.BankAccountNumber,
                     Status = true
                 };
 
@@ -188,6 +191,7 @@ namespace GreenRoam.Controllers
                                     Name = accountApp.Name,
                                     Address = accountApp.Address,
                                     Phone = accountApp.Phone,
+                                    Taxcode = accountApp.TaxCode,
                                     Roles = userRoles.ToList(),
                                     Token = token.AccessToken,
                                     RefreshToken = token.RefreshToken
@@ -236,7 +240,7 @@ namespace GreenRoam.Controllers
 
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-            smtp.Authenticate("khanhvmse171632@fpt.edu.vn", "qkww weod sevi krjh"); //user email and password
+            smtp.Authenticate("khanhvmse171632@fpt.edu.vn", "qpvj xjhk eihq sptw"); //user email and password
             smtp.Send(_email);
             smtp.Disconnect(true);
             return "Thank you for your registration, kindly check your email for confirmation code";

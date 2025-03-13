@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Repository.IRepositories
 {
-    public interface IImageHomeStayTypesRepository : IBaseRepository<ImageHomeStayTypes>
+    public interface IImageHomeStayTypesRepository : IBaseRepository<ImageHomeStayRentals>
     {
     
-        Task<IEnumerable<ImageHomeStayTypes>> GetAllByImageIdAsync(int imageId);
-        Task<ImageHomeStayTypes> GetImageHomeStayTypesByIdAsync(int id);
+        Task<IEnumerable<ImageHomeStayRentals>> GetAllByImageIdAsync(int imageId);
+        Task<ImageHomeStayRentals> GetImageHomeStayTypesByIdAsync(int id);
     }
 }

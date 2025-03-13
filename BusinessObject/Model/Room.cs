@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessObject.Model;
-
+namespace BusinessObject.Model
+{
     public class Room
     {
         [Key]
@@ -16,10 +16,14 @@ namespace BusinessObject.Model;
         [Required]
         public string roomNumber { get; set; }
 
-        public bool Status { get; set; }
+        public bool isUsed { get; set; }
 
-        public int? HomeStayTypesID { get; set; }
-        [ForeignKey("HomeStayTypesID ")]
-        public HomeStayTypes? HomeStayTypes { get; set; }
+        public bool isActive { get; set; }
+
+        public int? RoomTypesID { get; set; }
+        [ForeignKey("RoomTypesID")]
+        public RoomTypes? RoomTypes { get; set; }
+
+        public ICollection<BookingDetail> BookingDetails { get; set; }
     }
-
+}

@@ -4,7 +4,6 @@ using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.Booking;
 using Service.RequestAndResponse.Request.BookingServices;
-using Service.RequestAndResponse.Request.District;
 using Service.RequestAndResponse.Response.Bookings;
 using Service.Service;
 
@@ -41,6 +40,13 @@ namespace GreenRoam.Controllers
             return await _bookingService.GetTopHomeStayBookingInMonth();
         }
 
+        [HttpGet("adminDashBoard/GetTotalBookingsTotalBookingsAmount")]
+        public async Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmount>>> GetTotalBookingsTotalBookingsAmount
+           (DateTime startDate, DateTime endDate, string? timeSpanType)
+        {
+            return await _bookingService.GetTotalBookingsTotalBookingsAmount(startDate, endDate, timeSpanType);
+        }
+
         [HttpPost]
         [Route("CreateBooking")]
         public async Task<ActionResult<BaseResponse<Booking>>> CreateBooking([FromBody] CreateBookingRequest bookingRequest, PaymentMethod paymentMethod)
@@ -54,10 +60,22 @@ namespace GreenRoam.Controllers
         }
 
         [HttpPut]
-        [Route("ChangeBookingStatus")]
-        public async Task<ActionResult<BaseResponse<Booking>>> ChangeTheBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, BookingServicesStatus servicesStatus)
+        [Route("UpdateBooking")]
+        public async Task<ActionResult<BaseResponse<UpdateBookingRequest>>> UpdateBooking(int bookingID, UpdateBookingRequest request)
         {
-            var booking = await _bookingService.ChangeBookingStatus(bookingId, bookingServiceID, status, servicesStatus);
+            if (request == null)
+            {
+                return BadRequest("Please Implement all Information");
+            }
+            var booking = await _bookingService.UpdateBooking(bookingID, request);
+            return booking;
+        }
+
+        [HttpPut]
+        [Route("ChangeBookingStatus")]
+        public async Task<ActionResult<BaseResponse<Booking>>> ChangeTheBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus)
+        {
+            var booking = await _bookingService.ChangeBookingStatus(bookingId, bookingServiceID, status, paymentStatus, servicesStatus);
             return Ok(booking);
         }
 
@@ -72,6 +90,18 @@ namespace GreenRoam.Controllers
             }
             var booking = await _bookingService.CreateServiceBooking(bookingServiceRequest, paymentServicesMethod);
             return booking;
+        }
+
+        [HttpPut]
+        [Route("UpdateBookingServices")]
+        public async Task<ActionResult<BaseResponse<UpdateBookingService>>> UpdateBookingServices(int bookingServiceID, UpdateBookingService request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Please Implement all Information");
+            }
+            var bookingServices = await _bookingService.UpdateBookingServices(bookingServiceID, request);
+            return bookingServices;
         }
 
 

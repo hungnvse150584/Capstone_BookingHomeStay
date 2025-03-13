@@ -2,13 +2,17 @@
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.HomeStayType;
+<<<<<<< HEAD
 using Service.RequestAndResponse.Request.Properties;
 using Service.RequestAndResponse.Request.Province;
 using Service.RequestAndResponse.Request.Report;
+=======
+using Service.RequestAndResponse.Request.RoomType;
+>>>>>>> main
 using Service.RequestAndResponse.Request.Services;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.HomeStayType;
-using Service.RequestAndResponse.Response.Properties;
+using Service.RequestAndResponse.Response.RoomType;
 using Service.RequestAndResponse.Response.Services;
 using Service.Service;
 
@@ -19,9 +23,12 @@ namespace GreenRoam.Controllers
     public class HomeStayTypeController : ControllerBase
     {
         private readonly IHomeStayTypeService _homeStayTypeService;
-        public HomeStayTypeController(IHomeStayTypeService homeStayTypeService)
+        private readonly IRoomTypeService _roomTypeService;
+        
+        public HomeStayTypeController(IHomeStayTypeService homeStayTypeService, IRoomTypeService roomTypeService)
         {
             _homeStayTypeService = homeStayTypeService;
+            _roomTypeService = roomTypeService;
         }
 
         [HttpGet]
@@ -45,26 +52,6 @@ namespace GreenRoam.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllProperties")]
-        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllProperties>>>> GetAllProperties()
-        {
-            var properties = await _homeStayTypeService.GetAllProperties();
-            return Ok(properties);
-        }
-
-        [HttpPost]
-        [Route("CreateProperty")]
-        public async Task<ActionResult<BaseResponse<CreatePropertyRequest>>> CreateProperty([FromBody] CreatePropertyRequest propertyRequest)
-        {
-            if (propertyRequest == null)
-            {
-                return BadRequest("Please Implement all Information");
-            }
-            var properties = await _homeStayTypeService.CreateProperties(propertyRequest);
-            return properties;
-        }
-
-        [HttpGet]
         [Route("GetAllServices")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllServices>>>> GetAllServices()
         {
@@ -83,6 +70,7 @@ namespace GreenRoam.Controllers
             var services = await _homeStayTypeService.CreateServices(serviceRequest);
             return services;
         }
+<<<<<<< HEAD
         [HttpPut]
         [Route("UpdateHomeStayType/{id}")]
         public async Task<ActionResult<BaseResponse<UpdateHomeStayTypeRequest>>> UpdateHomeStayType(int id, [FromBody] UpdateHomeStayTypeRequest updateRequest)
@@ -92,6 +80,28 @@ namespace GreenRoam.Controllers
                 return BadRequest("Please provide a valid Id.");
             }
             return await _homeStayTypeService.UpdateHomeStayType(id, updateRequest);
+=======
+
+        //RoomTypes
+        [HttpGet]
+        [Route("GetAllRoomTypes")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllRoomType>>>> GetAllRoomTypes()
+        {
+            var roomTypes = await _roomTypeService.GetAllRoomTypes();
+            return Ok(roomTypes);
+        }
+
+        [HttpPost]
+        [Route("CreateRoomType")]
+        public async Task<ActionResult<BaseResponse<CreateRoomTypeRequest>>> CreateRoomType([FromBody] CreateRoomTypeRequest typeRequest)
+        {
+            if (typeRequest == null)
+            {
+                return BadRequest("Please Implement all Information");
+            }
+            var roomType = await _roomTypeService.CreateRoomType(typeRequest);
+            return roomType;
+>>>>>>> main
         }
     }
 }

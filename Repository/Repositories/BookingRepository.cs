@@ -28,12 +28,12 @@ namespace Repository.Repositories
             await _bookingDao.UpdateAsync(booking);
         }
 
-        public async Task<Booking?> ChangeBookingStatus(int bookingId, BookingStatus status)
+        public async Task<Booking?> ChangeBookingStatus(int bookingId, BookingStatus status, PaymentStatus paymentStatus)
         {
-            return await _bookingDao.ChangeBookingStatus(bookingId, status);
+            return await _bookingDao.ChangeBookingStatus(bookingId, status, paymentStatus);
         }
 
-        public async Task<IEnumerable<Booking>> GetAllBookingAsync(string? search, DateTime? date = null, BookingStatus? status = null)
+        public async Task<IEnumerable<Booking>> GetAllBookingAsync(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
         {
            return await _bookingDao.GetAllBookingAsync(search, date);
         }
@@ -76,6 +76,11 @@ namespace Repository.Repositories
         public async Task<List<(string homeStayName, int QuantityOfBooking)>> GetTopHomeStayBookingInMonthAsync()
         {
            return await _bookingDao.GetTopHomeStayBookingInMonthAsync();
+        }
+
+        public async Task<List<(object span, int totalBookings, double totalBookingsAmount)>> GetTotalBookingsTotalBookingsAmount(DateTime startDate, DateTime endDate, string? timeSpanType)
+        {
+            return await _bookingDao.GetTotalBookingsTotalBookingsAmountAsync(startDate, endDate, timeSpanType);
         }
     }
 }

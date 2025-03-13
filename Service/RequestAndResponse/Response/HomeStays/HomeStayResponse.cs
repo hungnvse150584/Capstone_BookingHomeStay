@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Service.RequestAndResponse.Response.Locations;
 
 namespace Service.RequestAndResponse.Response.HomeStays
 {
@@ -19,6 +18,8 @@ namespace Service.RequestAndResponse.Response.HomeStays
         public string Name { get; set; }
       
         public string Description { get; set; }
+
+        public string Address { get; set; }
 
         public DateTime CreateAt { get; set; }
 
@@ -34,9 +35,5 @@ namespace Service.RequestAndResponse.Response.HomeStays
         
         public string AccountID { get; set; }
         public Account Account { get; set; }
-
-        
-        public int LocationID { get; set; }
-        public GetLocation Location { get; set; }
     }
 }

@@ -21,6 +21,8 @@ namespace BusinessObject.Model;
 
         public string ResponseText { get; set; }
 
+        public bool Status { get; set; }
+
         public string? Image { get; set; }
 
         [ForeignKey("AccountID")]
@@ -28,11 +30,11 @@ namespace BusinessObject.Model;
         public Account Account { get; set; }
 
         public int? HomeStayID { get; set; }
-        [ForeignKey("HomeStayID ")]
+        [ForeignKey("HomeStayID")]
         public HomeStay? HomeStay { get; set; }
 
         public int? BookingID { get; set; }
-        [ForeignKey("BookingID ")]
+        [ForeignKey("BookingID")]
         public Booking? Booking { get; set; }
     }
 

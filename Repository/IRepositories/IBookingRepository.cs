@@ -9,10 +9,10 @@ namespace Repository.IRepositories
 {
     public interface IBookingRepository
     {
-        Task<IEnumerable<Booking>> GetAllBookingAsync(string? search, DateTime? date = null, BookingStatus? status = null);
+        Task<IEnumerable<Booking>> GetAllBookingAsync(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null);
         Task<IEnumerable<Booking>> GetBookingsByAccountId(string accountId);
         Task<Booking?> GetBookingStatusByAccountId(string accountId);
-        Task<Booking?> ChangeBookingStatus(int bookingId, BookingStatus status);
+        Task<Booking?> ChangeBookingStatus(int bookingId, BookingStatus status, PaymentStatus paymentStatus);
         Task AddBookingAsync(Booking booking);
         Task UpdateBookingAsync(Booking booking);
         Task<IEnumerable<Booking>> GetBookingsByDateAsync(DateTime date);
@@ -24,5 +24,7 @@ namespace Repository.IRepositories
         //For AdminDashBoard
         Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)> GetStaticBookings();
         Task<List<(string homeStayName, int QuantityOfBooking)>> GetTopHomeStayBookingInMonthAsync();
+        Task<List<(object span, int totalBookings, double totalBookingsAmount)>> GetTotalBookingsTotalBookingsAmount
+        (DateTime startDate, DateTime endDate, string? timeSpanType);
     }
 }

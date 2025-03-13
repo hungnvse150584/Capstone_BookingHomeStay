@@ -17,20 +17,14 @@ namespace DataAccessObject
         {
             services.AddScoped<Account>();
             services.AddScoped<HomeStay>();
-            services.AddScoped<Location>();
-            services.AddScoped<HomeStayTypes>();
-            services.AddScoped<Property>();
-            services.AddScoped<Room>();
+            services.AddScoped<HomeStayRentals>();
+            services.AddScoped<RoomTypes>();
             services.AddScoped<Booking>();
             services.AddScoped<BookingServices>();
             services.AddScoped<BookingDetail>();
             services.AddScoped<BookingServicesDetail>();
             services.AddScoped<Services>();
             services.AddScoped<Report>();
-            services.AddScoped<Street>();
-            services.AddScoped<Ward>();
-            services.AddScoped<District>();
-            services.AddScoped<Province>();
             services.AddScoped<Notification>();
             services.AddScoped<Rating>();
             services.AddScoped<Review>();

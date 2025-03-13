@@ -30,7 +30,7 @@ namespace Service.Service
 
         public async Task<BaseResponse<AddImageHomeStayTypesRequest>> CreateImageHomeStayTypes(AddImageHomeStayTypesRequest imageTypesRequest)
         {
-            ImageHomeStayTypes imageType = _mapper.Map<ImageHomeStayTypes>(imageTypesRequest);
+            ImageHomeStayRentals imageType = _mapper.Map<ImageHomeStayRentals>(imageTypesRequest);
             await _imageTypeRepository.AddAsync(imageType);
             var response = _mapper.Map<AddImageHomeStayTypesRequest>(imageType);
             return new BaseResponse<AddImageHomeStayTypesRequest>("Create image tpye success", StatusCodeEnum.Created_201, response);
@@ -45,7 +45,7 @@ namespace Service.Service
 
         public async Task<BaseResponse<IEnumerable<GetAllImageHomeStayType>>> GetAllImageHomeStayTypes()
         {
-            IEnumerable<ImageHomeStayTypes> imageType = await _imageTypeRepository.GetAllAsync();
+            IEnumerable<ImageHomeStayRentals> imageType = await _imageTypeRepository.GetAllAsync();
             if (imageType == null)
             {
                 return new BaseResponse<IEnumerable<GetAllImageHomeStayType>>(
@@ -82,7 +82,7 @@ namespace Service.Service
 
         public async Task<BaseResponse<UpdateImageHomeStayTypesRequest>> UpdateImageHomeStayTypes(int id, UpdateImageHomeStayTypesRequest imageTypesRequest)
         {
-            ImageHomeStayTypes imageType = await _imageTypeRepository.GetByIdAsync(id);
+            ImageHomeStayRentals imageType = await _imageTypeRepository.GetByIdAsync(id);
             _mapper.Map(imageTypesRequest, imageType);
             await _imageTypeRepository.UpdateAsync(imageType);
             var response = _mapper.Map<UpdateImageHomeStayTypesRequest>(imageType);

@@ -34,6 +34,10 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BankAccountNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -85,6 +89,9 @@ namespace DataAccessObject.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
+                    b.Property<string>("TaxCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -120,6 +127,12 @@ namespace DataAccessObject.Migrations
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("ExpiredTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("HomeStayID")
+                        .HasColumnType("int");
+
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
@@ -132,26 +145,30 @@ namespace DataAccessObject.Migrations
                     b.Property<double>("Total")
                         .HasColumnType("float");
 
+                    b.Property<double>("bookingDeposit")
+                        .HasColumnType("float");
+
                     b.Property<int>("numberOfAdults")
                         .HasColumnType("int");
 
                     b.Property<int>("numberOfChildren")
                         .HasColumnType("int");
 
-                    b.Property<string>("transactionID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("paymentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<double>("remainingBalance")
+                        .HasColumnType("float");
 
                     b.HasKey("BookingID");
 
                     b.HasIndex("AccountID");
 
+                    b.HasIndex("HomeStayID");
+
                     b.HasIndex("ReportID")
                         .IsUnique()
                         .HasFilter("[ReportID] IS NOT NULL");
-
-                    b.HasIndex("transactionID")
-                        .IsUnique()
-                        .HasFilter("[transactionID] IS NOT NULL");
 
                     b.ToTable("Bookings");
                 });
@@ -173,10 +190,10 @@ namespace DataAccessObject.Migrations
                     b.Property<DateTime>("CheckOutDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("HomeStayTypesID")
+                    b.Property<int?>("HomeStayRentalID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int?>("RoomID")
                         .HasColumnType("int");
 
                     b.Property<double>("TotalAmount")
@@ -189,7 +206,9 @@ namespace DataAccessObject.Migrations
 
                     b.HasIndex("BookingID");
 
-                    b.HasIndex("HomeStayTypesID");
+                    b.HasIndex("HomeStayRentalID");
+
+                    b.HasIndex("RoomID");
 
                     b.ToTable("BookingDetails");
                 });
@@ -221,18 +240,17 @@ namespace DataAccessObject.Migrations
                     b.Property<double>("Total")
                         .HasColumnType("float");
 
-                    b.Property<string>("transactionID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<double>("bookingServiceDeposit")
+                        .HasColumnType("float");
+
+                    b.Property<double>("remainingBalance")
+                        .HasColumnType("float");
 
                     b.HasKey("BookingServicesID");
 
                     b.HasIndex("AccountID");
 
                     b.HasIndex("BookingID");
-
-                    b.HasIndex("transactionID")
-                        .IsUnique()
-                        .HasFilter("[transactionID] IS NOT NULL");
 
                     b.ToTable("BookingServices");
                 });
@@ -269,26 +287,73 @@ namespace DataAccessObject.Migrations
                     b.ToTable("BookingServicesDetails");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.District", b =>
+            modelBuilder.Entity("BusinessObject.Model.CommissionRate", b =>
                 {
-                    b.Property<int>("DistrictID")
+                    b.Property<int>("CommissionRateID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DistrictID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommissionRateID"));
 
-                    b.Property<int?>("ProvinceID")
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("HostShare")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PlatformShare")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CommissionRateID");
+
+                    b.ToTable("CommissionRates");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.CultureExperience", b =>
+                {
+                    b.Property<int>("CultureExperienceID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("districtName")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CultureExperienceID"));
+
+                    b.Property<string>("AccountID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CultureName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("DistrictID");
+                    b.Property<string>("CultureType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("ProvinceID");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Districts");
+                    b.Property<int?>("HomeStayID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CultureExperienceID");
+
+                    b.HasIndex("AccountID");
+
+                    b.HasIndex("HomeStayID");
+
+                    b.ToTable("CultureExperiences");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.HomeStay", b =>
@@ -303,9 +368,16 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Area")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CommissionRateID")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
@@ -313,9 +385,6 @@ namespace DataAccessObject.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LocationID")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -334,18 +403,18 @@ namespace DataAccessObject.Migrations
 
                     b.HasIndex("AccountID");
 
-                    b.HasIndex("LocationID");
+                    b.HasIndex("CommissionRateID");
 
                     b.ToTable("HomeStays");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.HomeStayTypes", b =>
+            modelBuilder.Entity("BusinessObject.Model.HomeStayRentals", b =>
                 {
-                    b.Property<int>("HomeStayTypesID")
+                    b.Property<int>("HomeStayRentalID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HomeStayTypesID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HomeStayRentalID"));
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
@@ -370,11 +439,11 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PropertyID")
-                        .HasColumnType("int");
-
                     b.Property<double>("RentPrice")
                         .HasColumnType("float");
+
+                    b.Property<bool>("RentWhole")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -385,35 +454,89 @@ namespace DataAccessObject.Migrations
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("HomeStayTypesID");
+                    b.Property<int>("numberBathRoom")
+                        .HasColumnType("int");
+
+                    b.Property<int>("numberBedRoom")
+                        .HasColumnType("int");
+
+                    b.Property<int>("numberKitchen")
+                        .HasColumnType("int");
+
+                    b.Property<int>("numberWifi")
+                        .HasColumnType("int");
+
+                    b.HasKey("HomeStayRentalID");
 
                     b.HasIndex("HomeStayID");
 
-                    b.HasIndex("PropertyID");
-
-                    b.ToTable("HomeStayTypes");
+                    b.ToTable("HomeStayRentals");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.ImageHomeStayTypes", b =>
+            modelBuilder.Entity("BusinessObject.Model.ImageCultureExperience", b =>
                 {
-                    b.Property<int>("ImageHomeStayTypesID")
+                    b.Property<int>("ImageCultureExperiencesID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageHomeStayTypesID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageCultureExperiencesID"));
 
-                    b.Property<int?>("HomeStayTypesID")
+                    b.Property<int?>("CultureExperienceID")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ImageHomeStayTypesID");
+                    b.HasKey("ImageCultureExperiencesID");
 
-                    b.HasIndex("HomeStayTypesID");
+                    b.HasIndex("CultureExperienceID");
 
-                    b.ToTable("ImageHomeStayTypes");
+                    b.ToTable("ImageCultureExperiences");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.ImageHomeStayRentals", b =>
+                {
+                    b.Property<int>("ImageHomeStayRentalsID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageHomeStayRentalsID"));
+
+                    b.Property<int?>("HomeStayRentalID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ImageHomeStayRentalsID");
+
+                    b.HasIndex("HomeStayRentalID");
+
+                    b.ToTable("ImageHomeStayRentals");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.ImageRoomTypes", b =>
+                {
+                    b.Property<int>("ImageRoomTypesID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageRoomTypesID"));
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RoomTypesID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ImageRoomTypesID");
+
+                    b.HasIndex("RoomTypesID");
+
+                    b.ToTable("ImageRoomTypes");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.ImageServices", b =>
@@ -436,55 +559,6 @@ namespace DataAccessObject.Migrations
                     b.HasIndex("ServicesID");
 
                     b.ToTable("ImageServices");
-                });
-
-            modelBuilder.Entity("BusinessObject.Model.Location", b =>
-                {
-                    b.Property<int>("LocationID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationID"));
-
-                    b.Property<string>("Cooordinate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("DistrictID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FullAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ProvinceID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StreetID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WardID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("numberHouse")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("postalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("LocationID");
-
-                    b.HasIndex("DistrictID");
-
-                    b.HasIndex("ProvinceID");
-
-                    b.HasIndex("StreetID");
-
-                    b.HasIndex("WardID");
-
-                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Notification", b =>
@@ -531,51 +605,6 @@ namespace DataAccessObject.Migrations
                     b.HasIndex("BookingServicesID");
 
                     b.ToTable("Notification");
-                });
-
-            modelBuilder.Entity("BusinessObject.Model.Property", b =>
-                {
-                    b.Property<int>("PropertyID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PropertyID"));
-
-                    b.Property<string>("AccountID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("numberBathRoom")
-                        .HasColumnType("int");
-
-                    b.Property<int>("numberBedRoom")
-                        .HasColumnType("int");
-
-                    b.Property<int>("numberWifi")
-                        .HasColumnType("int");
-
-                    b.HasKey("PropertyID");
-
-                    b.HasIndex("AccountID");
-
-                    b.ToTable("Property");
-                });
-
-            modelBuilder.Entity("BusinessObject.Model.Province", b =>
-                {
-                    b.Property<int>("ProvinceID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProvinceID"));
-
-                    b.Property<string>("provinceName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ProvinceID");
-
-                    b.ToTable("Provinces");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Rating", b =>
@@ -680,6 +709,9 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
 
@@ -733,10 +765,13 @@ namespace DataAccessObject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomID"));
 
-                    b.Property<int?>("HomeStayTypesID")
+                    b.Property<int?>("RoomTypesID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("isUsed")
                         .HasColumnType("bit");
 
                     b.Property<string>("roomNumber")
@@ -745,9 +780,68 @@ namespace DataAccessObject.Migrations
 
                     b.HasKey("RoomID");
 
-                    b.HasIndex("HomeStayTypesID");
+                    b.HasIndex("RoomTypesID");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.RoomTypes", b =>
+                {
+                    b.Property<int>("RoomTypesID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomTypesID"));
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("HomeStayRentalID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxAdults")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxChildren")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxPeople")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("RentPrice")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("numberBathRoom")
+                        .HasColumnType("int");
+
+                    b.Property<int>("numberBedRoom")
+                        .HasColumnType("int");
+
+                    b.Property<int>("numberWifi")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoomTypesID");
+
+                    b.HasIndex("HomeStayRentalID");
+
+                    b.ToTable("RoomTypes");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Services", b =>
@@ -791,28 +885,6 @@ namespace DataAccessObject.Migrations
                     b.ToTable("Services");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.Street", b =>
-                {
-                    b.Property<int>("StreetID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StreetID"));
-
-                    b.Property<int?>("WardID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("streetName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("StreetID");
-
-                    b.HasIndex("WardID");
-
-                    b.ToTable("Streets");
-                });
-
             modelBuilder.Entity("BusinessObject.Model.Transaction", b =>
                 {
                     b.Property<string>("ResponseId")
@@ -828,6 +900,12 @@ namespace DataAccessObject.Migrations
                     b.Property<string>("BankTranNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("BookingID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BookingServicesID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -870,29 +948,11 @@ namespace DataAccessObject.Migrations
 
                     b.HasKey("ResponseId");
 
+                    b.HasIndex("BookingID");
+
+                    b.HasIndex("BookingServicesID");
+
                     b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("BusinessObject.Model.Ward", b =>
-                {
-                    b.Property<int>("WardID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WardID"));
-
-                    b.Property<int?>("DistrictID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("wardName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("WardID");
-
-                    b.HasIndex("DistrictID");
-
-                    b.ToTable("Wards");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -924,19 +984,19 @@ namespace DataAccessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "19bf5a20-587b-4ccc-92c2-16dbf618660f",
+                            Id = "0325a81e-11ae-4530-a920-fcdc4517d69d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d5e8b00f-237d-4d69-928b-544f47f031ce",
+                            Id = "94c6652b-13e0-40f6-9f08-46effec1271f",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "5a96659f-a7d5-41be-b4e4-209ba11a6573",
+                            Id = "b03e23bc-f35e-406f-b1de-a71953b81cdc",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         });
@@ -1056,19 +1116,19 @@ namespace DataAccessObject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BusinessObject.Model.HomeStay", "HomeStay")
+                        .WithMany("Bookings")
+                        .HasForeignKey("HomeStayID");
+
                     b.HasOne("BusinessObject.Model.Report", "Report")
                         .WithOne("Booking")
                         .HasForeignKey("BusinessObject.Model.Booking", "ReportID");
 
-                    b.HasOne("BusinessObject.Model.Transaction", "Transaction")
-                        .WithOne("Booking")
-                        .HasForeignKey("BusinessObject.Model.Booking", "transactionID");
-
                     b.Navigation("Account");
 
-                    b.Navigation("Report");
+                    b.Navigation("HomeStay");
 
-                    b.Navigation("Transaction");
+                    b.Navigation("Report");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.BookingDetail", b =>
@@ -1077,13 +1137,19 @@ namespace DataAccessObject.Migrations
                         .WithMany("BookingDetails")
                         .HasForeignKey("BookingID");
 
-                    b.HasOne("BusinessObject.Model.HomeStayTypes", "HomeStayTypes")
+                    b.HasOne("BusinessObject.Model.HomeStayRentals", "HomeStayRentals")
                         .WithMany("BookingDetails")
-                        .HasForeignKey("HomeStayTypesID");
+                        .HasForeignKey("HomeStayRentalID");
+
+                    b.HasOne("BusinessObject.Model.Room", "Rooms")
+                        .WithMany("BookingDetails")
+                        .HasForeignKey("RoomID");
 
                     b.Navigation("Booking");
 
-                    b.Navigation("HomeStayTypes");
+                    b.Navigation("HomeStayRentals");
+
+                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.BookingServices", b =>
@@ -1098,15 +1164,9 @@ namespace DataAccessObject.Migrations
                         .WithMany("BookingServices")
                         .HasForeignKey("BookingID");
 
-                    b.HasOne("BusinessObject.Model.Transaction", "Transaction")
-                        .WithOne("BookingService")
-                        .HasForeignKey("BusinessObject.Model.BookingServices", "transactionID");
-
                     b.Navigation("Account");
 
                     b.Navigation("Booking");
-
-                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.BookingServicesDetail", b =>
@@ -1124,13 +1184,21 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Services");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.District", b =>
+            modelBuilder.Entity("BusinessObject.Model.CultureExperience", b =>
                 {
-                    b.HasOne("BusinessObject.Model.Province", "Province")
-                        .WithMany("Districts")
-                        .HasForeignKey("ProvinceID");
+                    b.HasOne("BusinessObject.Model.Account", "Account")
+                        .WithMany("CultureExperiences")
+                        .HasForeignKey("AccountID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Province");
+                    b.HasOne("BusinessObject.Model.HomeStay", "HomeStay")
+                        .WithMany("CultureExperiences")
+                        .HasForeignKey("HomeStayID");
+
+                    b.Navigation("Account");
+
+                    b.Navigation("HomeStay");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.HomeStay", b =>
@@ -1141,39 +1209,49 @@ namespace DataAccessObject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BusinessObject.Model.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("BusinessObject.Model.CommissionRate", "CommissionRate")
+                        .WithMany("HomeStays")
+                        .HasForeignKey("CommissionRateID");
 
                     b.Navigation("Account");
 
-                    b.Navigation("Location");
+                    b.Navigation("CommissionRate");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.HomeStayTypes", b =>
+            modelBuilder.Entity("BusinessObject.Model.HomeStayRentals", b =>
                 {
                     b.HasOne("BusinessObject.Model.HomeStay", "HomeStay")
-                        .WithMany("HomeStayTypes")
+                        .WithMany("HomeStayRentals")
                         .HasForeignKey("HomeStayID");
 
-                    b.HasOne("BusinessObject.Model.Property", "Property")
-                        .WithMany("HomeStayTypes")
-                        .HasForeignKey("PropertyID");
-
                     b.Navigation("HomeStay");
-
-                    b.Navigation("Property");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.ImageHomeStayTypes", b =>
+            modelBuilder.Entity("BusinessObject.Model.ImageCultureExperience", b =>
                 {
-                    b.HasOne("BusinessObject.Model.HomeStayTypes", "HomeStayTypes")
-                        .WithMany("ImageHomeStayTypes")
-                        .HasForeignKey("HomeStayTypesID");
+                    b.HasOne("BusinessObject.Model.CultureExperience", "CultureExperiences")
+                        .WithMany("ImageCultureExperiences")
+                        .HasForeignKey("CultureExperienceID");
 
-                    b.Navigation("HomeStayTypes");
+                    b.Navigation("CultureExperiences");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.ImageHomeStayRentals", b =>
+                {
+                    b.HasOne("BusinessObject.Model.HomeStayRentals", "HomeStayRentals")
+                        .WithMany("ImageHomeStayRentals")
+                        .HasForeignKey("HomeStayRentalID");
+
+                    b.Navigation("HomeStayRentals");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.ImageRoomTypes", b =>
+                {
+                    b.HasOne("BusinessObject.Model.RoomTypes", "RoomTypes")
+                        .WithMany("ImageRoomTypes")
+                        .HasForeignKey("RoomTypesID");
+
+                    b.Navigation("RoomTypes");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.ImageServices", b =>
@@ -1183,33 +1261,6 @@ namespace DataAccessObject.Migrations
                         .HasForeignKey("ServicesID");
 
                     b.Navigation("Services");
-                });
-
-            modelBuilder.Entity("BusinessObject.Model.Location", b =>
-                {
-                    b.HasOne("BusinessObject.Model.District", "District")
-                        .WithMany("Locations")
-                        .HasForeignKey("DistrictID");
-
-                    b.HasOne("BusinessObject.Model.Province", "Province")
-                        .WithMany("Locations")
-                        .HasForeignKey("ProvinceID");
-
-                    b.HasOne("BusinessObject.Model.Street", "Street")
-                        .WithMany("Locations")
-                        .HasForeignKey("StreetID");
-
-                    b.HasOne("BusinessObject.Model.Ward", "Ward")
-                        .WithMany("Locations")
-                        .HasForeignKey("WardID");
-
-                    b.Navigation("District");
-
-                    b.Navigation("Province");
-
-                    b.Navigation("Street");
-
-                    b.Navigation("Ward");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Notification", b =>
@@ -1233,17 +1284,6 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Booking");
 
                     b.Navigation("BookingService");
-                });
-
-            modelBuilder.Entity("BusinessObject.Model.Property", b =>
-                {
-                    b.HasOne("BusinessObject.Model.Account", "Account")
-                        .WithMany("Properties")
-                        .HasForeignKey("AccountID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Rating", b =>
@@ -1310,11 +1350,20 @@ namespace DataAccessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Model.Room", b =>
                 {
-                    b.HasOne("BusinessObject.Model.HomeStayTypes", "HomeStayTypes")
+                    b.HasOne("BusinessObject.Model.RoomTypes", "RoomTypes")
                         .WithMany("Rooms")
-                        .HasForeignKey("HomeStayTypesID");
+                        .HasForeignKey("RoomTypesID");
 
-                    b.Navigation("HomeStayTypes");
+                    b.Navigation("RoomTypes");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.RoomTypes", b =>
+                {
+                    b.HasOne("BusinessObject.Model.HomeStayRentals", "HomeStayRentals")
+                        .WithMany("RoomTypes")
+                        .HasForeignKey("HomeStayRentalID");
+
+                    b.Navigation("HomeStayRentals");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Services", b =>
@@ -1326,22 +1375,19 @@ namespace DataAccessObject.Migrations
                     b.Navigation("HomeStay");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.Street", b =>
+            modelBuilder.Entity("BusinessObject.Model.Transaction", b =>
                 {
-                    b.HasOne("BusinessObject.Model.Ward", "Ward")
-                        .WithMany("Streets")
-                        .HasForeignKey("WardID");
+                    b.HasOne("BusinessObject.Model.Booking", "Booking")
+                        .WithMany("Transactions")
+                        .HasForeignKey("BookingID");
 
-                    b.Navigation("Ward");
-                });
+                    b.HasOne("BusinessObject.Model.BookingServices", "BookingService")
+                        .WithMany("Transactions")
+                        .HasForeignKey("BookingServicesID");
 
-            modelBuilder.Entity("BusinessObject.Model.Ward", b =>
-                {
-                    b.HasOne("BusinessObject.Model.District", "District")
-                        .WithMany("Wards")
-                        .HasForeignKey("DistrictID");
+                    b.Navigation("Booking");
 
-                    b.Navigation("District");
+                    b.Navigation("BookingService");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1401,11 +1447,11 @@ namespace DataAccessObject.Migrations
 
                     b.Navigation("Bookings");
 
+                    b.Navigation("CultureExperiences");
+
                     b.Navigation("HomeStays");
 
                     b.Navigation("Notifications");
-
-                    b.Navigation("Properties");
 
                     b.Navigation("Reports");
 
@@ -1419,6 +1465,8 @@ namespace DataAccessObject.Migrations
                     b.Navigation("BookingServices");
 
                     b.Navigation("Notifications");
+
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.BookingServices", b =>
@@ -1426,18 +1474,27 @@ namespace DataAccessObject.Migrations
                     b.Navigation("BookingServicesDetails");
 
                     b.Navigation("Notifications");
+
+                    b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.District", b =>
+            modelBuilder.Entity("BusinessObject.Model.CommissionRate", b =>
                 {
-                    b.Navigation("Locations");
+                    b.Navigation("HomeStays");
+                });
 
-                    b.Navigation("Wards");
+            modelBuilder.Entity("BusinessObject.Model.CultureExperience", b =>
+                {
+                    b.Navigation("ImageCultureExperiences");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.HomeStay", b =>
                 {
-                    b.Navigation("HomeStayTypes");
+                    b.Navigation("Bookings");
+
+                    b.Navigation("CultureExperiences");
+
+                    b.Navigation("HomeStayRentals");
 
                     b.Navigation("Ratings");
 
@@ -1446,25 +1503,13 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Services");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.HomeStayTypes", b =>
+            modelBuilder.Entity("BusinessObject.Model.HomeStayRentals", b =>
                 {
                     b.Navigation("BookingDetails");
 
-                    b.Navigation("ImageHomeStayTypes");
+                    b.Navigation("ImageHomeStayRentals");
 
-                    b.Navigation("Rooms");
-                });
-
-            modelBuilder.Entity("BusinessObject.Model.Property", b =>
-                {
-                    b.Navigation("HomeStayTypes");
-                });
-
-            modelBuilder.Entity("BusinessObject.Model.Province", b =>
-                {
-                    b.Navigation("Districts");
-
-                    b.Navigation("Locations");
+                    b.Navigation("RoomTypes");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Report", b =>
@@ -1472,30 +1517,23 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Booking");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.Room", b =>
+                {
+                    b.Navigation("BookingDetails");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.RoomTypes", b =>
+                {
+                    b.Navigation("ImageRoomTypes");
+
+                    b.Navigation("Rooms");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.Services", b =>
                 {
                     b.Navigation("BookingServicesDetails");
 
                     b.Navigation("ImageServices");
-                });
-
-            modelBuilder.Entity("BusinessObject.Model.Street", b =>
-                {
-                    b.Navigation("Locations");
-                });
-
-            modelBuilder.Entity("BusinessObject.Model.Transaction", b =>
-                {
-                    b.Navigation("Booking");
-
-                    b.Navigation("BookingService");
-                });
-
-            modelBuilder.Entity("BusinessObject.Model.Ward", b =>
-                {
-                    b.Navigation("Locations");
-
-                    b.Navigation("Streets");
                 });
 #pragma warning restore 612, 618
         }
