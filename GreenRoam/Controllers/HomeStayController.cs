@@ -106,5 +106,15 @@ namespace GreenRoam.Controllers
             }
             return await _homestayService.ChangeHomeStayStatus(homestayId, status);
         }
+        [HttpDelete]
+        [Route("DeleteHomeStay/{id}")]
+        public async Task<ActionResult<BaseResponse<string>>> DeleteHomeStay(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("Please provide a valid Id.");
+            }
+            return await _homestayService.DeleteHomeStay(id);
+        }
     }
 }

@@ -242,6 +242,42 @@
   },
   {
     "ContainingType": "GreenRoam.Controllers.BookingController",
+    "Method": "GetTotalBookingsTotalBookingsAmount",
+    "RelativePath": "api/booking-bookingservices/adminDashBoard/GetTotalBookingsTotalBookingsAmount",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "endDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "timeSpanType",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.List\u00601[[Service.RequestAndResponse.Response.Bookings.GetTotalBookingsTotalBookingsAmount, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.BookingController",
     "Method": "ChangeTheBookingStatus",
     "RelativePath": "api/booking-bookingservices/ChangeBookingStatus",
     "HttpMethod": "PUT",
@@ -260,6 +296,11 @@
       },
       {
         "Name": "status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "paymentStatus",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -380,99 +421,58 @@
     ]
   },
   {
-    "ContainingType": "GreenRoam.Controllers.DistrictController",
-    "Method": "CreateDistrict",
-    "RelativePath": "api/district/CreateDistrict",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "districtRequest",
-        "Type": "Service.RequestAndResponse.Request.District.AddDistrictRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.District.AddDistrictRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.DistrictController",
-    "Method": "GetAllDistrict",
-    "RelativePath": "api/district/GetAllDistrict",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.Districts.GetAllDistrict, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.DistrictController",
-    "Method": "GetDistrictById",
-    "RelativePath": "api/district/GetDistrict/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Districts.GetAllDistrict, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.DistrictController",
-    "Method": "UpdateDistrict",
-    "RelativePath": "api/district/UpdateDistrict",
+    "ContainingType": "GreenRoam.Controllers.BookingController",
+    "Method": "UpdateBooking",
+    "RelativePath": "api/booking-bookingservices/UpdateBooking",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "bookingID",
         "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "districtRequest",
-        "Type": "Service.RequestAndResponse.Request.District.UpdateDistrictRequest",
+        "Name": "request",
+        "Type": "Service.RequestAndResponse.Request.Booking.UpdateBookingRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.District.UpdateDistrictRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Booking.UpdateBookingRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.BookingController",
+    "Method": "UpdateBookingServices",
+    "RelativePath": "api/booking-bookingservices/UpdateBookingServices",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingServiceID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "request",
+        "Type": "Service.RequestAndResponse.Request.BookingServices.UpdateBookingService",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.BookingServices.UpdateBookingService, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -670,21 +670,21 @@
   },
   {
     "ContainingType": "GreenRoam.Controllers.HomeStayTypeController",
-    "Method": "CreateProperty",
-    "RelativePath": "api/homestaytype/CreateProperty",
+    "Method": "CreateRoomType",
+    "RelativePath": "api/homestaytype/CreateRoomType",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "propertyRequest",
-        "Type": "Service.RequestAndResponse.Request.Properties.CreatePropertyRequest",
+        "Name": "typeRequest",
+        "Type": "Service.RequestAndResponse.Request.RoomType.CreateRoomTypeRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Properties.CreatePropertyRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.RoomType.CreateRoomTypeRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -722,6 +722,32 @@
   },
   {
     "ContainingType": "GreenRoam.Controllers.HomeStayTypeController",
+    "Method": "DeleteHomeStayRentals",
+    "RelativePath": "api/homestaytype/DeleteHomeStayRental/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.HomeStayTypeController",
     "Method": "GetAllHomeStayTypes",
     "RelativePath": "api/homestaytype/GetAllHomeStayTypes",
     "HttpMethod": "GET",
@@ -742,15 +768,15 @@
   },
   {
     "ContainingType": "GreenRoam.Controllers.HomeStayTypeController",
-    "Method": "GetAllProperties",
-    "RelativePath": "api/homestaytype/GetAllProperties",
+    "Method": "GetAllRoomTypes",
+    "RelativePath": "api/homestaytype/GetAllRoomTypes",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.Properties.GetAllProperties, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.RoomType.GetAllRoomType, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -781,9 +807,9 @@
     ]
   },
   {
-    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayRentalsController",
     "Method": "CreateImageHomeStayType",
-    "RelativePath": "api/ImageHomeStayTypes/CreateImageHomeStayType",
+    "RelativePath": "api/ImageHomeStayRentals/CreateImageHomeStayType",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -807,9 +833,9 @@
     ]
   },
   {
-    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayRentalsController",
     "Method": "DeleteImageHomeStayTypes",
-    "RelativePath": "api/ImageHomeStayTypes/DeleteImageService/{id}",
+    "RelativePath": "api/ImageHomeStayRentals/DeleteImageService/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -833,9 +859,9 @@
     ]
   },
   {
-    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayRentalsController",
     "Method": "GetAllImageHomeStayTypes",
-    "RelativePath": "api/ImageHomeStayTypes/GetAllImageHomeStayType",
+    "RelativePath": "api/ImageHomeStayRentals/GetAllImageHomeStayType",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -853,9 +879,9 @@
     ]
   },
   {
-    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayRentalsController",
     "Method": "GetImageHomeStayTypesById",
-    "RelativePath": "api/ImageHomeStayTypes/GetAllImageHomeStayType/{id}",
+    "RelativePath": "api/ImageHomeStayRentals/GetAllImageHomeStayType/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -879,9 +905,9 @@
     ]
   },
   {
-    "ContainingType": "GreenRoam.Controllers.ImageHomeStayTypesController",
+    "ContainingType": "GreenRoam.Controllers.ImageHomeStayRentalsController",
     "Method": "UpdateImageService",
-    "RelativePath": "api/ImageHomeStayTypes/UpdateImageService/{id}",
+    "RelativePath": "api/ImageHomeStayRentals/UpdateImageService/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -1029,315 +1055,6 @@
     "ReturnTypes": [
       {
         "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.ImageService.UpdateImageServicesRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.ProvinceController",
-    "Method": "CreateProvince",
-    "RelativePath": "api/province/CreateProvince",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "provinceRequest",
-        "Type": "Service.RequestAndResponse.Request.Province.AddProvinceRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Province.AddProvinceRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.ProvinceController",
-    "Method": "GetAllProvinces",
-    "RelativePath": "api/province/GetAllProvince",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.Provinces.GetAllProvince, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.ProvinceController",
-    "Method": "GetProvinceById",
-    "RelativePath": "api/province/GetProvince/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Provinces.GetAllProvince, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.ProvinceController",
-    "Method": "UpdateProvince",
-    "RelativePath": "api/province/UpdateProvince",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "provinceRequest",
-        "Type": "Service.RequestAndResponse.Request.Province.UpdateProvinceRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Province.UpdateProvinceRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.StreetController",
-    "Method": "CreateStreet",
-    "RelativePath": "api/street/CreateStreet",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "streetRequest",
-        "Type": "Service.RequestAndResponse.Request.Street.AddStreetRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Street.AddStreetRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.StreetController",
-    "Method": "GetAllStreet",
-    "RelativePath": "api/street/GetAllStreet",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.Streets.GetAllStreet, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.StreetController",
-    "Method": "GetStreetById",
-    "RelativePath": "api/street/GetStreet/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Streets.GetAllStreet, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.StreetController",
-    "Method": "UpdateStreet",
-    "RelativePath": "api/street/UpdateStreet",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "streetRequest",
-        "Type": "Service.RequestAndResponse.Request.Street.UpdateStreetRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Street.UpdateStreetRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.WardController",
-    "Method": "CreateWardFromBase",
-    "RelativePath": "api/ward/CreateWard",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "wardRequest",
-        "Type": "Service.RequestAndResponse.Request.Ward.AddWardRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Ward.AddWardRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.WardController",
-    "Method": "GetAllWard",
-    "RelativePath": "api/ward/GetAllWard",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.Wards.GetAllWard, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.WardController",
-    "Method": "GetWardById",
-    "RelativePath": "api/ward/GetWard/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Wards.GetAllWard, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.WardController",
-    "Method": "UpdateWardFromBase",
-    "RelativePath": "api/ward/UpdateWard",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "wardRequest",
-        "Type": "Service.RequestAndResponse.Request.Ward.UpdateWardRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Ward.UpdateWardRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

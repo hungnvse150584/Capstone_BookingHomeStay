@@ -22,7 +22,10 @@ namespace BusinessObject.IdentityModel
         public string? Address { get; set; }
         [Required]
         public string? Phone { get; set; }
+
         [Required]
         public string? Role { get; set; }
+        [Required]
+        public string BankAccountNumber { get; set; }
     }
 }

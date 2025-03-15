@@ -20,5 +20,6 @@ namespace Service.IService
         Task<BaseResponse<IEnumerable<GetAllServices>>> GetAllServices();
 
         Task<BaseResponse<CreateServices>> CreateServices(CreateServices servicesRequest);
+        Task<BaseResponse<string>> DeleteHomeStayRental(int id);
     }
 }
