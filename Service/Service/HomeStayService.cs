@@ -39,6 +39,13 @@ namespace Service.Service
             return new BaseResponse<HomeStayResponse>("Change status ok", StatusCodeEnum.OK_200, homestayResponse);
         }
 
+        public async Task<BaseResponse<string>> DeleteHomeStay(int id)
+        {
+            var homestay = await _homeStayRepository.GetByIdAsync(id);
+            await _homeStayRepository.DeleteAsync(homestay);
+            return new BaseResponse<string>("Delete homestay success", StatusCodeEnum.OK_200, "Deleted successfully");
+        }
+
         public async Task<BaseResponse<IEnumerable<HomeStayResponse>>> GetAllHomeStayRegisterFromBase()
         {
             IEnumerable<HomeStay> homeStay = await _homeStayRepository.GetAllRegisterHomeStayAsync();

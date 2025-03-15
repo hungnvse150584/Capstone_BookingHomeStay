@@ -25,5 +25,7 @@ namespace BusinessObject.IdentityModel
 
         [Required]
         public string? Role { get; set; }
+        [Required]
+        public string BankAccountNumber { get; set; }
     }
 }

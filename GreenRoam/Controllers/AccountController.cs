@@ -333,6 +333,7 @@ namespace GreenRoam.Controllers
                     Email = createAccountDto.Email,
                     Address = createAccountDto.Address,
                     Phone = createAccountDto.Phone,
+                    BankAccountNumber = createAccountDto.BankAccountNumber,
                     Status = true,
                     EmailConfirmed = true
                 };
