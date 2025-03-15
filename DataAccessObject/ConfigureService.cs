@@ -19,6 +19,7 @@ namespace DataAccessObject
             services.AddScoped<HomeStay>();
             services.AddScoped<HomeStayRentals>();
             services.AddScoped<RoomTypes>();
+            services.AddScoped<Room>();
             services.AddScoped<Booking>();
             services.AddScoped<BookingServices>();
             services.AddScoped<BookingDetail>();

@@ -984,19 +984,19 @@ namespace DataAccessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0325a81e-11ae-4530-a920-fcdc4517d69d",
+                            Id = "a6b85be8-b3b8-480e-a881-409333ddead1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "94c6652b-13e0-40f6-9f08-46effec1271f",
+                            Id = "0705219e-f526-4f4e-b4c8-497f32976489",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "b03e23bc-f35e-406f-b1de-a71953b81cdc",
+                            Id = "0e32d3ad-2548-43ae-85fa-35c16970b6fe",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         });

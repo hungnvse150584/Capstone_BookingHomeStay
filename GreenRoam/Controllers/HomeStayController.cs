@@ -52,29 +52,58 @@ namespace GreenRoam.Controllers
         [Route("CreateHomeStay")]
         public async Task<ActionResult<BaseResponse<List<HomeStay>>>> RegisterHomeStay(CreateHomeStayRequest request)
         {
-            if (request == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Please Implement all Information");
+                return BadRequest(ModelState); 
             }
+
             var homeStays = await _homestayService.RegisterHomeStay(request);
-            return homeStays;
+
+            if (homeStays == null)
+            {
+                return StatusCode(500, "An error occurred while processing the request.");
+            }
+            
+            return Ok(homeStays);
         }
 
         [HttpPut]
         [Route("UpdateHomeStay")]
         public async Task<ActionResult<BaseResponse<HomeStay>>> UpdateHomeStay(int homestayId, UpdateHomeStayRequest request)
         {
-            if (homestayId == 0 || homestayId == null)
+            if (homestayId <= 0)
             {
-                return BadRequest("Please Input Id!");
+                return BadRequest("Invalid HomeStay ID.");
             }
-            return await _homestayService.UpdateHomeStay(homestayId, request);
+
+            if (request == null)
+            {
+                return BadRequest("Request body cannot be null.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _homestayService.UpdateHomeStay(homestayId, request);
+
+            if (result == null)
+            {
+                return StatusCode(500, "An error occurred while updating the HomeStay.");
+            }
+
+            return Ok(result);
         }
 
         [HttpPut]
         [Route("ChangeHomeStayStatus")]
         public async Task<ActionResult<BaseResponse<HomeStayResponse>>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status)
         {
+            if (homestayId <= 0)
+            {
+                return BadRequest("Invalid HomeStay ID.");
+            }
             return await _homestayService.ChangeHomeStayStatus(homestayId, status);
         }
     }

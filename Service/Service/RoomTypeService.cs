@@ -34,7 +34,7 @@ namespace Service.Service
             await _roomTypeRepository.AddAsync(roomTypes);
 
             var response = _mapper.Map<CreateRoomTypeRequest>(roomTypes);
-            return new BaseResponse<CreateRoomTypeRequest>("Add HomeStayType as base success", StatusCodeEnum.Created_201, response);
+            return new BaseResponse<CreateRoomTypeRequest>("Add Roomtype as base success", StatusCodeEnum.Created_201, response);
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllRoomType>>> GetAllRoomTypes()

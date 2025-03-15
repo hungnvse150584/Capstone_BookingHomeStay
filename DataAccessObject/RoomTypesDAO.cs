@@ -16,10 +16,17 @@ namespace DataAccessObject
         {
             _context = context;
         }
-        public async Task<IEnumerable<RoomTypes>> GetAllRoomTypesAsync(int roomTypeId)
+        /*public async Task<IEnumerable<RoomTypes>> GetAllRoomTypesAsync(int roomTypeId)
         {
             return await _context.RoomTypes
                         .Where(c => c.RoomTypesID == roomTypeId)
+                        .Include(c => c.ImageRoomTypes)
+                        .ToListAsync();
+        }*/
+
+        public async Task<IEnumerable<RoomTypes>> GetAllRoomTypesAsync()
+        {
+            return await _context.RoomTypes
                         .Include(c => c.ImageRoomTypes)
                         .ToListAsync();
         }
