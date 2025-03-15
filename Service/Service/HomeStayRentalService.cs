@@ -84,5 +84,12 @@ namespace Service.Service
             return new BaseResponse<IEnumerable<GetAllServices>>("Get all services as base success",
                 StatusCodeEnum.OK_200, services);
         }
+
+        public async Task<BaseResponse<string>> DeleteHomeStayRental(int id)
+        {
+            var rental = await _homeStayTypeRepository.GetByIdAsync(id);
+            await _homeStayTypeRepository.DeleteAsync(rental);
+            return new BaseResponse<string>("Delete homestay rental success", StatusCodeEnum.OK_200, "Deleted successfully");
+        }
     }
 }

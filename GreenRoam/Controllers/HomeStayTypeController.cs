@@ -85,5 +85,15 @@ namespace GreenRoam.Controllers
             var roomType = await _roomTypeService.CreateRoomType(typeRequest);
             return roomType;
         }
+        [HttpDelete]
+        [Route("DeleteHomeStayRental/{id}")]
+        public async Task<ActionResult<BaseResponse<string>>> DeleteHomeStayRentals(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("Please provide a valid Id.");
+            }
+            return await _homeStayTypeService.DeleteHomeStayRental(id);
+        }
     }
 }
