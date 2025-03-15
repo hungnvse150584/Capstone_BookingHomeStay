@@ -110,7 +110,21 @@ namespace GreenRoam.Controllers
                         {
                             var _user = await GetUser(registerDto.Email);
                             var emailCode = await _userManager.GenerateEmailConfirmationTokenAsync(_user!);
+
+                            if (string.IsNullOrEmpty(emailCode))
+                            {
+                                await _userManager.DeleteAsync(accountApp); // Xóa tài khoản để tránh bị kẹt
+                                return StatusCode(500, "Failed to generate confirmation token. Please try again.");
+                            }
+
                             string sendEmail = SendEmail(_user!.Email!, emailCode);
+
+                            if (string.IsNullOrEmpty(sendEmail)) // Nếu gửi thất bại
+                            {
+                                await _userManager.DeleteAsync(accountApp); // Xóa tài khoản để tránh bị kẹt
+                                return StatusCode(500, "Failed to send email. Please try again.");
+                            }
+
                             var userRoles = await _userManager.GetRolesAsync(accountApp);
                             return Ok(
                                 new NewUserDto
@@ -181,7 +195,21 @@ namespace GreenRoam.Controllers
                         {
                             var _user = await GetUser(registerDto.Email);
                             var emailCode = await _userManager.GenerateEmailConfirmationTokenAsync(_user!);
+
+                            if (string.IsNullOrEmpty(emailCode))
+                            {
+                                await _userManager.DeleteAsync(accountApp); // Xóa tài khoản để tránh bị kẹt
+                                return StatusCode(500, "Failed to generate confirmation token. Please try again.");
+                            }
+
                             string sendEmail = SendEmail(_user!.Email!, emailCode);
+
+                            if (string.IsNullOrEmpty(sendEmail)) // Nếu gửi thất bại
+                            {
+                                await _userManager.DeleteAsync(accountApp); // Xóa tài khoản để tránh bị kẹt
+                                return StatusCode(500, "Failed to send email. Please try again.");
+                            }
+
                             var userRoles = await _userManager.GetRolesAsync(accountApp);
                             return Ok(
                                 new NewUserDto
@@ -240,7 +268,7 @@ namespace GreenRoam.Controllers
 
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-            smtp.Authenticate("khanhvmse171632@fpt.edu.vn", "qpvj xjhk eihq sptw"); //user email and password
+            smtp.Authenticate("khanhvmse171632@fpt.edu.vn", "qpvj xjhk eihq sptw"); //user email and password qpvj xjhk eihq sptw
             smtp.Send(_email);
             smtp.Disconnect(true);
             return "Thank you for your registration, kindly check your email for confirmation code";

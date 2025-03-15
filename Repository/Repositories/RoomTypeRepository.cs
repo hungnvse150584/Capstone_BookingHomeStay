@@ -19,29 +19,29 @@ namespace Repository.Repositories
             _roomTypeDao = roomTypeDao;
         }
 
-        public Task<RoomTypes> AddAsync(RoomTypes entity)
+        public async Task<RoomTypes> AddAsync(RoomTypes entity)
         {
-            return _roomTypeDao.AddAsync(entity);
+            return await _roomTypeDao.AddAsync(entity);
         }
 
-        public Task<RoomTypes> UpdateAsync(RoomTypes entity)
+        public async Task<RoomTypes> UpdateAsync(RoomTypes entity)
         {
-            return _roomTypeDao.UpdateAsync(entity);
+            return await _roomTypeDao.UpdateAsync(entity);
         }
 
-        public Task<RoomTypes> DeleteAsync(RoomTypes entity)
+        public async Task<RoomTypes> DeleteAsync(RoomTypes entity)
         {
-            return _roomTypeDao.DeleteAsync(entity);
+            return await _roomTypeDao.DeleteAsync(entity);
         }
 
-        public Task<IEnumerable<RoomTypes>> GetAllAsync(int roomTypeId)
+        public async Task<IEnumerable<RoomTypes>> GetAllAsync()
         {
-            return _roomTypeDao.GetAllRoomTypesAsync(roomTypeId);
+            return await _roomTypeDao.GetAllRoomTypesAsync();
         }
 
-        public Task<RoomTypes> GetRoomTypesByIdAsync(int? id)
+        public async Task<RoomTypes> GetRoomTypesByIdAsync(int? id)
         {
-            return _roomTypeDao.GetRoomTypeByIdAsync(id);
+            return await _roomTypeDao.GetRoomTypeByIdAsync(id);
         }
     }
 }

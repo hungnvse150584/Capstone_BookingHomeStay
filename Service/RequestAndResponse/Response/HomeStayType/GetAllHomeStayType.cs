@@ -12,7 +12,7 @@ namespace Service.RequestAndResponse.Response.HomeStayType
 {
     public class GetAllHomeStayType
     {
-        public int HomeStayTypesID { get; set; }
+        public int HomeStayRentalID { get; set; }
         
         public string Name { get; set; }
         
@@ -35,6 +35,8 @@ namespace Service.RequestAndResponse.Response.HomeStayType
         public int numberWifi { get; set; }
 
         public bool Status { get; set; }
+
+        public bool RentWhole { get; set; }
 
         public int MaxAdults { get; set; }
 
