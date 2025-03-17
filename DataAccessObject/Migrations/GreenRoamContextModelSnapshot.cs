@@ -423,6 +423,12 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1054,19 +1060,19 @@ namespace DataAccessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c4ccc551-6758-4825-8e05-a678444d6046",
+                            Id = "5ffa7a99-5bd4-4eda-9144-468c8924ed80",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ddfe4eaa-bbd5-438c-9816-c81b432b2487",
+                            Id = "33910f06-8466-4b84-b41e-afd4c490a51c",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "b8be1a2a-88d5-4258-a1ec-e3c3d71ab871",
+                            Id = "a8df72cb-bf34-42b1-af03-f58a3432bb47",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         });

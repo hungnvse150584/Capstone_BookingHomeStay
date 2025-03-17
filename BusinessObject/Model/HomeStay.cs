@@ -20,6 +20,13 @@ namespace BusinessObject.Model;
 
         [Required]
         public string Address { get; set; }
+
+        [Required]
+        public double Latitude { get; set; }  // Vĩ độ
+
+        [Required]
+        public double Longitude { get; set; } // Kinh độ
+
         public DateTime CreateAt { get; set; }
 
         public DateTime UpdateAt { get; set; }
