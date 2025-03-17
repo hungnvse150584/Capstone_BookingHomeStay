@@ -25,7 +25,7 @@ namespace Service.RequestAndResponse.Request.HomeStay
         public double Latitude { get; set; }
         public RentalType RentalType { get; set; }
 
-        public string Area { get; set; }
+        //public string Area { get; set; }
 
         [Required(ErrorMessage = "Must Include AccountID")]
         public string AccountID { get; set; } 
