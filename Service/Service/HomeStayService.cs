@@ -92,6 +92,8 @@ namespace Service.Service
                     TypeOfRental = request.RentalType,
                     Area = request.Area,
                     Address = request.Address,
+                    Longitude = request.Longtitude,
+                    Latitude = request.Latitude,
                     AccountID = request.AccountID,
 
                 }
