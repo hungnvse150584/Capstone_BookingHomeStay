@@ -220,6 +220,7 @@ namespace GreenRoam.Controllers
                                     Address = accountApp.Address,
                                     Phone = accountApp.Phone,
                                     Taxcode = accountApp.TaxCode,
+                                    BankAccountNumber = accountApp.BankAccountNumber,
                                     Roles = userRoles.ToList(),
                                     Token = token.AccessToken,
                                     RefreshToken = token.RefreshToken
@@ -334,6 +335,7 @@ namespace GreenRoam.Controllers
                     Address = createAccountDto.Address,
                     Phone = createAccountDto.Phone,
                     BankAccountNumber = createAccountDto.BankAccountNumber,
+                    TaxCode = createAccountDto.TaxCode,
                     Status = true,
                     EmailConfirmed = true
                 };
@@ -372,6 +374,8 @@ namespace GreenRoam.Controllers
                                     Name = accountApp.Name,
                                     Address = accountApp.Address,
                                     Phone = accountApp.Phone,
+                                    BankAccountNumber = accountApp.BankAccountNumber,
+                                    Taxcode = accountApp.TaxCode,
                                     Roles = userRoles.ToList(),
                                     Token = token.AccessToken,
                                     RefreshToken = token.RefreshToken
@@ -447,6 +451,7 @@ namespace GreenRoam.Controllers
                 user.Name = updateAccountDto.Name ?? user.Name;
                 user.Address = updateAccountDto.Address ?? user.Address;
                 user.Phone = updateAccountDto.Phone ?? user.Phone;
+                user.BankAccountNumber = updateAccountDto.BankAccountNumber ?? user.BankAccountNumber;
 
                 // Save changes
                 var updateResult = await _userManager.UpdateAsync(user);
@@ -462,6 +467,7 @@ namespace GreenRoam.Controllers
                         Name = user.Name,
                         Address = user.Address,
                         Phone = user.Phone,
+                        BankAccountNumber = user.BankAccountNumber,
                         Roles = updatedUserRoles.ToList()
                     });
                 }
@@ -530,6 +536,8 @@ namespace GreenRoam.Controllers
                     Email = user.Email,
                     Name = user.Name,
                     Address = user.Address,
+                    BankAccountNumber = user.BankAccountNumber,
+                    Taxcode = user.TaxCode,
                     Phone = user.Phone,
                     Roles = _userManager.GetRolesAsync(user).Result.ToList() // This should ideally be await _userManager.GetRolesAsync(user)
                 }).ToList();
