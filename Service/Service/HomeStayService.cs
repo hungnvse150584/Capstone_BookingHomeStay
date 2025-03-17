@@ -90,7 +90,7 @@ namespace Service.Service
                     UpdateAt = DateTime.Now,
                     Status = HomeStayStatus.PendingApproval,
                     TypeOfRental = request.RentalType,
-                    Area = request.Area,
+                    //Area = request.Area,
                     Address = request.Address,
                     Longitude = request.Longtitude,
                     Latitude = request.Latitude,
