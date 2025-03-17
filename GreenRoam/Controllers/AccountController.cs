@@ -385,6 +385,7 @@ namespace GreenRoam.Controllers
                     }
                     else
                     {
+                        await _userManager.DeleteAsync(accountApp);
                         return BadRequest($"Role '{createAccountDto.Role}' does not exist.");
                     }
                 }

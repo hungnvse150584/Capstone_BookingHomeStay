@@ -24,12 +24,6 @@ namespace BusinessObject.Model;
         public DateTime UpdateAt { get; set; }
 
         [Required]
-        public double UnitPrice { get; set; }
-
-        [Required]
-        public double RentPrice { get; set; }
-
-        [Required]
         public int numberBedRoom { get; set; }
 
         [Required]
@@ -60,6 +54,8 @@ namespace BusinessObject.Model;
         public ICollection<ImageHomeStayRentals> ImageHomeStayRentals { get; set; }
 
         public ICollection<BookingDetail> BookingDetails { get; set; }
+
+        public ICollection<Pricing> Prices { get; set; }
 
     }
 

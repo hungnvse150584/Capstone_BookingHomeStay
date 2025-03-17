@@ -199,6 +199,9 @@ namespace DataAccessObject.Migrations
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
 
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
                     b.Property<double>("rentPrice")
                         .HasColumnType("float");
 
@@ -285,6 +288,37 @@ namespace DataAccessObject.Migrations
                     b.HasIndex("ServicesID");
 
                     b.ToTable("BookingServicesDetails");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.CancellationPolicy", b =>
+                {
+                    b.Property<int>("CancellationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CancellationID"));
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DayBeforeCancel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HomeStayID")
+                        .HasColumnType("int");
+
+                    b.Property<double>("RefundPercentage")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CancellationID");
+
+                    b.HasIndex("HomeStayID")
+                        .IsUnique();
+
+                    b.ToTable("CancelPolicy");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.CommissionRate", b =>
@@ -376,6 +410,9 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CancellationID")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CommissionRateID")
                         .HasColumnType("int");
 
@@ -439,17 +476,11 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("RentPrice")
-                        .HasColumnType("float");
-
                     b.Property<bool>("RentWhole")
                         .HasColumnType("bit");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
-
-                    b.Property<double>("UnitPrice")
-                        .HasColumnType("float");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -605,6 +636,51 @@ namespace DataAccessObject.Migrations
                     b.HasIndex("BookingServicesID");
 
                     b.ToTable("Notification");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.Pricing", b =>
+                {
+                    b.Property<int>("PricingID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PricingID"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("HomeStayRentalID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("RentPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("RoomTypesID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("PricingID");
+
+                    b.HasIndex("HomeStayRentalID");
+
+                    b.HasIndex("RoomTypesID");
+
+                    b.ToTable("Prices");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Rating", b =>
@@ -816,14 +892,8 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("RentPrice")
-                        .HasColumnType("float");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
-
-                    b.Property<double>("UnitPrice")
-                        .HasColumnType("float");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -984,19 +1054,19 @@ namespace DataAccessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a6b85be8-b3b8-480e-a881-409333ddead1",
+                            Id = "c4ccc551-6758-4825-8e05-a678444d6046",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "0705219e-f526-4f4e-b4c8-497f32976489",
+                            Id = "ddfe4eaa-bbd5-438c-9816-c81b432b2487",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "0e32d3ad-2548-43ae-85fa-35c16970b6fe",
+                            Id = "b8be1a2a-88d5-4258-a1ec-e3c3d71ab871",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         });
@@ -1184,6 +1254,17 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Services");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.CancellationPolicy", b =>
+                {
+                    b.HasOne("BusinessObject.Model.HomeStay", "HomeStay")
+                        .WithOne("CancelPolicy")
+                        .HasForeignKey("BusinessObject.Model.CancellationPolicy", "HomeStayID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HomeStay");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.CultureExperience", b =>
                 {
                     b.HasOne("BusinessObject.Model.Account", "Account")
@@ -1284,6 +1365,21 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Booking");
 
                     b.Navigation("BookingService");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.Pricing", b =>
+                {
+                    b.HasOne("BusinessObject.Model.HomeStayRentals", "HomeStayRentals")
+                        .WithMany("Prices")
+                        .HasForeignKey("HomeStayRentalID");
+
+                    b.HasOne("BusinessObject.Model.RoomTypes", "RoomTypes")
+                        .WithMany("Prices")
+                        .HasForeignKey("RoomTypesID");
+
+                    b.Navigation("HomeStayRentals");
+
+                    b.Navigation("RoomTypes");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Rating", b =>
@@ -1492,6 +1588,8 @@ namespace DataAccessObject.Migrations
                 {
                     b.Navigation("Bookings");
 
+                    b.Navigation("CancelPolicy");
+
                     b.Navigation("CultureExperiences");
 
                     b.Navigation("HomeStayRentals");
@@ -1509,6 +1607,8 @@ namespace DataAccessObject.Migrations
 
                     b.Navigation("ImageHomeStayRentals");
 
+                    b.Navigation("Prices");
+
                     b.Navigation("RoomTypes");
                 });
 
@@ -1525,6 +1625,8 @@ namespace DataAccessObject.Migrations
             modelBuilder.Entity("BusinessObject.Model.RoomTypes", b =>
                 {
                     b.Navigation("ImageRoomTypes");
+
+                    b.Navigation("Prices");
 
                     b.Navigation("Rooms");
                 });

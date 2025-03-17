@@ -13,6 +13,8 @@ namespace BusinessObject.Model;
         [Key]
         public int BookingDetailID { get; set; }
 
+        public double UnitPrice { get; set; }
+
         public double rentPrice { get; set; }
 
         public DateTime CheckInDate { get; set; }

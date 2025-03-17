@@ -19,10 +19,6 @@ namespace Service.RequestAndResponse.Response.RoomType
 
         public DateTime UpdateAt { get; set; }
 
-        public double UnitPrice { get; set; }
-
-        public double RentPrice { get; set; }
-
         public int numberBedRoom { get; set; }
 
         public int numberBathRoom { get; set; }

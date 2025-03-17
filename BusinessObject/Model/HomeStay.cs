@@ -37,7 +37,11 @@ namespace BusinessObject.Model;
         public int? CommissionRateID { get; set; }
         public CommissionRate? CommissionRate { get; set; }
 
+        public int? CancellationID { get; set; }
+        public CancellationPolicy? CancelPolicy { get; set; }
+
         [EnumDataType(typeof(RentalType))]
+
         public RentalType TypeOfRental { get; set; } 
 
         public ICollection<Report> Reports { get; set; }

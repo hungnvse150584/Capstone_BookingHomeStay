@@ -86,7 +86,7 @@ namespace DataAccessObject
             }
             var entity = await _context.Set<HomeStay>()
                         .Include(c => c.Account)
-               .SingleOrDefaultAsync(c => c.AccountID == accountId);
+               .FirstOrDefaultAsync(c => c.AccountID == accountId);
             if (entity == null)
             {
                 throw new ArgumentNullException($"Entity with id {accountId} not found");

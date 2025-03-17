@@ -109,8 +109,8 @@ namespace Service.Service
                         CheckInDate = bookingDetail.CheckInDate,
                         CheckOutDate = bookingDetail.CheckOutDate,
                         HomeStayRentalID = homeStayType.HomeStayRentalID,
-                        rentPrice = homeStayType.RentPrice,
-                        TotalAmount = homeStayType.RentPrice * numberOfDays
+                        /*rentPrice = homeStayType.RentPrice,
+                        TotalAmount = homeStayType.RentPrice * numberOfDays*/
                     };
                     booking.BookingDetails.Add(bookingRentWholeDetail);
                 }
@@ -139,8 +139,8 @@ namespace Service.Service
                         
                         HomeStayRentalID = homeStayType.HomeStayRentalID,
                        
-                        rentPrice = roomType.RentPrice,
-                        TotalAmount = roomType.RentPrice * numberOfDays * bookingDetail.Quantity
+                        /*rentPrice = roomType.RentPrice,
+                        TotalAmount = roomType.RentPrice * numberOfDays * bookingDetail.Quantity*/
                     };
                     booking.BookingDetails.Add(bookingDetails);
                 }
@@ -300,8 +300,8 @@ namespace Service.Service
                                 existingDetail.HomeStayRentalID = updatedBookingDetails.homeStayTypeID;
                                 existingDetail.CheckInDate = updatedBookingDetails.CheckInDate;
                                 existingDetail.CheckOutDate = updatedBookingDetails.CheckOutDate;
-                                existingDetail.rentPrice = homeStayType.RentPrice;
-                                existingDetail.TotalAmount = homeStayType.RentPrice * numberOfDays;
+                                /*existingDetail.rentPrice = homeStayType.RentPrice;
+                                existingDetail.TotalAmount = homeStayType.RentPrice * numberOfDays;*/
                             }
                             else
                             {
@@ -326,8 +326,8 @@ namespace Service.Service
 
                                 existingDetail.CheckInDate = updatedBookingDetails.CheckInDate;
                                 existingDetail.CheckOutDate = updatedBookingDetails.CheckOutDate;
-                                existingDetail.rentPrice = roomType.RentPrice;
-                                existingDetail.TotalAmount = roomType.RentPrice * numberOfDays;
+                                /*existingDetail.rentPrice = roomType.RentPrice;
+                                existingDetail.TotalAmount = roomType.RentPrice * numberOfDays;*/
                             }
                         }
                     }
@@ -360,8 +360,8 @@ namespace Service.Service
                                 HomeStayRentalID = updatedBookingDetails.homeStayTypeID,
                                 CheckInDate = updatedBookingDetails.CheckInDate,
                                 CheckOutDate = updatedBookingDetails.CheckOutDate,
-                                rentPrice = homeStayType.RentPrice,
-                                TotalAmount = homeStayType.RentPrice * numberOfDays
+                                /*rentPrice = homeStayType.RentPrice,
+                                TotalAmount = homeStayType.RentPrice * numberOfDays*/
                             });
                         }
                         // 🔹 THÊM MỚI: Nếu không có BookingDetailID, nghĩa là thêm mới
@@ -388,8 +388,8 @@ namespace Service.Service
                                 HomeStayRentalID = updatedBookingDetails.homeStayTypeID,
                                 CheckInDate = updatedBookingDetails.CheckInDate,
                                 CheckOutDate = updatedBookingDetails.CheckOutDate,
-                                rentPrice = roomType.RentPrice,
-                                TotalAmount = roomType.RentPrice * numberOfDays 
+                                /*rentPrice = roomType.RentPrice,
+                                TotalAmount = roomType.RentPrice * numberOfDays */
                             });
                         }
                             
