@@ -532,6 +532,28 @@ namespace DataAccessObject.Migrations
                     b.ToTable("ImageCultureExperiences");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.ImageHomeStay", b =>
+                {
+                    b.Property<int>("ImageHomeStayID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageHomeStayID"));
+
+                    b.Property<int?>("HomeStayID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ImageHomeStayID");
+
+                    b.HasIndex("HomeStayID");
+
+                    b.ToTable("ImageHomeStays");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.ImageHomeStayRentals", b =>
                 {
                     b.Property<int>("ImageHomeStayRentalsID")
@@ -1060,19 +1082,19 @@ namespace DataAccessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5ffa7a99-5bd4-4eda-9144-468c8924ed80",
+                            Id = "532acf00-6fbc-41b8-802f-2fa10cc143b1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "33910f06-8466-4b84-b41e-afd4c490a51c",
+                            Id = "aab086d5-4835-4161-bfe2-b61d8f4100f6",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "a8df72cb-bf34-42b1-af03-f58a3432bb47",
+                            Id = "57e83061-893c-43ad-9995-35123c42adb9",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         });
@@ -1321,6 +1343,15 @@ namespace DataAccessObject.Migrations
                         .HasForeignKey("CultureExperienceID");
 
                     b.Navigation("CultureExperiences");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.ImageHomeStay", b =>
+                {
+                    b.HasOne("BusinessObject.Model.HomeStay", "HomeStay")
+                        .WithMany("ImageHomeStays")
+                        .HasForeignKey("HomeStayID");
+
+                    b.Navigation("HomeStay");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.ImageHomeStayRentals", b =>
@@ -1599,6 +1630,8 @@ namespace DataAccessObject.Migrations
                     b.Navigation("CultureExperiences");
 
                     b.Navigation("HomeStayRentals");
+
+                    b.Navigation("ImageHomeStays");
 
                     b.Navigation("Ratings");
 

@@ -4,6 +4,7 @@ using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Request.HomeStayType;
 using Service.RequestAndResponse.Request.ImageHomeStayTypes;
 using Service.RequestAndResponse.Request.ImageService;
+using Service.RequestAndResponse.Request.Pricing;
 using Service.RequestAndResponse.Request.Room;
 using Service.RequestAndResponse.Request.RoomType;
 using Service.RequestAndResponse.Request.Services;
@@ -15,6 +16,7 @@ using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.HomeStayType;
 using Service.RequestAndResponse.Response.ImageHomeStayTypes;
 using Service.RequestAndResponse.Response.ImageService;
+using Service.RequestAndResponse.Response.Pricing;
 using Service.RequestAndResponse.Response.Room;
 using Service.RequestAndResponse.Response.RoomType;
 using Service.RequestAndResponse.Response.Services;
@@ -42,6 +44,10 @@ namespace Service.Mapping
 
             CreateMap<CreateRoomTypeRequest, RoomTypes>().ReverseMap();
             CreateMap<GetAllRoomType, RoomTypes>().ReverseMap();
+
+            CreateMap<GetAllPricing, Pricing>().ReverseMap();
+            CreateMap<CreatePricingRequest, Pricing>().ReverseMap();
+            CreateMap<UpdatePricingRequest, Pricing>().ReverseMap();
 
             CreateMap<GetAllRooms, Room>().ReverseMap();
             CreateMap<CreateRoomRequest, Room>().ReverseMap();

@@ -26,6 +26,7 @@ namespace DataAccessObject
             services.AddScoped<BookingServicesDetail>();
             services.AddScoped<Services>();
             services.AddScoped<Report>();
+            services.AddScoped<Pricing>();
             services.AddScoped<Notification>();
             services.AddScoped<Rating>();
             services.AddScoped<Review>();

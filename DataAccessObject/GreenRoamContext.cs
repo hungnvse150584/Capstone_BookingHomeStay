@@ -76,6 +76,7 @@ namespace DataAccessObject
         public DbSet<Services> Services { get; set; }
         public DbSet<BookingServices> BookingServices { get; set; }
         public DbSet<BookingServicesDetail> BookingServicesDetails { get; set; }
+        public DbSet<ImageHomeStay> ImageHomeStays { get; set; }
         public DbSet<ImageHomeStayRentals> ImageHomeStayRentals { get; set; }
         public DbSet<ImageServices> ImageServices { get; set; }
         public DbSet<ImageRoomTypes> ImageRoomTypes { get; set; }
