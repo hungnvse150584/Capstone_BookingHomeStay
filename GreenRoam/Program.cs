@@ -116,10 +116,12 @@ builder.Services.AddCors(options =>
 
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    serverOptions.Listen(IPAddress.Any, 7221, listenOptions =>
+    serverOptions.ListenAnyIP(7221, listenOptions =>
     {
-        listenOptions.UseHttps(); // Đảm bảo HTTPS được bật
+        listenOptions.UseHttps();
     });
+
+    serverOptions.ListenAnyIP(5139); // HTTP port
 });
 
 var app = builder.Build();
