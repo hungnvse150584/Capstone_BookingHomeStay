@@ -1,4 +1,4 @@
-using BusinessObject.Model;
+﻿using BusinessObject.Model;
 using DataAccessObject;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repository;
 using Service;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -112,14 +113,26 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.Listen(IPAddress.Any, 7221, listenOptions =>
+    {
+        listenOptions.UseHttps(); // Đảm bảo HTTPS được bật
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "GreenRoam");
+    options.RoutePrefix = String.Empty;
+});
+
 
 app.UseHttpsRedirection();
 
