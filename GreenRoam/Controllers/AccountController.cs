@@ -557,7 +557,7 @@ namespace GreenRoam.Controllers
             var user = await _userManager.FindByEmailAsync(resetTokenModel.Email);
             if (user == null)
             {
-                return BadRequest("Cannot find Email, Please check again!");
+                return BadRequest("Cannot find Email. Please check again!");
             }
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             return Ok(new { token = token });
