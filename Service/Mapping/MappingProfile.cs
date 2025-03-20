@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using BusinessObject.Model;
+using Service.RequestAndResponse.Request.CancellationPolicy;
+using Service.RequestAndResponse.Request.CommissionRates;
 using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Request.HomeStayType;
 using Service.RequestAndResponse.Request.ImageHomeStay;
@@ -13,6 +15,8 @@ using Service.RequestAndResponse.Response.BookingDetails;
 using Service.RequestAndResponse.Response.BookingOfServices;
 using Service.RequestAndResponse.Response.BookingOfServicesDetails;
 using Service.RequestAndResponse.Response.Bookings;
+using Service.RequestAndResponse.Response.CancellationPolicyRequest;
+using Service.RequestAndResponse.Response.CommissionRate;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.HomeStayType;
 using Service.RequestAndResponse.Response.ImageHomeStayTypes;
@@ -55,7 +59,13 @@ namespace Service.Mapping
             CreateMap<CreateRoomRequest, Room>().ReverseMap();
             CreateMap<UpdateRoomRequest, Room>().ReverseMap();
 
-           
+            CreateMap<GetAllCommissionRate, CommissionRate>().ReverseMap();
+            CreateMap<CreateCommissionRateRequest, CommissionRate>().ReverseMap();
+            CreateMap<CommissionRate, UpdateCommissionRateRequest>().ReverseMap();
+         
+            CreateMap<CancellationPolicy, CreateCancellationPolicyRequest>().ReverseMap();
+            CreateMap<CancellationPolicy, UpdateCancellationPolicyRequest>().ReverseMap();
+            CreateMap<CancellationPolicy, GetAllCancellationPolicy>().ReverseMap();
 
             CreateMap<Services, GetAllServices>();
             CreateMap<Services, CreateServices>().ReverseMap();

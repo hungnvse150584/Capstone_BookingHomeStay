@@ -53,5 +53,38 @@ namespace Service.Service
             return new BaseResponse<IEnumerable<GetAllCommissionRate>>("Get all RoomType as base success",
                 StatusCodeEnum.OK_200, commissionRates);
         }
+
+        public async Task<BaseResponse<UpdateCommissionRateRequest>> UpdateCommmisionRate(UpdateCommissionRateRequest typeRequest)
+        {
+            var commissionRate = await _commissionRateRepository.GetCommissionRateByHomeStay(typeRequest.CommissionRateID);      
+            if (commissionRate == null)
+            {
+                return new BaseResponse<UpdateCommissionRateRequest>("CommissionRate not found", StatusCodeEnum.NotFound_404, null);
+            }
+
+            commissionRate.HostShare = typeRequest.HostShare != null ? typeRequest.HostShare : commissionRate.HostShare;
+            commissionRate.PlatformShare = typeRequest.PlatformShare != null ? typeRequest.PlatformShare : commissionRate.PlatformShare;
+            commissionRate.UpdateAt = DateTime.UtcNow; 
+
+            await _commissionRateRepository.UpdateAsync(commissionRate);
+            await _commissionRateRepository.SaveChangesAsync();
+
+            var response = _mapper.Map<UpdateCommissionRateRequest>(commissionRate);
+
+            return new BaseResponse<UpdateCommissionRateRequest>("Update CommissionRate successfully", StatusCodeEnum.OK_200, response);
+        }
+        public async Task<BaseResponse<GetAllCommissionRate>> GetCommissionRateByHomeStay(int homeStayID)
+        {
+            var commissionRate = await _commissionRateRepository.GetCommissionRateByHomeStay(homeStayID);
+            if (commissionRate == null)
+            {
+                return new BaseResponse<GetAllCommissionRate>("CommissionRate not found", StatusCodeEnum.NotFound_404, null);
+            }
+
+            var response = _mapper.Map<GetAllCommissionRate>(commissionRate);
+            return new BaseResponse<GetAllCommissionRate>("Successfully retrieved CommissionRate for HomeStay", StatusCodeEnum.OK_200, response);
+        }
+
+
     }
 }
