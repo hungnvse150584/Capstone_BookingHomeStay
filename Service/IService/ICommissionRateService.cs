@@ -14,6 +14,8 @@ namespace Service.IService
     public interface ICommissionRateService
     {
         Task<BaseResponse<IEnumerable<GetAllCommissionRate>>> GetAllCommissionRates();
+        Task<BaseResponse<GetAllCommissionRate>> GetCommissionRateByHomeStay(int homeStayID);
         Task<BaseResponse<CreateCommissionRateRequest>> CreateCommmisionRate(CreateCommissionRateRequest typeRequest);
+        Task<BaseResponse<UpdateCommissionRateRequest>> UpdateCommmisionRate(UpdateCommissionRateRequest typeRequest);
     }
 }

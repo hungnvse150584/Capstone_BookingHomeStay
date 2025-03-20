@@ -12,5 +12,7 @@ namespace Repository.IRepositories
         Task<IEnumerable<CommissionRate>> GetAllCommissionRate();
         Task<CommissionRate?> GetCommissionRateByHomeStay(int homeStayID);
         Task<CommissionRate> AddAsync(CommissionRate entity);
+        Task<CommissionRate> UpdateAsync(CommissionRate entity);
+        Task SaveChangesAsync();
     }
 }

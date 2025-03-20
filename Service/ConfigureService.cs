@@ -31,7 +31,7 @@ namespace Service
             services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<ICommissionRateService, CommissionRateService>();
             services.AddScoped<IImageHomeStayService, ImageHomeStayService>();
-
+            services.AddScoped<ICancellationPolicyService, CancellationPolicyService>();
             services.AddScoped<IVnPayService, VnPayService>();
 
             services.AddScoped<ITokenService, TokenService>();

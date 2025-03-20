@@ -40,6 +40,7 @@ namespace Repository
             services.AddTransient<IReviewRepository, ReviewRepository>();
             services.AddScoped<IReportRepository, ReportRepository>();
             services.AddTransient<IReportRepository, ReportRepository>();
+            services.AddScoped<ICancellationPolicyRepository, CancellationPolicyRepository>();
 
             
             services.AddScoped<IImageServicesRepository, ImageServicesRepository>();
@@ -56,7 +57,7 @@ namespace Repository
             services.AddScoped<RoomDAO>();
             services.AddScoped<PricingDAO>();
             services.AddScoped<ImageHomeStayDAO>();
-
+            services.AddScoped<CancellationPolicyDAO>();
             services.AddScoped<BookingDAO>();
             services.AddScoped<BookingServicesDAO>();
             services.AddScoped<ReviewDAO>();

@@ -43,5 +43,10 @@ namespace Repository.Repositories
         {
             return await _commissionRateDao.DeleteAsync(entity);
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _commissionRateDao.SaveChangesAsync();
+        }
     }
 }
