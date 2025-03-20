@@ -64,5 +64,10 @@ namespace Repository.Repositories
         {
            return await _homestayDao.GetOwnerHomeStayByIdAsync(accountId);
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _homestayDao.SaveChangesAsync();
+        }
     }
 }

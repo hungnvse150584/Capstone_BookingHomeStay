@@ -32,7 +32,7 @@ namespace Repository
             services.AddScoped<IBookingRepository, BookingRepository>();
             services.AddScoped<IBookingServiceRepository, BookingServiceRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
-
+            services.AddScoped<IImageHomeStayRepository, ImageHomeStayRepository>();
 
             services.AddScoped<INotificationRepository, NotificationRepository>();
             
@@ -55,7 +55,7 @@ namespace Repository
             services.AddScoped<RoomTypesDAO>();
             services.AddScoped<RoomDAO>();
             services.AddScoped<PricingDAO>();
-
+            services.AddScoped<ImageHomeStayDAO>();
 
             services.AddScoped<BookingDAO>();
             services.AddScoped<BookingServicesDAO>();

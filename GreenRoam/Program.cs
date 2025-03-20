@@ -1,12 +1,15 @@
-using BusinessObject.Model;
+﻿using BusinessObject.Model;
+using CloudinaryDotNet;
 using DataAccessObject;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repository;
 using Service;
+using Account = BusinessObject.Model.Account;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +63,12 @@ builder.Services.AddSwaggerGen(option =>
             new string[]{}
         }
     });
+    // Cấu hình hỗ trợ file upload (multipart/form-data)
+    option.MapType<IFormFile>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Format = "binary"
+    });
 });
 
 // SetUp Specification for password
@@ -72,10 +81,9 @@ builder.Services.AddIdentity<Account, IdentityRole>(options =>
     options.Password.RequiredLength = 8;
     options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
 })
-    .AddEntityFrameworkStores<GreenRoamContext>().AddDefaultTokenProviders();
-// warning: AccountApplication at here is a type of custom from IdentityUser;
-//
-//life span
+.AddEntityFrameworkStores<GreenRoamContext>()
+.AddDefaultTokenProviders();
+
 builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
 {
     options.TokenLifespan = TimeSpan.FromHours(1);
@@ -106,13 +114,30 @@ builder.Services.AddAuthentication(options =>
 //
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        builder => builder
-            .WithOrigins("")
-            .AllowAnyHeader()
-            .AllowAnyMethod());
+    options.AddPolicy("AllowAll", policyBuilder =>
+    {
+        policyBuilder.AllowAnyOrigin()
+                     .AllowAnyHeader()
+                     .AllowAnyMethod();
+    });
 });
+builder.Services.AddAuthorization();
+
+//var cloudinaryConfig = builder.Configuration.GetSection("Cloudinary");
+//var cloudinary = new Cloudinary(new CloudinaryDotNet.Account(
+//    cloudinaryConfig["CloudName"],
+//    cloudinaryConfig["ApiKey"],
+//    cloudinaryConfig["ApiSecret"]
+//));
+//builder.Services.AddSingleton(cloudinary);
+var cloudName = builder.Configuration["Cloudinary:CloudName"];
+var apiKey = builder.Configuration["Cloudinary:ApiKey"];
+var apiSecret = builder.Configuration["Cloudinary:ApiSecret"];
+var cloudinaryAccount = new CloudinaryDotNet.Account(cloudName, apiKey, apiSecret);
+var cloudinary = new Cloudinary(cloudinaryAccount);
+builder.Services.AddSingleton(cloudinary);
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -122,7 +147,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 

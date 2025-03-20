@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Service.RequestAndResponse.Request.HomeStay
 {
@@ -25,10 +26,11 @@ namespace Service.RequestAndResponse.Request.HomeStay
         public double Latitude { get; set; }
         public RentalType RentalType { get; set; }
 
-        public string Area { get; set; }
+        public string? Area { get; set; }
 
         [Required(ErrorMessage = "Must Include AccountID")]
-        public string AccountID { get; set; } 
-        
+        public string AccountID { get; set; }
+        public List<IFormFile> Images { get; set; }
+
     }
 }

@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using Azure;
 using BusinessObject.Model;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Identity.Client;
 using Repository.IRepositories;
@@ -23,13 +26,21 @@ namespace Service.Service
     {
         private readonly IMapper _mapper;
         private readonly IHomeStayRepository _homeStayRepository;
-        
+        private readonly IImageHomeStayRepository _imageHomeStayRepository; 
+        private readonly Cloudinary _cloudinary;
 
 
-        public HomeStayService(IMapper mapper, IHomeStayRepository homeStayRepository)
+
+        public HomeStayService(
+            IMapper mapper,
+            IHomeStayRepository homeStayRepository,
+            IImageHomeStayRepository imageHomeStayRepository,
+            Cloudinary cloudinary)
         {
             _mapper = mapper;
             _homeStayRepository = homeStayRepository;
+            _imageHomeStayRepository = imageHomeStayRepository;
+            _cloudinary = cloudinary;
         }
 
         public async Task<BaseResponse<HomeStayResponse>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status)
@@ -77,32 +88,98 @@ namespace Service.Service
             var result = _mapper.Map<HomeStayResponse>(homeStay);
             return new BaseResponse<HomeStayResponse>("Get HomeStay as base success", StatusCodeEnum.OK_200, result);
         }
+        private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> files)
+        {
+            if (files == null || !files.Any())
+            {
+                return new List<string>(); // Trả về danh sách rỗng nếu không có file
+            }
 
+            var urls = new List<string>();
+
+            foreach (var file in files)
+            {
+                if (file == null || file.Length == 0)
+                {
+                    continue; // Bỏ qua file không hợp lệ
+                }
+
+                using var stream = file.OpenReadStream();
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(file.FileName, stream),
+                    Folder = "HomeStayImages"
+                };
+
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    urls.Add(uploadResult.SecureUrl.ToString());
+                }
+                else
+                {
+                    throw new Exception($"Failed to upload image to Cloudinary: {uploadResult.Error.Message}");
+                }
+            }
+
+            return urls;
+        }
         public async Task<BaseResponse<List<HomeStay>>> RegisterHomeStay(CreateHomeStayRequest request)
         {
-            var homestayRegister = new List<HomeStay>
+            try
             {
-                new HomeStay
+                // Tạo HomeStay
+                var homestayRegister = new List<HomeStay>
+        {
+            new HomeStay
+            {
+                Name = request.Name,
+                Description = request.Description,
+                CreateAt = DateTime.Now,
+                UpdateAt = DateTime.Now,
+                Status = HomeStayStatus.PendingApproval,
+                TypeOfRental = request.RentalType,
+                Address = request.Address,
+                Area = request.Area,
+                Longitude = request.Longtitude, // Đã sửa từ Longtitude thành Longitude
+                Latitude = request.Latitude,
+                AccountID = request.AccountID,
+            }
+        };
+
+                // Lưu HomeStay vào database và gọi SaveChanges để lấy ID
+                await _homeStayRepository.AddRange(homestayRegister);
+                await _homeStayRepository.SaveChangesAsync(); // Thêm dòng này để gán HomeStayID
+
+                // Upload ảnh nếu có
+                if (request.Images != null && request.Images.Any())
                 {
-                    Name = request.Name,
-                    Description = request.Description,
-                    CreateAt = DateTime.Now,
-                    UpdateAt = DateTime.Now,
-                    Status = HomeStayStatus.PendingApproval,
-                    TypeOfRental = request.RentalType,
-                    //Area = request.Area,
-                    Address = request.Address,
-                    Longitude = request.Longtitude,
-                    Latitude = request.Latitude,
-                    AccountID = request.AccountID,
+                    // Gọi phương thức upload hình
+                    var imageUrls = await UploadImagesToCloudinary(request.Images);
 
+                    // Lưu từng URL vào ImageHomeStay
+                    foreach (var url in imageUrls)
+                    {
+                        var imageHomeStay = new ImageHomeStay
+                        {
+                            Image = url,
+                            HomeStayID = homestayRegister[0].HomeStayID // Bây giờ HomeStayID đã được gán
+                        };
+                        await _imageHomeStayRepository.AddImageAsync(imageHomeStay);
+                    }
                 }
-            };
-                
-            await _homeStayRepository.AddRange(homestayRegister);
-            return new BaseResponse<List<HomeStay>>("Register HomeStay as base success, Please Wait for Accepting", StatusCodeEnum.Created_201, homestayRegister);
-        }
 
+                return new BaseResponse<List<HomeStay>>("Register HomeStay and upload images successfully, Please Wait for Accepting", StatusCodeEnum.Created_201, homestayRegister);
+            }
+            catch (Exception ex)
+            {
+                // Ghi log chi tiết lỗi
+                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+                return new BaseResponse<List<HomeStay>>($"Something went wrong! Error: {ex.Message}. Inner Exception: {ex.InnerException?.Message}", StatusCodeEnum.InternalServerError_500, null);
+            }
+        }
         public async Task<BaseResponse<HomeStay>> UpdateHomeStay(int homestayId, UpdateHomeStayRequest request)
         {
             var homeStayExist = await _homeStayRepository.GetHomeStayDetailByIdAsync(homestayId);
@@ -111,8 +188,8 @@ namespace Service.Service
                 return new BaseResponse<HomeStay>("Cannot find HomeStay", StatusCodeEnum.BadGateway_502, null);
           }
             var updatedHomeStay = _mapper.Map(request, homeStayExist);
-            updatedHomeStay.CreateAt = homeStayExist.CreateAt; // Keep the original CreateAt
-            updatedHomeStay.Status = homeStayExist.Status;     // Keep the original Status
+            updatedHomeStay.CreateAt = homeStayExist.CreateAt; 
+            updatedHomeStay.Status = homeStayExist.Status;     
             updatedHomeStay.UpdateAt = DateTime.Now;
             updatedHomeStay.Address = request.Address;
             updatedHomeStay.TypeOfRental = request.RentalType;

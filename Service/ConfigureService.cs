@@ -30,7 +30,7 @@ namespace Service
             services.AddScoped<IPricingService, PricingService>();
             services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<ICommissionRateService, CommissionRateService>();
-
+            services.AddScoped<IImageHomeStayService, ImageHomeStayService>();
 
             services.AddScoped<IVnPayService, VnPayService>();
 

@@ -60,7 +60,10 @@ namespace DataAccessObject
                         .Include(c => c.Services)
                         .ToListAsync();
         }
-
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
         public async Task<HomeStay> GetHomeStayByIdAsync(int id)
         {
             if (id <= 0)

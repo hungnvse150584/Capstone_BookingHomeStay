@@ -14,5 +14,6 @@ namespace Repository.IRepositories
         Task<IEnumerable<HomeStay>> GetAllRegisterHomeStayAsync();
         Task<HomeStay> GetHomeStayDetailByIdAsync(int id);
         Task<HomeStay> GetOwnerHomeStayByIdAsync(string accountId);
+        Task SaveChangesAsync();
     }
 }

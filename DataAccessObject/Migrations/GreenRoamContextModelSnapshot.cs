@@ -407,7 +407,6 @@ namespace DataAccessObject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Area")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CancellationID")
@@ -1082,19 +1081,19 @@ namespace DataAccessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "532acf00-6fbc-41b8-802f-2fa10cc143b1",
+                            Id = "58940479-d741-4cf6-9cc0-f4916f085bc5",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "aab086d5-4835-4161-bfe2-b61d8f4100f6",
+                            Id = "b7559bef-c073-4761-8ded-5188d234a188",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "57e83061-893c-43ad-9995-35123c42adb9",
+                            Id = "2c73fbe8-af8c-48b6-94dc-38ccae7e41c5",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         });

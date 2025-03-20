@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
+using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.Service;
@@ -48,23 +49,48 @@ namespace GreenRoam.Controllers
             return await _homestayService.GetOwnerHomeStayByIdFromBase(accountId);
         }
 
+        //[HttpPost]
+        //[Route("CreateHomeStay")]
+        //public async Task<ActionResult<BaseResponse<List<HomeStay>>>> RegisterHomeStay(CreateHomeStayRequest request)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState); 
+        //    }
+
+        //    var homeStays = await _homestayService.RegisterHomeStay(request);
+
+        //    if (homeStays == null)
+        //    {
+        //        return StatusCode(500, "An error occurred while processing the request.");
+        //    }
+
+        //    return Ok(homeStays);
+        //}
+
         [HttpPost]
         [Route("CreateHomeStay")]
-        public async Task<ActionResult<BaseResponse<List<HomeStay>>>> RegisterHomeStay(CreateHomeStayRequest request)
+        public async Task<ActionResult<BaseResponse<List<HomeStay>>>> RegisterHomeStay([FromForm] CreateHomeStayRequest request)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState); 
+                if (request == null)
+                {
+                    return BadRequest(new BaseResponse<List<HomeStay>>("Request body cannot be null!", StatusCodeEnum.BadRequest_400, null));
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new BaseResponse<List<HomeStay>>("Invalid request data!", StatusCodeEnum.BadRequest_400, null));
+                }
+
+                var homeStays = await _homestayService.RegisterHomeStay(request);
+                return StatusCode((int)homeStays.StatusCode, homeStays);
             }
-
-            var homeStays = await _homestayService.RegisterHomeStay(request);
-
-            if (homeStays == null)
+            catch (Exception ex)
             {
-                return StatusCode(500, "An error occurred while processing the request.");
+                return StatusCode(500, new BaseResponse<List<HomeStay>>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null));
             }
-            
-            return Ok(homeStays);
         }
 
         [HttpPut]

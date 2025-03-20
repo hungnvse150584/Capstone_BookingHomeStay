@@ -2,6 +2,7 @@
 using BusinessObject.Model;
 using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Request.HomeStayType;
+using Service.RequestAndResponse.Request.ImageHomeStay;
 using Service.RequestAndResponse.Request.ImageHomeStayTypes;
 using Service.RequestAndResponse.Request.ImageService;
 using Service.RequestAndResponse.Request.Pricing;
@@ -38,6 +39,7 @@ namespace Service.Mapping
             /*CreateMap<Street, GetStreet>();*/
             CreateMap<CreateHomeStayRequest, HomeStay>().ReverseMap();
             CreateMap<UpdateHomeStayRequest, HomeStay>().ReverseMap();
+            CreateMap<UploadImageRequest, ImageHomeStay>().ReverseMap();
 
             CreateMap<HomeStayRentals, GetAllHomeStayType>();
             CreateMap<CreateHomeStayTypeRequest, HomeStayRentals>().ReverseMap();
@@ -53,7 +55,7 @@ namespace Service.Mapping
             CreateMap<CreateRoomRequest, Room>().ReverseMap();
             CreateMap<UpdateRoomRequest, Room>().ReverseMap();
 
-
+           
 
             CreateMap<Services, GetAllServices>();
             CreateMap<Services, CreateServices>().ReverseMap();
