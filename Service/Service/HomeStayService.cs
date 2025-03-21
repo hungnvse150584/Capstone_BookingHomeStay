@@ -75,6 +75,24 @@ namespace Service.Service
                 StatusCodeEnum.OK_200, homeStays);
         }
 
+        public async Task<BaseResponse<IEnumerable<GetAllHomeStayWithOwnerName>>> GetAllHomeStayWithOwnerName()
+        {
+            IEnumerable<HomeStay> homeStay = await _homeStayRepository.GetAllRegisterHomeStayAsync();
+            if (homeStay == null)
+            {
+                return new BaseResponse<IEnumerable<GetAllHomeStayWithOwnerName>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            var homeStays = _mapper.Map<IEnumerable<GetAllHomeStayWithOwnerName>>(homeStay);
+            if (homeStays == null)
+            {
+                return new BaseResponse<IEnumerable<GetAllHomeStayWithOwnerName>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            return new BaseResponse<IEnumerable<GetAllHomeStayWithOwnerName>>("Get all HomeStay as base success",
+                StatusCodeEnum.OK_200, homeStays);
+        }
+
         public async Task<BaseResponse<HomeStayResponse>> GetHomeStayDetailByIdFromBase(int id)
         {
             HomeStay homeStay = await _homeStayRepository.GetHomeStayDetailByIdAsync(id);

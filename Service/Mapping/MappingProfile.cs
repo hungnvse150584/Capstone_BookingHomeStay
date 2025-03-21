@@ -93,15 +93,17 @@ namespace Service.Mapping
             CreateMap<CultureExperience, GetAllCultureExperiencesResponse>().ReverseMap();
             CreateMap<Services, GetServiceForHomeStay>().ReverseMap();
             CreateMap<HomeStay, SimpleHomeStayResponse>().ReverseMap();
-            
-           
+            CreateMap<HomeStay, GetAllHomeStayWithOwnerName>()
+    .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.Account.Name));
+
+
         }
 
 
 
 
 
-       
-        
+
+
     }
 }
