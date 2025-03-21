@@ -28,6 +28,14 @@ namespace GreenRoam.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllHomeStayWithOwnerName")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllHomeStayWithOwnerName>>>> GetAllHomeStayWithOwnerName()
+        {
+            var homeStays = await _homestayService.GetAllHomeStayWithOwnerName();
+            return Ok(homeStays);
+        }
+
+        [HttpGet]
         [Route("GetRegisterHomeStay/{id}")]
         public async Task<ActionResult<BaseResponse<HomeStayResponse>>> GetHomeStayDetailById(int id)
         {

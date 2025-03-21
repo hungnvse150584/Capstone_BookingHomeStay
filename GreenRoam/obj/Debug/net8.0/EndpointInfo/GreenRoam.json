@@ -1373,6 +1373,35 @@
         }
       }
     },
+    "/api/homestay/GetAllHomeStayWithOwnerName": {
+      "get": {
+        "tags": [
+          "HomeStay"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllHomeStayWithOwnerNameIEnumerableBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllHomeStayWithOwnerNameIEnumerableBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllHomeStayWithOwnerNameIEnumerableBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/homestay/GetRegisterHomeStay/{id}": {
       "get": {
         "tags": [
@@ -4881,6 +4910,134 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GetAllHomeStayType"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetAllHomeStayWithOwnerName": {
+        "type": "object",
+        "properties": {
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "createAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "$ref": "#/components/schemas/HomeStayStatus"
+          },
+          "area": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          },
+          "commissionRateID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "commissionRate": {
+            "nullable": true
+          },
+          "cancellationID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cancelPolicy": {
+            "nullable": true
+          },
+          "typeOfRental": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reports": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetReportResponse"
+            },
+            "nullable": true
+          },
+          "imageHomeStays": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageHomeStayResponse"
+            },
+            "nullable": true
+          },
+          "cultureExperiences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAllCultureExperiencesResponse"
+            },
+            "nullable": true
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetServiceForHomeStay"
+            },
+            "nullable": true
+          },
+          "ratings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAllRatingResponse"
+            },
+            "nullable": true
+          },
+          "ownerName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetAllHomeStayWithOwnerNameIEnumerableBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAllHomeStayWithOwnerName"
             },
             "nullable": true
           }
