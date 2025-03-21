@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BusinessObject.Model;
+using Microsoft.AspNetCore.Http;
+using Service.RequestAndResponse.Request.BookingDetail;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +17,7 @@ namespace Service.RequestAndResponse.Request.HomeStayType
 
         public DateTime CreateAt { get; set; }
 
-        public DateTime UpdateAt { get; set; }
+        //public DateTime UpdateAt { get; set; }
 
         public int? HomeStayID { get; set; }
 
@@ -35,5 +38,6 @@ namespace Service.RequestAndResponse.Request.HomeStayType
         public int MaxChildren { get; set; }
 
         public int MaxPeople { get; set; }
+        public List<IFormFile> Images { get; set; }
     }
 }

@@ -1,5 +1,10 @@
 ﻿using BusinessObject.Model;
+using Service.RequestAndResponse.Response.BookingDetails;
 using Service.RequestAndResponse.Response.HomeStays;
+using Service.RequestAndResponse.Response.ImageHomeStay;
+using Service.RequestAndResponse.Response.ImageHomeStayTypes;
+using Service.RequestAndResponse.Response.Pricing;
+using Service.RequestAndResponse.Response.RoomType;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -41,6 +46,12 @@ namespace Service.RequestAndResponse.Response.HomeStayType
         public int MaxPeople { get; set; }
 
         public int? HomeStayID { get; set; }
-        public HomeStayResponse? HomeStay { get; set; }
+        public IEnumerable<GetAllImageHomeStayType> ImageHomeStayRentals { get; set; }
+        public IEnumerable<GetAllRoomType> RoomTypes { get; set; }
+
+       
+        public IEnumerable<GetBookingDetails> BookingDetails { get; set; }
+
+        public IEnumerable<GetAllPricing> Prices { get; set; }
     }
 }

@@ -13,5 +13,6 @@ namespace Repository.IRepositories
     
         Task<IEnumerable<ImageHomeStayRentals>> GetAllByImageIdAsync(int imageId);
         Task<ImageHomeStayRentals> GetImageHomeStayTypesByIdAsync(int id);
+        Task<ImageHomeStayRentals> AddImageAsync(ImageHomeStayRentals image);
     }
 }

@@ -51,7 +51,14 @@ namespace Service.Mapping
             CreateMap<UpdateHomeStayRequest, HomeStay>().ReverseMap();
             CreateMap<UploadImageRequest, ImageHomeStay>().ReverseMap();
 
-            CreateMap<HomeStayRentals, GetAllHomeStayType>();
+
+            
+            CreateMap<RoomTypes, GetAllRoomType>().ReverseMap();
+            CreateMap<ImageHomeStayRentals, GetAllImageHomeStayType>().ReverseMap();
+            CreateMap<HomeStayRentals, GetAllHomeStayType>()
+        .ForMember(dest => dest.ImageHomeStayRentals,
+               opt => opt.MapFrom(src => src.ImageHomeStayRentals));
+
             CreateMap<CreateHomeStayTypeRequest, HomeStayRentals>().ReverseMap();
 
             CreateMap<CreateRoomTypeRequest, RoomTypes>().ReverseMap();
@@ -95,6 +102,7 @@ namespace Service.Mapping
             CreateMap<HomeStay, SimpleHomeStayResponse>().ReverseMap();
             CreateMap<HomeStay, GetAllHomeStayWithOwnerName>()
     .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.Account.Name));
+
 
 
         }
