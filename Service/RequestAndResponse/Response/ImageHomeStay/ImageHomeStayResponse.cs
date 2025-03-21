@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Service.RequestAndResponse.Response.ImageHomeStay
 {
@@ -17,8 +18,7 @@ namespace Service.RequestAndResponse.Response.ImageHomeStay
         [Required]
         public string? Image { get; set; }
 
-        public int? HomeStayID { get; set; }
-        [ForeignKey("HomeStayID")]
-        public HomeStay? HomeStay { get; set; }
+
+       
     }
 }

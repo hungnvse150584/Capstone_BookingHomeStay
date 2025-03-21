@@ -4593,6 +4593,39 @@
         },
         "additionalProperties": false
       },
+      "GetAllCultureExperiencesResponse": {
+        "required": [
+          "cultureName",
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "cultureName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "cultureType": {
+            "type": "string",
+            "nullable": true
+          },
+          "createAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "GetAllDetailOfServices": {
         "type": "object",
         "properties": {
@@ -4928,6 +4961,16 @@
         },
         "additionalProperties": false
       },
+      "GetAllRatingResponse": {
+        "type": "object",
+        "properties": {
+          "rate": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "GetAllRoomType": {
         "type": "object",
         "properties": {
@@ -5190,6 +5233,49 @@
           },
           "booking": {
             "$ref": "#/components/schemas/GetAllBookings"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetReportResponse": {
+        "type": "object",
+        "properties": {
+          "reportID": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetServiceForHomeStay": {
+        "type": "object",
+        "properties": {
+          "servicesName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "createAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "servicesPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -5737,6 +5823,23 @@
           },
           "homeStayRentals": {
             "$ref": "#/components/schemas/HomeStayRentals"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ImageHomeStayResponse": {
+        "required": [
+          "image"
+        ],
+        "type": "object",
+        "properties": {
+          "imageHomeStayID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "image": {
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -6462,37 +6565,37 @@
           },
           "reports": {
             "type": "array",
-            "items": { },
-            "nullable": true
-          },
-          "homeStayRentals": {
-            "type": "array",
-            "items": { },
+            "items": {
+              "$ref": "#/components/schemas/GetReportResponse"
+            },
             "nullable": true
           },
           "imageHomeStays": {
             "type": "array",
-            "items": { },
-            "nullable": true
-          },
-          "bookings": {
-            "type": "array",
-            "items": { },
+            "items": {
+              "$ref": "#/components/schemas/ImageHomeStayResponse"
+            },
             "nullable": true
           },
           "cultureExperiences": {
             "type": "array",
-            "items": { },
+            "items": {
+              "$ref": "#/components/schemas/GetAllCultureExperiencesResponse"
+            },
             "nullable": true
           },
           "services": {
             "type": "array",
-            "items": { },
+            "items": {
+              "$ref": "#/components/schemas/GetServiceForHomeStay"
+            },
             "nullable": true
           },
           "ratings": {
             "type": "array",
-            "items": { },
+            "items": {
+              "$ref": "#/components/schemas/GetAllRatingResponse"
+            },
             "nullable": true
           }
         },

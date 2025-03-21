@@ -32,9 +32,20 @@ namespace DataAccessObject
 
         public async Task<IEnumerable<HomeStay>> GetAllRegisterHomeStayAsync()
         {
+            //return await _context.HomeStays
+            //            .Include(c => c.Account)
+
+            //            .ToListAsync();
             return await _context.HomeStays
-                        .Include(c => c.Account)
-                        .ToListAsync();
+               .Include(h => h.Account)
+               .Include(h => h.Reports)
+               .Include(h => h.HomeStayRentals)
+               .Include(h => h.ImageHomeStays)
+               .Include(h => h.Bookings)
+               .Include(h => h.CultureExperiences)
+               .Include(h => h.Services)
+               .Include(h => h.Ratings)
+               .ToListAsync();
         }
 
         public async Task<HomeStay> GetHomeStayDetailByIdAsync(int id)
@@ -60,6 +71,7 @@ namespace DataAccessObject
                         .Include(c => c.Services)
                         .ToListAsync();
         }
+        
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

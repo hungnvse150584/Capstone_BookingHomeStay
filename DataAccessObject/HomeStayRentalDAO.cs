@@ -25,7 +25,10 @@ namespace DataAccessObject
                         .ToListAsync();                          
         }
 
-
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
         public async Task<HomeStayRentals> GetHomeStayTypeByIdAsync(int? id)
         {
             if (id <= 0)

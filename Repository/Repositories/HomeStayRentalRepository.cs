@@ -43,5 +43,10 @@ namespace Repository.Repositories
         {
             return _homestayrentalDao.GetHomeStayTypeByIdAsync(id);
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _homestayrentalDao.SaveChangesAsync();
+        }
     }
 }

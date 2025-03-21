@@ -17,11 +17,15 @@ using Service.RequestAndResponse.Response.BookingOfServicesDetails;
 using Service.RequestAndResponse.Response.Bookings;
 using Service.RequestAndResponse.Response.CancellationPolicyRequest;
 using Service.RequestAndResponse.Response.CommissionRate;
+using Service.RequestAndResponse.Response.CultureExperiences;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.HomeStayType;
+using Service.RequestAndResponse.Response.ImageHomeStay;
 using Service.RequestAndResponse.Response.ImageHomeStayTypes;
 using Service.RequestAndResponse.Response.ImageService;
 using Service.RequestAndResponse.Response.Pricing;
+using Service.RequestAndResponse.Response.Ratings;
+using Service.RequestAndResponse.Response.Reports;
 using Service.RequestAndResponse.Response.Room;
 using Service.RequestAndResponse.Response.RoomType;
 using Service.RequestAndResponse.Response.Services;
@@ -39,8 +43,9 @@ namespace Service.Mapping
     {
         public MappingProfile()
         {
+
             CreateMap<HomeStay, HomeStayResponse>();
-            CreateMap<HomeStay, SimpleHomeStayResponse>().ReverseMap();
+            //CreateMap<HomeStay, SimpleHomeStayResponse>().ReverseMap();
             /*CreateMap<Street, GetStreet>();*/
             CreateMap<CreateHomeStayRequest, HomeStay>().ReverseMap();
             CreateMap<UpdateHomeStayRequest, HomeStay>().ReverseMap();
@@ -76,16 +81,26 @@ namespace Service.Mapping
             CreateMap<BookingDetail, GetBookingDetails>();
             CreateMap<BookingServices, GetAllBookingServices>();
             CreateMap<Booking, GetAllBookings>();
-            CreateMap<BookingServicesDetail, GetAllDetailOfServices>();
-
-
-            
-
-            
             CreateMap<ImageServices, GetAllImageService>();
             CreateMap<ImageServices, GetImageService>();
             CreateMap<ImageServices, AddImageServicesRequest>().ReverseMap();
             CreateMap<ImageServices, UpdateImageServicesRequest>().ReverseMap();
+            CreateMap<BookingServicesDetail, GetAllDetailOfServices>();
+            CreateMap<ImageHomeStay, ImageHomeStayResponse>().ReverseMap();
+            CreateMap<Rating, GetAllRatingResponse>().ReverseMap();
+            CreateMap<Report, GetReportResponse>().ReverseMap();
+            CreateMap<CultureExperience, GetAllCultureExperiencesResponse>().ReverseMap();
+            CreateMap<Services, GetServiceForHomeStay>().ReverseMap();
+            CreateMap<HomeStay, SimpleHomeStayResponse>().ReverseMap();
+            
+           
         }
+
+
+
+
+
+       
+        
     }
 }
