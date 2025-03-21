@@ -1,4 +1,5 @@
-﻿using Service.RequestAndResponse.BaseResponse;
+﻿using BusinessObject.Model;
+using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.HomeStayType;
 using Service.RequestAndResponse.Request.Services;
 using Service.RequestAndResponse.Response.HomeStayType;
@@ -15,11 +16,9 @@ namespace Service.IService
     {
         Task<BaseResponse<IEnumerable<GetAllHomeStayType>>> GetAllHomeStayTypes();
 
-        Task<BaseResponse<CreateHomeStayTypeRequest>> CreateHomeStayType(CreateHomeStayTypeRequest typeRequest);
+        Task<BaseResponse<IEnumerable<GetAllHomeStayType>>> GetAllHomeStayTypesByHomeStayID(int homestayId);
+        Task<BaseResponse<List<HomeStayRentals>>> CreateHomeStayType(CreateHomeStayTypeRequest typeRequest);
 
-        Task<BaseResponse<IEnumerable<GetAllServices>>> GetAllServices();
-
-        Task<BaseResponse<CreateServices>> CreateServices(CreateServices servicesRequest);
         Task<BaseResponse<string>> DeleteHomeStayRental(int id);
     }
 }

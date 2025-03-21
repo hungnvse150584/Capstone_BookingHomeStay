@@ -43,5 +43,10 @@ namespace Repository.Repositories
         {
             return _imageHomeStayTypesDAO.GetImageHomeStayTypesByIdAsync(id);
         }
+
+        public async Task<ImageHomeStayRentals> AddImageAsync(ImageHomeStayRentals image)
+        {
+            return await _imageHomeStayTypesDAO.AddAsync(image);
+        }
     }
 }

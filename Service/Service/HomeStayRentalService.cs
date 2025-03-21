@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using BusinessObject.Model;
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
+using Microsoft.AspNetCore.Http;
 using Repository.IRepositories;
 using Repository.Repositories;
 using Service.IService;
@@ -22,13 +25,125 @@ namespace Service.Service
         private readonly IMapper _mapper;
         private readonly IHomeStayRentalRepository _homeStayTypeRepository;
         private readonly IServiceRepository _serviceRepository;
+        private readonly Cloudinary _cloudinary;
+        private readonly IImageHomeStayTypesRepository _imageHomeStayTypesRepository;
 
         public HomeStayRentalService(IMapper mapper, IHomeStayRentalRepository homeStayTypeRepository,
-             IServiceRepository serviceRepository)
+             IServiceRepository serviceRepository, Cloudinary cloudinary, IImageHomeStayTypesRepository imageHomeStayTypes)
         {
             _mapper = mapper;
             _homeStayTypeRepository = homeStayTypeRepository;
             _serviceRepository = serviceRepository;
+            _cloudinary = cloudinary;
+            _imageHomeStayTypesRepository = imageHomeStayTypes;
+        }
+
+        public async Task<BaseResponse<IEnumerable<GetAllHomeStayType>>> GetAllHomeStayTypesByHomeStayID(int homestayId)
+        {
+            IEnumerable<HomeStayRentals> homeStayType = await _homeStayTypeRepository.GetAllHomeStayTypesAsync(homestayId);
+            if (homeStayType == null)
+            {
+                return new BaseResponse<IEnumerable<GetAllHomeStayType>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            var homeStayTypes = _mapper.Map<IEnumerable<GetAllHomeStayType>>(homeStayType);
+            if (homeStayTypes == null)
+            {
+                return new BaseResponse<IEnumerable<GetAllHomeStayType>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            return new BaseResponse<IEnumerable<GetAllHomeStayType>>("Get all HomeStayType as base success",
+                StatusCodeEnum.OK_200, homeStayTypes);
+        }
+
+        public async Task<BaseResponse<List<HomeStayRentals>>> CreateHomeStayType(CreateHomeStayTypeRequest typeRequest)
+        {
+            try
+            {
+               
+                var rentalEntity = _mapper.Map<HomeStayRentals>(typeRequest);
+
+             
+                rentalEntity.CreateAt = DateTime.Now;
+                //rentalEntity.UpdateAt = DateTime.Now;
+
+               
+                await _homeStayTypeRepository.AddAsync(rentalEntity);
+                await _homeStayTypeRepository.SaveChangesAsync();
+
+              
+                if (typeRequest.Images != null && typeRequest.Images.Any())
+                {
+                    var imageUrls = await UploadImagesToCloudinary(typeRequest.Images);
+                    foreach (var url in imageUrls)
+                    {
+                        var imageRental = new ImageHomeStayRentals
+                        {
+                            Image = url,
+                            HomeStayRentalID = rentalEntity.HomeStayRentalID
+                        };
+                        await _imageHomeStayTypesRepository.AddImageAsync(imageRental);
+                    }
+                }
+
+         
+                return new BaseResponse<List<HomeStayRentals>>("Create HomeStay Rental successfully", StatusCodeEnum.Created_201, new List<HomeStayRentals> { rentalEntity });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+                return new BaseResponse<List<HomeStayRentals>>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
+            }
+        }
+        private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> files)
+        {
+            if (files == null || !files.Any())
+            {
+                return new List<string>(); // Trả về danh sách rỗng nếu không có file
+            }
+
+            var urls = new List<string>();
+
+            foreach (var file in files)
+            {
+                if (file == null || file.Length == 0)
+                {
+                    continue; // Bỏ qua file không hợp lệ
+                }
+
+                using var stream = file.OpenReadStream();
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(file.FileName, stream),
+                    Folder = "HomeStayRentalImages"
+                };
+
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    urls.Add(uploadResult.SecureUrl.ToString());
+                }
+                else
+                {
+                    throw new Exception($"Failed to upload image to Cloudinary: {uploadResult.Error.Message}");
+                }
+            }
+
+            return urls;
+        }
+
+
+
+
+
+
+        public async Task<BaseResponse<string>> DeleteHomeStayRental(int id)
+        {
+            var rental = await _homeStayTypeRepository.GetByIdAsync(id);
+            await _homeStayTypeRepository.DeleteAsync(rental);
+            return new BaseResponse<string>("Delete homestay rental success", StatusCodeEnum.OK_200, "Deleted successfully");
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllHomeStayType>>> GetAllHomeStayTypes()
@@ -48,48 +163,5 @@ namespace Service.Service
             return new BaseResponse<IEnumerable<GetAllHomeStayType>>("Get all HomeStayType as base success",
                 StatusCodeEnum.OK_200, homeStayTypes);
         }
-
-        public async Task<BaseResponse<CreateHomeStayTypeRequest>> CreateHomeStayType(CreateHomeStayTypeRequest typeRequest)
-        {
-            HomeStayRentals homeStayTypes = _mapper.Map<HomeStayRentals>(typeRequest);
-            await _homeStayTypeRepository.AddAsync(homeStayTypes);
-
-            var response = _mapper.Map<CreateHomeStayTypeRequest>(homeStayTypes);
-            return new BaseResponse<CreateHomeStayTypeRequest>("Add HomeStayType as base success", StatusCodeEnum.Created_201, response);
-        }
-
-        public async Task<BaseResponse<CreateServices>> CreateServices(CreateServices servicesRequest)
-        {
-            Services services = _mapper.Map<Services>(servicesRequest);
-            await _serviceRepository.AddAsync(services);
-
-            var response = _mapper.Map<CreateServices>(services);
-            return new BaseResponse<CreateServices>("Add Services as base success", StatusCodeEnum.Created_201, response);
-        }
-
-        public async Task<BaseResponse<IEnumerable<GetAllServices>>> GetAllServices()
-        {
-            IEnumerable<Services> service = await _serviceRepository.GetAllAsync();
-            if (service == null)
-            {
-                return new BaseResponse<IEnumerable<GetAllServices>>("Something went wrong!",
-                StatusCodeEnum.BadGateway_502, null);
-            }
-            var services = _mapper.Map<IEnumerable<GetAllServices>>(service);
-            if (services == null)
-            {
-                return new BaseResponse<IEnumerable<GetAllServices>>("Something went wrong!",
-                StatusCodeEnum.BadGateway_502, null);
-            }
-            return new BaseResponse<IEnumerable<GetAllServices>>("Get all services as base success",
-                StatusCodeEnum.OK_200, services);
-        }
-
-        public async Task<BaseResponse<string>> DeleteHomeStayRental(int id)
-        {
-            var rental = await _homeStayTypeRepository.GetByIdAsync(id);
-            await _homeStayTypeRepository.DeleteAsync(rental);
-            return new BaseResponse<string>("Delete homestay rental success", StatusCodeEnum.OK_200, "Deleted successfully");
-        }
-    }
+    } 
 }

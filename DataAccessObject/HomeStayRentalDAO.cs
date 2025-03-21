@@ -16,14 +16,19 @@ namespace DataAccessObject
         {
             _context = context;
         }
+
         public async Task<IEnumerable<HomeStayRentals>> GetAllHomeStayTypesAsync(int homestayId)
         {
             return await _context.HomeStayRentals
-                        .Where(c => c.HomeStayID == homestayId)              
-                        .Include(c => c.ImageHomeStayRentals)
-                        .Include(c => c.HomeStay)
-                        .ToListAsync();                          
+                .Where(c => c.HomeStayID == homestayId)
+                .Include(c => c.HomeStay)
+                .Include(c => c.ImageHomeStayRentals)
+                .Include(c => c.RoomTypes)            
+                .Include(c => c.BookingDetails)       
+                .Include(c => c.Prices)              
+                .ToListAsync();
         }
+
 
         public async Task SaveChangesAsync()
         {

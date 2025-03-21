@@ -183,7 +183,7 @@ namespace Service.Service
                 TypeOfRental = request.RentalType,
                 Address = request.Address,
                 Area = request.Area,
-                Longitude = request.Longtitude, // Đã sửa từ Longtitude thành Longitude
+                Longitude = request.Longtitude,
                 Latitude = request.Latitude,
                 AccountID = request.AccountID,
             }

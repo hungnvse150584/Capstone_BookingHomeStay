@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessObject.Model;
+using Microsoft.AspNetCore.Mvc;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
+using Service.RequestAndResponse.Enums;
+using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Request.HomeStayType;
 using Service.RequestAndResponse.Request.RoomType;
 using Service.RequestAndResponse.Request.Services;
@@ -27,43 +30,37 @@ namespace GreenRoam.Controllers
 
         [HttpGet]
         [Route("GetAllHomeStayTypes")]
-        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllHomeStayType>>>> GetAllHomeStayTypes()
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllHomeStayType>>>> GetAllHomeStayTypesByHomeStayId(int homestayId)
         {
-            var homeStays = await _homeStayTypeService.GetAllHomeStayTypes();
+            var homeStays = await _homeStayTypeService.GetAllHomeStayTypesByHomeStayID(homestayId);
             return Ok(homeStays);
         }
 
         [HttpPost]
-        [Route("CreateHomeStayType")]
-        public async Task<ActionResult<BaseResponse<CreateHomeStayTypeRequest>>> CreateHomeStayType([FromBody] CreateHomeStayTypeRequest typeRequest)
+        [Route("CreateHomeStayRental")]
+        public async Task<ActionResult<BaseResponse<List<HomeStayRentals>>>> CreateHomeStayRental([FromForm] CreateHomeStayTypeRequest request)
         {
-            if (typeRequest == null)
+            try
             {
-                return BadRequest("Please Implement all Information");
+                if (request == null)
+                {
+                    return BadRequest(new BaseResponse<List<HomeStayRentals>>("Request body cannot be null!", StatusCodeEnum.BadRequest_400, null));
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new BaseResponse<List<HomeStayRentals>>("Invalid request data!", StatusCodeEnum.BadRequest_400, null));
+                }
+
+                var homeStays = await _homeStayTypeService.CreateHomeStayType(request);
+                return StatusCode((int)homeStays.StatusCode, homeStays);
             }
-            var homeStayType = await _homeStayTypeService.CreateHomeStayType(typeRequest);
-            return homeStayType;
+            catch (Exception ex)
+            {
+                return StatusCode(500, new BaseResponse<List<HomeStayRentals>>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null));
+            }
         }
 
-        [HttpGet]
-        [Route("GetAllServices")]
-        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllServices>>>> GetAllServices()
-        {
-            var services = await _homeStayTypeService.GetAllServices();
-            return Ok(services);
-        }
-
-        [HttpPost]
-        [Route("CreateService")]
-        public async Task<ActionResult<BaseResponse<CreateServices>>> CreateService([FromBody] CreateServices serviceRequest)
-        {
-            if (serviceRequest == null)
-            {
-                return BadRequest("Please Implement all Information");
-            }
-            var services = await _homeStayTypeService.CreateServices(serviceRequest);
-            return services;
-        }
 
         //RoomTypes
         [HttpGet]

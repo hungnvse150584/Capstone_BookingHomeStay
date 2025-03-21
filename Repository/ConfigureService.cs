@@ -47,7 +47,7 @@ namespace Repository
             services.AddScoped<IImageHomeStayTypesRepository, ImageHomeStayTypesRepository>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
-            //
+            
             services.AddScoped<AccountDAO>();
 
             services.AddScoped<HomeStayDAO>();
