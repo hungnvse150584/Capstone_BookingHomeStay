@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Model;
+using Repository.IBaseRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repository.IRepositories
 {
-    public interface ICommissionRateRepository
+    public interface ICommissionRateRepository : IBaseRepository<CommissionRate>
     {
         Task<IEnumerable<CommissionRate>> GetAllCommissionRate();
         Task<CommissionRate?> GetCommissionRateByHomeStay(int homeStayID);

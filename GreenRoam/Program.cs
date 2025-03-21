@@ -64,10 +64,14 @@ builder.Services.AddSwaggerGen(option =>
         }
     });
     // Cấu hình hỗ trợ file upload (multipart/form-data)
-    option.MapType<IFormFile>(() => new OpenApiSchema
+    //option.MapType<IFormFile>(() => new OpenApiSchema
+    //{
+    //    Type = "string",
+    //    Format = "binary"
+    //});
+    option.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
     {
-        Type = "string",
-        Format = "binary"
+        Url = "https://localhost:7221"
     });
 });
 
@@ -111,25 +115,15 @@ builder.Services.AddAuthentication(options =>
         )
     };
 });
-//
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policyBuilder =>
-    {
-        policyBuilder.AllowAnyOrigin()
-                     .AllowAnyHeader()
-                     .AllowAnyMethod();
-    });
+    options.AddDefaultPolicy(
+        builder => builder
+            .AllowAnyOrigin()   
+            .AllowAnyHeader()
+            .AllowAnyMethod());
 });
 builder.Services.AddAuthorization();
-
-//var cloudinaryConfig = builder.Configuration.GetSection("Cloudinary");
-//var cloudinary = new Cloudinary(new CloudinaryDotNet.Account(
-//    cloudinaryConfig["CloudName"],
-//    cloudinaryConfig["ApiKey"],
-//    cloudinaryConfig["ApiSecret"]
-//));
-//builder.Services.AddSingleton(cloudinary);
 var cloudName = builder.Configuration["Cloudinary:CloudName"];
 var apiKey = builder.Configuration["Cloudinary:ApiKey"];
 var apiSecret = builder.Configuration["Cloudinary:ApiSecret"];
@@ -139,6 +133,8 @@ builder.Services.AddSingleton(cloudinary);
 var app = builder.Build();
 
 
+app.UseRouting();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -147,7 +143,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowAll");
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 app.UseAuthentication();
 app.UseAuthorization();
 
