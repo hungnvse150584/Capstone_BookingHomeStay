@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.BookingOfServicesDetails;
+using Service.RequestAndResponse.Response.ImageHomeStay;
+using Service.RequestAndResponse.Response.ImageService;
 
 namespace Service.RequestAndResponse.Response.Services
 {
@@ -28,7 +30,8 @@ namespace Service.RequestAndResponse.Response.Services
         public bool Status { get; set; }
 
         public int? HomeStayID { get; set; }
-        public HomeStayResponse? HomeStay { get; set; }
+        //public HomeStayResponse? HomeStay { get; set; }
+        public IEnumerable<GetAllImageService> ImageServices { get; set; }
 
         public ICollection<GetAllDetailOfServices> BookingServicesDetails { get; set; }
     }

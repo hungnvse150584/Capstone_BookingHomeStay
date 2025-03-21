@@ -73,7 +73,8 @@ namespace Service.Mapping
             CreateMap<CancellationPolicy, UpdateCancellationPolicyRequest>().ReverseMap();
             CreateMap<CancellationPolicy, GetAllCancellationPolicy>().ReverseMap();
 
-            CreateMap<Services, GetAllServices>();
+            CreateMap<ImageServices, GetAllImageService>().ReverseMap();
+            CreateMap<Services, GetAllServices>().ReverseMap();
             CreateMap<Services, CreateServices>().ReverseMap();
             CreateMap<ImageHomeStayRentals, AddImageHomeStayTypesRequest>().ReverseMap();
             CreateMap<ImageHomeStayRentals, UpdateImageHomeStayTypesRequest>().ReverseMap();
@@ -83,7 +84,7 @@ namespace Service.Mapping
             CreateMap<Booking, GetAllBookings>();
             CreateMap<ImageServices, GetAllImageService>();
             CreateMap<ImageServices, GetImageService>();
-            CreateMap<ImageServices, AddImageServicesRequest>().ReverseMap();
+            CreateMap<ImageServices, UploadImageServiceRequest>().ReverseMap();
             CreateMap<ImageServices, UpdateImageServicesRequest>().ReverseMap();
             CreateMap<BookingServicesDetail, GetAllDetailOfServices>();
             CreateMap<ImageHomeStay, ImageHomeStayResponse>().ReverseMap();
