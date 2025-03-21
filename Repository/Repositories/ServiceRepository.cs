@@ -39,9 +39,21 @@ namespace Repository.Repositories
             return _serviceDao.GetAllAsync();
         }
 
-        public Task<Services> GetByIdAsync(int id)
+        public async Task<Services> GetByIdAsync(int id)
         {
-            return _serviceDao.GetByIdAsync(id);
+            return await _serviceDao.GetByIdAsync(id);
+        }
+
+        public async Task<IEnumerable<Services>> GetAllServiceAsync()
+        {
+            return await _serviceDao.GetAllServiceAsync();
+        }
+
+       
+
+        public Task SaveChangesAsync()
+        {
+            return _serviceDao.SaveChangesAsync();
         }
     }
 }

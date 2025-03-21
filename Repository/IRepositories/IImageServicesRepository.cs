@@ -12,5 +12,6 @@ namespace Repository.IRepositories
     {
         Task<IEnumerable<ImageServices>> GetAllByServiceIdAsync(int serviceId);
         Task<ImageServices> GetImageServiceByIdAsync(int id);
+        Task<ImageServices> AddImageAsync(ImageServices image);
     }
 }

@@ -19,34 +19,39 @@ namespace Repository.Repositories
             _imageServicesDao = imageServicesDao;
         }
 
-        public Task<ImageServices> AddAsync(ImageServices entity)
+        public async Task<ImageServices> AddAsync(ImageServices entity)
         {
-            return _imageServicesDao.AddAsync(entity);
+            return  await _imageServicesDao.AddAsync(entity);
         }
 
-        public Task<ImageServices> UpdateAsync(ImageServices entity)
+        public async Task<ImageServices> UpdateAsync(ImageServices entity)
         {
-            return _imageServicesDao.UpdateAsync(entity);
+            return await _imageServicesDao.UpdateAsync(entity);
         }
 
-        public Task<ImageServices> DeleteAsync(ImageServices entity)
+        public async Task<ImageServices> DeleteAsync(ImageServices entity)
         {
-            return _imageServicesDao.DeleteAsync(entity);
+            return await _imageServicesDao.DeleteAsync(entity);
         }
 
-        public Task<IEnumerable<ImageServices>> GetAllAsync()   
+        public async Task<IEnumerable<ImageServices>> GetAllAsync()   
         {
-            return _imageServicesDao.GetAllAsync();
+            return await _imageServicesDao.GetAllAsync();
         }
 
-        public Task<IEnumerable<ImageServices>> GetAllByServiceIdAsync(int serviceId)
+        public async Task<IEnumerable<ImageServices>> GetAllByServiceIdAsync(int serviceId)
         {
-            return _imageServicesDao.GetAllByServiceIdAsync(serviceId);
+            return await _imageServicesDao.GetAllByServiceIdAsync(serviceId);
         }
 
-        public Task<ImageServices> GetImageServiceByIdAsync(int id)
+        public async Task<ImageServices> GetImageServiceByIdAsync(int id)
         {
-            return _imageServicesDao.GetImageServiceByIdAsync(id);
+            return await _imageServicesDao.GetImageServiceByIdAsync(id);
+        }
+
+        public async Task<ImageServices> AddImageAsync(ImageServices image)
+        {
+            return await _imageServicesDao.AddAsync(image); ;
         }
     }
 }

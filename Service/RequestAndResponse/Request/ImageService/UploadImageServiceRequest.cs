@@ -8,16 +8,12 @@ using System.Threading.Tasks;
 
 namespace Service.RequestAndResponse.Request.ImageService
 {
-    public class AddImageServicesRequest
+    public class UploadImageServiceRequest
     {
-        [Key]
-        public int ImageServicesID { get; set; }
-
         [Required]
-        public string? Image { get; set; }
+        public IFormFile File { get; set; }
 
-        public int? ServicesID { get; set; }
-        [Required]
-        public List<IFormFile> Images { get; set; }
+        public int? ServiceID { get; set; }
+
     }
 }

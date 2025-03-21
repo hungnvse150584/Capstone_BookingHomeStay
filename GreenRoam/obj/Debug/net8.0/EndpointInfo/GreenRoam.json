@@ -2988,6 +2988,133 @@
         }
       }
     },
+    "/api/Service/GetAllServices": {
+      "get": {
+        "tags": [
+          "Service"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllServicesIEnumerableBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllServicesIEnumerableBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllServicesIEnumerableBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Service/CreateService": {
+      "post": {
+        "tags": [
+          "Service"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "Description",
+                  "Images",
+                  "servicesName",
+                  "servicesPrice",
+                  "UnitPrice"
+                ],
+                "type": "object",
+                "properties": {
+                  "servicesName": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "UnitPrice": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "servicesPrice": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Status": {
+                    "type": "boolean"
+                  },
+                  "HomeStayID": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "servicesName": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "UnitPrice": {
+                  "style": "form"
+                },
+                "servicesPrice": {
+                  "style": "form"
+                },
+                "Status": {
+                  "style": "form"
+                },
+                "HomeStayID": {
+                  "style": "form"
+                },
+                "Images": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesListBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesListBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesListBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/WeatherForecast": {
       "get": {
         "tags": [
@@ -3209,7 +3336,8 @@
       },
       "AddImageServicesRequest": {
         "required": [
-          "image"
+          "image",
+          "images"
         ],
         "type": "object",
         "properties": {
@@ -3225,6 +3353,13 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "binary"
+            }
           }
         },
         "additionalProperties": false
@@ -4139,6 +4274,7 @@
       "CreateServices": {
         "required": [
           "description",
+          "images",
           "servicesName",
           "servicesPrice",
           "unitPrice"
@@ -4152,14 +4288,6 @@
           "description": {
             "minLength": 1,
             "type": "string"
-          },
-          "createAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updateAt": {
-            "type": "string",
-            "format": "date-time"
           },
           "unitPrice": {
             "type": "number",
@@ -4176,6 +4304,13 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "binary"
+            }
           }
         },
         "additionalProperties": false
@@ -5158,8 +5293,12 @@
             "format": "int32",
             "nullable": true
           },
-          "homeStay": {
-            "$ref": "#/components/schemas/HomeStayResponse"
+          "imageServices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAllImageService"
+            },
+            "nullable": true
           },
           "bookingServicesDetails": {
             "type": "array",
@@ -6491,6 +6630,26 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/BookingServicesDetail"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ServicesListBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Services"
             },
             "nullable": true
           }

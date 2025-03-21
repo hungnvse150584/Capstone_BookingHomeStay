@@ -33,7 +33,7 @@ namespace Service
             services.AddScoped<IImageHomeStayService, ImageHomeStayService>();
             services.AddScoped<ICancellationPolicyService, CancellationPolicyService>();
             services.AddScoped<IVnPayService, VnPayService>();
-
+            services.AddScoped<IServiceServices, ServicesService>();
             services.AddScoped<ITokenService, TokenService>();
 
             return services;
