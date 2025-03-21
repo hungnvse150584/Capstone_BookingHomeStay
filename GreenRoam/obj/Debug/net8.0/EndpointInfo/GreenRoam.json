@@ -3031,10 +3031,21 @@
         }
       }
     },
-    "/api/Service/GetAllServices": {
+    "/api/Service/GetAllServices/{homestayId}": {
       "get": {
         "tags": [
           "Service"
+        ],
+        "parameters": [
+          {
+            "name": "homestayId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -4952,7 +4963,7 @@
         ],
         "type": "object",
         "properties": {
-          "imageHomeStayTypesID": {
+          "imageHomeStayRentalsID": {
             "type": "integer",
             "format": "int32"
           },

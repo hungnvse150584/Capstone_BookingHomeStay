@@ -14,6 +14,6 @@ namespace Service.IService
     public interface IServiceServices
     {
         Task<BaseResponse<Services>> CreateService(CreateServices request);
-        Task<BaseResponse<IEnumerable<GetAllServices>>> GetAllServices();
+        Task<BaseResponse<IEnumerable<GetAllServices>>> GetAllServices(int homestayId);
     }
 }

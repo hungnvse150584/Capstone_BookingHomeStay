@@ -12,7 +12,7 @@ namespace Service.RequestAndResponse.Response.ImageHomeStayTypes
     public class GetAllImageHomeStayType
     {
         [Key]
-        public int ImageHomeStayTypesID { get; set; }
+        public int ImageHomeStayRentalsID { get; set; }
 
         [Required]
         public string? Image { get; set; }
