@@ -17,5 +17,7 @@ namespace Service.IService
         Task<BaseResponse<GetAllCommissionRate>> GetCommissionRateByHomeStay(int homeStayID);
         Task<BaseResponse<CreateCommissionRateRequest>> CreateCommmisionRate(CreateCommissionRateRequest typeRequest);
         Task<BaseResponse<UpdateCommissionRateRequest>> UpdateCommmisionRate(UpdateCommissionRateRequest typeRequest);
+        Task<BaseResponse<string>> DeleteCommissionRate(int id);
+
     }
 }

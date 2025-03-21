@@ -40,6 +40,7 @@ namespace Service.Mapping
         public MappingProfile()
         {
             CreateMap<HomeStay, HomeStayResponse>();
+            CreateMap<HomeStay, SimpleHomeStayResponse>().ReverseMap();
             /*CreateMap<Street, GetStreet>();*/
             CreateMap<CreateHomeStayRequest, HomeStay>().ReverseMap();
             CreateMap<UpdateHomeStayRequest, HomeStay>().ReverseMap();

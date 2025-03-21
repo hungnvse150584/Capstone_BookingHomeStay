@@ -88,6 +88,29 @@ namespace Service.Service
             var result = _mapper.Map<HomeStayResponse>(homeStay);
             return new BaseResponse<HomeStayResponse>("Get HomeStay as base success", StatusCodeEnum.OK_200, result);
         }
+        public async Task<BaseResponse<IEnumerable<SimpleHomeStayResponse>>> GetSimpleHomeStaysByAccount(string accountId)
+        {
+            try
+            {
+
+                var allHomeStays = await _homeStayRepository.GetAllRegisterHomeStayAsync();
+                var filteredHomeStays = allHomeStays.Where(h => h.AccountID == accountId).ToList();
+
+                if (!filteredHomeStays.Any())
+                {
+                    return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("No HomeStay found for the account", StatusCodeEnum.NotFound_404, null);
+                }
+
+                // Ánh xạ sang SimpleHomeStayResponse
+                var response = _mapper.Map<IEnumerable<SimpleHomeStayResponse>>(filteredHomeStays);
+                return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("Get HomeStays by account success", StatusCodeEnum.OK_200, response);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
+            }
+        }
+
         private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> files)
         {
             if (files == null || !files.Any())
@@ -197,5 +220,7 @@ namespace Service.Service
 
             return new BaseResponse<HomeStay>("Update HomeStay successfully", StatusCodeEnum.OK_200, updatedHomeStay);
         }
+
+       
     }
 }

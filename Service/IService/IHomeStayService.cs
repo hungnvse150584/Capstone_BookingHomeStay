@@ -18,6 +18,7 @@ namespace Service.IService
         Task<BaseResponse<IEnumerable<HomeStayResponse>>> GetAllHomeStayRegisterFromBase();
         Task<BaseResponse<HomeStayResponse>> GetHomeStayDetailByIdFromBase(int id);
         Task<BaseResponse<HomeStayResponse>> GetOwnerHomeStayByIdFromBase(string accountId);
+        Task<BaseResponse<IEnumerable<SimpleHomeStayResponse>>> GetSimpleHomeStaysByAccount(string accountId);
         Task<BaseResponse<string>> DeleteHomeStay(int id);
     }
 }

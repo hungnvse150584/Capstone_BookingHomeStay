@@ -85,6 +85,11 @@ namespace Service.Service
             return new BaseResponse<GetAllCommissionRate>("Successfully retrieved CommissionRate for HomeStay", StatusCodeEnum.OK_200, response);
         }
 
-
+        public async Task<BaseResponse<string>> DeleteCommissionRate(int id)
+        {
+            var cp = await _commissionRateRepository.GetCommissionRateByHomeStay(id);
+            await _commissionRateRepository.DeleteAsync(cp);
+            return new BaseResponse<string>("Delete Commission Rate success", StatusCodeEnum.OK_200, "Deleted successfully");
+        }
     }
 }

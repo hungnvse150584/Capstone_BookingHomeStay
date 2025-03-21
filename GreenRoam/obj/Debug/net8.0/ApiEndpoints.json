@@ -634,6 +634,32 @@
   },
   {
     "ContainingType": "GreenRoam.Controllers.CommissionRateController",
+    "Method": "DeleteCommissionRate",
+    "RelativePath": "api/CommissionRate/Delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.CommissionRateController",
     "Method": "GetAllCommissionRates",
     "RelativePath": "api/CommissionRate/GetAll",
     "HttpMethod": "GET",
@@ -643,6 +669,58 @@
     "ReturnTypes": [
       {
         "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.CommissionRate.GetAllCommissionRate, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.CommissionRateController",
+    "Method": "GetCommissionRateByHomeStay",
+    "RelativePath": "api/CommissionRate/GetByHomeStay/{homeStayID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "homeStayID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.CommissionRate.GetAllCommissionRate, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.CommissionRateController",
+    "Method": "UpdateCommissionRate",
+    "RelativePath": "api/CommissionRate/Update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Service.RequestAndResponse.Request.CommissionRates.UpdateCommissionRateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.CommissionRates.UpdateCommissionRateRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -968,6 +1046,32 @@
     "ReturnTypes": [
       {
         "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.HomeStays.HomeStayResponse, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.HomeStayController",
+    "Method": "GetSimpleHomeStaysByAccount",
+    "RelativePath": "api/homestay/GetSimpleByAccount/{accountId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "accountId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.HomeStays.SimpleHomeStayResponse, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

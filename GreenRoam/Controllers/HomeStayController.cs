@@ -48,6 +48,17 @@ namespace GreenRoam.Controllers
             }
             return await _homestayService.GetOwnerHomeStayByIdFromBase(accountId);
         }
+        //GetSimple
+        [HttpGet("GetSimpleByAccount/{accountId}")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<SimpleHomeStayResponse>>>> GetSimpleHomeStaysByAccount(string accountId)
+        {
+            if (string.IsNullOrEmpty(accountId))
+            {
+                return BadRequest("Please provide a valid accountId.");
+            }
+            var response = await _homestayService.GetSimpleHomeStaysByAccount(accountId);
+            return StatusCode((int)response.StatusCode, response);
+        }
 
         //[HttpPost]
         //[Route("CreateHomeStay")]
