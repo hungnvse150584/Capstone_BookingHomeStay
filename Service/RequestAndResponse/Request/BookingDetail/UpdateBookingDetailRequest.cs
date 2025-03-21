@@ -11,8 +11,7 @@ namespace Service.RequestAndResponse.Request.BookingDetail
         public int? BookingDetailID { get; set; }
         public int homeStayTypeID { get; set; }
         public int? roomTypeID { get; set; }
-
-        public int Quantity { get; set; }
+        public int roomID { get; set; }
 
         public DateTime CheckInDate { get; set; }
 

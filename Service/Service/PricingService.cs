@@ -133,6 +133,7 @@ namespace Service.Service
                 RentPrice = typeRequest.RentPrice,
                 IsDefault = typeRequest.IsDefault,
                 IsActive = typeRequest.IsActive,
+                DayType = typeRequest.DayType,
                 HomeStayRentalID = typeRequest.HomeStayRentalID,
                 RoomTypesID = typeRequest.RoomTypesID,
                 StartDate = typeRequest.IsDefault ? null : typeRequest.StartDate,
@@ -189,6 +190,7 @@ namespace Service.Service
             pricingExist.RentPrice = request.RentPrice;
             pricingExist.IsDefault = request.IsDefault;
             pricingExist.IsActive = request.IsActive;
+            pricingExist.DayType = request.DayType;
             pricingExist.HomeStayRentalID = request.HomeStayRentalID;
             pricingExist.RoomTypesID = request.RoomTypesID;
             pricingExist.StartDate = request.IsDefault ? null : request.StartDate;
@@ -197,6 +199,26 @@ namespace Service.Service
             await _priceRepository.UpdateAsync(pricingExist);
 
             return new BaseResponse<Pricing>("Pricing updated successfully!", StatusCodeEnum.OK_200, pricingExist);
+        }
+
+        public async Task<BaseResponse<GetTotalPrice>> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int homeStayRentalId, int? roomTypeId)
+        {
+            var prices = await _priceRepository.GetTotalPrice(checkInDate, checkOutDate, homeStayRentalId, roomTypeId);
+            var response = new GetTotalPrice
+            {
+                totalUnitPrice = prices.totalUnitPrice,
+                totalRentPrice = prices.totalRentPrice
+            };
+            if (response == null)
+            {
+                return new BaseResponse<GetTotalPrice>("Get All Fail", StatusCodeEnum.BadGateway_502, response);
+            }
+            return new BaseResponse<GetTotalPrice>("Get All Success", StatusCodeEnum.OK_200, response);
+        }
+
+        public async Task<DayType> GetDayType(DateTime date)
+        {
+            return await _priceRepository.GetDayType(date);
         }
     }
 }

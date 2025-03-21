@@ -34,7 +34,7 @@ namespace BusinessObject.Model;
         [EnumDataType(typeof(HomeStayStatus))]
         public HomeStayStatus Status { get; set; }
 
-        public string Area { get; set; }
+        public string? Area { get; set; }
 
         [ForeignKey("AccountID")]
         public string AccountID { get; set; }

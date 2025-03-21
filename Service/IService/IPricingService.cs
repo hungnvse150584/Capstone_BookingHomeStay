@@ -20,6 +20,8 @@ namespace Service.IService
         Task<BaseResponse<GetAllPricing>> GetPricingByIdAsync(int id);
         Task<BaseResponse<Pricing>> CreatePricing(CreatePricingRequest typeRequest);
         Task<BaseResponse<Pricing>> UpdatePricing(int pricingID, UpdatePricingRequest request);
+        Task<BaseResponse<GetTotalPrice>> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int homeStayRentalId, int? roomTypeId);
+        Task<DayType> GetDayType(DateTime date);
 
 
     }

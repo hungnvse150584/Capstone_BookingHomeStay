@@ -35,6 +35,9 @@ namespace BusinessObject.Model
         [EnumDataType(typeof(PaymentServicesMethod))]
         public PaymentServicesMethod PaymentServicesMethod { get; set; }
 
+        [EnumDataType(typeof(PaymentServicesStatus))]
+        public PaymentServicesStatus PaymentServiceStatus { get; set; }
+
         public ICollection<Transaction> Transactions { get; set; }
 
         public ICollection<BookingServicesDetail> BookingServicesDetails { get; set; }

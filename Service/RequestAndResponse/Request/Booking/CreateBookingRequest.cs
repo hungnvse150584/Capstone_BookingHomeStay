@@ -19,6 +19,8 @@ namespace Service.RequestAndResponse.Request.Booking
 
         public string AccountID { get; set; }
 
+        public int HomeStayID { get; set; }
+
         public ICollection<BookingDetailRequest>  BookingDetails { get; set; }
         public BookingServiceRequest? BookingOfServices { get; set; }
     }

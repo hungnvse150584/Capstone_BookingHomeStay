@@ -30,7 +30,7 @@ namespace Service.RequestAndResponse.Response.HomeStays
 
         public RentalType TypeOfRental { get; set; }
 
-        public string Area { get; set; }
+        public string? Area { get; set; }
 
         
         public string AccountID { get; set; }

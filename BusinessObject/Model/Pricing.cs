@@ -37,5 +37,15 @@ namespace BusinessObject.Model
         public int? RoomTypesID { get; set; }
         [ForeignKey("RoomTypesID")]
         public RoomTypes? RoomTypes { get; set; }
+
+        [EnumDataType(typeof(DayType))]
+        public DayType DayType { get; set; }
+    }
+
+    public enum DayType
+    {
+        Weekday,// =0
+        Weekend,//=1
+        Holiday //=2
     }
 }

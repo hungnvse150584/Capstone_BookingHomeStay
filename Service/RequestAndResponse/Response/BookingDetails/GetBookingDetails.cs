@@ -16,8 +16,6 @@ namespace Service.RequestAndResponse.Response.BookingDetails
 
         public double rentPrice { get; set; }
 
-        public int Quantity { get; set; }
-
         public DateTime CheckInDate { get; set; }
 
         public DateTime CheckOutDate { get; set; }
