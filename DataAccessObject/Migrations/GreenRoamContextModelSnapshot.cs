@@ -234,6 +234,9 @@ namespace DataAccessObject.Migrations
                     b.Property<DateTime>("BookingServicesDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("PaymentServiceStatus")
+                        .HasColumnType("int");
+
                     b.Property<int>("PaymentServicesMethod")
                         .HasColumnType("int");
 
@@ -673,6 +676,9 @@ namespace DataAccessObject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PricingID"));
 
+                    b.Property<int>("DayType")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1077,26 +1083,6 @@ namespace DataAccessObject.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "58940479-d741-4cf6-9cc0-f4916f085bc5",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "b7559bef-c073-4761-8ded-5188d234a188",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
-                        },
-                        new
-                        {
-                            Id = "2c73fbe8-af8c-48b6-94dc-38ccae7e41c5",
-                            Name = "Owner",
-                            NormalizedName = "OWNER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -29,6 +29,8 @@ namespace Service.RequestAndResponse.Response.Pricing
 
         public bool IsActive { get; set; }
 
+        public DayType DayType { get; set; }
+
         public int? HomeStayRentalID { get; set; }
         public GetAllHomeStayType? HomeStayRentals { get; set; }
 

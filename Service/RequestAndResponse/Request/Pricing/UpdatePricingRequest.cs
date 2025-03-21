@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObject.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace Service.RequestAndResponse.Request.Pricing
         public bool IsDefault { get; set; }
 
         public bool IsActive { get; set; }
+
+        public DayType DayType { get; set; }
 
         public int? HomeStayRentalID { get; set; }
 

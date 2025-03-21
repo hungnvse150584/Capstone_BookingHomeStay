@@ -43,7 +43,7 @@ namespace DataAccessObject
                 .WithOne(e => e.CancelPolicy)
                 .HasForeignKey<CancellationPolicy>(e => e.HomeStayID);
 
-            List<IdentityRole> roles = new List<IdentityRole>
+            /*List<IdentityRole> roles = new List<IdentityRole>
               {
                   new IdentityRole
                   {
@@ -61,7 +61,7 @@ namespace DataAccessObject
                       NormalizedName = "OWNER"
                   }
              };
-            modelBuilder.Entity<IdentityRole>().HasData(roles);
+            modelBuilder.Entity<IdentityRole>().HasData(roles);*/
         }
         public DbSet<HomeStay> HomeStays { get; set; }
         public DbSet<Pricing> Prices { get; set; }
