@@ -10,8 +10,8 @@ namespace Service.RequestAndResponse.Request.Services
 {
     public class UpdateServices
     {
-        [Key]
-        public int servicesID { get; set; }
+        //[Key]
+        //public int servicesID { get; set; }
         [Required]
         public string servicesName { get; set; }
 
@@ -31,7 +31,7 @@ namespace Service.RequestAndResponse.Request.Services
         public bool Status { get; set; }
 
         //public int? HomeStayID { get; set; }
-        [Required]
-        public List<IFormFile> Images { get; set; }
+        //[Required]
+        //public List<IFormFile> Images { get; set; }
     }
 }

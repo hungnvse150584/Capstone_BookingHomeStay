@@ -54,7 +54,7 @@ namespace GreenRoam.Controllers
             }
         }
         [HttpPut("UpdateService/{serviceId}")]
-        public async Task<ActionResult<BaseResponse<Services>>> UpdateService( [FromRoute] int serviceId,[FromForm] CreateServices request        )
+        public async Task<ActionResult<BaseResponse<Services>>> UpdateService( [FromRoute] int serviceId,[FromForm] UpdateServices request        )
         {
             if (serviceId <= 0)
             {
@@ -81,18 +81,18 @@ namespace GreenRoam.Controllers
             return Ok(result);
         }
 
-        [HttpPut]
-        [Route("UpdateServiceByHomeStayId/{homeStayId}")]
-        public async Task<ActionResult<BaseResponse<Services>>> UpdateServiceByHomeStayId(
-        int homeStayId, [FromForm] UpdateServices request)
-        {
-            if (request == null)
-            {
-                return BadRequest(new BaseResponse<Services>("Request body cannot be null", StatusCodeEnum.BadRequest_400, null));
-            }
+        //[HttpPut]
+        //[Route("UpdateServiceByHomeStayId/{homeStayId}")]
+        //public async Task<ActionResult<BaseResponse<Services>>> UpdateServiceByHomeStayId(
+        //int homeStayId, [FromForm] UpdateServices request)
+        //{
+        //    if (request == null)
+        //    {
+        //        return BadRequest(new BaseResponse<Services>("Request body cannot be null", StatusCodeEnum.BadRequest_400, null));
+        //    }
 
-            var result = await _servicesService.UpdateServiceByHomeStayId(homeStayId, request);
-            return StatusCode((int)result.StatusCode, result);
-        }
+        //    var result = await _servicesService.UpdateServiceByHomeStayId(homeStayId, request);
+        //    return StatusCode((int)result.StatusCode, result);
+        //}
     }
 }

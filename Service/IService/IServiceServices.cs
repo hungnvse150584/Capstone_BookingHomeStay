@@ -16,7 +16,7 @@ namespace Service.IService
     {
         Task<BaseResponse<Services>> CreateService(CreateServices request);
         Task<BaseResponse<IEnumerable<GetAllServices>>> GetAllServices(int homestayId);
-        Task<BaseResponse<Services>> UpdateService(int serviceId, CreateServices request);
-        Task<BaseResponse<Services>> UpdateServiceByHomeStayId(int homeStayId, UpdateServices request);
+        Task<BaseResponse<Services>> UpdateService(int serviceId, UpdateServices request);
+        //Task<BaseResponse<Services>> UpdateServiceByHomeStayId(int homeStayId, UpdateServices request);
     }
 }

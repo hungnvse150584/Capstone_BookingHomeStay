@@ -94,7 +94,7 @@ namespace Service.Service
                 StatusCodeEnum.OK_200, serviceDtos);
         }
 
-        public async Task<BaseResponse<Services>> UpdateService(int serviceId, CreateServices request)
+        public async Task<BaseResponse<Services>> UpdateService(int serviceId, UpdateServices request)
         {
             try
             {
@@ -116,22 +116,22 @@ namespace Service.Service
                 await _servicesRepository.SaveChangesAsync();
 
 
-                if (request.Images != null && request.Images.Any())
-                {
-                    var imageUrls = await UploadImagesToCloudinary(request.Images);
+                //if (request.Images != null && request.Images.Any())
+                //{
+                //    var imageUrls = await UploadImagesToCloudinary(request.Images);
 
-                    foreach (var url in imageUrls)
-                    {
-                        var imageService = new ImageServices
-                        {
-                            Image = url,
-                            ServicesID = updatedService.ServicesID
-                        };
-                        await _imageServiceRepository.AddImageAsync(imageService);
-                    }
+                //    foreach (var url in imageUrls)
+                //    {
+                //        var imageService = new ImageServices
+                //        {
+                //            Image = url,
+                //            ServicesID = updatedService.ServicesID
+                //        };
+                //        await _imageServiceRepository.AddImageAsync(imageService);
+                //    }
                 
-                    await _servicesRepository.SaveChangesAsync();
-                }
+                //    await _servicesRepository.SaveChangesAsync();
+                //}
 
                 return new BaseResponse<Services>("Update Service successfully", StatusCodeEnum.OK_200, updatedService);
             }
@@ -142,50 +142,50 @@ namespace Service.Service
                 return new BaseResponse<Services>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
             }
         }
-        public async Task<BaseResponse<Services>> UpdateServiceByHomeStayId(int homeStayId, UpdateServices request)
-        {
-            try
-            {
-                // Lấy service đúng theo ID từ request
-                var service = await _servicesRepository.GetByIdAsync(request.servicesID);
+        //public async Task<BaseResponse<Services>> UpdateServiceByHomeStayId(int homeStayId, UpdateServices request)
+        //{
+        //    try
+        //    {
+        //        // Lấy service đúng theo ID từ request
+        //        var service = await _servicesRepository.GetByIdAsync(request.servicesID);
 
-                if (service == null || service.HomeStayID != homeStayId)
-                {
-                    return new BaseResponse<Services>("Service not found for this HomeStay", StatusCodeEnum.NotFound_404, null);
-                }
+        //        if (service == null || service.HomeStayID != homeStayId)
+        //        {
+        //            return new BaseResponse<Services>("Service not found for this HomeStay", StatusCodeEnum.NotFound_404, null);
+        //        }
 
-                // Ánh xạ dữ liệu
-                var updatedService = _mapper.Map(request, service);
-                updatedService.CreateAt = service.CreateAt;
-                updatedService.UpdateAt = DateTime.Now;
+        //        // Ánh xạ dữ liệu
+        //        var updatedService = _mapper.Map(request, service);
+        //        updatedService.CreateAt = service.CreateAt;
+        //        updatedService.UpdateAt = DateTime.Now;
 
-                await _servicesRepository.UpdateAsync(updatedService);
-                await _servicesRepository.SaveChangesAsync();
+        //        await _servicesRepository.UpdateAsync(updatedService);
+        //        await _servicesRepository.SaveChangesAsync();
 
-                // Upload ảnh nếu có
-                if (request.Images != null && request.Images.Any())
-                {
-                    var imageUrls = await UploadImagesToCloudinary(request.Images);
-                    foreach (var url in imageUrls)
-                    {
-                        var imageService = new ImageServices
-                        {
-                            Image = url,
-                            ServicesID = updatedService.ServicesID
-                        };
-                        await _imageServiceRepository.AddImageAsync(imageService);
-                    }
-                    await _servicesRepository.SaveChangesAsync();
-                }
+        //        // Upload ảnh nếu có
+        //        //if (request.Images != null && request.Images.Any())
+        //        //{
+        //        //    var imageUrls = await UploadImagesToCloudinary(request.Images);
+        //        //    foreach (var url in imageUrls)
+        //        //    {
+        //        //        var imageService = new ImageServices
+        //        //        {
+        //        //            Image = url,
+        //        //            ServicesID = updatedService.ServicesID
+        //        //        };
+        //        //        await _imageServiceRepository.AddImageAsync(imageService);
+        //        //    }
+        //        //    await _servicesRepository.SaveChangesAsync();
+        //        //}
 
-                return new BaseResponse<Services>("Update Service successfully", StatusCodeEnum.OK_200, updatedService);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return new BaseResponse<Services>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
-            }
-        }
+        //        return new BaseResponse<Services>("Update Service successfully", StatusCodeEnum.OK_200, updatedService);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Error: {ex.Message}");
+        //        return new BaseResponse<Services>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
+        //    }
+        //}
 
 
         private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> files)
