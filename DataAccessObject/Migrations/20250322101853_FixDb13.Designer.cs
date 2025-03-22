@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessObject.Migrations
 {
     [DbContext(typeof(GreenRoamContext))]
-    [Migration("20250318140305_FixDb10")]
-    partial class FixDb10
+    [Migration("20250322101853_FixDb13")]
+    partial class FixDb13
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -237,6 +237,9 @@ namespace DataAccessObject.Migrations
                     b.Property<DateTime>("BookingServicesDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("PaymentServiceStatus")
+                        .HasColumnType("int");
+
                     b.Property<int>("PaymentServicesMethod")
                         .HasColumnType("int");
 
@@ -410,7 +413,6 @@ namespace DataAccessObject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Area")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CancellationID")
@@ -676,6 +678,9 @@ namespace DataAccessObject.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PricingID"));
+
+                    b.Property<int>("DayType")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -1081,6 +1086,26 @@ namespace DataAccessObject.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "cce47e9f-62cb-499f-982c-994dedd7b2c6",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "90338ea8-86e3-4590-a946-a6b1bb5a5bd8",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "f173272a-35d4-4a38-9edb-e20dc8ac8975",
+                            Name = "Owner",
+                            NormalizedName = "OWNER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

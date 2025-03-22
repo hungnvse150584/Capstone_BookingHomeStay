@@ -17,7 +17,9 @@ namespace Repository.IRepositories
         Task<IEnumerable<BookingServices>> GetBookingServicesByDateAsync(DateTime date);
         Task<IEnumerable<BookingServices>> GetBookingServicesByStatusAsync(BookingServicesStatus status);
         Task<BookingServices?> GetBookingServicesByIdAsync(int bookingId);
+        Task<BookingServices?> GetBookingServicesByBookingIdAsync(int bookingId);
         Task<BookingServices?> FindBookingServicesByIdAsync(int? bookingId);
         Task<BookingServices?> GetUnpaidServicesByAccountId(string accountId);
+
     }
 }

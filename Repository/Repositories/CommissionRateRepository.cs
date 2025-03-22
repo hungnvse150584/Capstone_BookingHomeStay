@@ -48,5 +48,10 @@ namespace Repository.Repositories
         {
             await _commissionRateDao.SaveChangesAsync();
         }
+
+        public async Task<CommissionRate?> GetCommissionByHomeStayAsync(int? homeStayID)
+        {
+            return await _commissionRateDao.GetCommissionByHomeStayAsync(homeStayID);
+        }
     }
 }
