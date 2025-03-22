@@ -13,7 +13,7 @@ namespace Service.IService
     public interface IHomeStayService
     {
         Task<BaseResponse<List<HomeStay>>> RegisterHomeStay(CreateHomeStayRequest request);
-        Task<BaseResponse<HomeStay>> UpdateHomeStay(int homestayId,UpdateHomeStayRequest request);
+        Task<BaseResponse<HomeStay>> UpdateHomeStay(int homestayId,CreateHomeStayRequest request);
         Task<BaseResponse<HomeStayResponse>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status);
         Task<BaseResponse<IEnumerable<HomeStayResponse>>> GetAllHomeStayRegisterFromBase();
         Task<BaseResponse<IEnumerable<GetAllHomeStayWithOwnerName>>> GetAllHomeStayWithOwnerName();

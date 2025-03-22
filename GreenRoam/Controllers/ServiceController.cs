@@ -53,5 +53,46 @@ namespace GreenRoam.Controllers
                 return StatusCode(500, new BaseResponse<List<Services>>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null));
             }
         }
+        [HttpPut("UpdateService/{serviceId}")]
+        public async Task<ActionResult<BaseResponse<Services>>> UpdateService( [FromRoute] int serviceId,[FromForm] CreateServices request        )
+        {
+            if (serviceId <= 0)
+            {
+                return BadRequest("Invalid Service ID.");
+            }
+
+            if (request == null)
+            {
+                return BadRequest("Request body cannot be null.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _servicesService.UpdateService(serviceId, request);
+
+            if (result == null)
+            {
+                return StatusCode(500, "An error occurred while updating the Service.");
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPut]
+        [Route("UpdateServiceByHomeStayId/{homeStayId}")]
+        public async Task<ActionResult<BaseResponse<Services>>> UpdateServiceByHomeStayId(
+        int homeStayId, [FromForm] UpdateServices request)
+        {
+            if (request == null)
+            {
+                return BadRequest(new BaseResponse<Services>("Request body cannot be null", StatusCodeEnum.BadRequest_400, null));
+            }
+
+            var result = await _servicesService.UpdateServiceByHomeStayId(homeStayId, request);
+            return StatusCode((int)result.StatusCode, result);
+        }
     }
 }

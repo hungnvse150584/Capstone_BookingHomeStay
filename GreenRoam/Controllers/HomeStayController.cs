@@ -114,7 +114,7 @@ namespace GreenRoam.Controllers
 
         [HttpPut]
         [Route("UpdateHomeStay")]
-        public async Task<ActionResult<BaseResponse<HomeStay>>> UpdateHomeStay(int homestayId, UpdateHomeStayRequest request)
+        public async Task<ActionResult<BaseResponse<HomeStay>>> UpdateHomeStay(int homestayId, CreateHomeStayRequest request)
         {
             if (homestayId <= 0)
             {
