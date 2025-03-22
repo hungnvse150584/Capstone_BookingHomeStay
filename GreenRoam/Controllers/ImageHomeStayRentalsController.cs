@@ -47,7 +47,7 @@ namespace GreenRoam.Controllers
                 return BadRequest("Please provide all required information.");
             }
             var imageType = await _imageHomeStayTypesService.CreateImageHomeStayTypes(imageTypeRequest);
-            return CreatedAtAction(nameof(GetImageHomeStayTypesById), new { id = imageType.Data.ImageHomeStayTypesID }, imageType);
+            return CreatedAtAction(nameof(GetImageHomeStayTypesById), new { id = imageType.Data.ImageHomeStayRentalsID }, imageType);
         }
         [HttpPut]
         [Route("UpdateImageService/{id}")]

@@ -44,8 +44,8 @@ namespace Service.Service
             {
                
                 var serviceEntity = _mapper.Map<Services>(request);
-                //serviceEntity.CreateAt = DateTime.Now;
-              
+                serviceEntity.CreateAt = DateTime.Now;
+
 
                 // 
                 await _servicesRepository.AddAsync(serviceEntity);

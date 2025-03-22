@@ -15,7 +15,7 @@ namespace Service.RequestAndResponse.Request.HomeStayType
 
         public string? Description { get; set; }
 
-        public DateTime CreateAt { get; set; }
+        //public DateTime CreateAt { get; set; }
 
         //public DateTime UpdateAt { get; set; }
 
