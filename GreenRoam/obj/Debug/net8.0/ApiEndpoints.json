@@ -998,6 +998,32 @@
     ]
   },
   {
+    "ContainingType": "GreenRoam.Controllers.PricingController",
+    "Method": "GetDayType",
+    "RelativePath": "api/homestay/GetDateType",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dateTime",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BusinessObject.Model.DayType",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "GreenRoam.Controllers.HomeStayController",
     "Method": "GetOwnerHomeStayById",
     "RelativePath": "api/homestay/GetOwnerHomeStay/{accountId}",
@@ -1102,6 +1128,47 @@
     ]
   },
   {
+    "ContainingType": "GreenRoam.Controllers.PricingController",
+    "Method": "GetTotalPrice",
+    "RelativePath": "api/homestay/GetTotalPrice",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "checkInDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "checkOutDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "homeStayRentalId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "roomTypeId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Pricing.GetTotalPrice, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "GreenRoam.Controllers.HomeStayController",
     "Method": "UpdateHomeStay",
     "RelativePath": "api/homestay/UpdateHomeStay",
@@ -1179,11 +1246,6 @@
       {
         "Name": "Description",
         "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "CreateAt",
-        "Type": "System.DateTime",
         "IsRequired": false
       },
       {

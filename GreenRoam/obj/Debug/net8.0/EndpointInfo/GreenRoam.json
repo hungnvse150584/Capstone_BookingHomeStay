@@ -1835,10 +1835,6 @@
                   "Description": {
                     "type": "string"
                   },
-                  "CreateAt": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
                   "HomeStayID": {
                     "type": "integer",
                     "format": "int32"
@@ -1891,9 +1887,6 @@
                   "style": "form"
                 },
                 "Description": {
-                  "style": "form"
-                },
-                "CreateAt": {
                   "style": "form"
                 },
                 "HomeStayID": {
@@ -2691,6 +2684,108 @@
         }
       }
     },
+    "/api/homestay/GetTotalPrice": {
+      "get": {
+        "tags": [
+          "Pricing"
+        ],
+        "parameters": [
+          {
+            "name": "checkInDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "checkOutDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "homeStayRentalId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "roomTypeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTotalPriceBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTotalPriceBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTotalPriceBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/homestay/GetDateType": {
+      "get": {
+        "tags": [
+          "Pricing"
+        ],
+        "parameters": [
+          {
+            "name": "dateTime",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DayType"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DayType"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DayType"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/homestay/CreatePricing": {
       "post": {
         "tags": [
@@ -3356,7 +3451,7 @@
         ],
         "type": "object",
         "properties": {
-          "imageHomeStayTypesID": {
+          "imageHomeStayRentalsID": {
             "type": "integer",
             "format": "int32"
           },
@@ -3364,7 +3459,7 @@
             "minLength": 1,
             "type": "string"
           },
-          "homeStayTypesID": {
+          "homeStayRentalsID": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -3613,7 +3708,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "quantity": {
+          "roomID": {
             "type": "integer",
             "format": "int32"
           },
@@ -3703,6 +3798,9 @@
           },
           "paymentServicesMethod": {
             "$ref": "#/components/schemas/PaymentServicesMethod"
+          },
+          "paymentServiceStatus": {
+            "$ref": "#/components/schemas/PaymentServicesStatus"
           },
           "transactions": {
             "type": "array",
@@ -3970,6 +4068,10 @@
             "type": "string",
             "nullable": true
           },
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32"
+          },
           "bookingDetails": {
             "type": "array",
             "items": {
@@ -4127,6 +4229,9 @@
           },
           "isActive": {
             "type": "boolean"
+          },
+          "dayType": {
+            "$ref": "#/components/schemas/DayType"
           },
           "homeStayRentalID": {
             "type": "integer",
@@ -4347,6 +4452,15 @@
           4,
           5,
           6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "DayType": {
+        "enum": [
+          0,
+          1,
+          2
         ],
         "type": "integer",
         "format": "int32"
@@ -5103,6 +5217,9 @@
           "isActive": {
             "type": "boolean"
           },
+          "dayType": {
+            "$ref": "#/components/schemas/DayType"
+          },
           "homeStayRentalID": {
             "type": "integer",
             "format": "int32",
@@ -5403,10 +5520,6 @@
             "type": "number",
             "format": "double"
           },
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
-          },
           "checkInDate": {
             "type": "string",
             "format": "date-time"
@@ -5589,6 +5702,36 @@
               "$ref": "#/components/schemas/GetTotalBookingsTotalBookingsAmount"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTotalPrice": {
+        "type": "object",
+        "properties": {
+          "totalRentPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalUnitPrice": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTotalPriceBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GetTotalPrice"
           }
         },
         "additionalProperties": false
@@ -6209,6 +6352,16 @@
         "type": "integer",
         "format": "int32"
       },
+      "PaymentServicesStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "PaymentStatus": {
         "enum": [
           0,
@@ -6274,6 +6427,9 @@
           },
           "roomTypes": {
             "$ref": "#/components/schemas/RoomTypes"
+          },
+          "dayType": {
+            "$ref": "#/components/schemas/DayType"
           }
         },
         "additionalProperties": false
@@ -7092,7 +7248,7 @@
             "format": "int32",
             "nullable": true
           },
-          "quantity": {
+          "roomID": {
             "type": "integer",
             "format": "int32"
           },
@@ -7415,6 +7571,9 @@
           },
           "isActive": {
             "type": "boolean"
+          },
+          "dayType": {
+            "$ref": "#/components/schemas/DayType"
           },
           "homeStayRentalID": {
             "type": "integer",

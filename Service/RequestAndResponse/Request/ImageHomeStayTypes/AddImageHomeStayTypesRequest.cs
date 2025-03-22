@@ -12,12 +12,12 @@ namespace Service.RequestAndResponse.Request.ImageHomeStayTypes
     public class AddImageHomeStayTypesRequest
     {
         [Key]
-        public int ImageHomeStayTypesID { get; set; }
+        public int ImageHomeStayRentalsID { get; set; }
 
         [Required]
         public string? Image { get; set; }
 
-        public int? HomeStayTypesID { get; set; }
+        public int? HomeStayRentalsID { get; set; }
         //[ForeignKey("HomeStayTypesID ")]
         //public HomeStayTypes? HomeStayTypes { get; set; }
     }

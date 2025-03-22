@@ -17,12 +17,12 @@ namespace GreenRoam.Controllers
 {
     [Route("api/homestaytype")]
     [ApiController]
-    public class HomeStayTypeController : ControllerBase
+    public class HomeStayRentalsController : ControllerBase
     {
         private readonly IHomeStayTypeService _homeStayTypeService;
         private readonly IRoomTypeService _roomTypeService;
         
-        public HomeStayTypeController(IHomeStayTypeService homeStayTypeService, IRoomTypeService roomTypeService)
+        public HomeStayRentalsController(IHomeStayTypeService homeStayTypeService, IRoomTypeService roomTypeService)
         {
             _homeStayTypeService = homeStayTypeService;
             _roomTypeService = roomTypeService;
@@ -30,7 +30,7 @@ namespace GreenRoam.Controllers
 
         [HttpGet]
         [Route("GetAllHomeStayTypes")]
-        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllHomeStayType>>>> GetAllHomeStayTypesByHomeStayId(int homestayId)
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllHomeStayType>>>> GetAllHomeStayRentalsByHomeStayId(int homestayId)
         {
             var homeStays = await _homeStayTypeService.GetAllHomeStayTypesByHomeStayID(homestayId);
             return Ok(homeStays);
