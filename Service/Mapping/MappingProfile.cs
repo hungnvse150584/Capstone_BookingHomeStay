@@ -59,11 +59,13 @@ namespace Service.Mapping
         .ForMember(dest => dest.ImageHomeStayRentals,
                opt => opt.MapFrom(src => src.ImageHomeStayRentals));
 
-            CreateMap<CreateHomeStayTypeRequest, HomeStayRentals>().ReverseMap();
+            CreateMap<CreateHomeStayTypeRequest, HomeStayRentals>()
+    .ForMember(dest => dest.Prices, opt => opt.MapFrom(src => src.Pricing));
+
 
             CreateMap<CreateRoomTypeRequest, RoomTypes>().ReverseMap();
             CreateMap<GetAllRoomType, RoomTypes>().ReverseMap();
-
+            CreateMap<PricingForHomeStayRental, Pricing>().ReverseMap();
             CreateMap<GetAllPricing, Pricing>().ReverseMap();
             CreateMap<CreatePricingRequest, Pricing>().ReverseMap();
             CreateMap<UpdatePricingRequest, Pricing>().ReverseMap();

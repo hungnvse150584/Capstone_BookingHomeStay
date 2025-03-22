@@ -60,18 +60,33 @@ namespace Service.Service
         {
             try
             {
-               
+                
                 var rentalEntity = _mapper.Map<HomeStayRentals>(typeRequest);
 
-             
+              
                 rentalEntity.CreateAt = DateTime.Now;
-                //rentalEntity.UpdateAt = DateTime.Now;
+              
 
-               
-                await _homeStayTypeRepository.AddAsync(rentalEntity);
+                // Nếu RentWhole == false, bỏ qua pricing (hoặc gán là danh sách rỗng)
+                if (!rentalEntity.RentWhole)
+                {
+                    rentalEntity.Prices = new List<Pricing>();
+                }
+                else
+                {
+                    // Nếu có dữ liệu pricing từ request, bạn ánh xạ và gán vào rentalEntity.Prices
+                    // Ví dụ, nếu typeRequest có property Pricing:
+                    if (typeRequest.Pricing != null && typeRequest.Pricing.Any())
+                    {
+                        rentalEntity.Prices = _mapper.Map<List<Pricing>>(typeRequest.Pricing);
+                    }
+                }
+
+                // Lưu entity và gọi SaveChanges để nhận được HomeStayRentalID
+                await _homeStayTypeRepository.AddAsync(rentalEntity); 
                 await _homeStayTypeRepository.SaveChangesAsync();
 
-              
+                // Nếu có hình ảnh trong request thì upload lên Cloudinary và lưu vào DB
                 if (typeRequest.Images != null && typeRequest.Images.Any())
                 {
                     var imageUrls = await UploadImagesToCloudinary(typeRequest.Images);
@@ -86,16 +101,22 @@ namespace Service.Service
                     }
                 }
 
-         
-                return new BaseResponse<List<HomeStayRentals>>("Create HomeStay Rental successfully", StatusCodeEnum.Created_201, new List<HomeStayRentals> { rentalEntity });
+                return new BaseResponse<List<HomeStayRentals>>(
+                    "Create HomeStay Rental successfully",
+                    StatusCodeEnum.Created_201,
+                    new List<HomeStayRentals> { rentalEntity });
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
                 Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
-                return new BaseResponse<List<HomeStayRentals>>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
+                return new BaseResponse<List<HomeStayRentals>>(
+                    $"Something went wrong! Error: {ex.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
             }
         }
+
         private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> files)
         {
             if (files == null || !files.Any())

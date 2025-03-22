@@ -1,6 +1,7 @@
 ﻿using BusinessObject.Model;
 using Microsoft.AspNetCore.Http;
 using Service.RequestAndResponse.Request.BookingDetail;
+using Service.RequestAndResponse.Request.Pricing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,5 +40,7 @@ namespace Service.RequestAndResponse.Request.HomeStayType
 
         public int MaxPeople { get; set; }
         public List<IFormFile> Images { get; set; }
+
+        public List<PricingForHomeStayRental>? Pricing { get; set; }
     }
 }

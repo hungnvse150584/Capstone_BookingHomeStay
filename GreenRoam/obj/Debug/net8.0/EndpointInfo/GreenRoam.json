@@ -1942,6 +1942,15 @@
                       "type": "string",
                       "format": "binary"
                     }
+                  },
+                  "PricingJson": {
+                    "type": "string"
+                  },
+                  "Pricing": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/PricingForHomeStayRental"
+                    }
                   }
                 }
               },
@@ -1983,6 +1992,12 @@
                   "style": "form"
                 },
                 "Images": {
+                  "style": "form"
+                },
+                "PricingJson": {
+                  "style": "form"
+                },
+                "Pricing": {
                   "style": "form"
                 }
               }
@@ -5194,7 +5209,7 @@
             },
             "nullable": true
           },
-          "prices": {
+          "pricing": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GetAllPricing"
@@ -6727,6 +6742,19 @@
           },
           "data": {
             "$ref": "#/components/schemas/Pricing"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PricingForHomeStayRental": {
+        "required": [
+          "rentPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "rentPrice": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false

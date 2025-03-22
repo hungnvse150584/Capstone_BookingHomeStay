@@ -116,10 +116,16 @@ namespace Service.Service
 
                 if (!filteredHomeStays.Any())
                 {
-                    return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("No HomeStay found for the account", StatusCodeEnum.NotFound_404, null);
+                 
+                    var emptyList = new List<SimpleHomeStayResponse>();
+                    return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>(
+                        "Account has not registered any homestay",
+                        StatusCodeEnum.OK_200,
+                        emptyList
+                    );
                 }
 
-                // Ánh xạ sang SimpleHomeStayResponse
+           
                 var response = _mapper.Map<IEnumerable<SimpleHomeStayResponse>>(filteredHomeStays);
                 return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("Get HomeStays by account success", StatusCodeEnum.OK_200, response);
             }
