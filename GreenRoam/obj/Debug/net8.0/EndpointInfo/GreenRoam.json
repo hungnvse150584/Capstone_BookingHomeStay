@@ -1943,9 +1943,6 @@
                       "format": "binary"
                     }
                   },
-                  "PricingJson": {
-                    "type": "string"
-                  },
                   "Pricing": {
                     "type": "array",
                     "items": {
@@ -1992,9 +1989,6 @@
                   "style": "form"
                 },
                 "Images": {
-                  "style": "form"
-                },
-                "PricingJson": {
                   "style": "form"
                 },
                 "Pricing": {
@@ -5433,11 +5427,6 @@
           "image": {
             "minLength": 1,
             "type": "string"
-          },
-          "servicesID": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5736,6 +5725,11 @@
       "GetAllServices": {
         "type": "object",
         "properties": {
+          "servicesID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "servicesName": {
             "type": "string",
             "nullable": true

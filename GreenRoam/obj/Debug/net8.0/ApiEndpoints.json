@@ -1344,11 +1344,6 @@
         "IsRequired": false
       },
       {
-        "Name": "PricingJson",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "Pricing",
         "Type": "System.Collections.Generic.List\u00601[[Service.RequestAndResponse.Request.Pricing.PricingForHomeStayRental, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": false
