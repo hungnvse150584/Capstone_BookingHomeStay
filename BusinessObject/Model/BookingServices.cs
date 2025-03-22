@@ -29,11 +29,14 @@ namespace BusinessObject.Model
         public string AccountID { get; set; }
         public Account Account { get; set; }
 
+
         [EnumDataType(typeof(BookingServicesStatus))]
         public BookingServicesStatus Status { get; set; }
 
+
         [EnumDataType(typeof(PaymentServicesMethod))]
         public PaymentServicesMethod PaymentServicesMethod { get; set; }
+
 
         [EnumDataType(typeof(PaymentServicesStatus))]
         public PaymentServicesStatus PaymentServiceStatus { get; set; }

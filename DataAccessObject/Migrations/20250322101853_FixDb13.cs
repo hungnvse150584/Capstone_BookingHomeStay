@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccessObject.Migrations
 {
     /// <inheritdoc />
-    public partial class Db3 : Migration
+    public partial class FixDb13 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -73,30 +73,6 @@ namespace DataAccessObject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CommissionRates", x => x.CommissionRateID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Transactions",
-                columns: table => new
-                {
-                    ResponseId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TmnCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TxnRef = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Amount = table.Column<long>(type: "bigint", nullable: false),
-                    OrderInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ResponseCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BankTranNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PayDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BankCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TransactionNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TransactionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TransactionStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SecureHash = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Transactions", x => x.ResponseId);
                 });
 
             migrationBuilder.CreateTable(
@@ -238,12 +214,15 @@ namespace DataAccessObject.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Latitude = table.Column<double>(type: "float", nullable: false),
+                    Longitude = table.Column<double>(type: "float", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    Area = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Area = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CommissionRateID = table.Column<int>(type: "int", nullable: true),
+                    CancellationID = table.Column<int>(type: "int", nullable: true),
                     TypeOfRental = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -260,6 +239,29 @@ namespace DataAccessObject.Migrations
                         column: x => x.CommissionRateID,
                         principalTable: "CommissionRates",
                         principalColumn: "CommissionRateID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CancelPolicy",
+                columns: table => new
+                {
+                    CancellationID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DayBeforeCancel = table.Column<int>(type: "int", nullable: false),
+                    RefundPercentage = table.Column<double>(type: "float", nullable: false),
+                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HomeStayID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CancelPolicy", x => x.CancellationID);
+                    table.ForeignKey(
+                        name: "FK_CancelPolicy_HomeStays_HomeStayID",
+                        column: x => x.HomeStayID,
+                        principalTable: "HomeStays",
+                        principalColumn: "HomeStayID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -303,8 +305,6 @@ namespace DataAccessObject.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UnitPrice = table.Column<double>(type: "float", nullable: false),
-                    RentPrice = table.Column<double>(type: "float", nullable: false),
                     numberBedRoom = table.Column<int>(type: "int", nullable: false),
                     numberBathRoom = table.Column<int>(type: "int", nullable: false),
                     numberKitchen = table.Column<int>(type: "int", nullable: false),
@@ -321,6 +321,25 @@ namespace DataAccessObject.Migrations
                     table.PrimaryKey("PK_HomeStayRentals", x => x.HomeStayRentalID);
                     table.ForeignKey(
                         name: "FK_HomeStayRentals_HomeStays_HomeStayID",
+                        column: x => x.HomeStayID,
+                        principalTable: "HomeStays",
+                        principalColumn: "HomeStayID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ImageHomeStays",
+                columns: table => new
+                {
+                    ImageHomeStayID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HomeStayID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImageHomeStays", x => x.ImageHomeStayID);
+                    table.ForeignKey(
+                        name: "FK_ImageHomeStays_HomeStays_HomeStayID",
                         column: x => x.HomeStayID,
                         principalTable: "HomeStays",
                         principalColumn: "HomeStayID");
@@ -487,8 +506,6 @@ namespace DataAccessObject.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UnitPrice = table.Column<double>(type: "float", nullable: false),
-                    RentPrice = table.Column<double>(type: "float", nullable: false),
                     numberBedRoom = table.Column<int>(type: "int", nullable: false),
                     numberBathRoom = table.Column<int>(type: "int", nullable: false),
                     numberWifi = table.Column<int>(type: "int", nullable: false),
@@ -522,11 +539,11 @@ namespace DataAccessObject.Migrations
                     paymentStatus = table.Column<int>(type: "int", nullable: false),
                     Total = table.Column<double>(type: "float", nullable: false),
                     bookingDeposit = table.Column<double>(type: "float", nullable: false),
+                    remainingBalance = table.Column<double>(type: "float", nullable: false),
                     ReportID = table.Column<int>(type: "int", nullable: true),
                     AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     HomeStayID = table.Column<int>(type: "int", nullable: true),
-                    PaymentMethod = table.Column<int>(type: "int", nullable: false),
-                    transactionID = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    PaymentMethod = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -547,11 +564,6 @@ namespace DataAccessObject.Migrations
                         column: x => x.ReportID,
                         principalTable: "Reports",
                         principalColumn: "ReportID");
-                    table.ForeignKey(
-                        name: "FK_Bookings_Transactions_transactionID",
-                        column: x => x.transactionID,
-                        principalTable: "Transactions",
-                        principalColumn: "ResponseId");
                 });
 
             migrationBuilder.CreateTable(
@@ -593,26 +605,88 @@ namespace DataAccessObject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoomAvailabilities",
+                name: "Prices",
                 columns: table => new
                 {
-                    RoomAvailabilityID = table.Column<int>(type: "int", nullable: false)
+                    PricingID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AvailableRooms = table.Column<int>(type: "int", nullable: false),
-                    UsedRooms = table.Column<int>(type: "int", nullable: false),
-                    RemainingRooms = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitPrice = table.Column<double>(type: "float", nullable: false),
+                    RentPrice = table.Column<double>(type: "float", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    HomeStayRentalID = table.Column<int>(type: "int", nullable: true),
+                    RoomTypesID = table.Column<int>(type: "int", nullable: true),
+                    DayType = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Prices", x => x.PricingID);
+                    table.ForeignKey(
+                        name: "FK_Prices_HomeStayRentals_HomeStayRentalID",
+                        column: x => x.HomeStayRentalID,
+                        principalTable: "HomeStayRentals",
+                        principalColumn: "HomeStayRentalID");
+                    table.ForeignKey(
+                        name: "FK_Prices_RoomTypes_RoomTypesID",
+                        column: x => x.RoomTypesID,
+                        principalTable: "RoomTypes",
+                        principalColumn: "RoomTypesID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rooms",
+                columns: table => new
+                {
+                    RoomID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    roomNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    isUsed = table.Column<bool>(type: "bit", nullable: false),
+                    isActive = table.Column<bool>(type: "bit", nullable: false),
                     RoomTypesID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoomAvailabilities", x => x.RoomAvailabilityID);
+                    table.PrimaryKey("PK_Rooms", x => x.RoomID);
                     table.ForeignKey(
-                        name: "FK_RoomAvailabilities_RoomTypes_RoomTypesID",
+                        name: "FK_Rooms_RoomTypes_RoomTypesID",
                         column: x => x.RoomTypesID,
                         principalTable: "RoomTypes",
                         principalColumn: "RoomTypesID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookingServices",
+                columns: table => new
+                {
+                    BookingServicesID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BookingID = table.Column<int>(type: "int", nullable: true),
+                    BookingServicesDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<double>(type: "float", nullable: false),
+                    bookingServiceDeposit = table.Column<double>(type: "float", nullable: false),
+                    remainingBalance = table.Column<double>(type: "float", nullable: false),
+                    AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    PaymentServicesMethod = table.Column<int>(type: "int", nullable: false),
+                    PaymentServiceStatus = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingServices", x => x.BookingServicesID);
+                    table.ForeignKey(
+                        name: "FK_BookingServices_AspNetUsers_AccountID",
+                        column: x => x.AccountID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookingServices_Bookings_BookingID",
+                        column: x => x.BookingID,
+                        principalTable: "Bookings",
+                        principalColumn: "BookingID");
                 });
 
             migrationBuilder.CreateTable(
@@ -621,13 +695,13 @@ namespace DataAccessObject.Migrations
                 {
                     BookingDetailID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UnitPrice = table.Column<double>(type: "float", nullable: false),
                     rentPrice = table.Column<double>(type: "float", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
                     CheckInDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CheckOutDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalAmount = table.Column<double>(type: "float", nullable: false),
                     HomeStayRentalID = table.Column<int>(type: "int", nullable: true),
-                    RoomTypesID = table.Column<int>(type: "int", nullable: true),
+                    RoomID = table.Column<int>(type: "int", nullable: true),
                     BookingID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -644,65 +718,10 @@ namespace DataAccessObject.Migrations
                         principalTable: "HomeStayRentals",
                         principalColumn: "HomeStayRentalID");
                     table.ForeignKey(
-                        name: "FK_BookingDetails_RoomTypes_RoomTypesID",
-                        column: x => x.RoomTypesID,
-                        principalTable: "RoomTypes",
-                        principalColumn: "RoomTypesID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BookingServices",
-                columns: table => new
-                {
-                    BookingServicesID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BookingID = table.Column<int>(type: "int", nullable: true),
-                    BookingServicesDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Total = table.Column<double>(type: "float", nullable: false),
-                    AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    transactionID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    PaymentServicesMethod = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookingServices", x => x.BookingServicesID);
-                    table.ForeignKey(
-                        name: "FK_BookingServices_AspNetUsers_AccountID",
-                        column: x => x.AccountID,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BookingServices_Bookings_BookingID",
-                        column: x => x.BookingID,
-                        principalTable: "Bookings",
-                        principalColumn: "BookingID");
-                    table.ForeignKey(
-                        name: "FK_BookingServices_Transactions_transactionID",
-                        column: x => x.transactionID,
-                        principalTable: "Transactions",
-                        principalColumn: "ResponseId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Rooms",
-                columns: table => new
-                {
-                    RoomID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    roomNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    RoomAvailabilityID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rooms", x => x.RoomID);
-                    table.ForeignKey(
-                        name: "FK_Rooms_RoomAvailabilities_RoomAvailabilityID",
-                        column: x => x.RoomAvailabilityID,
-                        principalTable: "RoomAvailabilities",
-                        principalColumn: "RoomAvailabilityID");
+                        name: "FK_BookingDetails_Rooms_RoomID",
+                        column: x => x.RoomID,
+                        principalTable: "Rooms",
+                        principalColumn: "RoomID");
                 });
 
             migrationBuilder.CreateTable(
@@ -768,14 +787,50 @@ namespace DataAccessObject.Migrations
                         principalColumn: "BookingID");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    ResponseId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    BookingID = table.Column<int>(type: "int", nullable: true),
+                    BookingServicesID = table.Column<int>(type: "int", nullable: true),
+                    TmnCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TxnRef = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Amount = table.Column<long>(type: "bigint", nullable: false),
+                    OrderInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ResponseCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BankTranNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PayDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BankCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TransactionNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TransactionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TransactionStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SecureHash = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.ResponseId);
+                    table.ForeignKey(
+                        name: "FK_Transactions_BookingServices_BookingServicesID",
+                        column: x => x.BookingServicesID,
+                        principalTable: "BookingServices",
+                        principalColumn: "BookingServicesID");
+                    table.ForeignKey(
+                        name: "FK_Transactions_Bookings_BookingID",
+                        column: x => x.BookingID,
+                        principalTable: "Bookings",
+                        principalColumn: "BookingID");
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "53511dd3-e47a-4858-b96c-eddba78bdf46", null, "Admin", "ADMIN" },
-                    { "952952ce-e13f-4c7d-aeb4-27554578a86d", null, "Owner", "OWNER" },
-                    { "e268cc3e-69a1-435b-99fa-6baba1159b91", null, "Customer", "CUSTOMER" }
+                    { "90338ea8-86e3-4590-a946-a6b1bb5a5bd8", null, "Customer", "CUSTOMER" },
+                    { "cce47e9f-62cb-499f-982c-994dedd7b2c6", null, "Admin", "ADMIN" },
+                    { "f173272a-35d4-4a38-9edb-e20dc8ac8975", null, "Owner", "OWNER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -828,9 +883,9 @@ namespace DataAccessObject.Migrations
                 column: "HomeStayRentalID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookingDetails_RoomTypesID",
+                name: "IX_BookingDetails_RoomID",
                 table: "BookingDetails",
-                column: "RoomTypesID");
+                column: "RoomID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_AccountID",
@@ -850,13 +905,6 @@ namespace DataAccessObject.Migrations
                 filter: "[ReportID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookings_transactionID",
-                table: "Bookings",
-                column: "transactionID",
-                unique: true,
-                filter: "[transactionID] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_BookingServices_AccountID",
                 table: "BookingServices",
                 column: "AccountID");
@@ -867,13 +915,6 @@ namespace DataAccessObject.Migrations
                 column: "BookingID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookingServices_transactionID",
-                table: "BookingServices",
-                column: "transactionID",
-                unique: true,
-                filter: "[transactionID] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_BookingServicesDetails_BookingServicesID",
                 table: "BookingServicesDetails",
                 column: "BookingServicesID");
@@ -882,6 +923,12 @@ namespace DataAccessObject.Migrations
                 name: "IX_BookingServicesDetails_ServicesID",
                 table: "BookingServicesDetails",
                 column: "ServicesID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CancelPolicy_HomeStayID",
+                table: "CancelPolicy",
+                column: "HomeStayID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CultureExperiences_AccountID",
@@ -919,6 +966,11 @@ namespace DataAccessObject.Migrations
                 column: "HomeStayRentalID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ImageHomeStays_HomeStayID",
+                table: "ImageHomeStays",
+                column: "HomeStayID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ImageRoomTypes_RoomTypesID",
                 table: "ImageRoomTypes",
                 column: "RoomTypesID");
@@ -942,6 +994,16 @@ namespace DataAccessObject.Migrations
                 name: "IX_Notification_BookingServicesID",
                 table: "Notification",
                 column: "BookingServicesID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prices_HomeStayRentalID",
+                table: "Prices",
+                column: "HomeStayRentalID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prices_RoomTypesID",
+                table: "Prices",
+                column: "RoomTypesID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rating_AccountID",
@@ -979,14 +1041,9 @@ namespace DataAccessObject.Migrations
                 column: "HomeStayID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoomAvailabilities_RoomTypesID",
-                table: "RoomAvailabilities",
-                column: "RoomTypesID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Rooms_RoomAvailabilityID",
+                name: "IX_Rooms_RoomTypesID",
                 table: "Rooms",
-                column: "RoomAvailabilityID");
+                column: "RoomTypesID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoomTypes_HomeStayRentalID",
@@ -997,6 +1054,16 @@ namespace DataAccessObject.Migrations
                 name: "IX_Services_HomeStayID",
                 table: "Services",
                 column: "HomeStayID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_BookingID",
+                table: "Transactions",
+                column: "BookingID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_BookingServicesID",
+                table: "Transactions",
+                column: "BookingServicesID");
         }
 
         /// <inheritdoc />
@@ -1024,10 +1091,16 @@ namespace DataAccessObject.Migrations
                 name: "BookingServicesDetails");
 
             migrationBuilder.DropTable(
+                name: "CancelPolicy");
+
+            migrationBuilder.DropTable(
                 name: "ImageCultureExperiences");
 
             migrationBuilder.DropTable(
                 name: "ImageHomeStayRentals");
+
+            migrationBuilder.DropTable(
+                name: "ImageHomeStays");
 
             migrationBuilder.DropTable(
                 name: "ImageRoomTypes");
@@ -1039,6 +1112,9 @@ namespace DataAccessObject.Migrations
                 name: "Notification");
 
             migrationBuilder.DropTable(
+                name: "Prices");
+
+            migrationBuilder.DropTable(
                 name: "Rating");
 
             migrationBuilder.DropTable(
@@ -1048,10 +1124,13 @@ namespace DataAccessObject.Migrations
                 name: "Reviews");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
+                name: "Transactions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Rooms");
 
             migrationBuilder.DropTable(
                 name: "CultureExperiences");
@@ -1063,22 +1142,16 @@ namespace DataAccessObject.Migrations
                 name: "BookingServices");
 
             migrationBuilder.DropTable(
-                name: "RoomAvailabilities");
+                name: "RoomTypes");
 
             migrationBuilder.DropTable(
                 name: "Bookings");
 
             migrationBuilder.DropTable(
-                name: "RoomTypes");
+                name: "HomeStayRentals");
 
             migrationBuilder.DropTable(
                 name: "Reports");
-
-            migrationBuilder.DropTable(
-                name: "Transactions");
-
-            migrationBuilder.DropTable(
-                name: "HomeStayRentals");
 
             migrationBuilder.DropTable(
                 name: "HomeStays");

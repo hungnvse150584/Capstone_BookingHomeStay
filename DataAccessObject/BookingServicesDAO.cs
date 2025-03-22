@@ -107,6 +107,16 @@ namespace DataAccessObject
                 .FirstOrDefaultAsync(o => o.BookingServicesID == bookingId);
         }
 
+        public async Task<BookingServices?> GetBookingServicesByBookingIdAsync(int bookingId)
+        {
+            return await _context.BookingServices
+                .Include(o => o.Account)
+                .Include(o => o.BookingServicesDetails)
+                .ThenInclude(bd => bd.Services)
+                .ThenInclude(s => s.ImageServices)
+                .FirstOrDefaultAsync(o => o.BookingID == bookingId && o.Status == BookingServicesStatus.Pending);
+        }
+
         public async Task<BookingServices?> FindBookingServicesByIdAsync(int? bookingId)
         {
             return await _context.BookingServices

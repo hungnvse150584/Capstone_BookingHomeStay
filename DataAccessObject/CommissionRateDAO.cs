@@ -39,6 +39,16 @@ namespace DataAccessObject
 
             return homeStay?.CommissionRate;
         }
+
+        public async Task<CommissionRate?> GetCommissionByHomeStayAsync(int? homeStayID)
+        {
+            var homeStay = await _context.HomeStays
+                .Include(h => h.CommissionRate)
+                .FirstOrDefaultAsync(h => h.HomeStayID == homeStayID);
+
+            return homeStay?.CommissionRate;
+        }
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

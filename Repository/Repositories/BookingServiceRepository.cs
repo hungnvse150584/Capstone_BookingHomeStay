@@ -43,6 +43,11 @@ namespace Repository.Repositories
             return await _bookingservicesDao.GetBookingServicesByAccountId(accountId);
         }
 
+        public async Task<BookingServices?> GetBookingServicesByBookingIdAsync(int bookingId)
+        {
+           return await _bookingservicesDao.GetBookingServicesByBookingIdAsync(bookingId);
+        }
+
         public async Task<IEnumerable<BookingServices>> GetBookingServicesByDateAsync(DateTime date)
         {
             return await _bookingservicesDao.GetBookingServicesByDateAsync(date);
