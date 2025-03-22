@@ -3358,7 +3358,6 @@
               "schema": {
                 "required": [
                   "Description",
-                  "Images",
                   "servicesName",
                   "servicesPrice",
                   "UnitPrice"
@@ -3381,17 +3380,6 @@
                   },
                   "Status": {
                     "type": "boolean"
-                  },
-                  "HomeStayID": {
-                    "type": "integer",
-                    "format": "int32"
-                  },
-                  "Images": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "format": "binary"
-                    }
                   }
                 }
               },
@@ -3409,121 +3397,6 @@
                   "style": "form"
                 },
                 "Status": {
-                  "style": "form"
-                },
-                "HomeStayID": {
-                  "style": "form"
-                },
-                "Images": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServicesBaseResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServicesBaseResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServicesBaseResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Service/UpdateServiceByHomeStayId/{homeStayId}": {
-      "put": {
-        "tags": [
-          "Service"
-        ],
-        "parameters": [
-          {
-            "name": "homeStayId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "Description",
-                  "Images",
-                  "servicesName",
-                  "servicesPrice",
-                  "UnitPrice"
-                ],
-                "type": "object",
-                "properties": {
-                  "servicesID": {
-                    "type": "integer",
-                    "format": "int32"
-                  },
-                  "servicesName": {
-                    "type": "string"
-                  },
-                  "Description": {
-                    "type": "string"
-                  },
-                  "UnitPrice": {
-                    "type": "number",
-                    "format": "double"
-                  },
-                  "servicesPrice": {
-                    "type": "number",
-                    "format": "double"
-                  },
-                  "Status": {
-                    "type": "boolean"
-                  },
-                  "Images": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "format": "binary"
-                    }
-                  }
-                }
-              },
-              "encoding": {
-                "servicesID": {
-                  "style": "form"
-                },
-                "servicesName": {
-                  "style": "form"
-                },
-                "Description": {
-                  "style": "form"
-                },
-                "UnitPrice": {
-                  "style": "form"
-                },
-                "servicesPrice": {
-                  "style": "form"
-                },
-                "Status": {
-                  "style": "form"
-                },
-                "Images": {
                   "style": "form"
                 }
               }
@@ -4460,10 +4333,6 @@
           "createAt": {
             "type": "string",
             "format": "date-time"
-          },
-          "homeStayID": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
