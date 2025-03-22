@@ -1182,9 +1182,49 @@
         "IsRequired": false
       },
       {
-        "Name": "request",
-        "Type": "Service.RequestAndResponse.Request.HomeStay.UpdateHomeStayRequest",
-        "IsRequired": true
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Address",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Longtitude",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "Latitude",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "RentalType",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Area",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "AccountID",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Images",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -1231,7 +1271,7 @@
     ]
   },
   {
-    "ContainingType": "GreenRoam.Controllers.HomeStayTypeController",
+    "ContainingType": "GreenRoam.Controllers.HomeStayRentalsController",
     "Method": "CreateHomeStayRental",
     "RelativePath": "api/homestaytype/CreateHomeStayRental",
     "HttpMethod": "POST",
@@ -1317,7 +1357,7 @@
     ]
   },
   {
-    "ContainingType": "GreenRoam.Controllers.HomeStayTypeController",
+    "ContainingType": "GreenRoam.Controllers.HomeStayRentalsController",
     "Method": "CreateRoomType",
     "RelativePath": "api/homestaytype/CreateRoomType",
     "HttpMethod": "POST",
@@ -1343,7 +1383,7 @@
     ]
   },
   {
-    "ContainingType": "GreenRoam.Controllers.HomeStayTypeController",
+    "ContainingType": "GreenRoam.Controllers.HomeStayRentalsController",
     "Method": "DeleteHomeStayRentals",
     "RelativePath": "api/homestaytype/DeleteHomeStayRental/{id}",
     "HttpMethod": "DELETE",
@@ -1369,8 +1409,8 @@
     ]
   },
   {
-    "ContainingType": "GreenRoam.Controllers.HomeStayTypeController",
-    "Method": "GetAllHomeStayTypesByHomeStayId",
+    "ContainingType": "GreenRoam.Controllers.HomeStayRentalsController",
+    "Method": "GetAllHomeStayRentalsByHomeStayId",
     "RelativePath": "api/homestaytype/GetAllHomeStayTypes",
     "HttpMethod": "GET",
     "IsController": true,
@@ -1395,7 +1435,7 @@
     ]
   },
   {
-    "ContainingType": "GreenRoam.Controllers.HomeStayTypeController",
+    "ContainingType": "GreenRoam.Controllers.HomeStayRentalsController",
     "Method": "GetAllRoomTypes",
     "RelativePath": "api/homestaytype/GetAllRoomTypes",
     "HttpMethod": "GET",
@@ -1874,6 +1914,128 @@
     "ReturnTypes": [
       {
         "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.Services.GetAllServices, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ServiceController",
+    "Method": "UpdateService",
+    "RelativePath": "api/Service/UpdateService/{serviceId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "serviceId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "servicesName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "UnitPrice",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "servicesPrice",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "Status",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "HomeStayID",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Images",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[BusinessObject.Model.Services, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.ServiceController",
+    "Method": "UpdateServiceByHomeStayId",
+    "RelativePath": "api/Service/UpdateServiceByHomeStayId/{homeStayId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "homeStayId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "servicesID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "servicesName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "UnitPrice",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "servicesPrice",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "Status",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "Images",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[BusinessObject.Model.Services, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

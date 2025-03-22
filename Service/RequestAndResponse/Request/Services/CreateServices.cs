@@ -12,6 +12,7 @@ namespace Service.RequestAndResponse.Request.Services
 {
     public class CreateServices
     {
+
         [Required]
         public string servicesName { get; set; }
 

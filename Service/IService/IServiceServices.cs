@@ -1,5 +1,6 @@
 ﻿using BusinessObject.Model;
 using Service.RequestAndResponse.BaseResponse;
+using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Request.Services;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.Services;
@@ -15,5 +16,7 @@ namespace Service.IService
     {
         Task<BaseResponse<Services>> CreateService(CreateServices request);
         Task<BaseResponse<IEnumerable<GetAllServices>>> GetAllServices(int homestayId);
+        Task<BaseResponse<Services>> UpdateService(int serviceId, CreateServices request);
+        Task<BaseResponse<Services>> UpdateServiceByHomeStayId(int homeStayId, UpdateServices request);
     }
 }

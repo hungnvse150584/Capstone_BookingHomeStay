@@ -1643,28 +1643,91 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Description",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Address",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Longtitude",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "Latitude",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "RentalType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/RentalType"
+            }
+          },
+          {
+            "name": "Area",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "AccountID",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateHomeStayRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateHomeStayRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateHomeStayRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateHomeStayRequest"
+                "type": "object",
+                "properties": {
+                  "Images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "Images": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -1782,7 +1845,7 @@
     "/api/homestaytype/GetAllHomeStayTypes": {
       "get": {
         "tags": [
-          "HomeStayType"
+          "HomeStayRentals"
         ],
         "parameters": [
           {
@@ -1821,7 +1884,7 @@
     "/api/homestaytype/CreateHomeStayRental": {
       "post": {
         "tags": [
-          "HomeStayType"
+          "HomeStayRentals"
         ],
         "requestBody": {
           "content": {
@@ -1953,7 +2016,7 @@
     "/api/homestaytype/GetAllRoomTypes": {
       "get": {
         "tags": [
-          "HomeStayType"
+          "HomeStayRentals"
         ],
         "responses": {
           "200": {
@@ -1982,7 +2045,7 @@
     "/api/homestaytype/CreateRoomType": {
       "post": {
         "tags": [
-          "HomeStayType"
+          "HomeStayRentals"
         ],
         "requestBody": {
           "content": {
@@ -2035,7 +2098,7 @@
     "/api/homestaytype/DeleteHomeStayRental/{id}": {
       "delete": {
         "tags": [
-          "HomeStayType"
+          "HomeStayRentals"
         ],
         "parameters": [
           {
@@ -3257,6 +3320,224 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ServicesListBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Service/UpdateService/{serviceId}": {
+      "put": {
+        "tags": [
+          "Service"
+        ],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "Description",
+                  "Images",
+                  "servicesName",
+                  "servicesPrice",
+                  "UnitPrice"
+                ],
+                "type": "object",
+                "properties": {
+                  "servicesName": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "UnitPrice": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "servicesPrice": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Status": {
+                    "type": "boolean"
+                  },
+                  "HomeStayID": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "servicesName": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "UnitPrice": {
+                  "style": "form"
+                },
+                "servicesPrice": {
+                  "style": "form"
+                },
+                "Status": {
+                  "style": "form"
+                },
+                "HomeStayID": {
+                  "style": "form"
+                },
+                "Images": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Service/UpdateServiceByHomeStayId/{homeStayId}": {
+      "put": {
+        "tags": [
+          "Service"
+        ],
+        "parameters": [
+          {
+            "name": "homeStayId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "Description",
+                  "Images",
+                  "servicesName",
+                  "servicesPrice",
+                  "UnitPrice"
+                ],
+                "type": "object",
+                "properties": {
+                  "servicesID": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "servicesName": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "UnitPrice": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "servicesPrice": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Status": {
+                    "type": "boolean"
+                  },
+                  "Images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "servicesID": {
+                  "style": "form"
+                },
+                "servicesName": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "UnitPrice": {
+                  "style": "form"
+                },
+                "servicesPrice": {
+                  "style": "form"
+                },
+                "Status": {
+                  "style": "form"
+                },
+                "Images": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesBaseResponse"
                 }
               }
             }
@@ -6874,6 +7155,22 @@
         },
         "additionalProperties": false
       },
+      "ServicesBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Services"
+          }
+        },
+        "additionalProperties": false
+      },
       "ServicesListBaseResponse": {
         "type": "object",
         "properties": {
@@ -7429,41 +7726,6 @@
           },
           "data": {
             "$ref": "#/components/schemas/UpdateCommissionRateRequest"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateHomeStayRequest": {
-        "required": [
-          "accountID",
-          "address",
-          "description",
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "description": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "address": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "rentalType": {
-            "$ref": "#/components/schemas/RentalType"
-          },
-          "area": {
-            "type": "string",
-            "nullable": true
-          },
-          "accountID": {
-            "minLength": 1,
-            "type": "string"
           }
         },
         "additionalProperties": false

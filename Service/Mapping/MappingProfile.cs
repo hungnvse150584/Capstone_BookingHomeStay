@@ -83,6 +83,8 @@ namespace Service.Mapping
             CreateMap<ImageServices, GetAllImageService>().ReverseMap();
             CreateMap<Services, GetAllServices>().ReverseMap();
             CreateMap<Services, CreateServices>().ReverseMap();
+            CreateMap<UpdateServices, Services>()
+           .ForMember(dest => dest.ServicesID, opt => opt.Ignore());
             CreateMap<ImageHomeStayRentals, AddImageHomeStayTypesRequest>().ReverseMap();
             CreateMap<ImageHomeStayRentals, UpdateImageHomeStayTypesRequest>().ReverseMap();
             CreateMap<ImageHomeStayRentals, GetAllImageHomeStayType>();
