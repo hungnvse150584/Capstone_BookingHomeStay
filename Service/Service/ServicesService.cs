@@ -79,22 +79,19 @@ namespace Service.Service
             }
         }
 
-        public async Task<BaseResponse<IEnumerable<GetAllServices>>> GetAllServices()
+        public async Task<BaseResponse<IEnumerable<GetAllServices>>> GetAllServices(int homestayId)
         {
-            IEnumerable<Services> homeStay = await _servicesRepository.GetAllServiceAsync();
-            if (homeStay == null)
+            var serviceList = await _servicesRepository.GetAllServiceAsync(homestayId);
+            if (serviceList == null)
             {
                 return new BaseResponse<IEnumerable<GetAllServices>>("Something went wrong!",
-                StatusCodeEnum.BadGateway_502, null);
+                    StatusCodeEnum.BadGateway_502, null);
             }
-            var homeStays = _mapper.Map<IEnumerable<GetAllServices>>(homeStay);
-            if (homeStays == null)
-            {
-                return new BaseResponse<IEnumerable<GetAllServices>>("Something went wrong!",
-                StatusCodeEnum.BadGateway_502, null);
-            }
-            return new BaseResponse<IEnumerable<GetAllServices>>("Get all HomeStay as base success",
-                StatusCodeEnum.OK_200, homeStays);
+
+          
+            var serviceDtos = _mapper.Map<IEnumerable<GetAllServices>>(serviceList);
+            return new BaseResponse<IEnumerable<GetAllServices>>("Get all Services by HomeStayID success",
+                StatusCodeEnum.OK_200, serviceDtos);
         }
 
         private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> files)

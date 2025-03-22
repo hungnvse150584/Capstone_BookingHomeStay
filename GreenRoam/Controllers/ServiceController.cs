@@ -22,12 +22,11 @@ namespace GreenRoam.Controllers
             _servicesService = servicesService;
         }
 
-        [HttpGet]
-        [Route("GetAllServices")]
-        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllServices>>>> GetAllServices()
+        [HttpGet("GetAllServices/{homestayId}")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllServices>>>> GetAllServicesByHomeStayId(int homestayId)
         {
-            var services = await _servicesService.GetAllServices();
-            return Ok(services);
+            var result = await _servicesService.GetAllServices(homestayId);
+            return StatusCode((int)result.StatusCode, result);
         }
 
         [HttpPost]

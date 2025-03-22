@@ -55,5 +55,10 @@ namespace Repository.Repositories
         {
             return _serviceDao.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Services>> GetAllServiceAsync(int homestayId)
+        {
+             return await _serviceDao.GetAllServiceAsync(homestayId);
+        }
     }
 }

@@ -28,6 +28,14 @@ namespace DataAccessObject
                .Include(h => h.ImageServices)
                .ToListAsync();
         }
+        public async Task<IEnumerable<Services>> GetAllServiceAsync(int homestayId)
+        {
+            return await _context.Services
+                .Where(s => s.HomeStayID == homestayId)
+                .Include(s => s.ImageServices)
+                .Include(h => h.BookingServicesDetails)
+                .ToListAsync();
+        }
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

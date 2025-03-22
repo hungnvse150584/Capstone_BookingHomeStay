@@ -10,7 +10,7 @@ namespace Repository.IRepositories
 {
     public interface IServiceRepository : IBaseRepository<Services>
     {
-        Task<IEnumerable<Services>> GetAllServiceAsync();
+        Task<IEnumerable<Services>> GetAllServiceAsync(int homestayId);
         //Task<Services> GetServiceByIdAsync(int id);
         Task SaveChangesAsync();
     }
