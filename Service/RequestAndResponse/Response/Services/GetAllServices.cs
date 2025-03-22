@@ -15,6 +15,7 @@ namespace Service.RequestAndResponse.Response.Services
 {
     public class GetAllServices
     {
+        public int? ServicesID { get; set; }
         public string servicesName { get; set; }
 
         public string Description { get; set; }

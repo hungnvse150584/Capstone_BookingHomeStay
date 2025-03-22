@@ -52,6 +52,6 @@ namespace Service.RequestAndResponse.Response.HomeStayType
        
         public IEnumerable<GetBookingDetails> BookingDetails { get; set; }
 
-        public IEnumerable<GetAllPricing> Prices { get; set; }
+        public IEnumerable<GetAllPricing> Pricing { get; set; }
     }
 }
