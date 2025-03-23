@@ -47,11 +47,11 @@ namespace Service.RequestAndResponse.Response.HomeStayType
 
         public int? HomeStayID { get; set; }
         public IEnumerable<GetAllImageHomeStayType> ImageHomeStayRentals { get; set; }
-        public IEnumerable<GetAllRoomType> RoomTypes { get; set; }
+        public ICollection<GetAllRoomType> RoomTypes { get; set; }
 
        
         public IEnumerable<GetBookingDetails> BookingDetails { get; set; }
 
-        public IEnumerable<GetAllPricing> Pricing { get; set; }
+        public ICollection<GetAllPricing> Pricing { get; set; }
     }
 }

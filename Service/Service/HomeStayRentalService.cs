@@ -66,7 +66,7 @@ namespace Service.Service
         {
             try
             {
-                // Xử lý Pricing và PricingJson, ưu tiên PricingJson
+               
                 if (!string.IsNullOrEmpty(request.PricingJson))
                 {
                     var options = new JsonSerializerOptions
