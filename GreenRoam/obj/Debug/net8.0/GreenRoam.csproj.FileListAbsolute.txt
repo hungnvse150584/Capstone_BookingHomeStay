@@ -500,7 +500,6 @@ D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.GeneratedMSBuildEdit
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.AssemblyInfoInputs.cache
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.AssemblyInfo.cs
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.csproj.CoreCompileInputs.cache
-D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.MvcApplicationPartsAssemblyInfo.cs
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.MvcApplicationPartsAssemblyInfo.cache
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.sourcelink.json
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\scopedcss\bundle\GreenRoam.styles.css
@@ -520,3 +519,4 @@ D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\refint\GreenRoam.dll
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.pdb
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.genruntimeconfig.cache
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\ref\GreenRoam.dll
+D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.MvcApplicationPartsAssemblyInfo.cs

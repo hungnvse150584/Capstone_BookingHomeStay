@@ -23,24 +23,8 @@ namespace Service.RequestAndResponse.Request.HomeStayType
 
         public string? PricingJson { get; set; }
 
-        private List<PricingForHomeStayRental>? _pricing;
-        public List<PricingForHomeStayRental>? Pricing
-        {
-            get
-            {
-                if (_pricing == null && !string.IsNullOrEmpty(PricingJson))
-                {
-                    var options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true // Bỏ qua sự khác biệt chữ hoa/thường
-                    };
-                    _pricing = JsonSerializer.Deserialize<List<PricingForHomeStayRental>>(PricingJson, options);
-                }
-                return _pricing;
-            }
-            set => _pricing = value;
-        }
-       
+        public List<PricingForHomeStayRental> Pricing { get; set; }
+
 
     }
 }

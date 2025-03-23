@@ -66,30 +66,54 @@ namespace Service.Service
         {
             try
             {
-                // Deserialize PricingJson
-                if (!string.IsNullOrEmpty(request.PricingJson))
+                // Xử lý Pricing và PricingJson
+                if (request.Pricing == null || !request.Pricing.Any())
                 {
-                    var options = new JsonSerializerOptions
+                    // Nếu Pricing rỗng, thử deserialize từ PricingJson
+                    if (!string.IsNullOrEmpty(request.PricingJson))
                     {
-                        PropertyNameCaseInsensitive = true
-                    };
-                    request.Pricing = JsonSerializer.Deserialize<List<PricingForHomeStayRental>>(request.PricingJson, options);
-
-                    if (request.Pricing != null)
-                    {
-                        foreach (var pricing in request.Pricing)
+                        var options = new JsonSerializerOptions
                         {
-                            Console.WriteLine($"After deserialize - PricingForHomeStayRental: UnitPrice={pricing.UnitPrice}, RentPrice={pricing.RentPrice}, StartDate={pricing.StartDate?.ToString() ?? "null"}, EndDate={pricing.EndDate?.ToString() ?? "null"}, IsDefault={pricing.IsDefault}, IsActive={pricing.IsActive}, DayType={pricing.DayType}, Description={pricing.Description}");
+                            PropertyNameCaseInsensitive = true
+                        };
+
+                        // Kiểm tra xem PricingJson có phải là danh sách không
+                        if (request.PricingJson.TrimStart().StartsWith("["))
+                        {
+                            request.Pricing = JsonSerializer.Deserialize<List<PricingForHomeStayRental>>(request.PricingJson, options);
+                        }
+                        else
+                        {
+                            // Nếu là đối tượng đơn lẻ, deserialize và đưa vào danh sách
+                            var singlePricing = JsonSerializer.Deserialize<PricingForHomeStayRental>(request.PricingJson, options);
+                            request.Pricing = new List<PricingForHomeStayRental> { singlePricing };
+                        }
+
+                        if (request.Pricing != null)
+                        {
+                            foreach (var pricing in request.Pricing)
+                            {
+                                Console.WriteLine($"After deserialize - PricingForHomeStayRental: UnitPrice={pricing.UnitPrice}, RentPrice={pricing.RentPrice}, StartDate={pricing.StartDate?.ToString() ?? "null"}, EndDate={pricing.EndDate?.ToString() ?? "null"}, IsDefault={pricing.IsDefault}, IsActive={pricing.IsActive}, DayType={pricing.DayType}, Description={pricing.Description}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("request.Pricing is null after deserialize.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("request.Pricing is null after deserialize.");
+                        Console.WriteLine("Both Pricing and PricingJson are null or empty.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("PricingJson is null or empty.");
+                    // Nếu Pricing đã có dữ liệu, bỏ qua PricingJson
+                    Console.WriteLine("Using Pricing directly from request.");
+                    foreach (var pricing in request.Pricing)
+                    {
+                        Console.WriteLine($"Pricing from request: UnitPrice={pricing.UnitPrice}, RentPrice={pricing.RentPrice}, StartDate={pricing.StartDate?.ToString() ?? "null"}, EndDate={pricing.EndDate?.ToString() ?? "null"}, IsDefault={pricing.IsDefault}, IsActive={pricing.IsActive}, DayType={pricing.DayType}, Description={pricing.Description}");
+                    }
                 }
 
                 // Gán giá trị mặc định cho Status và RentWhole nếu là null
@@ -121,23 +145,6 @@ namespace Service.Service
                 var homeStayRental = _mapper.Map<HomeStayRentals>(request);
                 homeStayRental.CreateAt = DateTime.Now;
 
-                if (request.RentWhole.Value)
-                {
-                    homeStayRental.Prices = _mapper.Map<ICollection<Pricing>>(request.Pricing);
-
-                    if (homeStayRental.Prices != null)
-                    {
-                        foreach (var price in homeStayRental.Prices)
-                        {
-                            Console.WriteLine($"After mapping - Pricing: UnitPrice={price.UnitPrice}, RentPrice={price.RentPrice}, StartDate={price.StartDate?.ToString() ?? "null"}, EndDate={price.EndDate?.ToString() ?? "null"}, IsDefault={price.IsDefault}, IsActive={price.IsActive}, DayType={price.DayType}, Description={price.Description}");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("homeStayRental.Prices is null after mapping.");
-                    }
-                }
-
                 await _homeStayTypeRepository.AddAsync(homeStayRental);
                 Console.WriteLine("Saving HomeStayRentals...");
                 await _homeStayTypeRepository.SaveChangesAsync();
@@ -162,10 +169,12 @@ namespace Service.Service
                     Console.WriteLine("ImageHomeStayRentals saved successfully.");
                 }
 
-                if (request.RentWhole.Value && homeStayRental.Prices != null && homeStayRental.Prices.Any())
+                // Lưu Pricing sau khi đã lưu HomeStayRental
+                if (request.RentWhole.Value && request.Pricing != null && request.Pricing.Any())
                 {
                     Console.WriteLine("Saving Prices...");
-                    foreach (var price in homeStayRental.Prices)
+                    var prices = _mapper.Map<ICollection<Pricing>>(request.Pricing);
+                    foreach (var price in prices)
                     {
                         Console.WriteLine($"Before saving - Pricing: UnitPrice={price.UnitPrice}, RentPrice={price.RentPrice}, StartDate={price.StartDate?.ToString() ?? "null"}, EndDate={price.EndDate?.ToString() ?? "null"}, IsDefault={price.IsDefault}, IsActive={price.IsActive}, DayType={price.DayType}, Description={price.Description}");
 
@@ -175,6 +184,9 @@ namespace Service.Service
                     }
                     await _pricingRepository.SaveChangesAsync();
                     Console.WriteLine("Prices saved successfully.");
+
+                    // Gán lại Prices vào homeStayRental để trả về trong response
+                    homeStayRental.Prices = prices;
                 }
 
                 return new BaseResponse<HomeStayRentals>(

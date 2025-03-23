@@ -20,7 +20,7 @@ namespace GreenRoam.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<BaseResponse<RoomTypes>>> CreateRoomType([FromBody] CreateRoomTypeRequest request, [FromQuery] int homeStayRentalId)
+        public async Task<ActionResult<BaseResponse<RoomTypes>>> CreateRoomType([FromForm] CreateRoomTypeRequest request, [FromQuery] int homeStayRentalId)
         {
             var result = await _roomTypeService.CreateRoomType(request, homeStayRentalId);
             if (result.StatusCode == StatusCodeEnum.Created_201)

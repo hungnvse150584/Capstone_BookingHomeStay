@@ -3169,24 +3169,83 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CreateRoomTypeRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRoomTypeRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRoomTypeRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRoomTypeRequest"
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "numberBedRoom": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "numberBathRoom": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "numberWifi": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Status": {
+                    "type": "boolean"
+                  },
+                  "MaxAdults": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "MaxChildren": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "MaxPeople": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "numberBedRoom": {
+                  "style": "form"
+                },
+                "numberBathRoom": {
+                  "style": "form"
+                },
+                "numberWifi": {
+                  "style": "form"
+                },
+                "Status": {
+                  "style": "form"
+                },
+                "MaxAdults": {
+                  "style": "form"
+                },
+                "MaxChildren": {
+                  "style": "form"
+                },
+                "MaxPeople": {
+                  "style": "form"
+                },
+                "Images": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -4455,47 +4514,6 @@
           },
           "data": {
             "$ref": "#/components/schemas/CreateRoomRequest"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateRoomTypeRequest": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "numberBedRoom": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberBathRoom": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberWifi": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "maxAdults": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "maxChildren": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "maxPeople": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
