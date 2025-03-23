@@ -64,7 +64,7 @@ namespace DataAccessObject.BaseDAO
             return await _dbContext.Set<T>().ToListAsync();
 
         }
-
+      
         public async Task<T> GetByStringIdAsync(string id)
         {
             var entity = await _dbContext.Set<T>().FindAsync(id);

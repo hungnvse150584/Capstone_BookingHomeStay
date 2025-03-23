@@ -65,7 +65,17 @@ namespace Service.Mapping
 
             CreateMap<CreateRoomTypeRequest, RoomTypes>().ReverseMap();
             CreateMap<GetAllRoomType, RoomTypes>().ReverseMap();
-            CreateMap<PricingForHomeStayRental, Pricing>().ReverseMap();
+            CreateMap<PricingForHomeStayRental, Pricing>()
+            .ForMember(dest => dest.PricingID, opt => opt.Ignore())
+            .ForMember(dest => dest.HomeStayRentalID, opt => opt.Ignore())
+            .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+            .ForMember(dest => dest.RentPrice, opt => opt.MapFrom(src => src.RentPrice))
+            .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
+            .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
+            .ForMember(dest => dest.IsDefault, opt => opt.MapFrom(src => src.IsDefault))
+            .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
+            .ForMember(dest => dest.DayType, opt => opt.MapFrom(src => src.DayType))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description ?? "Default description"));
             CreateMap<GetAllPricing, Pricing>().ReverseMap();
             CreateMap<CreatePricingRequest, Pricing>().ReverseMap();
             CreateMap<UpdatePricingRequest, Pricing>().ReverseMap();

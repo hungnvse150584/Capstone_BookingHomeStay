@@ -63,5 +63,10 @@ namespace Repository.Repositories
         {
             return await _pricingDao.GetTotalPrice(checkInDate, checkOutDate, homeStayRentalId, roomTypeId);
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _pricingDao.SaveChangesAsync();
+        }
     }
 }

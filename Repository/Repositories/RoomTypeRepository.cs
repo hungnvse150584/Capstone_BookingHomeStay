@@ -43,5 +43,10 @@ namespace Repository.Repositories
         {
             return await _roomTypeDao.GetRoomTypeByIdAsync(id);
         }
+
+        public async Task SaveChangesAsync()
+        {
+             await _roomTypeDao.SaveChangesAsync();
+        }
     }
 }

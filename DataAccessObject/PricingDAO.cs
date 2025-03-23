@@ -29,7 +29,10 @@ namespace DataAccessObject
                .Include(p => p.RoomTypes)
                .ToListAsync();
         }
-
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
         public async Task<IEnumerable<Pricing>> GetPricingByHomeStayRentalAsync(int rentalID)
         {
             if (rentalID <= 0)
