@@ -40,24 +40,7 @@ namespace Service.RequestAndResponse.Request.HomeStayType
             }
             set => _pricing = value;
         }
-        public string? RoomTypesJson { get; set; }
-        private ICollection<CreateRoomTypeRequest>? _roomTypes;
-        public ICollection<CreateRoomTypeRequest>? RoomTypes
-        {
-            get
-            {
-                if (_roomTypes == null && !string.IsNullOrEmpty(RoomTypesJson))
-                {
-                    var options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    };
-                    _roomTypes = JsonSerializer.Deserialize<ICollection<CreateRoomTypeRequest>>(RoomTypesJson, options);
-                }
-                return _roomTypes;
-            }
-            set => _roomTypes = value;
-        }
+       
 
     }
 }
