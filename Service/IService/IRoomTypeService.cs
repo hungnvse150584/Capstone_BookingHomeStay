@@ -14,6 +14,6 @@ namespace Service.IService
     {
         Task<BaseResponse<IEnumerable<GetAllRoomType>>> GetAllRoomTypes();
 
-        Task<BaseResponse<RoomTypes>> CreateRoomType(CreateRoomTypeRequest request, int homeStayRentalId);
+        Task<BaseResponse<CreateRoomTypeResponse>> CreateRoomType(CreateRoomTypeRequest request, int homeStayRentalId);
     }
 }

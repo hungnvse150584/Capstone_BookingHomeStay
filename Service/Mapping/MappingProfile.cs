@@ -60,10 +60,22 @@ namespace Service.Mapping
                opt => opt.MapFrom(src => src.ImageHomeStayRentals));
 
             CreateMap<CreateHomeStayTypeRequest, HomeStayRentals>()
-    .ForMember(dest => dest.Prices, opt => opt.MapFrom(src => src.Pricing));
+    .ForMember(dest => dest.Prices, opt => opt.MapFrom(src => src.PricingJson));
 
 
-            CreateMap<CreateRoomTypeRequest, RoomTypes>().ReverseMap();
+            CreateMap<CreateHomeStayTypeRequest, HomeStayRentals>()
+            .ForMember(dest => dest.numberBedRoom, opt => opt.MapFrom(src => src.numberBedRoom))
+            .ForMember(dest => dest.numberBathRoom, opt => opt.MapFrom(src => src.numberBathRoom))
+            .ForMember(dest => dest.numberKitchen, opt => opt.MapFrom(src => src.numberKitchen))
+            .ForMember(dest => dest.numberWifi, opt => opt.MapFrom(src => src.numberWifi))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status ?? true))
+            .ForMember(dest => dest.RentWhole, opt => opt.MapFrom(src => src.RentWhole ?? true))
+            .ForMember(dest => dest.HomeStayRentalID, opt => opt.Ignore())
+            .ForMember(dest => dest.HomeStay, opt => opt.Ignore())
+            .ForMember(dest => dest.ImageHomeStayRentals, opt => opt.Ignore())
+            .ForMember(dest => dest.Prices, opt => opt.Ignore())
+            .ForMember(dest => dest.BookingDetails, opt => opt.Ignore())
+            .ForMember(dest => dest.RoomTypes, opt => opt.Ignore());
             CreateMap<GetAllRoomType, RoomTypes>().ReverseMap();
             CreateMap<PricingForHomeStayRental, Pricing>()
             .ForMember(dest => dest.PricingID, opt => opt.Ignore())

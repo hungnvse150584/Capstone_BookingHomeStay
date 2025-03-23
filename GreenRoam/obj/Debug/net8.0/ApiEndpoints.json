@@ -1834,9 +1834,54 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
-        "Type": "Service.RequestAndResponse.Request.RoomType.CreateRoomTypeRequest",
-        "IsRequired": true
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "numberBedRoom",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "numberBathRoom",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "numberWifi",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Status",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "MaxAdults",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "MaxChildren",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "MaxPeople",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Images",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
       },
       {
         "Name": "homeStayRentalId",
