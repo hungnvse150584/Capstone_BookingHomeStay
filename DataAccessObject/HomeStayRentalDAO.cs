@@ -20,15 +20,18 @@ namespace DataAccessObject
         public async Task<IEnumerable<HomeStayRentals>> GetAllHomeStayTypesAsync(int homestayId)
         {
             return await _context.HomeStayRentals
-                .Where(c => c.HomeStayID == homestayId)
-                .Include(c => c.HomeStay)
-                .Include(c => c.ImageHomeStayRentals)
-                .Include(c => c.RoomTypes)            
-                .Include(c => c.BookingDetails)       
-                .Include(c => c.Prices)              
-                .ToListAsync();
+           .Where(c => c.HomeStayID == homestayId)
+           .Include(c => c.Prices)  
+           .Include(c => c.HomeStay)
+           .Include(c => c.ImageHomeStayRentals)
+           .Include(c => c.RoomTypes)
+           .Include(c => c.BookingDetails)
+           .ToListAsync();
         }
-
+        public async Task AddRoomTypeAsync(RoomTypes roomType)
+        {
+            await _context.RoomTypes.AddAsync(roomType);
+        }
 
         public async Task SaveChangesAsync()
         {

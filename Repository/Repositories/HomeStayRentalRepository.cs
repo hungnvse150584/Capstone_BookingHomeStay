@@ -1,5 +1,6 @@
 ﻿using BusinessObject.Model;
 using DataAccessObject;
+using Microsoft.EntityFrameworkCore;
 using Repository.BaseRepository;
 using Repository.IRepositories;
 using System;
@@ -52,6 +53,11 @@ namespace Repository.Repositories
         public async Task<IEnumerable<HomeStayRentals>> GetAllHomeStayTypesAsync(int homestayId)
         {
             return await _homestayrentalDao.GetAllHomeStayTypesAsync(homestayId);
+        }
+
+        public async Task AddRoomTypeAsync(RoomTypes roomType)
+        {
+            await _homestayrentalDao.AddRoomTypeAsync(roomType);
         }
     }
 }

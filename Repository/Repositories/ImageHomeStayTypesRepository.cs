@@ -48,5 +48,10 @@ namespace Repository.Repositories
         {
             return await _imageHomeStayTypesDAO.AddAsync(image);
         }
+
+        public async Task SaveChangesAsync()
+        {
+           await _imageHomeStayTypesDAO.SaveChangesAsync();
+        }
     }
 }

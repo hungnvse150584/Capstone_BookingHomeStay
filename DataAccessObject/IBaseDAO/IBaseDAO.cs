@@ -19,5 +19,6 @@ namespace DataAccessObject.IBaseDAO
         Task<List<T>> DeleteRange(List<T> entities);
 
         Task<T> GetByStringIdAsync(string id);
+        
     }
 }

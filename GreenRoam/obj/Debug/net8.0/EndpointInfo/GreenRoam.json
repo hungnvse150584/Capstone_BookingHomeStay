@@ -1943,6 +1943,9 @@
                       "format": "binary"
                     }
                   },
+                  "PricingJson": {
+                    "type": "string"
+                  },
                   "Pricing": {
                     "type": "array",
                     "items": {
@@ -1989,6 +1992,9 @@
                   "style": "form"
                 },
                 "Images": {
+                  "style": "form"
+                },
+                "PricingJson": {
                   "style": "form"
                 },
                 "Pricing": {
@@ -6610,14 +6616,37 @@
         "additionalProperties": false
       },
       "PricingForHomeStayRental": {
-        "required": [
-          "rentPrice"
-        ],
         "type": "object",
         "properties": {
+          "unitPrice": {
+            "type": "integer",
+            "format": "int32"
+          },
           "rentPrice": {
-            "type": "number",
-            "format": "double"
+            "type": "integer",
+            "format": "int32"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "dayType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

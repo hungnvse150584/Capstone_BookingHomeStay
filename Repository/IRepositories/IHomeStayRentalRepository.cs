@@ -13,5 +13,6 @@ namespace Repository.IRepositories
         Task<HomeStayRentals> GetHomeStayTypesByIdAsync(int? id);
         Task<IEnumerable<HomeStayRentals>> GetAllHomeStayTypesAsync(int homestayId);
         Task SaveChangesAsync();
+        Task AddRoomTypeAsync(RoomTypes roomType);
     }
 }

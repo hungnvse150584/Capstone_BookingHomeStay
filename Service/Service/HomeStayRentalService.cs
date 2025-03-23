@@ -17,6 +17,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Service.RequestAndResponse.Request.Pricing;
+using System.Text.Json;
+using Service.RequestAndResponse.Request.RoomType;
 
 namespace Service.Service
 {
@@ -27,15 +30,17 @@ namespace Service.Service
         private readonly IServiceRepository _serviceRepository;
         private readonly Cloudinary _cloudinary;
         private readonly IImageHomeStayTypesRepository _imageHomeStayTypesRepository;
-
+        private readonly IPricingRepository _pricingRepository;
+        private readonly IRoomTypeRepository _roomTypeRepository;
         public HomeStayRentalService(IMapper mapper, IHomeStayRentalRepository homeStayTypeRepository,
-             IServiceRepository serviceRepository, Cloudinary cloudinary, IImageHomeStayTypesRepository imageHomeStayTypes)
+             IServiceRepository serviceRepository, Cloudinary cloudinary, IImageHomeStayTypesRepository imageHomeStayTypes, IPricingRepository pricingRepository)
         {
             _mapper = mapper;
             _homeStayTypeRepository = homeStayTypeRepository;
             _serviceRepository = serviceRepository;
             _cloudinary = cloudinary;
             _imageHomeStayTypesRepository = imageHomeStayTypes;
+            _pricingRepository = pricingRepository;
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllHomeStayType>>> GetAllHomeStayTypesByHomeStayID(int homestayId)
@@ -56,72 +61,138 @@ namespace Service.Service
                 StatusCodeEnum.OK_200, homeStayTypes);
         }
 
-        public async Task<BaseResponse<List<HomeStayRentals>>> CreateHomeStayType(CreateHomeStayTypeRequest typeRequest)
+        public async Task<BaseResponse<HomeStayRentals>> CreateHomeStayType(CreateHomeStayTypeRequest request)
         {
             try
             {
-                
-                var rentalEntity = _mapper.Map<HomeStayRentals>(typeRequest);
-
-              
-                rentalEntity.CreateAt = DateTime.Now;
-              
-
-                // Nếu RentWhole == false, bỏ qua pricing (hoặc gán là danh sách rỗng)
-                if (!rentalEntity.RentWhole)
+             
+                if (!string.IsNullOrEmpty(request.PricingJson))
                 {
-                    rentalEntity.Prices = new List<Pricing>();
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    request.Pricing = JsonSerializer.Deserialize<List<PricingForHomeStayRental>>(request.PricingJson, options);
+
+               
+                    if (request.Pricing != null)
+                    {
+                        foreach (var pricing in request.Pricing)
+                        {
+                            Console.WriteLine($"After deserialize - PricingForHomeStayRental: UnitPrice={pricing.UnitPrice}, RentPrice={pricing.RentPrice}, StartDate={pricing.StartDate}, EndDate={pricing.EndDate}, IsDefault={pricing.IsDefault}, IsActive={pricing.IsActive}, DayType={pricing.DayType}, Description={pricing.Description}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("request.Pricing is null after deserialize.");
+                    }
                 }
                 else
                 {
-                    // Nếu có dữ liệu pricing từ request, bạn ánh xạ và gán vào rentalEntity.Prices
-                    // Ví dụ, nếu typeRequest có property Pricing:
-                    if (typeRequest.Pricing != null && typeRequest.Pricing.Any())
+                    Console.WriteLine("PricingJson is null or empty.");
+                }
+
+               
+                Console.WriteLine($"RentWhole: {request.RentWhole}");
+                Console.WriteLine($"PricingJson: {request.PricingJson ?? "null"}");
+                Console.WriteLine($"Pricing: {(request.Pricing != null ? $"Count = {request.Pricing.Count}" : "null")}");
+
+              
+                if (request.RentWhole && (request.Pricing == null || !request.Pricing.Any()))
+                {
+                    return new BaseResponse<HomeStayRentals>(
+                        "Pricing must be provided when RentWhole is true!",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
+                if (!request.RentWhole && request.Pricing != null && request.Pricing.Any())
+                {
+                    return new BaseResponse<HomeStayRentals>(
+                        "Pricing cannot be provided when RentWhole is false!",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
+
+                var homeStayRental = _mapper.Map<HomeStayRentals>(request);
+                homeStayRental.CreateAt = DateTime.Now;
+
+                if (request.RentWhole)
+                {
+                    homeStayRental.Prices = _mapper.Map<ICollection<Pricing>>(request.Pricing);
+
+                    if (homeStayRental.Prices != null)
                     {
-                        rentalEntity.Prices = _mapper.Map<List<Pricing>>(typeRequest.Pricing);
+                        foreach (var price in homeStayRental.Prices)
+                        {
+                            Console.WriteLine($"After mapping - Pricing: UnitPrice={price.UnitPrice}, RentPrice={price.RentPrice}, StartDate={price.StartDate}, EndDate={price.EndDate}, IsDefault={price.IsDefault}, IsActive={price.IsActive}, DayType={price.DayType}, Description={price.Description}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("homeStayRental.Prices is null after mapping.");
                     }
                 }
 
-                // Lưu entity và gọi SaveChanges để nhận được HomeStayRentalID
-                await _homeStayTypeRepository.AddAsync(rentalEntity); 
+                await _homeStayTypeRepository.AddAsync(homeStayRental);
+                Console.WriteLine("Saving HomeStayRentals...");
                 await _homeStayTypeRepository.SaveChangesAsync();
+                Console.WriteLine("HomeStayRentals saved successfully.");
 
-                // Nếu có hình ảnh trong request thì upload lên Cloudinary và lưu vào DB
-                if (typeRequest.Images != null && typeRequest.Images.Any())
+                if (request.Images != null && request.Images.Any())
                 {
-                    var imageUrls = await UploadImagesToCloudinary(typeRequest.Images);
+                    Console.WriteLine("Uploading images to Cloudinary...");
+                    var imageUrls = await UploadImagesToCloudinary(request.Images);
+                    Console.WriteLine($"Uploaded {imageUrls.Count} images: {string.Join(", ", imageUrls)}");
                     foreach (var url in imageUrls)
                     {
                         var imageRental = new ImageHomeStayRentals
                         {
                             Image = url,
-                            HomeStayRentalID = rentalEntity.HomeStayRentalID
+                            HomeStayRentalID = homeStayRental.HomeStayRentalID,
                         };
                         await _imageHomeStayTypesRepository.AddImageAsync(imageRental);
                     }
+                    Console.WriteLine("Saving ImageHomeStayRentals...");
+                    await _imageHomeStayTypesRepository.SaveChangesAsync();
+                    Console.WriteLine("ImageHomeStayRentals saved successfully.");
                 }
 
-                return new BaseResponse<List<HomeStayRentals>>(
-                    "Create HomeStay Rental successfully",
+                if (request.RentWhole && homeStayRental.Prices != null && homeStayRental.Prices.Any())
+                {
+                    Console.WriteLine("Saving Prices...");
+                    foreach (var price in homeStayRental.Prices)
+                    {
+                        Console.WriteLine($"Before saving - Pricing: UnitPrice={price.UnitPrice}, RentPrice={price.RentPrice}, StartDate={price.StartDate}, EndDate={price.EndDate}, IsDefault={price.IsDefault}, IsActive={price.IsActive}, DayType={price.DayType}, Description={price.Description}");
+
+                        price.PricingID = 0;
+                        price.HomeStayRentalID = homeStayRental.HomeStayRentalID;
+                        await _pricingRepository.AddAsync(price);
+                    }
+                    await _pricingRepository.SaveChangesAsync();
+                    Console.WriteLine("Prices saved successfully.");
+                }
+
+                return new BaseResponse<HomeStayRentals>(
+                    "HomeStayType created successfully!",
                     StatusCodeEnum.Created_201,
-                    new List<HomeStayRentals> { rentalEntity });
+                    homeStayRental);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
-                return new BaseResponse<List<HomeStayRentals>>(
-                    $"Something went wrong! Error: {ex.Message}",
+                Console.WriteLine($"Exception: {ex.Message}");
+                Console.WriteLine($"InnerException: {ex.InnerException?.Message}");
+                Console.WriteLine($"StackTrace: {ex.StackTrace}");
+                return new BaseResponse<HomeStayRentals>(
+                    $"An error occurred while creating HomeStayType: {ex.Message}. InnerException: {ex.InnerException?.Message}",
                     StatusCodeEnum.InternalServerError_500,
                     null);
             }
         }
-
         private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> files)
         {
             if (files == null || !files.Any())
             {
-                return new List<string>(); // Trả về danh sách rỗng nếu không có file
+                return new List<string>(); 
             }
 
             var urls = new List<string>();
@@ -130,7 +201,7 @@ namespace Service.Service
             {
                 if (file == null || file.Length == 0)
                 {
-                    continue; // Bỏ qua file không hợp lệ
+                    continue; 
                 }
 
                 using var stream = file.OpenReadStream();
@@ -184,5 +255,7 @@ namespace Service.Service
             return new BaseResponse<IEnumerable<GetAllHomeStayType>>("Get all HomeStayType as base success",
                 StatusCodeEnum.OK_200, homeStayTypes);
         }
+
+        
     } 
 }
