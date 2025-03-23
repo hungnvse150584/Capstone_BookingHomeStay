@@ -14,8 +14,8 @@ namespace Service.RequestAndResponse.Request.HomeStayType
         public int numberBathRoom { get; set; }
         public int numberKitchen { get; set; }
         public int numberWifi { get; set; }
-        public bool Status { get; set; }
-        public bool RentWhole { get; set; }
+        public bool? Status { get; set; } = true;
+        public bool? RentWhole { get; set; } = true;
         public int MaxAdults { get; set; }
         public int MaxChildren { get; set; }
         public int MaxPeople { get; set; }
@@ -40,7 +40,24 @@ namespace Service.RequestAndResponse.Request.HomeStayType
             }
             set => _pricing = value;
         }
+        public string? RoomTypesJson { get; set; }
+        private ICollection<CreateRoomTypeRequest>? _roomTypes;
+        public ICollection<CreateRoomTypeRequest>? RoomTypes
+        {
+            get
+            {
+                if (_roomTypes == null && !string.IsNullOrEmpty(RoomTypesJson))
+                {
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    _roomTypes = JsonSerializer.Deserialize<ICollection<CreateRoomTypeRequest>>(RoomTypesJson, options);
+                }
+                return _roomTypes;
+            }
+            set => _roomTypes = value;
+        }
 
-        
     }
 }

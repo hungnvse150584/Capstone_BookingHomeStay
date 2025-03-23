@@ -1842,7 +1842,7 @@
         }
       }
     },
-    "/api/homestaytype/GetAllHomeStayTypes": {
+    "/api/homestaytype/GetAllHomeStayTypes/{homestayId}": {
       "get": {
         "tags": [
           "HomeStayRentals"
@@ -1850,7 +1850,8 @@
         "parameters": [
           {
             "name": "homestayId",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1951,6 +1952,15 @@
                     "items": {
                       "$ref": "#/components/schemas/PricingForHomeStayRental"
                     }
+                  },
+                  "RoomTypesJson": {
+                    "type": "string"
+                  },
+                  "RoomTypes": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/CreateRoomTypeRequest"
+                    }
                   }
                 }
               },
@@ -1998,6 +2008,12 @@
                   "style": "form"
                 },
                 "Pricing": {
+                  "style": "form"
+                },
+                "RoomTypesJson": {
+                  "style": "form"
+                },
+                "RoomTypes": {
                   "style": "form"
                 }
               }
@@ -2050,59 +2066,6 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GetAllRoomTypeIEnumerableBaseResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/homestaytype/CreateRoomType": {
-      "post": {
-        "tags": [
-          "HomeStayRentals"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRoomTypeRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRoomTypeRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRoomTypeRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRoomTypeRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateRoomTypeRequestBaseResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateRoomTypeRequestBaseResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateRoomTypeRequestBaseResponse"
                 }
               }
             }
@@ -3197,6 +3160,69 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UpdateRoomRequestBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RoomType/create": {
+      "post": {
+        "tags": [
+          "RoomType"
+        ],
+        "parameters": [
+          {
+            "name": "homeStayRentalId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoomTypeRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoomTypeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoomTypeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoomTypeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomTypesBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomTypesBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomTypesBaseResponse"
                 }
               }
             }
@@ -4459,19 +4485,6 @@
             "type": "string",
             "nullable": true
           },
-          "createAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updateAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "homeStayRentalID": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
           "numberBedRoom": {
             "type": "integer",
             "format": "int32"
@@ -4498,22 +4511,6 @@
           "maxPeople": {
             "type": "integer",
             "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateRoomTypeRequestBaseResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "statusCode": {
-            "$ref": "#/components/schemas/StatusCodeEnum"
-          },
-          "data": {
-            "$ref": "#/components/schemas/CreateRoomTypeRequest"
           }
         },
         "additionalProperties": false
@@ -6628,11 +6625,13 @@
           },
           "startDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "endDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "isDefault": {
             "type": "boolean"
@@ -7006,6 +7005,22 @@
               "$ref": "#/components/schemas/Pricing"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoomTypesBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/RoomTypes"
           }
         },
         "additionalProperties": false

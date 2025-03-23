@@ -22,19 +22,39 @@ namespace Service.Service
         private readonly IMapper _mapper;
         private readonly IRoomTypeRepository _roomTypeRepository;
 
+
         public RoomTypeService(IMapper mapper, IRoomTypeRepository roomTypeRepository)
         {
             _mapper = mapper;
             _roomTypeRepository = roomTypeRepository; 
         }
 
-        public async Task<BaseResponse<CreateRoomTypeRequest>> CreateRoomType(CreateRoomTypeRequest typeRequest)
-        {
-            RoomTypes roomTypes = _mapper.Map<RoomTypes>(typeRequest);
-            await _roomTypeRepository.AddAsync(roomTypes);
+        
 
-            var response = _mapper.Map<CreateRoomTypeRequest>(roomTypes);
-            return new BaseResponse<CreateRoomTypeRequest>("Add Roomtype as base success", StatusCodeEnum.Created_201, response);
+        public async Task<BaseResponse<RoomTypes>> CreateRoomType(CreateRoomTypeRequest request, int homeStayRentalId)
+        {
+            try
+            {
+                var roomType = _mapper.Map<RoomTypes>(request);
+                roomType.CreateAt = DateTime.UtcNow;
+                //roomType.UpdateAt = DateTime.UtcNow;
+                roomType.HomeStayRentalID = homeStayRentalId;
+
+                await _roomTypeRepository.AddAsync(roomType);
+                await _roomTypeRepository.SaveChangesAsync();
+
+                return new BaseResponse<RoomTypes>(
+                    "RoomType created successfully!",
+                    StatusCodeEnum.Created_201,
+                    roomType);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<RoomTypes>(
+                    $"An error occurred while creating RoomType: {ex.Message}. InnerException: {ex.InnerException?.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
+            }
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllRoomType>>> GetAllRoomTypes()
