@@ -1273,7 +1273,7 @@
   {
     "ContainingType": "GreenRoam.Controllers.HomeStayRentalsController",
     "Method": "CreateHomeStayRental",
-    "RelativePath": "api/homestaytype/CreateHomeStayRental",
+    "RelativePath": "api/homestayrental/CreateHomeStayRental",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -1379,7 +1379,7 @@
   {
     "ContainingType": "GreenRoam.Controllers.HomeStayRentalsController",
     "Method": "DeleteHomeStayRentals",
-    "RelativePath": "api/homestaytype/DeleteHomeStayRental/{id}",
+    "RelativePath": "api/homestayrental/DeleteHomeStayRental/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -1405,7 +1405,7 @@
   {
     "ContainingType": "GreenRoam.Controllers.HomeStayRentalsController",
     "Method": "GetAllHomeStayRentalsByHomeStayId",
-    "RelativePath": "api/homestaytype/GetAllHomeStayTypes/{homestayId}",
+    "RelativePath": "api/homestayrental/GetAllHomeStayRentals/{homestayId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1431,7 +1431,7 @@
   {
     "ContainingType": "GreenRoam.Controllers.HomeStayRentalsController",
     "Method": "GetAllRoomTypes",
-    "RelativePath": "api/homestaytype/GetAllRoomTypes",
+    "RelativePath": "api/homestayrental/GetAllRoomTypes",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

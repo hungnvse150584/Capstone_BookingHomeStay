@@ -1842,7 +1842,7 @@
         }
       }
     },
-    "/api/homestaytype/GetAllHomeStayTypes/{homestayId}": {
+    "/api/homestayrental/GetAllHomeStayRentals/{homestayId}": {
       "get": {
         "tags": [
           "HomeStayRentals"
@@ -1882,7 +1882,7 @@
         }
       }
     },
-    "/api/homestaytype/CreateHomeStayRental": {
+    "/api/homestayrental/CreateHomeStayRental": {
       "post": {
         "tags": [
           "HomeStayRentals"
@@ -2044,7 +2044,7 @@
         }
       }
     },
-    "/api/homestaytype/GetAllRoomTypes": {
+    "/api/homestayrental/GetAllRoomTypes": {
       "get": {
         "tags": [
           "HomeStayRentals"
@@ -2073,7 +2073,7 @@
         }
       }
     },
-    "/api/homestaytype/DeleteHomeStayRental/{id}": {
+    "/api/homestayrental/DeleteHomeStayRental/{id}": {
       "delete": {
         "tags": [
           "HomeStayRentals"
