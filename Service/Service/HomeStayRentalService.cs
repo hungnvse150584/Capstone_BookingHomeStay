@@ -66,53 +66,54 @@ namespace Service.Service
         {
             try
             {
-                // Xử lý Pricing và PricingJson
-                if (request.Pricing == null || !request.Pricing.Any())
+                // Xử lý Pricing và PricingJson, ưu tiên PricingJson
+                if (!string.IsNullOrEmpty(request.PricingJson))
                 {
-                    // Nếu Pricing rỗng, thử deserialize từ PricingJson
-                    if (!string.IsNullOrEmpty(request.PricingJson))
+                    var options = new JsonSerializerOptions
                     {
-                        var options = new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        };
+                        PropertyNameCaseInsensitive = true
+                    };
 
-                        // Kiểm tra xem PricingJson có phải là danh sách không
-                        if (request.PricingJson.TrimStart().StartsWith("["))
-                        {
-                            request.Pricing = JsonSerializer.Deserialize<List<PricingForHomeStayRental>>(request.PricingJson, options);
-                        }
-                        else
-                        {
-                            // Nếu là đối tượng đơn lẻ, deserialize và đưa vào danh sách
-                            var singlePricing = JsonSerializer.Deserialize<PricingForHomeStayRental>(request.PricingJson, options);
-                            request.Pricing = new List<PricingForHomeStayRental> { singlePricing };
-                        }
+                    // Kiểm tra xem PricingJson có phải là danh sách không
+                    if (request.PricingJson.TrimStart().StartsWith("["))
+                    {
+                        // Nếu là danh sách, deserialize trực tiếp thành List<PricingForHomeStayRental>
+                        request.Pricing = JsonSerializer.Deserialize<List<PricingForHomeStayRental>>(request.PricingJson, options);
+                    }
+                    else
+                    {
+                        // Nếu là đối tượng đơn lẻ, deserialize thành PricingForHomeStayRental rồi đưa vào danh sách
+                        var singlePricing = JsonSerializer.Deserialize<PricingForHomeStayRental>(request.PricingJson, options);
+                        request.Pricing = new List<PricingForHomeStayRental> { singlePricing };
+                    }
 
-                        if (request.Pricing != null)
+                    if (request.Pricing != null)
+                    {
+                        Console.WriteLine("Using Pricing from PricingJson.");
+                        foreach (var pricing in request.Pricing)
                         {
-                            foreach (var pricing in request.Pricing)
-                            {
-                                Console.WriteLine($"After deserialize - PricingForHomeStayRental: UnitPrice={pricing.UnitPrice}, RentPrice={pricing.RentPrice}, StartDate={pricing.StartDate?.ToString() ?? "null"}, EndDate={pricing.EndDate?.ToString() ?? "null"}, IsDefault={pricing.IsDefault}, IsActive={pricing.IsActive}, DayType={pricing.DayType}, Description={pricing.Description}");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("request.Pricing is null after deserialize.");
+                            Console.WriteLine($"Pricing from PricingJson: UnitPrice={pricing.UnitPrice}, RentPrice={pricing.RentPrice}, StartDate={pricing.StartDate?.ToString() ?? "null"}, EndDate={pricing.EndDate?.ToString() ?? "null"}, IsDefault={pricing.IsDefault}, IsActive={pricing.IsActive}, DayType={pricing.DayType}, Description={pricing.Description}");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Both Pricing and PricingJson are null or empty.");
+                        Console.WriteLine("request.Pricing is null after deserialize from PricingJson.");
                     }
                 }
                 else
                 {
-                    // Nếu Pricing đã có dữ liệu, bỏ qua PricingJson
-                    Console.WriteLine("Using Pricing directly from request.");
-                    foreach (var pricing in request.Pricing)
+                    // Nếu PricingJson rỗng, sử dụng Pricing từ request (nếu có)
+                    if (request.Pricing != null && request.Pricing.Any())
                     {
-                        Console.WriteLine($"Pricing from request: UnitPrice={pricing.UnitPrice}, RentPrice={pricing.RentPrice}, StartDate={pricing.StartDate?.ToString() ?? "null"}, EndDate={pricing.EndDate?.ToString() ?? "null"}, IsDefault={pricing.IsDefault}, IsActive={pricing.IsActive}, DayType={pricing.DayType}, Description={pricing.Description}");
+                        Console.WriteLine("Using Pricing directly from request.");
+                        foreach (var pricing in request.Pricing)
+                        {
+                            Console.WriteLine($"Pricing from request: UnitPrice={pricing.UnitPrice}, RentPrice={pricing.RentPrice}, StartDate={pricing.StartDate?.ToString() ?? "null"}, EndDate={pricing.EndDate?.ToString() ?? "null"}, IsDefault={pricing.IsDefault}, IsActive={pricing.IsActive}, DayType={pricing.DayType}, Description={pricing.Description}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Both PricingJson and Pricing are null or empty.");
                     }
                 }
 
