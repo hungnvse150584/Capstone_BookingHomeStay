@@ -13,11 +13,12 @@ namespace Service.RequestAndResponse.Request.Pricing
     {
         public int UnitPrice { get; set; }
         public int RentPrice { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public bool IsDefault { get; set; }
-        public bool IsActive { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public bool IsDefault { get; set; } = true;
+        public bool IsActive { get; set; } = true;
         public int DayType { get; set; }
         public string Description { get; set; }
+       
     }
 }

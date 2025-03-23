@@ -1315,12 +1315,12 @@
       },
       {
         "Name": "Status",
-        "Type": "System.Boolean",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
         "Name": "RentWhole",
-        "Type": "System.Boolean",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -1352,37 +1352,21 @@
         "Name": "Pricing",
         "Type": "System.Collections.Generic.List\u00601[[Service.RequestAndResponse.Request.Pricing.PricingForHomeStayRental, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": false
+      },
+      {
+        "Name": "RoomTypesJson",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "RoomTypes",
+        "Type": "System.Collections.Generic.ICollection\u00601[[Service.RequestAndResponse.Request.RoomType.CreateRoomTypeRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
         "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.List\u00601[[BusinessObject.Model.HomeStayRentals, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "GreenRoam.Controllers.HomeStayRentalsController",
-    "Method": "CreateRoomType",
-    "RelativePath": "api/homestaytype/CreateRoomType",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "typeRequest",
-        "Type": "Service.RequestAndResponse.Request.RoomType.CreateRoomTypeRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.RoomType.CreateRoomTypeRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1421,7 +1405,7 @@
   {
     "ContainingType": "GreenRoam.Controllers.HomeStayRentalsController",
     "Method": "GetAllHomeStayRentalsByHomeStayId",
-    "RelativePath": "api/homestaytype/GetAllHomeStayTypes",
+    "RelativePath": "api/homestaytype/GetAllHomeStayTypes/{homestayId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1429,7 +1413,7 @@
       {
         "Name": "homestayId",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
@@ -1842,6 +1826,37 @@
     "ReturnTypes": [
       {
         "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Room.UpdateRoomRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.RoomTypeController",
+    "Method": "CreateRoomType",
+    "RelativePath": "api/RoomType/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Service.RequestAndResponse.Request.RoomType.CreateRoomTypeRequest",
+        "IsRequired": true
+      },
+      {
+        "Name": "homeStayRentalId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[BusinessObject.Model.RoomTypes, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

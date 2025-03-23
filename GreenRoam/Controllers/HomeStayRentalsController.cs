@@ -29,7 +29,7 @@ namespace GreenRoam.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllHomeStayTypes")]
+        [Route("GetAllHomeStayTypes/{homestayId}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllHomeStayType>>>> GetAllHomeStayRentalsByHomeStayId(int homestayId)
         {
             var homeStays = await _homeStayTypeService.GetAllHomeStayTypesByHomeStayID(homestayId);
@@ -71,17 +71,17 @@ namespace GreenRoam.Controllers
             return Ok(roomTypes);
         }
 
-        [HttpPost]
-        [Route("CreateRoomType")]
-        public async Task<ActionResult<BaseResponse<CreateRoomTypeRequest>>> CreateRoomType([FromBody] CreateRoomTypeRequest typeRequest)
-        {
-            if (typeRequest == null)
-            {
-                return BadRequest("Please Implement all Information");
-            }
-            var roomType = await _roomTypeService.CreateRoomType(typeRequest);
-            return roomType;
-        }
+        //[HttpPost]
+        //[Route("CreateRoomType")]
+        //public async Task<ActionResult<BaseResponse<RoomTypes>>> CreateRoomType([FromBody] CreateRoomTypeRequest typeRequest)
+        //{
+        //    if (typeRequest == null)
+        //    {
+        //        return BadRequest("Please Implement all Information");
+        //    }
+        //    var roomType = await _roomTypeService.CreateRoomType(typeRequest);
+        //    return roomType;
+        //}
         [HttpDelete]
         [Route("DeleteHomeStayRental/{id}")]
         public async Task<ActionResult<BaseResponse<string>>> DeleteHomeStayRentals(int id)
