@@ -1352,16 +1352,6 @@
         "Name": "Pricing",
         "Type": "System.Collections.Generic.List\u00601[[Service.RequestAndResponse.Request.Pricing.PricingForHomeStayRental, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": false
-      },
-      {
-        "Name": "RoomTypesJson",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "RoomTypes",
-        "Type": "System.Collections.Generic.ICollection\u00601[[Service.RequestAndResponse.Request.RoomType.CreateRoomTypeRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [

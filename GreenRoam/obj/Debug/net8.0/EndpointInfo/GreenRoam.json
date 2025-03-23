@@ -1952,15 +1952,6 @@
                     "items": {
                       "$ref": "#/components/schemas/PricingForHomeStayRental"
                     }
-                  },
-                  "RoomTypesJson": {
-                    "type": "string"
-                  },
-                  "RoomTypes": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/CreateRoomTypeRequest"
-                    }
                   }
                 }
               },
@@ -2008,12 +1999,6 @@
                   "style": "form"
                 },
                 "Pricing": {
-                  "style": "form"
-                },
-                "RoomTypesJson": {
-                  "style": "form"
-                },
-                "RoomTypes": {
                   "style": "form"
                 }
               }

@@ -92,32 +92,6 @@ namespace Service.Service
                     Console.WriteLine("PricingJson is null or empty.");
                 }
 
-                // Deserialize RoomTypesJson
-                if (!string.IsNullOrEmpty(request.RoomTypesJson))
-                {
-                    var options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    };
-                    request.RoomTypes = JsonSerializer.Deserialize<ICollection<CreateRoomTypeRequest>>(request.RoomTypesJson, options);
-
-                    if (request.RoomTypes != null)
-                    {
-                        foreach (var roomType in request.RoomTypes)
-                        {
-                            Console.WriteLine($"After deserialize - CreateRoomTypeRequest: Name={roomType.Name}, Description={roomType.Description}, MaxAdults={roomType.MaxAdults}, MaxChildren={roomType.MaxChildren}, MaxPeople={roomType.MaxPeople}");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("request.RoomTypes is null after deserialize.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("RoomTypesJson is null or empty.");
-                }
-
                 // Gán giá trị mặc định cho Status và RentWhole nếu là null
                 request.Status ??= true;
                 request.RentWhole ??= true;
@@ -127,8 +101,6 @@ namespace Service.Service
                 Console.WriteLine($"Status: {request.Status.Value}");
                 Console.WriteLine($"PricingJson: {request.PricingJson ?? "null"}");
                 Console.WriteLine($"Pricing: {(request.Pricing != null ? $"Count = {request.Pricing.Count}" : "null")}");
-                Console.WriteLine($"RoomTypesJson: {request.RoomTypesJson ?? "null"}");
-                Console.WriteLine($"RoomTypes: {(request.RoomTypes != null ? $"Count = {request.RoomTypes.Count}" : "null")}");
 
                 // Kiểm tra RentWhole và Pricing
                 if (request.RentWhole.Value && (request.Pricing == null || !request.Pricing.Any()))
@@ -142,20 +114,6 @@ namespace Service.Service
                 {
                     return new BaseResponse<HomeStayRentals>(
                         "Pricing cannot be provided when RentWhole is false!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
-                if (request.RentWhole.Value && request.RoomTypes != null && request.RoomTypes.Any())
-                {
-                    return new BaseResponse<HomeStayRentals>(
-                        "RoomTypes cannot be provided when RentWhole is true!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
-                if (!request.RentWhole.Value && (request.RoomTypes == null || !request.RoomTypes.Any()))
-                {
-                    return new BaseResponse<HomeStayRentals>(
-                        "RoomTypes must be provided when RentWhole is false!",
                         StatusCodeEnum.BadRequest_400,
                         null);
                 }
@@ -217,24 +175,6 @@ namespace Service.Service
                     }
                     await _pricingRepository.SaveChangesAsync();
                     Console.WriteLine("Prices saved successfully.");
-                }
-
-                if (!request.RentWhole.Value && request.RoomTypes != null && request.RoomTypes.Any())
-                {
-                    Console.WriteLine("Creating RoomTypes...");
-                    foreach (var roomTypeRequest in request.RoomTypes)
-                    {
-                        var roomTypeResponse = await _roomTypeService.CreateRoomType(roomTypeRequest, homeStayRental.HomeStayRentalID);
-                        if (roomTypeResponse.StatusCode != StatusCodeEnum.Created_201)
-                        {
-                            return new BaseResponse<HomeStayRentals>(
-                                $"Failed to create RoomType: {roomTypeResponse.Message}",
-                                roomTypeResponse.StatusCode,
-                                null);
-                        }
-                        Console.WriteLine($"RoomType created: Name={roomTypeResponse.Data.Name}, Description={roomTypeResponse.Data.Description}");
-                    }
-                    Console.WriteLine("RoomTypes created successfully.");
                 }
 
                 return new BaseResponse<HomeStayRentals>(
