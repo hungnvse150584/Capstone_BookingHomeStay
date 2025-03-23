@@ -15,7 +15,7 @@ using Service.Service;
 
 namespace GreenRoam.Controllers
 {
-    [Route("api/homestaytype")]
+    [Route("api/homestayrental")]
     [ApiController]
     public class HomeStayRentalsController : ControllerBase
     {
@@ -29,7 +29,7 @@ namespace GreenRoam.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllHomeStayTypes/{homestayId}")]
+        [Route("GetAllHomeStayRentals/{homestayId}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllHomeStayType>>>> GetAllHomeStayRentalsByHomeStayId(int homestayId)
         {
             var homeStays = await _homeStayTypeService.GetAllHomeStayTypesByHomeStayID(homestayId);
