@@ -22,8 +22,8 @@ namespace Service.RequestAndResponse.Response.Room
         public bool isActive { get; set; }
 
         public int? RoomTypesID { get; set; }
-        public GetAllRoomType? RoomTypes { get; set; }
+        //public GetAllRoomType? RoomTypes { get; set; }
 
-        public ICollection<GetBookingDetails> BookingDetails { get; set; }
+        //public ICollection<GetBookingDetails> BookingDetails { get; set; }
     }
 }
