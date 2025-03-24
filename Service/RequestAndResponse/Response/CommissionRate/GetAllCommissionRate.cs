@@ -20,6 +20,6 @@ namespace Service.RequestAndResponse.Response.CommissionRate
 
         public DateTime UpdateAt { get; set; }
 
-        public ICollection<HomeStayResponse> HomeStays { get; set; }
+        //public ICollection<HomeStayResponse> HomeStays { get; set; }
     }
 }

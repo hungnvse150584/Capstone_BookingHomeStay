@@ -43,11 +43,34 @@ namespace Service.Service
             _cloudinary = cloudinary;
         }
 
-        public async Task<BaseResponse<HomeStayResponse>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status)
+        public async Task<BaseResponse<HomeStayResponse>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status, int? commissionRateId = null)
         {
-            var homestay = await _homeStayRepository.ChangeHomeStayStatus(homestayId, status);
-            var homestayResponse = _mapper.Map<HomeStayResponse>(homestay);
-            return new BaseResponse<HomeStayResponse>("Change status ok", StatusCodeEnum.OK_200, homestayResponse);
+            try
+            {
+                // Gọi repository để thay đổi Status và CommissionRateID
+                var homestay = await _homeStayRepository.ChangeHomeStayStatus(homestayId, status, commissionRateId);
+
+                if (homestay == null)
+                {
+                    return new BaseResponse<HomeStayResponse>(
+                        "HomeStay not found!",
+                        StatusCodeEnum.NotFound_404,
+                        null);
+                }
+
+                var homestayResponse = _mapper.Map<HomeStayResponse>(homestay);
+                return new BaseResponse<HomeStayResponse>(
+                    "Change status and commission rate successfully!",
+                    StatusCodeEnum.OK_200,
+                    homestayResponse);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<HomeStayResponse>(
+                    $"An error occurred while changing HomeStay status: {ex.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
+            }
         }
 
         public async Task<BaseResponse<string>> DeleteHomeStay(int id)

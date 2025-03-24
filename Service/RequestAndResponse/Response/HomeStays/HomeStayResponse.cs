@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Service.RequestAndResponse.Response.CommissionRate;
 
 namespace Service.RequestAndResponse.Response.HomeStays
 {
@@ -32,7 +33,7 @@ namespace Service.RequestAndResponse.Response.HomeStays
 
         public string? Area { get; set; }
 
-        
+        public int? CommissionRateID { get; set; }
         public string AccountID { get; set; }
         public Account Account { get; set; }
     }

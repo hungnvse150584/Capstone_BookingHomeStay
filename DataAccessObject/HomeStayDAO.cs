@@ -18,7 +18,7 @@ namespace DataAccessObject
             _context = context;
         }
 
-        public async Task<HomeStay?> ChangeHomeStayStatus(int homestayId, HomeStayStatus status)
+        public async Task<HomeStay?> ChangeHomeStayStatus(int homestayId, HomeStayStatus status, int? commissionRateId = null)
         {
             var homestay = await _context.HomeStays.FindAsync(homestayId);
             if (homestay != null)
