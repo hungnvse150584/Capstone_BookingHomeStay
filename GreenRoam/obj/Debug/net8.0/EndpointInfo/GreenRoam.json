@@ -1882,6 +1882,46 @@
         }
       }
     },
+    "/api/homestayrental/GetHomeStayRentalDetail/{homeStayRentalId}": {
+      "get": {
+        "tags": [
+          "HomeStayRentals"
+        ],
+        "parameters": [
+          {
+            "name": "homeStayRentalId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetHomeStayRentalDetailResponseBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetHomeStayRentalDetailResponseBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetHomeStayRentalDetailResponseBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/homestayrental/CreateHomeStayRental": {
       "post": {
         "tags": [
@@ -5729,6 +5769,119 @@
         },
         "additionalProperties": false
       },
+      "GetHomeStayRentalDetailResponse": {
+        "type": "object",
+        "properties": {
+          "homeStayRentalID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "homeStayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "createAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "numberBedRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberBathRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberKitchen": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberWifi": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "rentWhole": {
+            "type": "boolean"
+          },
+          "maxAdults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxChildren": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxPeople": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "imageHomeStayRentals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAllImageHomeStayType"
+            },
+            "nullable": true
+          },
+          "roomTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoomTypeDetailResponse"
+            },
+            "nullable": true
+          },
+          "bookingDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetBookingDetails"
+            },
+            "nullable": true
+          },
+          "pricing": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PricingResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetHomeStayRentalDetailResponseBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GetHomeStayRentalDetailResponse"
+          }
+        },
+        "additionalProperties": false
+      },
       "GetReportResponse": {
         "type": "object",
         "properties": {
@@ -6386,6 +6539,20 @@
         },
         "additionalProperties": false
       },
+      "ImageRoomTypeResponse": {
+        "type": "object",
+        "properties": {
+          "imageRoomTypesID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ImageRoomTypes": {
         "required": [
           "image"
@@ -6666,6 +6833,47 @@
         },
         "additionalProperties": false
       },
+      "PricingResponse": {
+        "type": "object",
+        "properties": {
+          "pricingID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "rentPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "dayType": {
+            "$ref": "#/components/schemas/DayType"
+          }
+        },
+        "additionalProperties": false
+      },
       "Rating": {
         "type": "object",
         "properties": {
@@ -6930,6 +7138,73 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/BookingDetail"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoomTypeDetailResponse": {
+        "type": "object",
+        "properties": {
+          "roomTypesID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "createAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "numberBedRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberBathRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberWifi": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "maxAdults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxChildren": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxPeople": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageRoomTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageRoomTypeResponse"
+            },
+            "nullable": true
+          },
+          "pricings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PricingResponse"
             },
             "nullable": true
           }

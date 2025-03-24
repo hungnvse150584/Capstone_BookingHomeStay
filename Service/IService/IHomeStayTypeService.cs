@@ -15,10 +15,10 @@ namespace Service.IService
     public interface IHomeStayTypeService
     {
         Task<BaseResponse<IEnumerable<GetAllHomeStayType>>> GetAllHomeStayTypes();
-
         Task<BaseResponse<IEnumerable<GetAllHomeStayType>>> GetAllHomeStayTypesByHomeStayID(int homestayId);
         Task<BaseResponse<HomeStayRentals>> CreateHomeStayType(CreateHomeStayTypeRequest request);
-
+        Task<BaseResponse<GetHomeStayRentalDetailResponse>> GetHomeStayRentalDetail(int homeStayRentalId); // Sửa kiểu trả về
         Task<BaseResponse<string>> DeleteHomeStayRental(int id);
+
     }
 }

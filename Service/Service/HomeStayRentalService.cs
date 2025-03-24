@@ -61,7 +61,51 @@ namespace Service.Service
             return new BaseResponse<IEnumerable<GetAllHomeStayType>>("Get all HomeStayType as base success",
                 StatusCodeEnum.OK_200, homeStayTypes);
         }
+        public async Task<BaseResponse<GetHomeStayRentalDetailResponse>> GetHomeStayRentalDetail(int homeStayRentalId)
+        {
+            try
+            {
+                // Lấy HomeStayRental theo ID, bao gồm các thông tin liên quan
+                var homeStayRental = await _homeStayTypeRepository.GetHomeStayTypesByIdAsync(homeStayRentalId);
 
+                if (homeStayRental == null)
+                {
+                    return new BaseResponse<GetHomeStayRentalDetailResponse>(
+                        "HomeStayRental not found!",
+                        StatusCodeEnum.NotFound_404,
+                        null);
+                }
+
+                // Log để kiểm tra dữ liệu
+                Console.WriteLine($"HomeStayRental: ID={homeStayRental.HomeStayRentalID}, Name={homeStayRental.Name}");
+                Console.WriteLine($"HomeStay: {homeStayRental.HomeStay?.Name ?? "null"}");
+                Console.WriteLine($"ImageHomeStayRentals: {(homeStayRental.ImageHomeStayRentals != null ? homeStayRental.ImageHomeStayRentals.Count() : 0)} items");
+                Console.WriteLine($"Prices: {(homeStayRental.Prices != null ? homeStayRental.Prices.Count() : 0)} items");
+                Console.WriteLine($"RoomTypes: {(homeStayRental.RoomTypes != null ? homeStayRental.RoomTypes.Count() : 0)} items");
+                Console.WriteLine($"BookingDetails: {(homeStayRental.BookingDetails != null ? homeStayRental.BookingDetails.Count() : 0)} items");
+
+                // Ánh xạ sang GetHomeStayRentalDetailResponse
+                var response = _mapper.Map<GetHomeStayRentalDetailResponse>(homeStayRental);
+
+                // Gán thêm HomeStayName từ HomeStay
+                response.HomeStayName = homeStayRental.HomeStay?.Name;
+
+                return new BaseResponse<GetHomeStayRentalDetailResponse>(
+                    "Get HomeStayRental detail successfully!",
+                    StatusCodeEnum.OK_200,
+                    response);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                Console.WriteLine($"InnerException: {ex.InnerException?.Message}");
+                Console.WriteLine($"StackTrace: {ex.StackTrace}");
+                return new BaseResponse<GetHomeStayRentalDetailResponse>(
+                    $"An error occurred while getting HomeStayRental detail: {ex.Message}. InnerException: {ex.InnerException?.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
+            }
+        }
         public async Task<BaseResponse<HomeStayRentals>> CreateHomeStayType(CreateHomeStayTypeRequest request)
         {
             try
