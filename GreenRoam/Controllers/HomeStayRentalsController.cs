@@ -35,7 +35,12 @@ namespace GreenRoam.Controllers
             var homeStays = await _homeStayTypeService.GetAllHomeStayTypesByHomeStayID(homestayId);
             return Ok(homeStays);
         }
-
+        [HttpGet("GetHomeStayRentalDetail/{homeStayRentalId}")]
+        public async Task<ActionResult<BaseResponse<GetHomeStayRentalDetailResponse>>> GetHomeStayRentalDetail(int homeStayRentalId)
+        {
+            var response = await _homeStayTypeService.GetHomeStayRentalDetail(homeStayRentalId);
+            return Ok(response);
+        }
         [HttpPost]
         [Route("CreateHomeStayRental")]
         public async Task<ActionResult<BaseResponse<List<HomeStayRentals>>>> CreateHomeStayRental([FromForm] CreateHomeStayTypeRequest request)

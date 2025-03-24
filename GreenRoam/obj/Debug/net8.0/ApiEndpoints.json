@@ -1439,6 +1439,32 @@
     ]
   },
   {
+    "ContainingType": "GreenRoam.Controllers.HomeStayRentalsController",
+    "Method": "GetHomeStayRentalDetail",
+    "RelativePath": "api/homestayrental/GetHomeStayRentalDetail/{homeStayRentalId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "homeStayRentalId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.HomeStayType.GetHomeStayRentalDetailResponse, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "GreenRoam.Controllers.ImageHomeStayRentalsController",
     "Method": "CreateImageHomeStayType",
     "RelativePath": "api/ImageHomeStayRentals/CreateImageHomeStayType",
