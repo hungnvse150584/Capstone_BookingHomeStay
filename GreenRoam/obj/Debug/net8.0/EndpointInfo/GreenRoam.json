@@ -1776,6 +1776,14 @@
             "schema": {
               "$ref": "#/components/schemas/HomeStayStatus"
             }
+          },
+          {
+            "name": "commissionRateID",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "responses": {
@@ -4930,13 +4938,6 @@
           "updateAt": {
             "type": "string",
             "format": "date-time"
-          },
-          "homeStays": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HomeStayResponse"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -6379,6 +6380,11 @@
           },
           "area": {
             "type": "string",
+            "nullable": true
+          },
+          "commissionRateID": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
           "accountID": {

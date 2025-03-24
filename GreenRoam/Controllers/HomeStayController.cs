@@ -68,25 +68,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)response.StatusCode, response);
         }
 
-        //[HttpPost]
-        //[Route("CreateHomeStay")]
-        //public async Task<ActionResult<BaseResponse<List<HomeStay>>>> RegisterHomeStay(CreateHomeStayRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState); 
-        //    }
-
-        //    var homeStays = await _homestayService.RegisterHomeStay(request);
-
-        //    if (homeStays == null)
-        //    {
-        //        return StatusCode(500, "An error occurred while processing the request.");
-        //    }
-
-        //    return Ok(homeStays);
-        //}
-
+     
         [HttpPost]
         [Route("CreateHomeStay")]
         public async Task<ActionResult<BaseResponse<List<HomeStay>>>> RegisterHomeStay([FromForm] CreateHomeStayRequest request)
@@ -143,13 +125,13 @@ namespace GreenRoam.Controllers
 
         [HttpPut]
         [Route("ChangeHomeStayStatus")]
-        public async Task<ActionResult<BaseResponse<HomeStayResponse>>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status)
+        public async Task<ActionResult<BaseResponse<HomeStayResponse>>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status, int? commissionRateID = null)
         {
             if (homestayId <= 0)
             {
                 return BadRequest("Invalid HomeStay ID.");
             }
-            return await _homestayService.ChangeHomeStayStatus(homestayId, status);
+            return await _homestayService.ChangeHomeStayStatus(homestayId, status, commissionRateID);
         }
         [HttpDelete]
         [Route("DeleteHomeStay/{id}")]

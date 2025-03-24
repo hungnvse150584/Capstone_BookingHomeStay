@@ -19,9 +19,25 @@ namespace Repository.Repositories
             _homestayDao = homestayDao;
         }
 
-        public async Task<HomeStay?> ChangeHomeStayStatus(int homestayId, HomeStayStatus status)
+        public async Task<HomeStay> ChangeHomeStayStatus(int homestayId, HomeStayStatus status, int? commissionRateId = null)
         {
-            return await _homestayDao.ChangeHomeStayStatus(homestayId, status);
+            var homestay = await _homestayDao.GetByIdAsync(homestayId);
+            if (homestay == null)
+            {
+                return null;
+            }
+
+            homestay.Status = status;
+            if (commissionRateId.HasValue)
+            {
+                homestay.CommissionRateID = commissionRateId.Value;
+            }
+            homestay.UpdateAt = DateTime.UtcNow;
+
+            await _homestayDao.UpdateAsync(homestay);
+            await _homestayDao.SaveChangesAsync();
+
+            return homestay;
         }
 
         public async Task<List<HomeStay>> AddListAsync(List<HomeStay> entity)

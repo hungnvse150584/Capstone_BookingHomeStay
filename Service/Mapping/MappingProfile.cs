@@ -45,7 +45,8 @@ namespace Service.Mapping
         public MappingProfile()
         {
 
-            CreateMap<HomeStay, HomeStayResponse>();
+            CreateMap<HomeStay, HomeStayResponse>()
+                .ForMember(dest => dest.CommissionRateID, opt => opt.MapFrom(src => src.CommissionRateID));
             //CreateMap<HomeStay, SimpleHomeStayResponse>().ReverseMap();
             /*CreateMap<Street, GetStreet>();*/
             CreateMap<CreateHomeStayRequest, HomeStay>().ReverseMap();

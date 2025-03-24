@@ -10,7 +10,7 @@ namespace Repository.IRepositories
 {
     public interface IHomeStayRepository : IBaseRepository<HomeStay>
     {
-        Task<HomeStay?> ChangeHomeStayStatus(int homestayId, HomeStayStatus status);
+        Task<HomeStay?> ChangeHomeStayStatus(int homestayId, HomeStayStatus status, int? commissionRateID = null);
         Task<IEnumerable<HomeStay>> GetAllRegisterHomeStayAsync();
         Task<HomeStay> GetHomeStayDetailByIdAsync(int id);
         Task<HomeStay> GetOwnerHomeStayByIdAsync(string accountId);
