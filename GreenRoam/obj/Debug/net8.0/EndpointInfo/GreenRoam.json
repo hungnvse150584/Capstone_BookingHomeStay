@@ -3152,7 +3152,7 @@
         }
       }
     },
-    "/api/RoomType/create": {
+    "/api/RoomType/CreateRoomType": {
       "post": {
         "tags": [
           "RoomType"
@@ -3212,6 +3212,24 @@
                       "type": "string",
                       "format": "binary"
                     }
+                  },
+                  "PricingJson": {
+                    "type": "string"
+                  },
+                  "Pricing": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/PricingForHomeStayRental"
+                    }
+                  },
+                  "RoomsJson": {
+                    "type": "string"
+                  },
+                  "Rooms": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/CreateRoomRequest"
+                    }
                   }
                 }
               },
@@ -3245,6 +3263,18 @@
                 },
                 "Images": {
                   "style": "form"
+                },
+                "PricingJson": {
+                  "style": "form"
+                },
+                "Pricing": {
+                  "style": "form"
+                },
+                "RoomsJson": {
+                  "style": "form"
+                },
+                "Rooms": {
+                  "style": "form"
                 }
               }
             }
@@ -3252,24 +3282,7 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/RoomTypesBaseResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RoomTypesBaseResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RoomTypesBaseResponse"
-                }
-              }
-            }
+            "description": "Success"
           }
         }
       }
@@ -7008,22 +7021,6 @@
               "$ref": "#/components/schemas/Pricing"
             },
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "RoomTypesBaseResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "statusCode": {
-            "$ref": "#/components/schemas/StatusCodeEnum"
-          },
-          "data": {
-            "$ref": "#/components/schemas/RoomTypes"
           }
         },
         "additionalProperties": false

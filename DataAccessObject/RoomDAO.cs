@@ -48,7 +48,10 @@ namespace DataAccessObject
            .ToListAsync();
             return availableRooms;
         }
-
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
         public async Task<Room> GetRoomByIdAsync(int? id)
         {
             if (id <= 0)

@@ -1828,7 +1828,7 @@
   {
     "ContainingType": "GreenRoam.Controllers.RoomTypeController",
     "Method": "CreateRoomType",
-    "RelativePath": "api/RoomType/create",
+    "RelativePath": "api/RoomType/CreateRoomType",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -1884,22 +1884,32 @@
         "IsRequired": false
       },
       {
+        "Name": "PricingJson",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Pricing",
+        "Type": "System.Collections.Generic.List\u00601[[Service.RequestAndResponse.Request.Pricing.PricingForHomeStayRental, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "RoomsJson",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Rooms",
+        "Type": "System.Collections.Generic.List\u00601[[Service.RequestAndResponse.Request.Room.CreateRoomRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      },
+      {
         "Name": "homeStayRentalId",
         "Type": "System.Int32",
         "IsRequired": false
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[BusinessObject.Model.RoomTypes, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "GreenRoam.Controllers.ServiceController",

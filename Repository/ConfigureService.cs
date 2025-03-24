@@ -1,4 +1,5 @@
-﻿using DataAccessObject;
+﻿using BusinessObject.Model;
+using DataAccessObject;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repository.BaseRepository;
@@ -27,7 +28,7 @@ namespace Repository
             services.AddScoped<IRoomTypeRepository, RoomTypeRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IPricingRepository, PricingRepository>();
-
+         
 
             services.AddScoped<IBookingRepository, BookingRepository>();
             services.AddScoped<IBookingServiceRepository, BookingServiceRepository>();
@@ -45,11 +46,12 @@ namespace Repository
             
             services.AddScoped<IImageServicesRepository, ImageServicesRepository>();
             services.AddScoped<IImageHomeStayTypesRepository, ImageHomeStayTypesRepository>();
+            services.AddScoped<IImageRoomTypesRepository, ImageRoomTypesRepository>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-
+          
             
             services.AddScoped<AccountDAO>();
-
+            services.AddScoped<ImageRoomTypeDAO>();
             services.AddScoped<HomeStayDAO>();
             services.AddScoped<CommissionRateDAO>();
             services.AddScoped<HomeStayRentalDAO>();

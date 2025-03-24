@@ -7,8 +7,132 @@
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\roomtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\roomtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\roomtype\\createroomtyperequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\roomtype\\createroomtyperequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\room\\createroomrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\room\\createroomrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\pricing\\createpricingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\pricing\\createpricingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\roomtype\\createroomtyperesponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\roomtype\\createroomtyperesponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\room\\getallrooms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\room\\getallrooms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\homestaytype\\getallhomestaytype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\homestaytype\\getallhomestaytype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\roomtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\roomtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\homestaytype\\createhomestaytyperequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\homestaytype\\createhomestaytyperequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490_capstone\\dataaccessobject\\roomdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\roomdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\pricing\\pricingforhomestayrental.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\pricing\\pricingforhomestayrental.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\pricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\pricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\homestayrentalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\homestayrentalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\roomtype\\getallroomtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\roomtype\\getallroomtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\configureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\configureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\repositories\\roomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\roomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\irepositories\\iroomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\irepositories\\iroomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490_capstone\\dataaccessobject\\roomtypesdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\roomtypesdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\repositories\\pricingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\pricingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\iservice\\ipricingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\ipricingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\roomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\roomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\repositories\\roomtyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\roomtyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\roomtype\\imageroomtyperesponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\roomtype\\imageroomtyperesponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\imagehomestaytypes\\addimagehomestaytypesrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\imagehomestaytypes\\addimagehomestaytypesrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\imagehomestay\\uploadimagerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\imagehomestay\\uploadimagerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490_capstone\\dataaccessobject\\imageroomtypedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\imageroomtypedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\irepositories\\iimageroomtypesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\irepositories\\iimageroomtypesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\configureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\configureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\homestay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\homestay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490_capstone\\dataaccessobject\\homestayrentaldao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,10 +145,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\irepositories\\ihomestayrentalrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\irepositories\\ihomestayrentalrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\homestayrentalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\homestayrentalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\pricing\\getallpricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -43,24 +163,8 @@
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\commissionrateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\homestaytype\\createhomestaytyperequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\homestaytype\\createhomestaytyperequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\pricing\\pricingforhomestayrental.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\pricing\\pricingforhomestayrental.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\homestayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\homestayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\roomtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\roomtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\controllers\\homestaycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -75,10 +179,6 @@
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\iroomtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\roomtype\\createroomtyperequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\roomtype\\createroomtyperequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\iservice\\ihomestayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\ihomestayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -91,20 +191,8 @@
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\homestays\\simplehomestayresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\imagehomestay\\uploadimagerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\imagehomestay\\uploadimagerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\homestay\\createhomestayrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\homestay\\createhomestayrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\roomtype\\getallroomtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\roomtype\\getallroomtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490_capstone\\dataaccessobject\\imageroomtypedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\imageroomtypedao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\repositories\\homestayrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -115,10 +203,6 @@
       "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\imagehomestayrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490_capstone\\dataaccessobject\\roomtypesdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\roomtypesdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\irepositories\\iimagehomestayrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\irepositories\\iimagehomestayrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -127,36 +211,16 @@
       "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\homestayrentalscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\pricing\\createpricingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\pricing\\createpricingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\irepositories\\iroomtyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\irepositories\\iroomtyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\repositories\\roomtyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\roomtyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\repositories\\pricingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\pricingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490_capstone\\dataaccessobject\\pricingdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\pricingdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\irepositories\\iroomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\irepositories\\iroomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490_capstone\\dataaccessobject\\greenroamcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\greenroamcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\pricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\pricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -173,10 +237,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\imagehomestay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\imagehomestay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\roomtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\roomtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -205,10 +265,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\imagehomestaytypes\\updateimagehomestaytypesrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\imagehomestaytypes\\updateimagehomestaytypesrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\imagehomestaytypes\\addimagehomestaytypesrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\imagehomestaytypes\\addimagehomestaytypesrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490_capstone\\dataaccessobject\\imagehomestayrentalsdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -249,10 +305,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\commissionrate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\commissionrate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\roomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\roomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\servicesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -319,24 +371,12 @@
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\imagehomestay\\imagehomestayresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\configureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\configureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\homestays\\homestayresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\homestays\\homestayresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\homestays\\getallhomestaywithownername.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\homestays\\getallhomestaywithownername.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\configureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\configureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\irepositories\\icommissionraterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -377,10 +417,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\imageservice\\updateimageservicesrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\imageservice\\updateimageservicesrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\homestay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\homestay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\repositories\\imageservicesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -535,10 +571,6 @@
       "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\imagehomestaydao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\repositories\\roomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\roomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490_capstone\\dataaccessobject\\configureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\configureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -559,16 +591,8 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GreenRoam\\Controllers\\HomeStayTypeController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\roomtype\\createroomtyperesponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\roomtype\\createroomtyperesponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\repositories\\imageroomtypesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\imageroomtypesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\irepositories\\iimageroomtypesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\irepositories\\iimageroomtypesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -598,67 +622,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "GetAllPricing.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\GetAllPricing.cs",
-              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Pricing\\GetAllPricing.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\GetAllPricing.cs",
-              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Pricing\\GetAllPricing.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAQwCgAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "CreateRoomTypeResponse.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\RoomType\\CreateRoomTypeResponse.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\RoomType\\CreateRoomTypeResponse.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\RoomType\\CreateRoomTypeResponse.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\RoomType\\CreateRoomTypeResponse.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAA6wCUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T06:03:54.132Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IHomeStayRentalRepository.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IHomeStayRentalRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\IRepositories\\IHomeStayRentalRepository.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IHomeStayRentalRepository.cs",
-              "RelativeToolTip": "Repository\\IRepositories\\IHomeStayRentalRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T07:26:30.679Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "HomeStayRentalRepository.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\HomeStayRentalRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\Repositories\\HomeStayRentalRepository.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\HomeStayRentalRepository.cs",
-              "RelativeToolTip": "Repository\\Repositories\\HomeStayRentalRepository.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAewDYAAABEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T07:19:48.44Z",
+              "WhenOpened": "2025-03-23T15:42:13.498Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "HomeStayRentalDAO.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\HomeStayRentalDAO.cs",
-              "RelativeDocumentMoniker": "DataAccessObject\\HomeStayRentalDAO.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\HomeStayRentalDAO.cs",
-              "RelativeToolTip": "DataAccessObject\\HomeStayRentalDAO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAaAAAAAAAAAA==",
+              "Title": "CreateRoomTypeRequest.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\RoomType\\CreateRoomTypeRequest.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\RoomType\\CreateRoomTypeRequest.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\RoomType\\CreateRoomTypeRequest.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\RoomType\\CreateRoomTypeRequest.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAApwB0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T07:05:19.142Z",
+              "WhenOpened": "2025-03-22T16:31:39.382Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "GetAllHomeStayType.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\HomeStayType\\GetAllHomeStayType.cs",
-              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\HomeStayType\\GetAllHomeStayType.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\HomeStayType\\GetAllHomeStayType.cs",
-              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\HomeStayType\\GetAllHomeStayType.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAD4vzEAAAAaAAAAAAAAAA==",
+              "Title": "RoomTypeService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RoomTypeService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\RoomTypeService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RoomTypeService.cs",
+              "RelativeToolTip": "Service\\Service\\RoomTypeService.cs",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAuwL4AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T05:54:58.871Z",
+              "WhenOpened": "2025-03-23T07:01:04.752Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CreatePricingRequest.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\CreatePricingRequest.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Pricing\\CreatePricingRequest.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\CreatePricingRequest.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Pricing\\CreatePricingRequest.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAiwB0AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T08:43:05.376Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CreateRoomRequest.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Room\\CreateRoomRequest.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Room\\CreateRoomRequest.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Room\\CreateRoomRequest.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Room\\CreateRoomRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T08:07:20.704Z",
               "EditorCaption": ""
             },
             {
@@ -669,7 +693,7 @@
               "RelativeDocumentMoniker": "Service\\Mapping\\MappingProfile.cs",
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Mapping\\MappingProfile.cs",
               "RelativeToolTip": "Service\\Mapping\\MappingProfile.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAAIwEsAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAwwHoAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-19T07:29:50.458Z",
               "EditorCaption": ""
@@ -680,33 +704,85 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "HomeStayRentalService.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\HomeStayRentalService.cs",
-              "RelativeDocumentMoniker": "Service\\Service\\HomeStayRentalService.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\HomeStayRentalService.cs",
-              "RelativeToolTip": "Service\\Service\\HomeStayRentalService.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAcwDAAAABuAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "GetAllRooms.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Room\\GetAllRooms.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Room\\GetAllRooms.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Room\\GetAllRooms.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Room\\GetAllRooms.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-20T10:01:10.436Z",
+              "WhenOpened": "2025-03-24T08:07:51.516Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "CommissionRateService.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\CommissionRateService.cs",
-              "RelativeDocumentMoniker": "Service\\Service\\CommissionRateService.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\CommissionRateService.cs",
-              "RelativeToolTip": "Service\\Service\\CommissionRateService.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAtwEsAAAA7AAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "GetAllHomeStayType.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\HomeStayType\\GetAllHomeStayType.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\HomeStayType\\GetAllHomeStayType.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\HomeStayType\\GetAllHomeStayType.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\HomeStayType\\GetAllHomeStayType.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAIAwwDEAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-20T05:38:28.126Z",
+              "WhenOpened": "2025-03-21T05:54:58.871Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CreateHomeStayTypeRequest.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\HomeStayType\\CreateHomeStayTypeRequest.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\HomeStayType\\CreateHomeStayTypeRequest.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\HomeStayType\\CreateHomeStayTypeRequest.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\HomeStayType\\CreateHomeStayTypeRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T08:41:17.922Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Room.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Room.cs",
+              "RelativeDocumentMoniker": "BusinessObject\\Model\\Room.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Room.cs",
+              "RelativeToolTip": "BusinessObject\\Model\\Room.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T07:35:40.63Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
+              "Title": "RoomDAO.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\RoomDAO.cs",
+              "RelativeDocumentMoniker": "DataAccessObject\\RoomDAO.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\RoomDAO.cs",
+              "RelativeToolTip": "DataAccessObject\\RoomDAO.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAqwDUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T07:03:17.168Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "RoomTypes.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\RoomTypes.cs",
+              "RelativeDocumentMoniker": "BusinessObject\\Model\\RoomTypes.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\RoomTypes.cs",
+              "RelativeToolTip": "BusinessObject\\Model\\RoomTypes.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAwCYAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-22T19:21:53.711Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "PricingForHomeStayRental.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\PricingForHomeStayRental.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Pricing\\PricingForHomeStayRental.cs",
@@ -719,20 +795,327 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "CreateHomeStayTypeRequest.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\HomeStayType\\CreateHomeStayTypeRequest.cs",
-              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\HomeStayType\\CreateHomeStayTypeRequest.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\HomeStayType\\CreateHomeStayTypeRequest.cs",
-              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\HomeStayType\\CreateHomeStayTypeRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAzAAAAAAAAAA==",
+              "DocumentIndex": 13,
+              "Title": "Pricing.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Pricing.cs",
+              "RelativeDocumentMoniker": "BusinessObject\\Model\\Pricing.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Pricing.cs",
+              "RelativeToolTip": "BusinessObject\\Model\\Pricing.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAvwCwAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T08:41:17.922Z",
+              "WhenOpened": "2025-03-22T19:16:40.878Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 15,
+              "Title": "GetAllRoomType.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAwBkAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T09:12:12.503Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ConfigureService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\ConfigureService.cs",
+              "RelativeDocumentMoniker": "Repository\\ConfigureService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\ConfigureService.cs",
+              "RelativeToolTip": "Repository\\ConfigureService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAmwDsAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-19T07:29:13.65Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "HomeStayRentalService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\HomeStayRentalService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\HomeStayRentalService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\HomeStayRentalService.cs",
+              "RelativeToolTip": "Service\\Service\\HomeStayRentalService.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAQwM8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-20T10:01:10.436Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "RoomTypesDAO.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\RoomTypesDAO.cs",
+              "RelativeDocumentMoniker": "DataAccessObject\\RoomTypesDAO.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\RoomTypesDAO.cs",
+              "RelativeToolTip": "DataAccessObject\\RoomTypesDAO.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAUwCQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-23T04:22:21.013Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "RoomRepository.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\RoomRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Repositories\\RoomRepository.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\RoomRepository.cs",
+              "RelativeToolTip": "Repository\\Repositories\\RoomRepository.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAtwEMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-19T07:19:53.68Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "IRoomRepository.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IRoomRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\IRepositories\\IRoomRepository.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IRoomRepository.cs",
+              "RelativeToolTip": "Repository\\IRepositories\\IRoomRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBEAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-23T04:21:50.332Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "PricingRepository.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\PricingRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Repositories\\PricingRepository.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\PricingRepository.cs",
+              "RelativeToolTip": "Repository\\Repositories\\PricingRepository.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAQwEMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-19T07:20:13.309Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "IPricingService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IPricingService.cs",
+              "RelativeDocumentMoniker": "Service\\IService\\IPricingService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IPricingService.cs",
+              "RelativeToolTip": "Service\\IService\\IPricingService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T07:40:44.448Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "RoomService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RoomService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\RoomService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RoomService.cs",
+              "RelativeToolTip": "Service\\Service\\RoomService.cs",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-22T17:36:19.156Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "RoomTypeRepository.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\RoomTypeRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Repositories\\RoomTypeRepository.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\RoomTypeRepository.cs",
+              "RelativeToolTip": "Repository\\Repositories\\RoomTypeRepository.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAwwDQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-23T04:21:57.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "RoomTypeController.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\RoomTypeController.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\RoomTypeController.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\RoomTypeController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\RoomTypeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-23T08:09:40.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "AddImageHomeStayTypesRequest.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\ImageHomeStayTypes\\AddImageHomeStayTypesRequest.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\ImageHomeStayTypes\\AddImageHomeStayTypesRequest.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\ImageHomeStayTypes\\AddImageHomeStayTypesRequest.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\ImageHomeStayTypes\\AddImageHomeStayTypesRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T15:58:35.663Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "ImageRoomTypeResponse.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\RoomType\\ImageRoomTypeResponse.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\RoomType\\ImageRoomTypeResponse.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\RoomType\\ImageRoomTypeResponse.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\RoomType\\ImageRoomTypeResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T07:26:40.251Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "UploadImageRequest.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\ImageHomeStay\\UploadImageRequest.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\ImageHomeStay\\UploadImageRequest.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\ImageHomeStay\\UploadImageRequest.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\ImageHomeStay\\UploadImageRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-19T07:30:32.742Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "ImageRoomTypeDAO.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\ImageRoomTypeDAO.cs",
+              "RelativeDocumentMoniker": "DataAccessObject\\ImageRoomTypeDAO.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\ImageRoomTypeDAO.cs",
+              "RelativeToolTip": "DataAccessObject\\ImageRoomTypeDAO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-23T08:48:10.509Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "ConfigureService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\ConfigureService.cs",
+              "RelativeDocumentMoniker": "Service\\ConfigureService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\ConfigureService.cs",
+              "RelativeToolTip": "Service\\ConfigureService.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACMAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-19T07:43:14.875Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Program.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Program.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Program.cs",
+              "RelativeToolTip": "GreenRoam\\Program.cs",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAewIQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-19T07:59:26.25Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "IImageRoomTypesRepository.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IImageRoomTypesRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\IRepositories\\IImageRoomTypesRepository.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IImageRoomTypesRepository.cs",
+              "RelativeToolTip": "Repository\\IRepositories\\IImageRoomTypesRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-23T15:42:13.53Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "HomeStay.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\HomeStay.cs",
+              "RelativeDocumentMoniker": "BusinessObject\\Model\\HomeStay.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\HomeStay.cs",
+              "RelativeToolTip": "BusinessObject\\Model\\HomeStay.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAqwF4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-19T06:54:37.595Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "HomeStayRentalDAO.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\HomeStayRentalDAO.cs",
+              "RelativeDocumentMoniker": "DataAccessObject\\HomeStayRentalDAO.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\HomeStayRentalDAO.cs",
+              "RelativeToolTip": "DataAccessObject\\HomeStayRentalDAO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-19T07:05:19.142Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "HomeStayRentalRepository.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\HomeStayRentalRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Repositories\\HomeStayRentalRepository.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\HomeStayRentalRepository.cs",
+              "RelativeToolTip": "Repository\\Repositories\\HomeStayRentalRepository.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAewDYAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-19T07:19:48.44Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "IHomeStayRentalRepository.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IHomeStayRentalRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\IRepositories\\IHomeStayRentalRepository.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IHomeStayRentalRepository.cs",
+              "RelativeToolTip": "Repository\\IRepositories\\IHomeStayRentalRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-19T07:26:30.679Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "GetAllPricing.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\GetAllPricing.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Pricing\\GetAllPricing.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\GetAllPricing.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Pricing\\GetAllPricing.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAQwCgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T06:03:54.132Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "CommissionRateService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\CommissionRateService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\CommissionRateService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\CommissionRateService.cs",
+              "RelativeToolTip": "Service\\Service\\CommissionRateService.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAtwEsAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-20T05:38:28.126Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
               "Title": "PricingService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\PricingService.cs",
               "RelativeDocumentMoniker": "Service\\Service\\PricingService.cs",
@@ -740,12 +1123,11 @@
               "RelativeToolTip": "Service\\Service\\PricingService.cs",
               "ViewState": "AgIAAFUAAAAAAAAAAAAnwHsAAABqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T17:24:11.858Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-22T17:24:11.858Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 38,
               "Title": "PricingController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\PricingController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\PricingController.cs",
@@ -753,12 +1135,11 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\PricingController.cs",
               "ViewState": "AgIAAC4AAAAAAAAAAAA5wE0AAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-20T05:39:29.664Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-20T05:39:29.664Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 40,
               "Title": "HomeStayService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\HomeStayService.cs",
               "RelativeDocumentMoniker": "Service\\Service\\HomeStayService.cs",
@@ -770,7 +1151,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 42,
               "Title": "RoomController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\RoomController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\RoomController.cs",
@@ -782,31 +1163,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "RoomTypeController.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\RoomTypeController.cs",
-              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\RoomTypeController.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\RoomTypeController.cs",
-              "RelativeToolTip": "GreenRoam\\Controllers\\RoomTypeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T08:09:40.46Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "RoomTypeService.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RoomTypeService.cs",
-              "RelativeDocumentMoniker": "Service\\Service\\RoomTypeService.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RoomTypeService.cs",
-              "RelativeToolTip": "Service\\Service\\RoomTypeService.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAuwG8AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T07:01:04.752Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 41,
               "Title": "HomeStayController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\HomeStayController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\HomeStayController.cs",
@@ -818,7 +1175,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 43,
               "Title": "IRoomTypeService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IRoomTypeService.cs",
               "RelativeDocumentMoniker": "Service\\IService\\IRoomTypeService.cs",
@@ -830,31 +1187,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 139,
-              "Title": "CreateRoomTypeResponse.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\RoomType\\CreateRoomTypeResponse.cs",
-              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\RoomType\\CreateRoomTypeResponse.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\RoomType\\CreateRoomTypeResponse.cs",
-              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\RoomType\\CreateRoomTypeResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T15:42:13.498Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "CreateRoomTypeRequest.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\RoomType\\CreateRoomTypeRequest.cs",
-              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\RoomType\\CreateRoomTypeRequest.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\RoomType\\CreateRoomTypeRequest.cs",
-              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\RoomType\\CreateRoomTypeRequest.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T16:31:39.382Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 44,
               "Title": "IHomeStayService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IHomeStayService.cs",
               "RelativeDocumentMoniker": "Service\\IService\\IHomeStayService.cs",
@@ -866,7 +1199,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 45,
               "Title": "IHomeStayTypeService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IHomeStayTypeService.cs",
               "RelativeDocumentMoniker": "Service\\IService\\IHomeStayTypeService.cs",
@@ -878,7 +1211,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 46,
               "Title": "SimpleHomeStayResponse.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\HomeStays\\SimpleHomeStayResponse.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\HomeStays\\SimpleHomeStayResponse.cs",
@@ -890,19 +1223,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "UploadImageRequest.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\ImageHomeStay\\UploadImageRequest.cs",
-              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\ImageHomeStay\\UploadImageRequest.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\ImageHomeStay\\UploadImageRequest.cs",
-              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\ImageHomeStay\\UploadImageRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T07:30:32.742Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 47,
               "Title": "CreateHomeStayRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\HomeStay\\CreateHomeStayRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\HomeStay\\CreateHomeStayRequest.cs",
@@ -914,19 +1235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "GetAllRoomType.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
-              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
-              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAAwBkAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T09:12:12.503Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 140,
+              "DocumentIndex": 147,
               "Title": "ImageRoomTypesRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\ImageRoomTypesRepository.cs",
               "RelativeDocumentMoniker": "Repository\\Repositories\\ImageRoomTypesRepository.cs",
@@ -938,31 +1247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "ImageRoomTypeDAO.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\ImageRoomTypeDAO.cs",
-              "RelativeDocumentMoniker": "DataAccessObject\\ImageRoomTypeDAO.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\ImageRoomTypeDAO.cs",
-              "RelativeToolTip": "DataAccessObject\\ImageRoomTypeDAO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T08:48:10.509Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 141,
-              "Title": "IImageRoomTypesRepository.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IImageRoomTypesRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\IRepositories\\IImageRoomTypesRepository.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IImageRoomTypesRepository.cs",
-              "RelativeToolTip": "Repository\\IRepositories\\IImageRoomTypesRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T15:42:13.53Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 48,
               "Title": "HomeStayRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\HomeStayRepository.cs",
               "RelativeDocumentMoniker": "Repository\\Repositories\\HomeStayRepository.cs",
@@ -974,7 +1259,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 49,
               "Title": "ImageHomeStayRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\ImageHomeStayRepository.cs",
               "RelativeDocumentMoniker": "Repository\\Repositories\\ImageHomeStayRepository.cs",
@@ -986,19 +1271,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "RoomTypesDAO.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\RoomTypesDAO.cs",
-              "RelativeDocumentMoniker": "DataAccessObject\\RoomTypesDAO.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\RoomTypesDAO.cs",
-              "RelativeToolTip": "DataAccessObject\\RoomTypesDAO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T04:22:21.013Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 50,
               "Title": "IImageHomeStayRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IImageHomeStayRepository.cs",
               "RelativeDocumentMoniker": "Repository\\IRepositories\\IImageHomeStayRepository.cs",
@@ -1010,7 +1283,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 51,
               "Title": "HomeStayRentalsController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\HomeStayRentalsController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\HomeStayRentalsController.cs",
@@ -1022,19 +1295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "CreatePricingRequest.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\CreatePricingRequest.cs",
-              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Pricing\\CreatePricingRequest.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\CreatePricingRequest.cs",
-              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Pricing\\CreatePricingRequest.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAqwBYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T08:43:05.376Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 52,
               "Title": "IRoomTypeRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IRoomTypeRepository.cs",
               "RelativeDocumentMoniker": "Repository\\IRepositories\\IRoomTypeRepository.cs",
@@ -1046,43 +1307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "RoomTypeRepository.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\RoomTypeRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\Repositories\\RoomTypeRepository.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\RoomTypeRepository.cs",
-              "RelativeToolTip": "Repository\\Repositories\\RoomTypeRepository.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAADgvzAAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T04:21:57.254Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
-              "Title": "IRoomRepository.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IRoomRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\IRepositories\\IRoomRepository.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IRoomRepository.cs",
-              "RelativeToolTip": "Repository\\IRepositories\\IRoomRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T04:21:50.332Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "PricingRepository.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\PricingRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\Repositories\\PricingRepository.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\PricingRepository.cs",
-              "RelativeToolTip": "Repository\\Repositories\\PricingRepository.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAQwEMAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T07:20:13.309Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 53,
               "Title": "PricingDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\PricingDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\PricingDAO.cs",
@@ -1094,7 +1319,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 54,
               "Title": "GreenRoamContext.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\GreenRoamContext.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\GreenRoamContext.cs",
@@ -1106,7 +1331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 62,
               "Title": "CreateServices.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Services\\CreateServices.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Services\\CreateServices.cs",
@@ -1118,19 +1343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
-              "Title": "Pricing.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Pricing.cs",
-              "RelativeDocumentMoniker": "BusinessObject\\Model\\Pricing.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Pricing.cs",
-              "RelativeToolTip": "BusinessObject\\Model\\Pricing.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T19:16:40.878Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 59,
               "Title": "Services.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Services.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\Services.cs",
@@ -1142,7 +1355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 60,
               "Title": "Transaction.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Transaction.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\Transaction.cs",
@@ -1154,19 +1367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
-              "Title": "RoomTypes.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\RoomTypes.cs",
-              "RelativeDocumentMoniker": "BusinessObject\\Model\\RoomTypes.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\RoomTypes.cs",
-              "RelativeToolTip": "BusinessObject\\Model\\RoomTypes.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T19:21:53.711Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 56,
               "Title": "ImageRoomTypes.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\ImageRoomTypes.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\ImageRoomTypes.cs",
@@ -1178,7 +1379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 55,
               "Title": "Notification.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Notification.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\Notification.cs",
@@ -1190,7 +1391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 58,
               "Title": "ImageHomeStay.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\ImageHomeStay.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\ImageHomeStay.cs",
@@ -1202,7 +1403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 57,
               "Title": "ImageHomeStayRentals.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\ImageHomeStayRentals.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\ImageHomeStayRentals.cs",
@@ -1214,7 +1415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 63,
               "Title": "UpdateServices.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Services\\UpdateServices.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Services\\UpdateServices.cs",
@@ -1226,7 +1427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 64,
               "Title": "UpdatePricingRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\UpdatePricingRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Pricing\\UpdatePricingRequest.cs",
@@ -1238,7 +1439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 61,
               "Title": "HomeStayRentals.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\HomeStayRentals.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\HomeStayRentals.cs",
@@ -1250,7 +1451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 65,
               "Title": "UpdateImageHomeStayTypesRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\ImageHomeStayTypes\\UpdateImageHomeStayTypesRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\ImageHomeStayTypes\\UpdateImageHomeStayTypesRequest.cs",
@@ -1262,19 +1463,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
-              "Title": "AddImageHomeStayTypesRequest.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\ImageHomeStayTypes\\AddImageHomeStayTypesRequest.cs",
-              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\ImageHomeStayTypes\\AddImageHomeStayTypesRequest.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\ImageHomeStayTypes\\AddImageHomeStayTypesRequest.cs",
-              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\ImageHomeStayTypes\\AddImageHomeStayTypesRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T15:58:35.663Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 67,
               "Title": "IBaseDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\IBaseDAO\\IBaseDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\IBaseDAO\\IBaseDAO.cs",
@@ -1286,7 +1475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 68,
               "Title": "BaseDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\BaseDAO\\BaseDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\BaseDAO\\BaseDAO.cs",
@@ -1298,7 +1487,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 69,
               "Title": "IPricingRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IPricingRepository.cs",
               "RelativeDocumentMoniker": "Repository\\IRepositories\\IPricingRepository.cs",
@@ -1310,7 +1499,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 66,
               "Title": "ImageHomeStayRentalsDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\ImageHomeStayRentalsDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\ImageHomeStayRentalsDAO.cs",
@@ -1322,7 +1511,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 70,
               "Title": "ImageHomeStayTypesRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\ImageHomeStayTypesRepository.cs",
               "RelativeDocumentMoniker": "Repository\\Repositories\\ImageHomeStayTypesRepository.cs",
@@ -1334,7 +1523,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 71,
               "Title": "IImageHomeStayTypesRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IImageHomeStayTypesRepository.cs",
               "RelativeDocumentMoniker": "Repository\\IRepositories\\IImageHomeStayTypesRepository.cs",
@@ -1346,7 +1535,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 72,
               "Title": "HomeStayDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\HomeStayDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\HomeStayDAO.cs",
@@ -1358,7 +1547,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 73,
               "Title": "IHomeStayRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IHomeStayRepository.cs",
               "RelativeDocumentMoniker": "Repository\\IRepositories\\IHomeStayRepository.cs",
@@ -1370,7 +1559,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 74,
               "Title": "BookingService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\BookingService.cs",
               "RelativeDocumentMoniker": "Service\\Service\\BookingService.cs",
@@ -1382,7 +1571,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 75,
               "Title": "CommissionRate.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\CommissionRate.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\CommissionRate.cs",
@@ -1394,19 +1583,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
-              "Title": "RoomService.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RoomService.cs",
-              "RelativeDocumentMoniker": "Service\\Service\\RoomService.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RoomService.cs",
-              "RelativeToolTip": "Service\\Service\\RoomService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T17:36:19.156Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 76,
               "Title": "ServicesService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\ServicesService.cs",
               "RelativeDocumentMoniker": "Service\\Service\\ServicesService.cs",
@@ -1418,7 +1595,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 78,
               "Title": "ServiceController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\ServiceController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\ServiceController.cs",
@@ -1430,7 +1607,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 77,
               "Title": "IServiceServices.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IServiceServices.cs",
               "RelativeDocumentMoniker": "Service\\IService\\IServiceServices.cs",
@@ -1442,7 +1619,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 79,
               "Title": "UpdateCommissionRateRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\CommissionRates\\UpdateCommissionRateRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\CommissionRates\\UpdateCommissionRateRequest.cs",
@@ -1454,7 +1631,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 80,
               "Title": "CreateCommissionRateRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\CommissionRates\\CreateCommissionRateRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\CommissionRates\\CreateCommissionRateRequest.cs",
@@ -1466,7 +1643,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 81,
               "Title": "CommissionRateRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\CommissionRates\\CommissionRateRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\CommissionRates\\CommissionRateRequest.cs",
@@ -1478,7 +1655,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 82,
               "Title": "GetAllServices.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Services\\GetAllServices.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Services\\GetAllServices.cs",
@@ -1490,7 +1667,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 83,
               "Title": "GetAllImageService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\ImageService\\GetAllImageService.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\ImageService\\GetAllImageService.cs",
@@ -1502,7 +1679,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 84,
               "Title": "GetTotalPrice.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\GetTotalPrice.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Pricing\\GetTotalPrice.cs",
@@ -1514,7 +1691,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 85,
               "Title": "ServicesDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\ServicesDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\ServicesDAO.cs",
@@ -1526,7 +1703,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 86,
               "Title": "ServiceRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\ServiceRepository.cs",
               "RelativeDocumentMoniker": "Repository\\Repositories\\ServiceRepository.cs",
@@ -1538,7 +1715,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 87,
               "Title": "IServiceRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IServiceRepository.cs",
               "RelativeDocumentMoniker": "Repository\\IRepositories\\IServiceRepository.cs",
@@ -1550,7 +1727,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 88,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\appsettings.json",
               "RelativeDocumentMoniker": "GreenRoam\\appsettings.json",
@@ -1562,7 +1739,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 89,
               "Title": "GetAllImageHomeStayType.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\ImageHomeStayTypes\\GetAllImageHomeStayType.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\ImageHomeStayTypes\\GetAllImageHomeStayType.cs",
@@ -1574,7 +1751,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
+              "DocumentIndex": 90,
               "Title": "ImageServicesController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\ImageServicesController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\ImageServicesController.cs",
@@ -1586,7 +1763,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 138,
+              "DocumentIndex": 146,
               "Title": "HomeStayTypeController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\HomeStayTypeController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\HomeStayTypeController.cs",
@@ -1598,7 +1775,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 78,
+              "DocumentIndex": 91,
               "Title": "ImageHomeStayResponse.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\ImageHomeStay\\ImageHomeStayResponse.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\ImageHomeStay\\ImageHomeStayResponse.cs",
@@ -1610,19 +1787,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 79,
-              "Title": "ConfigureService.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\ConfigureService.cs",
-              "RelativeDocumentMoniker": "Service\\ConfigureService.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\ConfigureService.cs",
-              "RelativeToolTip": "Service\\ConfigureService.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAACMAAABAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T07:43:14.875Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 80,
+              "DocumentIndex": 92,
               "Title": "HomeStayResponse.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\HomeStays\\HomeStayResponse.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\HomeStays\\HomeStayResponse.cs",
@@ -1634,7 +1799,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 93,
               "Title": "GetAllHomeStayWithOwnerName.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\HomeStays\\GetAllHomeStayWithOwnerName.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\HomeStays\\GetAllHomeStayWithOwnerName.cs",
@@ -1646,31 +1811,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Program.cs",
-              "RelativeDocumentMoniker": "GreenRoam\\Program.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Program.cs",
-              "RelativeToolTip": "GreenRoam\\Program.cs",
-              "ViewState": "AgIAAIEAAAAAAAAAAIAwwJgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T07:59:26.25Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 83,
-              "Title": "ConfigureService.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\ConfigureService.cs",
-              "RelativeDocumentMoniker": "Repository\\ConfigureService.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\ConfigureService.cs",
-              "RelativeToolTip": "Repository\\ConfigureService.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAuwDUAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T07:29:13.65Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 84,
+              "DocumentIndex": 94,
               "Title": "ICommissionRateRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\ICommissionRateRepository.cs",
               "RelativeDocumentMoniker": "Repository\\IRepositories\\ICommissionRateRepository.cs",
@@ -1682,7 +1823,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 86,
+              "DocumentIndex": 96,
               "Title": "GetServiceForHomeStay.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Services\\GetServiceForHomeStay.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Services\\GetServiceForHomeStay.cs",
@@ -1694,7 +1835,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 85,
+              "DocumentIndex": 95,
               "Title": "GetImageService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\ImageService\\GetImageService.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\ImageService\\GetImageService.cs",
@@ -1706,7 +1847,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 87,
+              "DocumentIndex": 97,
               "Title": "ImageHomeStayService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\ImageHomeStayService.cs",
               "RelativeDocumentMoniker": "Service\\Service\\ImageHomeStayService.cs",
@@ -1718,7 +1859,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 88,
+              "DocumentIndex": 98,
               "Title": "IImageHomeStayService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IImageHomeStayService.cs",
               "RelativeDocumentMoniker": "Service\\IService\\IImageHomeStayService.cs",
@@ -1730,7 +1871,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 89,
+              "DocumentIndex": 99,
               "Title": "IImageServicesService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IImageServicesService.cs",
               "RelativeDocumentMoniker": "Service\\IService\\IImageServicesService.cs",
@@ -1742,7 +1883,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 90,
+              "DocumentIndex": 100,
               "Title": "ImageServices.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\ImageServices.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\ImageServices.cs",
@@ -1754,7 +1895,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 91,
+              "DocumentIndex": 101,
               "Title": "UploadImageServiceRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\ImageService\\UploadImageServiceRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\ImageService\\UploadImageServiceRequest.cs",
@@ -1766,7 +1907,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 92,
+              "DocumentIndex": 102,
               "Title": "AddImageServicesRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\ImageService\\AddImageServicesRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\ImageService\\AddImageServicesRequest.cs",
@@ -1778,7 +1919,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 93,
+              "DocumentIndex": 103,
               "Title": "UpdateImageServicesRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\ImageService\\UpdateImageServicesRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\ImageService\\UpdateImageServicesRequest.cs",
@@ -1790,19 +1931,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 94,
-              "Title": "HomeStay.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\HomeStay.cs",
-              "RelativeDocumentMoniker": "BusinessObject\\Model\\HomeStay.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\HomeStay.cs",
-              "RelativeToolTip": "BusinessObject\\Model\\HomeStay.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAADwv14AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T06:54:37.595Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 96,
+              "DocumentIndex": 105,
               "Title": "IImageServicesRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IImageServicesRepository.cs",
               "RelativeDocumentMoniker": "Repository\\IRepositories\\IImageServicesRepository.cs",
@@ -1814,7 +1943,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 95,
+              "DocumentIndex": 104,
               "Title": "ImageServicesRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\ImageServicesRepository.cs",
               "RelativeDocumentMoniker": "Repository\\Repositories\\ImageServicesRepository.cs",
@@ -1826,7 +1955,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 97,
+              "DocumentIndex": 106,
               "Title": "GetAllCultureExperiencesResponse.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\CultureExperiences\\GetAllCultureExperiencesResponse.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\CultureExperiences\\GetAllCultureExperiencesResponse.cs",
@@ -1838,7 +1967,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 98,
+              "DocumentIndex": 107,
               "Title": "CultureExperience.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\CultureExperience.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\CultureExperience.cs",
@@ -1850,7 +1979,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 99,
+              "DocumentIndex": 108,
               "Title": "GetReportResponse.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Reports\\GetReportResponse.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Reports\\GetReportResponse.cs",
@@ -1862,7 +1991,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 100,
+              "DocumentIndex": 109,
               "Title": "Report.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Report.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\Report.cs",
@@ -1874,7 +2003,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 102,
+              "DocumentIndex": 111,
               "Title": "Rating.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Rating.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\Rating.cs",
@@ -1886,7 +2015,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 101,
+              "DocumentIndex": 110,
               "Title": "GetAllRatingResponse.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Ratings\\GetAllRatingResponse.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Ratings\\GetAllRatingResponse.cs",
@@ -1898,7 +2027,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 103,
+              "DocumentIndex": 112,
               "Title": "GetAllBookings.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Bookings\\GetAllBookings.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Bookings\\GetAllBookings.cs",
@@ -1910,7 +2039,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 104,
+              "DocumentIndex": 113,
               "Title": "IBookingServiceRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IBookingServiceRepository.cs",
               "RelativeDocumentMoniker": "Repository\\IRepositories\\IBookingServiceRepository.cs",
@@ -1922,7 +2051,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 105,
+              "DocumentIndex": 114,
               "Title": "ICancellationPolicyRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\ICancellationPolicyRepository.cs",
               "RelativeDocumentMoniker": "Repository\\IRepositories\\ICancellationPolicyRepository.cs",
@@ -1934,7 +2063,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 106,
+              "DocumentIndex": 115,
               "Title": "ICommissionRateService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\ICommissionRateService.cs",
               "RelativeDocumentMoniker": "Service\\IService\\ICommissionRateService.cs",
@@ -1946,7 +2075,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 107,
+              "DocumentIndex": 116,
               "Title": "GetAllCommissionRate.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\CommissionRate\\GetAllCommissionRate.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\CommissionRate\\GetAllCommissionRate.cs",
@@ -1958,7 +2087,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 108,
+              "DocumentIndex": 117,
               "Title": "CommissionRateRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\CommissionRateRepository.cs",
               "RelativeDocumentMoniker": "Repository\\Repositories\\CommissionRateRepository.cs",
@@ -1970,7 +2099,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 109,
+              "DocumentIndex": 118,
               "Title": "CommissionRateDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\CommissionRateDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\CommissionRateDAO.cs",
@@ -1982,7 +2111,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 110,
+              "DocumentIndex": 119,
               "Title": "CommissionRateController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\CommissionRateController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\CommissionRateController.cs",
@@ -1994,7 +2123,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 111,
+              "DocumentIndex": 120,
               "Title": "CancellationPolicyService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\CancellationPolicyService.cs",
               "RelativeDocumentMoniker": "Service\\Service\\CancellationPolicyService.cs",
@@ -2006,7 +2135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 112,
+              "DocumentIndex": 121,
               "Title": "CancellationPolicyController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\CancellationPolicyController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\CancellationPolicyController.cs",
@@ -2018,7 +2147,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 113,
+              "DocumentIndex": 122,
               "Title": "ICancellationPolicyService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\ICancellationPolicyService.cs",
               "RelativeDocumentMoniker": "Service\\IService\\ICancellationPolicyService.cs",
@@ -2030,7 +2159,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 114,
+              "DocumentIndex": 123,
               "Title": "AccountController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\AccountController.cs",
@@ -2042,7 +2171,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 115,
+              "DocumentIndex": 124,
               "Title": "GetAllCancellationPolicy.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\CancellationPolicyRequest\\GetAllCancellationPolicy.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\CancellationPolicyRequest\\GetAllCancellationPolicy.cs",
@@ -2054,7 +2183,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 116,
+              "DocumentIndex": 125,
               "Title": "UpdateCancellationPolicyRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\CancellationPolicy\\UpdateCancellationPolicyRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\CancellationPolicy\\UpdateCancellationPolicyRequest.cs",
@@ -2066,7 +2195,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 117,
+              "DocumentIndex": 126,
               "Title": "CancellationPolicy.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\CancellationPolicy.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\CancellationPolicy.cs",
@@ -2078,7 +2207,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 118,
+              "DocumentIndex": 127,
               "Title": "CreateCancellationPolicyRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\CancellationPolicy\\CreateCancellationPolicyRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\CancellationPolicy\\CreateCancellationPolicyRequest.cs",
@@ -2090,7 +2219,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 119,
+              "DocumentIndex": 128,
               "Title": "CancellationPolicyDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\CancellationPolicyDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\CancellationPolicyDAO.cs",
@@ -2102,7 +2231,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 120,
+              "DocumentIndex": 129,
               "Title": "CancellationPolicyRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\CancellationPolicyRepository.cs",
               "RelativeDocumentMoniker": "Repository\\Repositories\\CancellationPolicyRepository.cs",
@@ -2114,7 +2243,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 121,
+              "DocumentIndex": 130,
               "Title": "IAccountRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IAccountRepository.cs",
               "RelativeDocumentMoniker": "Repository\\IRepositories\\IAccountRepository.cs",
@@ -2126,7 +2255,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 122,
+              "DocumentIndex": 131,
               "Title": "BookingServicesDetail.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\BookingServicesDetail.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\BookingServicesDetail.cs",
@@ -2138,7 +2267,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 123,
+              "DocumentIndex": 132,
               "Title": "BookingServiceRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\BookingServices\\BookingServiceRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\BookingServices\\BookingServiceRequest.cs",
@@ -2150,7 +2279,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 124,
+              "DocumentIndex": 133,
               "Title": "CreateBookingServices.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\BookingServices\\CreateBookingServices.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\BookingServices\\CreateBookingServices.cs",
@@ -2162,7 +2291,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 125,
+              "DocumentIndex": 134,
               "Title": "BookingController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\BookingController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\BookingController.cs",
@@ -2174,7 +2303,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 126,
+              "DocumentIndex": 135,
               "Title": "ImageHomeStayRentalsController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\ImageHomeStayRentalsController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\ImageHomeStayRentalsController.cs",
@@ -2186,7 +2315,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 127,
+              "DocumentIndex": 136,
               "Title": "Account.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Account.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Model\\Account.cs",
@@ -2198,7 +2327,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 128,
+              "DocumentIndex": 137,
               "Title": "launchSettings.json",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "GreenRoam\\Properties\\launchSettings.json",
@@ -2210,7 +2339,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 129,
+              "DocumentIndex": 138,
               "Title": "IImageHomeStayTypesService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IImageHomeStayTypesService.cs",
               "RelativeDocumentMoniker": "Service\\IService\\IImageHomeStayTypesService.cs",
@@ -2222,7 +2351,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 130,
+              "DocumentIndex": 139,
               "Title": "ImageHomeStayTypesService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\ImageHomeStayTypesService.cs",
               "RelativeDocumentMoniker": "Service\\Service\\ImageHomeStayTypesService.cs",
@@ -2234,7 +2363,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 131,
+              "DocumentIndex": 140,
               "Title": "ImageServicesService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\ImageServicesService.cs",
               "RelativeDocumentMoniker": "Service\\Service\\ImageServicesService.cs",
@@ -2246,7 +2375,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 132,
+              "DocumentIndex": 141,
               "Title": "ImageHomeStayDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\ImageHomeStayDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\ImageHomeStayDAO.cs",
@@ -2258,19 +2387,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 133,
-              "Title": "RoomRepository.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\RoomRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\Repositories\\RoomRepository.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\RoomRepository.cs",
-              "RelativeToolTip": "Repository\\Repositories\\RoomRepository.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T07:19:53.68Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 135,
+              "DocumentIndex": 143,
               "Title": "BookingServicesDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\BookingServicesDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\BookingServicesDAO.cs",
@@ -2282,7 +2399,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 134,
+              "DocumentIndex": 142,
               "Title": "ConfigureService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\ConfigureService.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\ConfigureService.cs",
@@ -2294,7 +2411,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 136,
+              "DocumentIndex": 144,
               "Title": "ImageServicesDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\ImageServicesDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\ImageServicesDAO.cs",
@@ -2306,7 +2423,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 137,
+              "DocumentIndex": 145,
               "Title": "AccountDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\AccountDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\AccountDAO.cs",

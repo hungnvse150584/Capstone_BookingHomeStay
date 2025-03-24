@@ -1,5 +1,6 @@
 ﻿using BusinessObject.Model;
 using DataAccessObject;
+using Microsoft.EntityFrameworkCore;
 using Repository.BaseRepository;
 using Repository.IRepositories;
 using System;
@@ -57,6 +58,10 @@ namespace Repository.Repositories
         public async Task<Room?> ChangeRoomStatusAsync(int roomId, bool? isUsed, bool? isActive)
         {
             return await _roomDao.ChangeRoomStatusAsync(roomId, isUsed, isActive);
+        }
+        public async Task SaveChangesAsync()
+        {
+            await _roomDao.SaveChangesAsync();
         }
     }
 }

@@ -5,6 +5,7 @@ using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.RoomType;
+using Service.RequestAndResponse.Response.RoomType;
 
 namespace GreenRoam.Controllers
 {
@@ -19,14 +20,20 @@ namespace GreenRoam.Controllers
             _roomTypeService = roomTypeService;
         }
 
-        [HttpPost("create")]
-        public async Task<ActionResult<BaseResponse<RoomTypes>>> CreateRoomType([FromForm] CreateRoomTypeRequest request, [FromQuery] int homeStayRentalId)
+        [HttpPost("CreateRoomType")]
+        public async Task<IActionResult> CreateRoomType([FromForm] CreateRoomTypeRequest request, [FromQuery] int homeStayRentalId)
         {
-            var result = await _roomTypeService.CreateRoomType(request, homeStayRentalId);
-            if (result.StatusCode == StatusCodeEnum.Created_201)
+           
+            if (!ModelState.IsValid)
             {
-                return StatusCode(201, result);
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return BadRequest(new BaseResponse<CreateRoomTypeResponse>(
+                    $"Validation errors: {string.Join(", ", errors)}",
+                    StatusCodeEnum.BadRequest_400,
+                    null));
             }
+
+            var result = await _roomTypeService.CreateRoomType(request, homeStayRentalId);
             return StatusCode((int)result.StatusCode, result);
         }
     }

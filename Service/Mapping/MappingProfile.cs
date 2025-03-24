@@ -35,6 +35,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using static Service.RequestAndResponse.Request.RoomType.CreateRoomTypeRequest;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Service.Mapping
@@ -91,6 +92,36 @@ namespace Service.Mapping
             CreateMap<GetAllPricing, Pricing>().ReverseMap();
             CreateMap<CreatePricingRequest, Pricing>().ReverseMap();
             CreateMap<UpdatePricingRequest, Pricing>().ReverseMap();
+
+            CreateMap<CreateRoomTypeRequest, RoomTypes>()
+                 .ForMember(dest => dest.RoomTypesID, opt => opt.Ignore())
+                 .ForMember(dest => dest.CreateAt, opt => opt.Ignore())
+                 .ForMember(dest => dest.UpdateAt, opt => opt.Ignore())
+                 .ForMember(dest => dest.HomeStayRentalID, opt => opt.Ignore())
+                 .ForMember(dest => dest.ImageRoomTypes, opt => opt.Ignore())
+                 .ForMember(dest => dest.Prices, opt => opt.Ignore())
+                 .ForMember(dest => dest.Rooms, opt => opt.Ignore());
+            CreateMap<RoomTypes, CreateRoomTypeResponse>()
+                .ForMember(dest => dest.ImageRoomTypes, opt => opt.MapFrom(src => src.ImageRoomTypes))
+                .ForMember(dest => dest.Pricings, opt => opt.MapFrom(src => src.Prices))
+                .ForMember(dest => dest.Rooms, opt => opt.MapFrom(src => src.Rooms));
+            CreateMap<ImageRoomTypes, ImageRoomTypeResponse>();
+            CreateMap<PricingForHomeStayRental, Pricing>()
+                .ForMember(dest => dest.PricingID, opt => opt.Ignore())
+                .ForMember(dest => dest.RoomTypesID, opt => opt.Ignore())
+                .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+                .ForMember(dest => dest.RentPrice, opt => opt.MapFrom(src => src.RentPrice))
+                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
+                .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
+                .ForMember(dest => dest.IsDefault, opt => opt.MapFrom(src => src.IsDefault))
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
+                .ForMember(dest => dest.DayType, opt => opt.MapFrom(src => src.DayType))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description ?? "Default description"));
+            // Ánh xạ cho Pricing -> PricingResponse
+            CreateMap<Pricing, PricingForHomeStayRental>();
+            // Ánh xạ cho RoomForRoomType -> Room
+            CreateMap<CreateRoomRequest, Room>().ReverseMap();
+            CreateMap<Room, RoomResponse>();
 
             CreateMap<GetAllRooms, Room>().ReverseMap();
             CreateMap<CreateRoomRequest, Room>().ReverseMap();

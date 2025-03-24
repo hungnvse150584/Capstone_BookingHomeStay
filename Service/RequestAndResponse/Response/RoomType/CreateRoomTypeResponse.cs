@@ -1,9 +1,6 @@
-﻿using BusinessObject.Model;
+﻿using Service.RequestAndResponse.Request.Pricing;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.RequestAndResponse.Response.RoomType
 {
@@ -18,6 +15,24 @@ namespace Service.RequestAndResponse.Response.RoomType
         public int MaxAdults { get; set; }
         public int MaxChildren { get; set; }
         public int MaxPeople { get; set; }
-        public ICollection<ImageRoomTypes>? ImageRoomTypes { get; set; }
+        public ICollection<ImageRoomTypeResponse>? ImageRoomTypes { get; set; }
+
+        public ICollection<PricingForHomeStayRental>? Pricings { get; set; } // Thêm Pricings
+        public ICollection<RoomResponse>? Rooms { get; set; } // Thêm Rooms
+    }
+
+    // DTO cho Pricing trong response
+   
+    // DTO cho Room trong response
+    public class RoomResponse
+    {
+        
+        public string roomNumber { get; set; }
+
+        public bool isUsed { get; set; }
+
+        public bool isActive { get; set; }
+
+        public int? RoomTypesID { get; set; }
     }
 }
