@@ -104,6 +104,8 @@ namespace Service.Service
             await _roomRepository.AddAsync(rooms);
 
             var response = _mapper.Map<CreateRoomRequest>(rooms);
+            response.isActive = true;
+            response.isUsed = true;
             return new BaseResponse<CreateRoomRequest>("Add Room as base success", StatusCodeEnum.Created_201, response);
         }
 

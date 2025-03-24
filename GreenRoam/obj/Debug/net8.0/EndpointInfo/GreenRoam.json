@@ -5600,16 +5600,6 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
-          },
-          "roomTypes": {
-            "$ref": "#/components/schemas/GetAllRoomType"
-          },
-          "bookingDetails": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetBookingDetails"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false

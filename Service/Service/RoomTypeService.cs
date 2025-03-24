@@ -195,6 +195,9 @@ namespace Service.Service
                 roomType.UpdateAt = DateTime.UtcNow;
                 roomType.HomeStayRentalID = homeStayRentalId;
 
+                //Luôn true
+                roomType.Status = true;
+
                 await _roomTypeRepository.AddAsync(roomType);
                 await _roomTypeRepository.SaveChangesAsync();
 
