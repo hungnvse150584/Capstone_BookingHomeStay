@@ -47,14 +47,21 @@ namespace Service.Mapping
 
             CreateMap<HomeStay, HomeStayResponse>()
                 .ForMember(dest => dest.CommissionRateID, opt => opt.MapFrom(src => src.CommissionRateID));
+               
+            CreateMap<ImageHomeStay, ImageHomeStayResponse>().ReverseMap();
+           
+
             //CreateMap<HomeStay, SimpleHomeStayResponse>().ReverseMap();
             /*CreateMap<Street, GetStreet>();*/
             CreateMap<CreateHomeStayRequest, HomeStay>().ReverseMap();
             CreateMap<UpdateHomeStayRequest, HomeStay>().ReverseMap();
             CreateMap<UploadImageRequest, ImageHomeStay>().ReverseMap();
+            CreateMap<UpdateHomeStayImagesBodyRequest, ImageHomeStay>().ReverseMap();
+   
+   
 
 
-            
+
             CreateMap<RoomTypes, GetAllRoomType>().ReverseMap();
             CreateMap<ImageHomeStayRentals, GetAllImageHomeStayType>().ReverseMap();
             CreateMap<HomeStayRentals, GetAllHomeStayType>()

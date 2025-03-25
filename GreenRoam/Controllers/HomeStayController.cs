@@ -5,6 +5,7 @@ using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Response.HomeStays;
+using Service.RequestAndResponse.Response.ImageHomeStay;
 using Service.Service;
 
 namespace GreenRoam.Controllers
@@ -122,7 +123,30 @@ namespace GreenRoam.Controllers
 
             return Ok(result);
         }
+        [HttpPut("UpdateImages/{homeStayId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<BaseResponse<ImageHomeStayResponse>>> UpdateHomeStayImages(
+            [FromRoute] int homeStayId,
+            [FromForm] UpdateHomeStayImagesBodyRequest request)
+        {
+            // Kiểm tra HomeStayID hợp lệ
+            if (homeStayId <= 0)
+            {
+                return BadRequest(new BaseResponse<ImageHomeStayResponse>(
+                    "Invalid HomeStay ID.",
+                    StatusCodeEnum.BadRequest_400,
+                    null));
+            }
 
+            // Gọi service để xử lý cập nhật hình ảnh
+            var result = await _homestayService.UpdateHomeStayImages(homeStayId, request);
+
+            // Trả về kết quả với mã trạng thái tương ứng
+            return StatusCode((int)result.StatusCode, result);
+        }
         [HttpPut]
         [Route("ChangeHomeStayStatus")]
         public async Task<ActionResult<BaseResponse<HomeStayResponse>>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status, int? commissionRateID = null)

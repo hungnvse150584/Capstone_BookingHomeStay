@@ -13,6 +13,7 @@ using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Response.HomeStays;
+using Service.RequestAndResponse.Response.ImageHomeStay;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -158,6 +159,137 @@ namespace Service.Service
             }
         }
 
+        public async Task<BaseResponse<ImageHomeStayResponse>> UpdateHomeStayImages(int homeStayId, UpdateHomeStayImagesBodyRequest request)
+        {
+            try
+            {
+                // Kiểm tra HomeStay tồn tại
+                var homeStay = await _homeStayRepository.GetByIdAsync(homeStayId);
+                if (homeStay == null)
+                {
+                    return new BaseResponse<ImageHomeStayResponse>(
+                        "HomeStay not found!",
+                        StatusCodeEnum.NotFound_404,
+                        null);
+                }
+
+                // Lấy danh sách hình ảnh hiện tại
+                var existingImages = await _imageHomeStayRepository.GetImagesByHomeStayIdAsync(homeStayId);
+
+                // Nếu có ImageHomeStayID, thay thế hình ảnh cụ thể
+                if (request.ImageHomeStayID.HasValue)
+                {
+                    // Kiểm tra ImageHomeStayID hợp lệ
+                    var imageToReplace = existingImages?.FirstOrDefault(img => img.ImageHomeStayID == request.ImageHomeStayID.Value);
+                    if (imageToReplace == null)
+                    {
+                        return new BaseResponse<ImageHomeStayResponse>(
+                            "ImageHomeStay not found!",
+                            StatusCodeEnum.NotFound_404,
+                            null);
+                    }
+
+                    // Kiểm tra có hình ảnh mới để thay thế không
+                    if (request.Images == null || !request.Images.Any())
+                    {
+                        return new BaseResponse<ImageHomeStayResponse>(
+                            "No new image provided to replace the existing one.",
+                            StatusCodeEnum.BadRequest_400,
+                            null);
+                    }
+
+                    // Chỉ cho phép thay thế bằng 1 hình ảnh
+                    if (request.Images.Count > 1)
+                    {
+                        return new BaseResponse<ImageHomeStayResponse>(
+                            "Only one image can be provided to replace an existing image.",
+                            StatusCodeEnum.BadRequest_400,
+                            null);
+                    }
+
+                    // Upload hình ảnh mới lên Cloudinary
+                    var imageUrls = await UploadImagesToCloudinary(request.Images);
+                    if (imageUrls == null || !imageUrls.Any())
+                    {
+                        return new BaseResponse<ImageHomeStayResponse>(
+                            "Failed to upload new image to Cloudinary.",
+                            StatusCodeEnum.InternalServerError_500,
+                            null);
+                    }
+
+                    // Xóa hình ảnh cũ trên Cloudinary
+                    var publicId = ExtractPublicIdFromUrl(imageToReplace.Image);
+                    if (!string.IsNullOrEmpty(publicId))
+                    {
+                        var deletionParams = new DeletionParams(publicId);
+                        var deletionResult = await _cloudinary.DestroyAsync(deletionParams);
+                        if (deletionResult.StatusCode != System.Net.HttpStatusCode.OK)
+                        {
+                            return new BaseResponse<ImageHomeStayResponse>(
+                                $"Failed to delete old image from Cloudinary: {deletionResult.Error.Message}",
+                                StatusCodeEnum.InternalServerError_500,
+                                null);
+                        }
+                    }
+
+                    // Cập nhật URL mới cho hình ảnh
+                    imageToReplace.Image = imageUrls.First();
+                    var updatedImage = await _imageHomeStayRepository.UpdateImageAsync(imageToReplace);
+
+                    // Cập nhật HomeStay
+                    homeStay.UpdateAt = DateTime.UtcNow;
+                    await _homeStayRepository.UpdateAsync(homeStay);
+                    await _homeStayRepository.SaveChangesAsync();
+
+                    // Ánh xạ sang ImageHomeStayResponse để trả về
+                    var response = _mapper.Map<ImageHomeStayResponse>(updatedImage);
+
+                    return new BaseResponse<ImageHomeStayResponse>(
+                        "HomeStay image replaced successfully!",
+                        StatusCodeEnum.OK_200,
+                        response);
+                }
+
+               
+                var newImages = new List<ImageHomeStay>();
+                if (request.Images != null && request.Images.Any())
+                {
+                    var imageUrls = await UploadImagesToCloudinary(request.Images);
+                    foreach (var url in imageUrls)
+                    {
+                        var imageHomeStay = new ImageHomeStay
+                        {
+                            Image = url,
+                            HomeStayID = homeStayId
+                        };
+                        newImages.Add(imageHomeStay);
+                        await _imageHomeStayRepository.AddImageAsync(imageHomeStay);
+                    }
+                    await _imageHomeStayRepository.SaveChangesAsync();
+                }
+
+                // Cập nhật HomeStay
+                homeStay.UpdateAt = DateTime.UtcNow;
+                await _homeStayRepository.UpdateAsync(homeStay);
+                await _homeStayRepository.SaveChangesAsync();
+
+                // Trả về hình ảnh mới nhất (nếu có) hoặc null
+                var latestImage = newImages.LastOrDefault();
+                var responseData = latestImage != null ? _mapper.Map<ImageHomeStayResponse>(latestImage) : null;
+
+                return new BaseResponse<ImageHomeStayResponse>(
+                    "HomeStay images updated successfully!",
+                    StatusCodeEnum.OK_200,
+                    responseData);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<ImageHomeStayResponse>(
+                    $"An error occurred while updating HomeStay images: {ex.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
+            }
+        }
         private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> files)
         {
             if (files == null || !files.Any())
@@ -194,6 +326,20 @@ namespace Service.Service
             }
 
             return urls;
+        }
+        private string ExtractPublicIdFromUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+            {
+                return null;
+            }
+
+            // URL Cloudinary có dạng: https://res.cloudinary.com/{cloud_name}/image/upload/v{version}/{folder}/{public_id}.{format}
+            var parts = url.Split('/');
+            var fileNameWithExtension = parts.Last();
+            var publicId = fileNameWithExtension.Split('.').First(); // Lấy phần trước đuôi file
+            var folder = "HomeStayImages/"; // Phải khớp với folder khi upload
+            return $"{folder}{publicId}";
         }
         public async Task<BaseResponse<List<HomeStay>>> RegisterHomeStay(CreateHomeStayRequest request)
         {

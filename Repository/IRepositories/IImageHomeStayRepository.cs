@@ -11,5 +11,10 @@ namespace Repository.IRepositories
     public interface IImageHomeStayRepository : IBaseRepository<ImageHomeStay>
     {
         Task<ImageHomeStay> AddImageAsync(ImageHomeStay image);
+        Task DeleteImageAsync(ImageHomeStay image);
+        Task SaveChangesAsync();
+        Task<IEnumerable<ImageHomeStay>> GetImagesByHomeStayIdAsync(int homeStayId);
+        Task<ImageHomeStay> UpdateImageAsync(ImageHomeStay image);
+
     }
 }

@@ -53,7 +53,10 @@ namespace DataAccessObject
                 .Include(i => i.HomeStay) // Bao gồm thông tin HomeStay nếu cần
                 .ToListAsync();
         }
-
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
         // Lấy một ảnh theo ID
         public async Task<ImageHomeStay> GetImageByIdAsync(int imageId)
         {
@@ -73,5 +76,36 @@ namespace DataAccessObject
 
             return image;
         }
+        public async Task<ImageHomeStay> UpdateImageAsync(ImageHomeStay image)
+        {
+            if (image == null)
+            {
+                throw new ArgumentNullException(nameof(image), "ImageHomeStay cannot be null");
+            }
+
+            if (image.ImageHomeStayID <= 0)
+            {
+                throw new ArgumentException("ImageHomeStayID must be a positive value", nameof(image.ImageHomeStayID));
+            }
+
+            var existingImage = await _context.ImageHomeStays
+                .FirstOrDefaultAsync(i => i.ImageHomeStayID == image.ImageHomeStayID);
+
+            if (existingImage == null)
+            {
+                throw new ArgumentException($"ImageHomeStay with ID {image.ImageHomeStayID} not found");
+            }
+
+          
+            existingImage.Image = image.Image;
+            existingImage.HomeStayID = image.HomeStayID;
+
+          
+            _context.ImageHomeStays.Update(existingImage);
+            await _context.SaveChangesAsync();
+
+            return existingImage;
+        }
+
     }
 }

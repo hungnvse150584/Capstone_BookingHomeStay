@@ -2,6 +2,7 @@
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Response.HomeStays;
+using Service.RequestAndResponse.Response.ImageHomeStay;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,6 @@ namespace Service.IService
         Task<BaseResponse<HomeStayResponse>> GetOwnerHomeStayByIdFromBase(string accountId);
         Task<BaseResponse<IEnumerable<SimpleHomeStayResponse>>> GetSimpleHomeStaysByAccount(string accountId);
         Task<BaseResponse<string>> DeleteHomeStay(int id);
+        Task<BaseResponse<ImageHomeStayResponse>> UpdateHomeStayImages(int homeStayId, UpdateHomeStayImagesBodyRequest request);
     }
 }
