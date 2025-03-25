@@ -29,6 +29,7 @@ namespace Service.Service
         private readonly IPricingRepository _pricingRepository;
         private readonly IRoomRepository _roomRepository;
         private readonly ICommissionRateRepository _commissionRateRepository;
+        private readonly IBookingDetailRepository _bookingDetailRepository;
 
 
         public BookingService(IMapper mapper, IBookingRepository bookingRepository,
@@ -38,7 +39,8 @@ namespace Service.Service
                               IRoomTypeRepository roomTypeRepository,
                               IRoomRepository roomRepository,
                               IPricingRepository pricingRepository,
-                              ICommissionRateRepository commissionRateRepository)
+                              ICommissionRateRepository commissionRateRepository, 
+                              IBookingDetailRepository bookingDetailRepository)
         {
             _mapper = mapper;
             _bookingRepository = bookingRepository;
@@ -49,6 +51,7 @@ namespace Service.Service
             _roomRepository = roomRepository;
             _pricingRepository = pricingRepository;
             _commissionRateRepository = commissionRateRepository;
+            _bookingDetailRepository = bookingDetailRepository;
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllBookings>>> GetAllBooking(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
@@ -301,6 +304,20 @@ namespace Service.Service
             else
             {
                 var existingDetails = existingBooking.BookingDetails.ToList();
+
+                var updatedDetailIds = request.BookingDetails
+                                        .Select(d => d.BookingDetailID)
+                                        .Where(id => id.HasValue)
+                                        .Select(id => id.Value)
+                                        .ToList();
+
+                var detailsToRemove = await _bookingDetailRepository.GetBookingDetailsToRemoveAsync(bookingID, updatedDetailIds);
+
+                if (detailsToRemove.Any())
+                {
+                    await _bookingDetailRepository.DeleteBookingDetailAsync(detailsToRemove);
+                }
+
                 foreach (var updatedBookingDetails in request.BookingDetails)
                 {
                     /*var existingBookingDetail = existingBooking.BookingDetails
