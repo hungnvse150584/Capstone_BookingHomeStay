@@ -68,5 +68,24 @@ namespace Repository.Repositories
         {
             return _imageHomestayDao.UpdateRange(entities);
         }
+        public async Task DeleteImageAsync(ImageHomeStay image)
+        {
+            await _imageHomestayDao.DeleteAsync(image);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _imageHomestayDao.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<ImageHomeStay>> GetImagesByHomeStayIdAsync(int homeStayId)
+        {
+            return await _imageHomestayDao.GetImagesByHomeStayIdAsync(homeStayId);
+        }
+        public async Task<ImageHomeStay> UpdateImageAsync(ImageHomeStay image)
+        {
+            return await _imageHomestayDao.UpdateImageAsync(image);
+        }
+
     }
 }
