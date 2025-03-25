@@ -250,26 +250,7 @@ namespace Service.Service
                         response);
                 }
 
-                // Nếu không có ImageHomeStayID, giữ logic hiện tại: xóa và thêm mới
-                if (request.DeleteExistingImages && existingImages != null && existingImages.Any())
-                {
-                    foreach (var image in existingImages)
-                    {
-                        // Xóa hình ảnh trên Cloudinary
-                        var publicId = ExtractPublicIdFromUrl(image.Image);
-                        if (!string.IsNullOrEmpty(publicId))
-                        {
-                            var deletionParams = new DeletionParams(publicId);
-                            await _cloudinary.DestroyAsync(deletionParams);
-                        }
-
-                        // Xóa hình ảnh khỏi cơ sở dữ liệu
-                        await _imageHomeStayRepository.DeleteImageAsync(image);
-                    }
-                    await _imageHomeStayRepository.SaveChangesAsync();
-                }
-
-                // Nếu có hình ảnh mới, upload lên Cloudinary và lưu vào cơ sở dữ liệu
+               
                 var newImages = new List<ImageHomeStay>();
                 if (request.Images != null && request.Images.Any())
                 {

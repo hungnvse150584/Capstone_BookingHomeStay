@@ -12,6 +12,6 @@ namespace Service.RequestAndResponse.Request.HomeStay
 
         public int? ImageHomeStayID { get; set; } 
         public List<IFormFile> Images { get; set; }
-        public bool DeleteExistingImages { get; set; }
+    
     }
 }

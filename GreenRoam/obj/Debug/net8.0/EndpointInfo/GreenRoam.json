@@ -1788,9 +1788,6 @@
                       "type": "string",
                       "format": "binary"
                     }
-                  },
-                  "DeleteExistingImages": {
-                    "type": "boolean"
                   }
                 }
               },
@@ -1799,9 +1796,6 @@
                   "style": "form"
                 },
                 "Images": {
-                  "style": "form"
-                },
-                "DeleteExistingImages": {
                   "style": "form"
                 }
               }
