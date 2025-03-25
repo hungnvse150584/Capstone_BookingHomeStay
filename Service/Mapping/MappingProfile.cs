@@ -113,8 +113,8 @@ namespace Service.Mapping
                  .ForMember(dest => dest.Rooms, opt => opt.Ignore());
             CreateMap<RoomTypes, CreateRoomTypeResponse>()
                 .ForMember(dest => dest.ImageRoomTypes, opt => opt.MapFrom(src => src.ImageRoomTypes))
-                .ForMember(dest => dest.Pricings, opt => opt.MapFrom(src => src.Prices))
-                .ForMember(dest => dest.Rooms, opt => opt.MapFrom(src => src.Rooms));
+                .ForMember(dest => dest.Pricings, opt => opt.MapFrom(src => src.Prices));
+                //.ForMember(dest => dest.Rooms, opt => opt.MapFrom(src => src.Rooms));
             CreateMap<ImageRoomTypes, ImageRoomTypeResponse>();
             CreateMap<PricingForHomeStayRental, Pricing>()
                 .ForMember(dest => dest.PricingID, opt => opt.Ignore())
@@ -136,7 +136,7 @@ namespace Service.Mapping
                  .ForMember(dest => dest.BookingDetails, opt => opt.MapFrom(src => src.BookingDetails));
             // Ánh xạ cho RoomForRoomType -> Room
             CreateMap<CreateRoomRequest, Room>().ReverseMap();
-            CreateMap<Room, RoomResponse>();
+            //CreateMap<Room, RoomResponse>();
 
             CreateMap<GetAllRooms, Room>().ReverseMap();
             CreateMap<CreateRoomRequest, Room>().ReverseMap();

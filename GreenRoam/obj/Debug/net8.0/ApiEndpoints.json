@@ -1925,16 +1925,6 @@
         "IsRequired": false
       },
       {
-        "Name": "RoomsJson",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Rooms",
-        "Type": "System.Collections.Generic.List\u00601[[Service.RequestAndResponse.Request.Room.CreateRoomRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": false
-      },
-      {
         "Name": "homeStayRentalId",
         "Type": "System.Int32",
         "IsRequired": false

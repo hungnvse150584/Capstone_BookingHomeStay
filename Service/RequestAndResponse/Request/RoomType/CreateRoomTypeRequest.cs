@@ -24,8 +24,8 @@ namespace Service.RequestAndResponse.Request.RoomType
         public List<IFormFile> Images { get; set; }
         public string? PricingJson { get; set; } 
         public List<PricingForHomeStayRental> Pricing { get; set; } 
-        public string? RoomsJson { get; set; }
-        public List<CreateRoomRequest> Rooms { get; set; } 
+        //public string? RoomsJson { get; set; }
+        //public List<CreateRoomRequest> Rooms { get; set; } 
        
 
         // DTO cho Room
