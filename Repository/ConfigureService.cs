@@ -33,6 +33,7 @@ namespace Repository
             services.AddScoped<IBookingRepository, BookingRepository>();
             services.AddScoped<IBookingDetailRepository, BookingDetailRepository>();
             services.AddScoped<IBookingServiceRepository, BookingServiceRepository>();
+            services.AddScoped<IBookingServiceDetailRepository, BookingServiceDetailRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IImageHomeStayRepository, ImageHomeStayRepository>();
 
@@ -63,6 +64,7 @@ namespace Repository
             services.AddScoped<CancellationPolicyDAO>();
             services.AddScoped<BookingDAO>();
             services.AddScoped<BookingDetailDAO>();
+            services.AddScoped<BookingServiceDetailDAO>();
             services.AddScoped<BookingServicesDAO>();
             services.AddScoped<ReviewDAO>();
             services.AddScoped<NotificationDAO>();

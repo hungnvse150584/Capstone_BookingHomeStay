@@ -30,6 +30,7 @@ namespace Service.Service
         private readonly IRoomRepository _roomRepository;
         private readonly ICommissionRateRepository _commissionRateRepository;
         private readonly IBookingDetailRepository _bookingDetailRepository;
+        private readonly IBookingServiceDetailRepository _bookingServiceDetailRepository;
 
 
         public BookingService(IMapper mapper, IBookingRepository bookingRepository,
@@ -40,7 +41,8 @@ namespace Service.Service
                               IRoomRepository roomRepository,
                               IPricingRepository pricingRepository,
                               ICommissionRateRepository commissionRateRepository, 
-                              IBookingDetailRepository bookingDetailRepository)
+                              IBookingDetailRepository bookingDetailRepository, 
+                              IBookingServiceDetailRepository bookingServiceDetailRepository)
         {
             _mapper = mapper;
             _bookingRepository = bookingRepository;
@@ -52,6 +54,7 @@ namespace Service.Service
             _pricingRepository = pricingRepository;
             _commissionRateRepository = commissionRateRepository;
             _bookingDetailRepository = bookingDetailRepository;
+            _bookingServiceDetailRepository = bookingServiceDetailRepository;
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllBookings>>> GetAllBooking(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
@@ -206,6 +209,20 @@ namespace Service.Service
                     AccountID = createBookingRequest.AccountID,
                     BookingServicesDetails = new List<BookingServicesDetail>()
                 };
+
+                var duplicateService = createBookingRequest.BookingOfServices.BookingServicesDetails
+                                        .GroupBy(d => d.ServicesID)
+                                        .Where(g => g.Count() > 1)
+                                        .Select(g => g.Key)
+                                        .FirstOrDefault();
+
+                if (duplicateService != 0) // Nếu có service trùng nhau
+                {
+                    return new BaseResponse<Booking>(
+                        $"Service with ID {duplicateService} is duplicated. Please choose different services or adjust the quantity.",
+                        StatusCodeEnum.Conflict_409, null);
+                }
+
                 foreach (var serviceDetailRequest in createBookingRequest.BookingOfServices.BookingServicesDetails)
                 {
                     var service = await _serviceRepository.GetByIdAsync(serviceDetailRequest.ServicesID);
@@ -672,11 +689,34 @@ namespace Service.Service
                     return new BaseResponse<UpdateBookingService>("This bookingservice was completed, cannot update more services!", StatusCodeEnum.Conflict_409, null);
             }
 
+            switch (existingBookingService.PaymentServiceStatus)
+            {
+                case PaymentServicesStatus.FullyPaid:
+                    return new BaseResponse<UpdateBookingService>("This bookingservice was paid, cannot update more services!", StatusCodeEnum.Conflict_409, null);
+                case PaymentServicesStatus.Deposited:
+                    return new BaseResponse<UpdateBookingService>("This bookingservice was paid the deposit, cannot update more services!", StatusCodeEnum.Conflict_409, null);
+                case PaymentServicesStatus.Refunded:
+                    return new BaseResponse<UpdateBookingService>("This bookingservice was refunded, cannot update more services!", StatusCodeEnum.Conflict_409, null);
+            }
+
 
 
             if (request.BookingServicesDetails == null || !request.BookingServicesDetails.Any())
             {
                 return new BaseResponse<UpdateBookingService>("No service details provided for update!", StatusCodeEnum.BadRequest_400, null);
+            }
+
+            var duplicateService = request.BookingServicesDetails
+                                    .GroupBy(d => d.ServicesID)
+                                    .Where(g => g.Count() > 1)
+                                    .Select(g => g.Key)
+                                    .FirstOrDefault();
+
+            if (duplicateService != 0) // Nếu có service trùng nhau
+            {
+                return new BaseResponse<UpdateBookingService>(
+                    $"Service with ID {duplicateService} is duplicated. Please choose different services or adjust the quantity.",
+                    StatusCodeEnum.Conflict_409, null);
             }
 
             foreach (var updatedServiceDetails in request.BookingServicesDetails)
@@ -696,9 +736,23 @@ namespace Service.Service
                 {
                     var existingDetail = existingBookingService.BookingServicesDetails
                         .FirstOrDefault(d => d.BookingServicesDetailID == updatedServiceDetails.ServiceDetailID.Value);
+                    
                     if (existingDetail == null)
                     {
                         return new BaseResponse<UpdateBookingService>($"Cannot find existing service detail with ID {updatedServiceDetails.ServiceDetailID}", StatusCodeEnum.BadRequest_400, null);
+                    }
+
+                    var updatedDetailIds = request.BookingServicesDetails
+                                        .Select(d => d.ServiceDetailID)
+                                        .Where(id => id.HasValue)
+                                        .Select(id => id.Value)
+                                        .ToList();
+
+                    var detailsToRemove = await _bookingServiceDetailRepository.GetBookingServiceDetailsToRemoveAsync(bookingServiceID, updatedDetailIds);
+
+                    if (detailsToRemove.Any())
+                    {
+                        await _bookingServiceDetailRepository.DeleteBookingServiceDetailAsync(detailsToRemove);
                     }
 
                     if (existingDetail != null)
