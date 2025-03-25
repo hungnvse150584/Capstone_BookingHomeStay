@@ -3269,15 +3269,6 @@
                     "items": {
                       "$ref": "#/components/schemas/PricingForHomeStayRental"
                     }
-                  },
-                  "RoomsJson": {
-                    "type": "string"
-                  },
-                  "Rooms": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/CreateRoomRequest"
-                    }
                   }
                 }
               },
@@ -3316,12 +3307,6 @@
                   "style": "form"
                 },
                 "Pricing": {
-                  "style": "form"
-                },
-                "RoomsJson": {
-                  "style": "form"
-                },
-                "Rooms": {
                   "style": "form"
                 }
               }

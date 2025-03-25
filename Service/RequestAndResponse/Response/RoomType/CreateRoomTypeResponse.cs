@@ -18,21 +18,21 @@ namespace Service.RequestAndResponse.Response.RoomType
         public ICollection<ImageRoomTypeResponse>? ImageRoomTypes { get; set; }
 
         public ICollection<PricingForHomeStayRental>? Pricings { get; set; } // Thêm Pricings
-        public ICollection<RoomResponse>? Rooms { get; set; } // Thêm Rooms
+        //public ICollection<RoomResponse>? Rooms { get; set; } // Thêm Rooms
     }
 
     // DTO cho Pricing trong response
    
     // DTO cho Room trong response
-    public class RoomResponse
-    {
+    //public class RoomResponse
+    //{
         
-        public string roomNumber { get; set; }
+    //    public string roomNumber { get; set; }
 
-        public bool isUsed { get; set; }
+    //    public bool isUsed { get; set; }
 
-        public bool isActive { get; set; }
+    //    public bool isActive { get; set; }
 
-        public int? RoomTypesID { get; set; }
-    }
+    //    public int? RoomTypesID { get; set; }
+    //}
 }

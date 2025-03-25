@@ -139,56 +139,56 @@ namespace Service.Service
                 }
 
                 // Xử lý Rooms: Ưu tiên RoomsJson
-                List<CreateRoomRequest> roomsList = null;
-                if (!string.IsNullOrEmpty(request.RoomsJson))
-                {
-                    var options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    };
+                //List<CreateRoomRequest> roomsList = null;
+                //if (!string.IsNullOrEmpty(request.RoomsJson))
+                //{
+                //    var options = new JsonSerializerOptions
+                //    {
+                //        PropertyNameCaseInsensitive = true
+                //    };
 
-                    Console.WriteLine("Processing RoomsJson...");
-                    Console.WriteLine($"RoomsJson: {request.RoomsJson}");
+                //    Console.WriteLine("Processing RoomsJson...");
+                //    Console.WriteLine($"RoomsJson: {request.RoomsJson}");
 
-                    if (request.RoomsJson.TrimStart().StartsWith("["))
-                    {
-                        roomsList = JsonSerializer.Deserialize<List<CreateRoomRequest>>(request.RoomsJson, options);
-                    }
-                    else
-                    {
-                        var singleRoom = JsonSerializer.Deserialize<CreateRoomRequest>(request.RoomsJson, options);
-                        roomsList = new List<CreateRoomRequest> { singleRoom };
-                    }
+                //    if (request.RoomsJson.TrimStart().StartsWith("["))
+                //    {
+                //        roomsList = JsonSerializer.Deserialize<List<CreateRoomRequest>>(request.RoomsJson, options);
+                //    }
+                //    else
+                //    {
+                //        var singleRoom = JsonSerializer.Deserialize<CreateRoomRequest>(request.RoomsJson, options);
+                //        roomsList = new List<CreateRoomRequest> { singleRoom };
+                //    }
 
-                    if (roomsList != null)
-                    {
-                        Console.WriteLine("Using Rooms from RoomsJson.");
-                        foreach (var room in roomsList)
-                        {
-                            Console.WriteLine($"Room from RoomsJson: roomNumber={room.roomNumber}, isUsed={room.isUsed}, isActive={room.isActive}, RoomTypesID={room.RoomTypesID}");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("roomsList is null after deserialize from RoomsJson.");
-                    }
-                }
-                else
-                {
-                    if (request.Rooms != null && request.Rooms.Any())
-                    {
-                        Console.WriteLine("Using Rooms directly from request.");
-                        roomsList = request.Rooms;
-                        foreach (var room in roomsList)
-                        {
-                            Console.WriteLine($"Room from request: roomNumber={room.roomNumber}, isUsed={room.isUsed}, isActive={room.isActive}, RoomTypesID={room.RoomTypesID}");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Both RoomsJson and Rooms are null or empty.");
-                    }
-                }
+                //    if (roomsList != null)
+                //    {
+                //        Console.WriteLine("Using Rooms from RoomsJson.");
+                //        foreach (var room in roomsList)
+                //        {
+                //            Console.WriteLine($"Room from RoomsJson: roomNumber={room.roomNumber}, isUsed={room.isUsed}, isActive={room.isActive}, RoomTypesID={room.RoomTypesID}");
+                //        }
+                //    }
+                //    else
+                //    {
+                //        Console.WriteLine("roomsList is null after deserialize from RoomsJson.");
+                //    }
+                //}
+                //else
+                //{
+                //    if (request.Rooms != null && request.Rooms.Any())
+                //    {
+                //        Console.WriteLine("Using Rooms directly from request.");
+                //        roomsList = request.Rooms;
+                //        foreach (var room in roomsList)
+                //        {
+                //            Console.WriteLine($"Room from request: roomNumber={room.roomNumber}, isUsed={room.isUsed}, isActive={room.isActive}, RoomTypesID={room.RoomTypesID}");
+                //        }
+                //    }
+                //    else
+                //    {
+                //        Console.WriteLine("Both RoomsJson and Rooms are null or empty.");
+                //    }
+                //}
 
                 var roomType = _mapper.Map<RoomTypes>(request);
                 roomType.CreateAt = DateTime.UtcNow;
@@ -227,20 +227,20 @@ namespace Service.Service
                 }
 
                 // Xử lý Rooms nếu có
-                var rooms = new List<Room>();
-                if (roomsList != null && roomsList.Any())
-                {
-                    Console.WriteLine("Saving Rooms...");
-                    foreach (var roomItem in roomsList)
-                    {
-                        var room = _mapper.Map<Room>(roomItem);
-                        room.RoomTypesID = roomType.RoomTypesID;
-                        rooms.Add(room);
-                        await _roomRepository.AddAsync(room);
-                    }
-                    await _roomRepository.SaveChangesAsync();
-                    Console.WriteLine("Rooms saved successfully.");
-                }
+                //var rooms = new List<Room>();
+                //if (roomsList != null && roomsList.Any())
+                //{
+                //    Console.WriteLine("Saving Rooms...");
+                //    foreach (var roomItem in roomsList)
+                //    {
+                //        var room = _mapper.Map<Room>(roomItem);
+                //        room.RoomTypesID = roomType.RoomTypesID;
+                //        rooms.Add(room);
+                //        await _roomRepository.AddAsync(room);
+                //    }
+                //    await _roomRepository.SaveChangesAsync();
+                //    Console.WriteLine("Rooms saved successfully.");
+                //}
 
                 // Upload hình ảnh nếu có
                 var imageRoomTypes = new List<ImageRoomTypes>();
@@ -269,7 +269,7 @@ namespace Service.Service
                 // Cập nhật các collection cho roomType để ánh xạ vào response
                 roomType.ImageRoomTypes = imageRoomTypes;
                 roomType.Prices = pricings;
-                roomType.Rooms = rooms;
+                //roomType.Rooms = rooms;
 
                 // Ánh xạ RoomTypes sang CreateRoomTypeResponse
                 var response = _mapper.Map<CreateRoomTypeResponse>(roomType);
