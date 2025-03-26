@@ -117,11 +117,11 @@ namespace Service.Service
                 StatusCodeEnum.OK_200, homeStays);
         }
 
-        public async Task<BaseResponse<HomeStayResponse>> GetHomeStayDetailByIdFromBase(int id)
+        public async Task<BaseResponse<SimpleHomeStayResponse>> GetHomeStayDetailByIdFromBase(int id)
         {
             HomeStay homeStay = await _homeStayRepository.GetHomeStayDetailByIdAsync(id);
-            var result = _mapper.Map<HomeStayResponse>(homeStay);
-            return new BaseResponse<HomeStayResponse>("Get HomeStay as base success", StatusCodeEnum.OK_200, result);
+            var result = _mapper.Map<SimpleHomeStayResponse>(homeStay);
+            return new BaseResponse<SimpleHomeStayResponse>("Get HomeStay as base success", StatusCodeEnum.OK_200, result);
         }
 
         public async Task<BaseResponse<HomeStayResponse>> GetOwnerHomeStayByIdFromBase(string accountId)

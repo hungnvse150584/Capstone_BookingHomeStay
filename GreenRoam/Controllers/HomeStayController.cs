@@ -37,8 +37,8 @@ namespace GreenRoam.Controllers
         }
 
         [HttpGet]
-        [Route("GetRegisterHomeStay/{id}")]
-        public async Task<ActionResult<BaseResponse<HomeStayResponse>>> GetHomeStayDetailById(int id)
+        [Route("GetHomeStayDetail/{id}")]
+        public async Task<ActionResult<BaseResponse<SimpleHomeStayResponse>>> GetHomeStayDetailById(int id)
         {
             if (id == 0 || id == null)
             {

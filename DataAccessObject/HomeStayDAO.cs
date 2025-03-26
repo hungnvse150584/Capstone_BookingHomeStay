@@ -58,6 +58,11 @@ namespace DataAccessObject
             }
             var entity = await _context.Set<HomeStay>()
                         .Include(c => c.Account)
+                        .Include(h => h.Reports)
+                         .Include(h => h.ImageHomeStays)
+                          .Include(h => h.CultureExperiences)
+                          .Include(h => h.Services)
+               .Include(h => h.Ratings)
                .SingleOrDefaultAsync(c => c.HomeStayID == id);
             if (entity == null)
             {
