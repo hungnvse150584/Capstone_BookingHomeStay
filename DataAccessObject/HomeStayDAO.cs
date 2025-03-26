@@ -92,7 +92,14 @@ namespace DataAccessObject
             }
             return entity;
         }
-
+        public async Task<IEnumerable<HomeStay>> GetAllWithDetailsAsync()
+        {
+            return await _context.HomeStays
+                .Include(h => h.HomeStayRentals)
+                .Include(h => h.Bookings)
+                    .ThenInclude(b => b.BookingDetails)
+                .ToListAsync();
+        }
         public async Task<HomeStay> GetOwnerHomeStayByIdAsync(string accountId)
         {
             if (string.IsNullOrEmpty(accountId))

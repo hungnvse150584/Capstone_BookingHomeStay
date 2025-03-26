@@ -1,5 +1,6 @@
 ﻿using BusinessObject.Model;
 using DataAccessObject;
+using Microsoft.EntityFrameworkCore;
 using Repository.BaseRepository;
 using Repository.IRepositories;
 using System;
@@ -84,6 +85,10 @@ namespace Repository.Repositories
         public async Task SaveChangesAsync()
         {
             await _homestayDao.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<HomeStay>> GetAllWithDetailsAsync()
+        {
+            return await _homestayDao.GetAllWithDetailsAsync();
         }
     }
 }

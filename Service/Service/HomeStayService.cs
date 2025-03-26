@@ -454,7 +454,114 @@ namespace Service.Service
             }
         }
 
+        public async Task<BaseResponse<IEnumerable<HomeStayResponse>>> FilterHomeStaysAsync(FilterHomeStayRequest request)
+        {
+            try
+            {
+             
+                if (request.CheckInDate >= request.CheckOutDate)
+                {
+                    return new BaseResponse<IEnumerable<HomeStayResponse>>(
+                        "Check-out date must be after check-in date.",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
 
+                if (request.CheckInDate < DateTime.UtcNow.Date)
+                {
+                    return new BaseResponse<IEnumerable<HomeStayResponse>>(
+                        "Check-in date cannot be in the past.",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
+
+         
+                var checkInDate = request.CheckInDate.Date;
+                var checkOutDate = request.CheckOutDate.Date;
+
+                
+                var allHomeStays = await _homeStayRepository.GetAllWithDetailsAsync();
+
+                var filteredHomeStays = new List<HomeStay>();
+                foreach (var homeStay in allHomeStays)
+                {
+                  
+                    bool isCapacitySuitable = false;
+                    foreach (var rental in homeStay.HomeStayRentals ?? new List<HomeStayRentals>())
+                    {
+                        if (rental.MaxAdults >= request.NumberOfAdults &&
+                            rental.MaxChildren >= request.NumberOfChildren &&
+                            rental.MaxPeople >= (request.NumberOfAdults + request.NumberOfChildren))
+                        {
+                            isCapacitySuitable = true;
+                            break;
+                        }
+                    }
+
+                    if (!isCapacitySuitable)
+                    {
+                        Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is excluded due to insufficient capacity.");
+                        continue; 
+                    }
+
+                  
+                    bool isAvailable = true;
+                    var activeBookings = homeStay.Bookings?
+                        .Where(b => b.Status == BookingStatus.Pending ||
+                                    b.Status == BookingStatus.Confirmed ||
+                                    b.Status == BookingStatus.InProgress)
+                        .ToList() ?? new List<Booking>();
+
+                    foreach (var booking in activeBookings)
+                    {
+                        foreach (var detail in booking.BookingDetails ?? new List<BookingDetail>())
+                        {
+                           
+                            var detailCheckInDate = detail.CheckInDate.Date;
+                            var detailCheckOutDate = detail.CheckOutDate.Date;
+
+
+                            Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, BookingDetailID: {detail.BookingDetailID}, " +
+                                              $"CheckIn: {detailCheckInDate:yyyy-MM-dd}, CheckOut: {detailCheckOutDate:yyyy-MM-dd}, " +
+                                              $"Request CheckIn: {checkInDate:yyyy-MM-dd}, Request CheckOut: {checkOutDate:yyyy-MM-dd}");
+
+                          
+                            if (detail.HomeStayRentalID.HasValue &&
+                                homeStay.HomeStayRentals.Any(r => r.HomeStayRentalID == detail.HomeStayRentalID) &&
+                                detailCheckInDate <= checkOutDate &&
+                                detailCheckOutDate >= checkInDate)
+                            {
+                                isAvailable = false;
+                                Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is not available due to overlapping booking.");
+                                break;
+                            }
+                        }
+                        if (!isAvailable) break;
+                    }
+
+                    if (isAvailable)
+                    {
+                        filteredHomeStays.Add(homeStay);
+                        Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is available and added to filtered list.");
+                    }
+                }
+
+                // Ánh xạ sang HomeStayResponse
+                var response = _mapper.Map<IEnumerable<HomeStayResponse>>(filteredHomeStays);
+
+                return new BaseResponse<IEnumerable<HomeStayResponse>>(
+                    filteredHomeStays.Any() ? "HomeStays filtered successfully!" : "No HomeStays available for the given criteria.",
+                    StatusCodeEnum.OK_200,
+                    response);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<IEnumerable<HomeStayResponse>>(
+                    $"An error occurred while filtering HomeStays: {ex.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
+            }
+        }
 
     }
 }
