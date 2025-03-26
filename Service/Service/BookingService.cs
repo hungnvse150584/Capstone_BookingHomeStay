@@ -30,6 +30,7 @@ namespace Service.Service
         private readonly IRoomRepository _roomRepository;
         private readonly ICommissionRateRepository _commissionRateRepository;
         private readonly IBookingDetailRepository _bookingDetailRepository;
+        private readonly IBookingServiceDetailRepository _bookingServiceDetailRepository;
 
 
         public BookingService(IMapper mapper, IBookingRepository bookingRepository,
@@ -40,7 +41,8 @@ namespace Service.Service
                               IRoomRepository roomRepository,
                               IPricingRepository pricingRepository,
                               ICommissionRateRepository commissionRateRepository, 
-                              IBookingDetailRepository bookingDetailRepository)
+                              IBookingDetailRepository bookingDetailRepository, 
+                              IBookingServiceDetailRepository bookingServiceDetailRepository)
         {
             _mapper = mapper;
             _bookingRepository = bookingRepository;
@@ -52,6 +54,7 @@ namespace Service.Service
             _pricingRepository = pricingRepository;
             _commissionRateRepository = commissionRateRepository;
             _bookingDetailRepository = bookingDetailRepository;
+            _bookingServiceDetailRepository = bookingServiceDetailRepository;
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllBookings>>> GetAllBooking(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
@@ -206,6 +209,20 @@ namespace Service.Service
                     AccountID = createBookingRequest.AccountID,
                     BookingServicesDetails = new List<BookingServicesDetail>()
                 };
+
+                var duplicateService = createBookingRequest.BookingOfServices.BookingServicesDetails
+                                        .GroupBy(d => d.ServicesID)
+                                        .Where(g => g.Count() > 1)
+                                        .Select(g => g.Key)
+                                        .FirstOrDefault();
+
+                if (duplicateService != 0) // Nếu có service trùng nhau
+                {
+                    return new BaseResponse<Booking>(
+                        $"Service with ID {duplicateService} is duplicated. Please choose different services or adjust the quantity.",
+                        StatusCodeEnum.Conflict_409, null);
+                }
+
                 foreach (var serviceDetailRequest in createBookingRequest.BookingOfServices.BookingServicesDetails)
                 {
                     var service = await _serviceRepository.GetByIdAsync(serviceDetailRequest.ServicesID);
@@ -539,28 +556,6 @@ namespace Service.Service
             var bookingExist = await _bookingRepository.GetBookingByIdAsync(bookingServiceRequest.BookingID);
             if (bookingExist == null)
             {
-                /*if (bookingExist.Status == BookingStatus.Cancelled)
-                {
-                    return new BaseResponse<BookingServices>("This Booking was canceled, cannot add more services!",
-                    StatusCodeEnum.Conflict_409, null);
-                }
-                if (bookingExist.Status == BookingStatus.Completed)
-                {
-                    return new BaseResponse<BookingServices>("This Booking was completed, cannot add more services!",
-                    StatusCodeEnum.Conflict_409, null);
-                }
-                if (bookingExist.Status == BookingStatus.ReturnRefund)
-                {
-                    return new BaseResponse<BookingServices>("This Booking was refunded, cannot add more services!",
-                    StatusCodeEnum.Conflict_409, null);
-                }
-                if (bookingExist.Status == BookingStatus.RequestReturn)
-                {
-                    return new BaseResponse<BookingServices>("You are trying to take the refund of this booking, cannot add more services!",
-                    StatusCodeEnum.Conflict_409, null);
-                }*/
-
-
                 return new BaseResponse<BookingServices>("Cannot Find any Booking!",
                     StatusCodeEnum.NotFound_404, null);
             }
@@ -597,6 +592,8 @@ namespace Service.Service
                 AccountID = bookingServiceRequest.AccountID,
                 BookingID = bookingServiceRequest.BookingID,
                 Status = BookingServicesStatus.Pending,
+                PaymentServiceStatus = PaymentServicesStatus.Pending,
+                PaymentServicesMethod = paymentServicesMethod == PaymentServicesMethod.Cod ? PaymentServicesMethod.Cod : PaymentServicesMethod.VnPay,
                 BookingServicesDetails = new List<BookingServicesDetail>()
             };
             foreach (var serviceDetailRequest in bookingServiceRequest.BookingServicesDetails)
@@ -623,7 +620,23 @@ namespace Service.Service
                 };
                 bookingServices.BookingServicesDetails.Add(bookingServiceDetail);
             }
-            bookingServices.Total = bookingServices.BookingServicesDetails.Sum(detail => detail.TotalAmount);
+            var commissionrate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingExist.HomeStayID);
+            if (commissionrate == null)
+            {
+                return new BaseResponse<BookingServices>("Cannot find the HomeStay Commission, please try again!",
+                            StatusCodeEnum.Conflict_409, null);
+            }
+            if (commissionrate.PlatformShare <= 0 || commissionrate.PlatformShare > 1)
+            {
+                return new BaseResponse<BookingServices>("Invalid PlatformShare value, please check commission settings!",
+                            StatusCodeEnum.Conflict_409, null);
+            }
+            var totalAmount = bookingServices.BookingServicesDetails.Sum(detail => detail.TotalAmount);
+            var deposit = commissionrate.PlatformShare * totalAmount;
+            var remaining = totalAmount - deposit;
+            bookingServices.Total = totalAmount;
+            bookingServices.bookingServiceDeposit = deposit;
+            bookingServices.remainingBalance = remaining;
             await _bookingServiceRepository.AddBookingServicesAsync(bookingServices);
             return new BaseResponse<BookingServices>("Booking Services Successfully!!!", StatusCodeEnum.Created_201, bookingServices);
         }
@@ -668,9 +681,42 @@ namespace Service.Service
                 return new BaseResponse<UpdateBookingService>("This booking service is not eligible for updates!", StatusCodeEnum.Conflict_409, null);
             }
 
+            switch (existingBookingService.Status)
+            {
+                case BookingServicesStatus.Cancelled:
+                    return new BaseResponse<UpdateBookingService>("This bookingservice was canceled, cannot update more services!", StatusCodeEnum.Conflict_409, null);
+                case BookingServicesStatus.Completed:
+                    return new BaseResponse<UpdateBookingService>("This bookingservice was completed, cannot update more services!", StatusCodeEnum.Conflict_409, null);
+            }
+
+            switch (existingBookingService.PaymentServiceStatus)
+            {
+                case PaymentServicesStatus.FullyPaid:
+                    return new BaseResponse<UpdateBookingService>("This bookingservice was paid, cannot update more services!", StatusCodeEnum.Conflict_409, null);
+                case PaymentServicesStatus.Deposited:
+                    return new BaseResponse<UpdateBookingService>("This bookingservice was paid the deposit, cannot update more services!", StatusCodeEnum.Conflict_409, null);
+                case PaymentServicesStatus.Refunded:
+                    return new BaseResponse<UpdateBookingService>("This bookingservice was refunded, cannot update more services!", StatusCodeEnum.Conflict_409, null);
+            }
+
+
+
             if (request.BookingServicesDetails == null || !request.BookingServicesDetails.Any())
             {
                 return new BaseResponse<UpdateBookingService>("No service details provided for update!", StatusCodeEnum.BadRequest_400, null);
+            }
+
+            var duplicateService = request.BookingServicesDetails
+                                    .GroupBy(d => d.ServicesID)
+                                    .Where(g => g.Count() > 1)
+                                    .Select(g => g.Key)
+                                    .FirstOrDefault();
+
+            if (duplicateService != 0) // Nếu có service trùng nhau
+            {
+                return new BaseResponse<UpdateBookingService>(
+                    $"Service with ID {duplicateService} is duplicated. Please choose different services or adjust the quantity.",
+                    StatusCodeEnum.Conflict_409, null);
             }
 
             foreach (var updatedServiceDetails in request.BookingServicesDetails)
@@ -690,15 +736,29 @@ namespace Service.Service
                 {
                     var existingDetail = existingBookingService.BookingServicesDetails
                         .FirstOrDefault(d => d.BookingServicesDetailID == updatedServiceDetails.ServiceDetailID.Value);
+                    
                     if (existingDetail == null)
                     {
                         return new BaseResponse<UpdateBookingService>($"Cannot find existing service detail with ID {updatedServiceDetails.ServiceDetailID}", StatusCodeEnum.BadRequest_400, null);
                     }
 
+                    var updatedDetailIds = request.BookingServicesDetails
+                                        .Select(d => d.ServiceDetailID)
+                                        .Where(id => id.HasValue)
+                                        .Select(id => id.Value)
+                                        .ToList();
+
+                    var detailsToRemove = await _bookingServiceDetailRepository.GetBookingServiceDetailsToRemoveAsync(bookingServiceID, updatedDetailIds);
+
+                    if (detailsToRemove.Any())
+                    {
+                        await _bookingServiceDetailRepository.DeleteBookingServiceDetailAsync(detailsToRemove);
+                    }
+
                     if (existingDetail != null)
                     {
                         existingDetail.Quantity = updatedServiceDetails.Quantity;
-                        existingDetail.unitPrice = service.UnitPrice;
+                        existingDetail.unitPrice = service.servicesPrice;
                         existingDetail.TotalAmount = updatedServiceDetails.Quantity * service.UnitPrice;
                         existingDetail.ServicesID = updatedServiceDetails.ServicesID;
                     }
@@ -718,14 +778,30 @@ namespace Service.Service
                     existingBookingService.BookingServicesDetails.Add(new BookingServicesDetail
                     {
                         ServicesID = updatedServiceDetails.ServicesID,
-                        unitPrice = service.UnitPrice,
+                        unitPrice = service.servicesPrice,
                         Quantity = updatedServiceDetails.Quantity,
                         TotalAmount = updatedServiceDetails.Quantity * service.UnitPrice,
                     });
                 }
             }
+            var commissionrate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingExist.HomeStayID);
+            if (commissionrate == null)
+            {
+                return new BaseResponse<UpdateBookingService>("Cannot find the HomeStay Commission, please try again!",
+                            StatusCodeEnum.Conflict_409, null);
+            }
+            if (commissionrate.PlatformShare <= 0 || commissionrate.PlatformShare > 1)
+            {
+                return new BaseResponse<UpdateBookingService>("Invalid PlatformShare value, please check commission settings!",
+                            StatusCodeEnum.Conflict_409, null);
+            }
 
-            existingBookingService.Total = existingBookingService.BookingServicesDetails.Sum(detail => detail.TotalAmount);
+            var totalAmount = existingBookingService.BookingServicesDetails.Sum(detail => detail.TotalAmount);
+            var deposit = commissionrate.PlatformShare * totalAmount;
+            var remaining = totalAmount - deposit;
+            existingBookingService.Total = totalAmount;
+            existingBookingService.bookingServiceDeposit = deposit;
+            existingBookingService.remainingBalance = remaining;
 
             await _bookingServiceRepository.UpdateBookingServicesAsync(existingBookingService);
 

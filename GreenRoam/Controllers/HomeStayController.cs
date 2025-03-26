@@ -69,7 +69,18 @@ namespace GreenRoam.Controllers
             return StatusCode((int)response.StatusCode, response);
         }
 
-     
+        [HttpGet]
+        [Route("GetNearestHomeStay")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<SimpleHomeStayResponse>>>> GetNearestHomeStays(double userLat, double userLon, int pageIndex = 1, int pageSize = 5)
+        {
+            if(userLat <= 0 || userLon <= 0)
+            {
+                return BadRequest("Please Input userLat, userLon!");
+            }
+            var response = await _homestayService.GetNearestHomeStays(userLat, userLon, pageIndex, pageSize);
+            return Ok(response);
+        }
+
         [HttpPost]
         [Route("CreateHomeStay")]
         public async Task<ActionResult<BaseResponse<List<HomeStay>>>> RegisterHomeStay([FromForm] CreateHomeStayRequest request)
