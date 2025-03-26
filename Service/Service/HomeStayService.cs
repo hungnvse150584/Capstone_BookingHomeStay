@@ -454,7 +454,40 @@ namespace Service.Service
             }
         }
 
+        /*public async Task<BaseResponse<IEnumerable<SimpleHomeStayResponse>>> GetNearestHomeStays(double userLat, double userLon, int topN = 5)
+        {
+            IEnumerable<HomeStay> homeStay = await _homeStayRepository.GetNearestHomeStaysAsync(userLat,userLon,topN);
+            if (homeStay == null)
+            {
+                return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            var homeStays = _mapper.Map<IEnumerable<SimpleHomeStayResponse>>(homeStay);
+            if (homeStays == null)
+            {
+                return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("Get all HomeStay as base success",
+                StatusCodeEnum.OK_200, homeStays);
+        }*/
 
-
+        public async Task<BaseResponse<IEnumerable<SimpleHomeStayResponse>>> GetNearestHomeStays(double userLat, double userLon, int pageIndex = 1, int pageSize = 5)
+        {
+            IEnumerable<HomeStay> homeStay = await _homeStayRepository.GetNearestHomeStaysAsync(userLat, userLon, pageIndex, pageSize);
+            if (homeStay == null)
+            {
+                return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            var homeStays = _mapper.Map<IEnumerable<SimpleHomeStayResponse>>(homeStay);
+            if (homeStays == null)
+            {
+                return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("Get all HomeStay as base success",
+                StatusCodeEnum.OK_200, homeStays);
+        }
     }
 }

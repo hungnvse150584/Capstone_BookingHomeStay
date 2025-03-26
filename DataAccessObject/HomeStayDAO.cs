@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Model;
+using BusinessObject.PaginatedLists;
 using DataAccessObject.BaseDAO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,6 +14,7 @@ namespace DataAccessObject
     public class HomeStayDAO : BaseDAO<HomeStay>
     {
         private readonly GreenRoamContext _context;
+        private const double EarthRadiusKm = 6371; // Bán kính trái đất (km)
         public HomeStayDAO(GreenRoamContext context) : base(context)
         {
             _context = context;
@@ -113,5 +115,59 @@ namespace DataAccessObject
         {
 
         }*/
+
+        public async Task<IEnumerable<HomeStay>> GetNearestHomeStaysAsync(double userLat, double userLon, int pageIndex = 1, int pageSize = 5)
+        {
+            /*return await Task.Run(() =>
+            {
+                return _context.HomeStays
+                    .AsEnumerable() // Chuyển sang xử lý trên RAM
+                    .Select(hs => new
+                    {
+                        HomeStay = hs,
+                        Distance = CalculateHaversineDistance(userLat, userLon, hs.Latitude, hs.Longitude)
+                    })
+                    .OrderBy(hs => hs.Distance)
+                    .Take(topN)
+                    .Select(hs => hs.HomeStay);
+            });*/
+
+            IQueryable<HomeStay> query = _context.HomeStays
+                                        .Include(hs => hs.Account)
+                                        .Include(hs => hs.ImageHomeStays)
+                                        .Include(hs => hs.Ratings);
+
+            var homeStaysWithDistance = query
+                .AsEnumerable() // Chuyển sang xử lý trên RAM
+                .Select(hs => new
+                {
+                    HomeStay = hs,
+                    Distance = CalculateHaversineDistance(userLat, userLon, hs.Latitude, hs.Longitude)
+                })
+                .OrderBy(hs => hs.Distance)
+                .Select(hs => hs.HomeStay)
+                .AsQueryable(); // Chuyển về IQueryable để hỗ trợ phân trang
+
+            return PaginatedList<HomeStay>.Create(homeStaysWithDistance, pageIndex, pageSize);
+        }
+
+        private double CalculateHaversineDistance(double lat1, double lon1, double lat2, double lon2)
+        {
+            double dLat = DegreesToRadians(lat2 - lat1);
+            double dLon = DegreesToRadians(lon2 - lon1);
+
+            double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                       Math.Cos(DegreesToRadians(lat1)) * Math.Cos(DegreesToRadians(lat2)) *
+                       Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+            return EarthRadiusKm * c; // Khoảng cách tính bằng km
+        }
+
+        private double DegreesToRadians(double degrees)
+        {
+            return degrees * (Math.PI / 180);
+        }
     }
 }
