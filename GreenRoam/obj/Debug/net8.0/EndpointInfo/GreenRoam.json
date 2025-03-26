@@ -484,6 +484,85 @@
         }
       }
     },
+    "/api/booking-bookingservices/GetBookingByHomeStay/{homeStayID}": {
+      "get": {
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "name": "homeStayID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllBookingsIEnumerableBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllBookingsIEnumerableBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllBookingsIEnumerableBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/booking-bookingservices/GetBookingByAccountID/{accountId}": {
+      "get": {
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllBookingsIEnumerableBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllBookingsIEnumerableBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllBookingsIEnumerableBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/booking-bookingservices/adminDashBoard/GetStaticBookings": {
       "get": {
         "tags": [
@@ -1520,6 +1599,71 @@
         }
       }
     },
+    "/api/homestay/GetNearestHomeStay": {
+      "get": {
+        "tags": [
+          "HomeStay"
+        ],
+        "parameters": [
+          {
+            "name": "userLat",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "userLon",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "pageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleHomeStayResponseIEnumerableBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleHomeStayResponseIEnumerableBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleHomeStayResponseIEnumerableBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/homestay/CreateHomeStay": {
       "post": {
         "tags": [
@@ -1972,7 +2116,6 @@
           {
             "name": "CheckInDate",
             "in": "query",
-            "required": true,
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -1981,7 +2124,6 @@
           {
             "name": "CheckOutDate",
             "in": "query",
-            "required": true,
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -1990,10 +2132,9 @@
           {
             "name": "NumberOfAdults",
             "in": "query",
-            "required": true,
             "schema": {
               "maximum": 2147483647,
-              "minimum": 1,
+              "minimum": 0,
               "type": "integer",
               "format": "int32"
             }
@@ -2001,7 +2142,6 @@
           {
             "name": "NumberOfChildren",
             "in": "query",
-            "required": true,
             "schema": {
               "maximum": 2147483647,
               "minimum": 0,

@@ -459,8 +459,7 @@ namespace Service.Service
         {
             try
             {
-             
-                if (request.CheckInDate >= request.CheckOutDate)
+                if (request.CheckInDate > request.CheckOutDate)
                 {
                     return new BaseResponse<IEnumerable<HomeStayResponse>>(
                         "Check-out date must be after check-in date.",
@@ -476,17 +475,22 @@ namespace Service.Service
                         null);
                 }
 
-         
                 var checkInDate = request.CheckInDate.Date;
                 var checkOutDate = request.CheckOutDate.Date;
 
-                
                 var allHomeStays = await _homeStayRepository.GetAllWithDetailsAsync();
 
                 var filteredHomeStays = new List<HomeStay>();
                 foreach (var homeStay in allHomeStays)
                 {
-                  
+                    // Kiểm tra trạng thái của HomeStay
+                    if ((int)homeStay.Status != (int)HomeStayStatus.Accepted)
+                    {
+                        Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is excluded due to status: {homeStay.Status}.");
+                        continue;
+                    }
+                   
+
                     bool isCapacitySuitable = false;
                     foreach (var rental in homeStay.HomeStayRentals ?? new List<HomeStayRentals>())
                     {
@@ -502,10 +506,9 @@ namespace Service.Service
                     if (!isCapacitySuitable)
                     {
                         Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is excluded due to insufficient capacity.");
-                        continue; 
+                        continue;
                     }
 
-                  
                     bool isAvailable = true;
                     var activeBookings = homeStay.Bookings?
                         .Where(b => b.Status == BookingStatus.Pending ||
@@ -517,16 +520,13 @@ namespace Service.Service
                     {
                         foreach (var detail in booking.BookingDetails ?? new List<BookingDetail>())
                         {
-                           
                             var detailCheckInDate = detail.CheckInDate.Date;
                             var detailCheckOutDate = detail.CheckOutDate.Date;
-
 
                             Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, BookingDetailID: {detail.BookingDetailID}, " +
                                               $"CheckIn: {detailCheckInDate:yyyy-MM-dd}, CheckOut: {detailCheckOutDate:yyyy-MM-dd}, " +
                                               $"Request CheckIn: {checkInDate:yyyy-MM-dd}, Request CheckOut: {checkOutDate:yyyy-MM-dd}");
 
-                          
                             if (detail.HomeStayRentalID.HasValue &&
                                 homeStay.HomeStayRentals.Any(r => r.HomeStayRentalID == detail.HomeStayRentalID) &&
                                 detailCheckInDate <= checkOutDate &&
@@ -547,7 +547,6 @@ namespace Service.Service
                     }
                 }
 
-                // Ánh xạ sang HomeStayResponse
                 var response = _mapper.Map<IEnumerable<HomeStayResponse>>(filteredHomeStays);
 
                 return new BaseResponse<IEnumerable<HomeStayResponse>>(
