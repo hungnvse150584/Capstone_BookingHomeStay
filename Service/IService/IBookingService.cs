@@ -19,7 +19,8 @@ namespace Service.IService
         Task<BaseResponse<IEnumerable<GetAllBookings>>> GetAllBooking(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null);
         Task<BaseResponse<UpdateBookingRequest>> UpdateBooking(int bookingID, UpdateBookingRequest request);
         Task<BaseResponse<UpdateBookingService>> UpdateBookingServices(int bookingServiceID, UpdateBookingService request);
-
+        Task<BaseResponse<IEnumerable<GetAllBookings>>> GetBookingsByHomeStayId(int homeStayID);
+        Task<BaseResponse<IEnumerable<GetAllBookings>>> GetBookingsByAccountId(string accountId);
         //For Admin DashBoard
         Task<BaseResponse<GetStaticBookings>> GetStaticBookings();
         Task<BaseResponse<GetTopHomeStayBookingInMonth>> GetTopHomeStayBookingInMonth();

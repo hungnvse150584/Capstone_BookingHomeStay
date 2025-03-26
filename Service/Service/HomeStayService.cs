@@ -454,7 +454,7 @@ namespace Service.Service
             }
         }
 
-<<<<<<< HEAD
+
         public async Task<BaseResponse<IEnumerable<HomeStayResponse>>> FilterHomeStaysAsync(FilterHomeStayRequest request)
         {
             try
@@ -564,7 +564,7 @@ namespace Service.Service
             }
         }
 
-=======
+
         /*public async Task<BaseResponse<IEnumerable<SimpleHomeStayResponse>>> GetNearestHomeStays(double userLat, double userLon, int topN = 5)
         {
             IEnumerable<HomeStay> homeStay = await _homeStayRepository.GetNearestHomeStaysAsync(userLat,userLon,topN);
@@ -600,6 +600,5 @@ namespace Service.Service
             return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("Get all HomeStay as base success",
                 StatusCodeEnum.OK_200, homeStays);
         }
->>>>>>> main
     }
 }

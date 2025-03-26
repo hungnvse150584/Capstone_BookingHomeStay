@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Model;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Mvc;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
@@ -6,6 +7,7 @@ using Service.RequestAndResponse.Request.Booking;
 using Service.RequestAndResponse.Request.BookingServices;
 using Service.RequestAndResponse.Response.Bookings;
 using Service.Service;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GreenRoam.Controllers
 {
@@ -26,6 +28,23 @@ namespace GreenRoam.Controllers
             var bookings = await _bookingService.GetAllBooking(search, date, status);
             return Ok(bookings);
         }
+
+        [HttpGet]
+        [Route("GetBookingByHomeStay/{homeStayID}")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllBookings>>>> GetBookingsByHomeStayId(int homeStayID)
+        {
+            var bookings = await _bookingService.GetBookingsByHomeStayId(homeStayID);
+            return Ok(bookings);
+        }
+
+        [HttpGet]
+        [Route("GetBookingByAccountID/{accountId}")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllBookings>>>> GetBookingsByAccountId(string accountId)
+        {
+            var bookings = await _bookingService.GetBookingsByAccountId(accountId);
+            return Ok(bookings);
+        }
+
 
 
         [HttpGet("adminDashBoard/GetStaticBookings")]

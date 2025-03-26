@@ -59,6 +59,14 @@ namespace DataAccessObject
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Booking>> GetBookingsByHomeStayId(int homeStayID)
+        {
+            return await _context.Bookings
+                .Include(b => b.BookingDetails)
+                .Where(b => b.HomeStayID == homeStayID)
+                .ToListAsync();
+        }
+
         public async Task<Booking?> GetBookingStatusByAccountId(string accountId)
         {
             return await _context.Bookings

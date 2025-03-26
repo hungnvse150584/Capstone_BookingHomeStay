@@ -77,30 +77,30 @@ namespace Repository.Repositories
             return await _homestayDao.GetHomeStayDetailByIdAsync(id);
         }
 
-        public  async Task<HomeStay> GetOwnerHomeStayByIdAsync(string accountId)
+        public async Task<HomeStay> GetOwnerHomeStayByIdAsync(string accountId)
         {
-           return await _homestayDao.GetOwnerHomeStayByIdAsync(accountId);
+            return await _homestayDao.GetOwnerHomeStayByIdAsync(accountId);
         }
 
         public async Task SaveChangesAsync()
         {
             await _homestayDao.SaveChangesAsync();
         }
-<<<<<<< HEAD
+
         public async Task<IEnumerable<HomeStay>> GetAllWithDetailsAsync()
         {
             return await _homestayDao.GetAllWithDetailsAsync();
-=======
-
+            
+        }
         /*public async Task<IEnumerable<HomeStay>> GetNearestHomeStaysAsync(double userLat, double userLon, int topN = 5)
-        {
-            return await _homestayDao.GetNearestHomeStaysAsync(userLat, userLon, topN);
-        }*/
+            {
+                return await _homestayDao.GetNearestHomeStaysAsync(userLat, userLon, topN);
+            }*/
 
         public async Task<IEnumerable<HomeStay>> GetNearestHomeStaysAsync(double userLat, double userLon, int pageIndex = 1, int pageSize = 5)
         {
             return await _homestayDao.GetNearestHomeStaysAsync(userLat, userLon, pageIndex, pageSize);
->>>>>>> main
+
         }
     }
 }
