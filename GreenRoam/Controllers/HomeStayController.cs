@@ -178,5 +178,14 @@ namespace GreenRoam.Controllers
             }
             return await _homestayService.DeleteHomeStay(id);
         }
+        [HttpGet("filter")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<BaseResponse<IEnumerable<HomeStayResponse>>>> FilterHomeStays([FromQuery] FilterHomeStayRequest request)
+        {
+            var result = await _homestayService.FilterHomeStaysAsync(request);
+            return StatusCode((int)result.StatusCode, result);
+        }
     }
 }

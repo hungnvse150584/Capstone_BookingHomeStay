@@ -1,5 +1,6 @@
 ﻿using BusinessObject.Model;
 using DataAccessObject;
+using Microsoft.EntityFrameworkCore;
 using Repository.BaseRepository;
 using Repository.IRepositories;
 using System;
@@ -85,6 +86,11 @@ namespace Repository.Repositories
         {
             await _homestayDao.SaveChangesAsync();
         }
+<<<<<<< HEAD
+        public async Task<IEnumerable<HomeStay>> GetAllWithDetailsAsync()
+        {
+            return await _homestayDao.GetAllWithDetailsAsync();
+=======
 
         /*public async Task<IEnumerable<HomeStay>> GetNearestHomeStaysAsync(double userLat, double userLon, int topN = 5)
         {
@@ -94,6 +100,7 @@ namespace Repository.Repositories
         public async Task<IEnumerable<HomeStay>> GetNearestHomeStaysAsync(double userLat, double userLon, int pageIndex = 1, int pageSize = 5)
         {
             return await _homestayDao.GetNearestHomeStaysAsync(userLat, userLon, pageIndex, pageSize);
+>>>>>>> main
         }
     }
 }
