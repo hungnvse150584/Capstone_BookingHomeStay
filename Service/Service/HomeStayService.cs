@@ -480,7 +480,8 @@ namespace Service.Service
 
                 var allHomeStays = await _homeStayRepository.GetAllWithDetailsAsync();
 
-                var filteredHomeStays = new List<HomeStay>();
+                // Tạo danh sách HomeStay với khoảng cách
+                var homeStaysWithDistance = new List<(HomeStay HomeStay, double Distance)>();
                 foreach (var homeStay in allHomeStays)
                 {
                     // Kiểm tra trạng thái của HomeStay
@@ -489,7 +490,15 @@ namespace Service.Service
                         Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is excluded due to status: {homeStay.Status}.");
                         continue;
                     }
-                   
+
+                    // Tính khoảng cách
+                    var distance = await _homeStayRepository.CalculateHaversineDistance(
+                        request.Latitude, request.Longitude, homeStay.Latitude, homeStay.Longitude);
+                    if (distance > request.MaxDistance)
+                    {
+                        Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is excluded due to distance: {distance} km (max: {request.MaxDistance} km).");
+                        continue;
+                    }
 
                     bool isCapacitySuitable = false;
                     foreach (var rental in homeStay.HomeStayRentals ?? new List<HomeStayRentals>())
@@ -542,10 +551,16 @@ namespace Service.Service
 
                     if (isAvailable)
                     {
-                        filteredHomeStays.Add(homeStay);
-                        Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is available and added to filtered list.");
+                        homeStaysWithDistance.Add((homeStay, distance));
+                        Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is available and added to filtered list (distance: {distance} km).");
                     }
                 }
+
+                // Sắp xếp theo khoảng cách (tăng dần)
+                var filteredHomeStays = homeStaysWithDistance
+                    .OrderBy(hs => hs.Distance)
+                    .Select(hs => hs.HomeStay)
+                    .ToList();
 
                 var response = _mapper.Map<IEnumerable<HomeStayResponse>>(filteredHomeStays);
 

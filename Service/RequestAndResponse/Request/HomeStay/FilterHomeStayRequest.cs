@@ -22,5 +22,13 @@ namespace Service.RequestAndResponse.Request.HomeStay
         
         [Range(0, int.MaxValue, ErrorMessage = "Number of children cannot be negative.")]
         public int NumberOfChildren { get; set; }
+        [Required]
+        public double Latitude { get; set; } 
+
+        [Required]
+        public double Longitude { get; set; } 
+
+        [Range(0, double.MaxValue, ErrorMessage = "Max distance must be non-negative.")]
+        public double MaxDistance { get; set; } = 10;
     }
 }
