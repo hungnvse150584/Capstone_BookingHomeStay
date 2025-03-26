@@ -9,17 +9,17 @@ namespace Service.RequestAndResponse.Request.HomeStay
 {
     public class FilterHomeStayRequest
     {
-        [Required(ErrorMessage = "Check-in date is required.")]
+        
         public DateTime CheckInDate { get; set; }
 
-        [Required(ErrorMessage = "Check-out date is required.")]
+     
         public DateTime CheckOutDate { get; set; }
 
-        [Required(ErrorMessage = "Number of adults is required.")]
-        [Range(1, int.MaxValue, ErrorMessage = "Number of adults must be at least 1.")]
+        
+        [Range(0, int.MaxValue, ErrorMessage = "Number of adults cannot be negative.")]
         public int NumberOfAdults { get; set; }
 
-        [Required(ErrorMessage = "Number of children is required.")]
+        
         [Range(0, int.MaxValue, ErrorMessage = "Number of children cannot be negative.")]
         public int NumberOfChildren { get; set; }
     }
