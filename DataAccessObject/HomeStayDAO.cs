@@ -158,7 +158,7 @@ namespace DataAccessObject
             return PaginatedList<HomeStay>.Create(homeStaysWithDistance, pageIndex, pageSize);
         }
 
-        private double CalculateHaversineDistance(double lat1, double lon1, double lat2, double lon2)
+        public double CalculateHaversineDistance(double lat1, double lon1, double lat2, double lon2)
         {
             double dLat = DegreesToRadians(lat2 - lat1);
             double dLon = DegreesToRadians(lon2 - lon1);

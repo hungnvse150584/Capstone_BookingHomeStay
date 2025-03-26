@@ -963,6 +963,21 @@
         "Name": "NumberOfChildren",
         "Type": "System.Int32",
         "IsRequired": false
+      },
+      {
+        "Name": "Latitude",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "Longitude",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "MaxDistance",
+        "Type": "System.Double",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [

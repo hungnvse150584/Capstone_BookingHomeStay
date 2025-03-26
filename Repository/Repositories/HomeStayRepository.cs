@@ -102,5 +102,10 @@ namespace Repository.Repositories
             return await _homestayDao.GetNearestHomeStaysAsync(userLat, userLon, pageIndex, pageSize);
 
         }
+
+        public async Task<double> CalculateHaversineDistance(double lat1, double lon1, double lat2, double lon2)
+        {
+            return _homestayDao.CalculateHaversineDistance(lat1, lon1, lat2, lon2);
+        }
     }
 }
