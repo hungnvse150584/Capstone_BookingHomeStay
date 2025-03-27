@@ -48,5 +48,9 @@ namespace Repository.Repositories
         {
              await _roomTypeDao.SaveChangesAsync();
         }
+        public async Task<IEnumerable<RoomTypes>> GetAllRoomTypeByHomeStayRentalID(int homeStayRentalId)
+        {
+            return await _roomTypeDao.GetAllRoomTypeByHomeStayRentalID(homeStayRentalId);
+        }
     }
 }

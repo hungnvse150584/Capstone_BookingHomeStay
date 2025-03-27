@@ -563,6 +563,46 @@
         }
       }
     },
+    "/api/booking-bookingservices/GetCancellationBooking/{bookingID}": {
+      "get": {
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "name": "bookingID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCancellationBookingBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCancellationBookingBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCancellationBookingBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/booking-bookingservices/adminDashBoard/GetStaticBookings": {
       "get": {
         "tags": [
@@ -841,6 +881,13 @@
             "in": "query",
             "schema": {
               "$ref": "#/components/schemas/BookingServicesStatus"
+            }
+          },
+          {
+            "name": "statusPayment",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/PaymentServicesStatus"
             }
           }
         ],
@@ -3680,6 +3727,69 @@
         }
       }
     },
+    "/api/RoomType/GetAllRoomTypeByHomeStayRentalID/{homeStayRentalId}": {
+      "get": {
+        "tags": [
+          "RoomType"
+        ],
+        "parameters": [
+          {
+            "name": "homeStayRentalId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/RoomType/CreateRoomType": {
       "post": {
         "tags": [
@@ -5103,6 +5213,29 @@
         },
         "additionalProperties": false
       },
+      "DataType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "DateOnly": {
         "type": "object",
         "properties": {
@@ -5260,12 +5393,12 @@
           "paymentMethod": {
             "$ref": "#/components/schemas/PaymentMethod"
           },
-          "transactionID": {
-            "type": "string",
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            },
             "nullable": true
-          },
-          "transaction": {
-            "$ref": "#/components/schemas/Transaction"
           },
           "bookingDetails": {
             "type": "array",
@@ -6221,6 +6354,94 @@
           },
           "booking": {
             "$ref": "#/components/schemas/GetAllBookings"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetCancellationBooking": {
+        "type": "object",
+        "properties": {
+          "bookingID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "numberOfChildren": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfAdults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BookingStatus"
+          },
+          "total": {
+            "type": "number",
+            "format": "double"
+          },
+          "cancelFee": {
+            "type": "number",
+            "format": "double"
+          },
+          "reportID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "report": {
+            "$ref": "#/components/schemas/Report"
+          },
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/PaymentMethod"
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            },
+            "nullable": true
+          },
+          "bookingDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetBookingDetails"
+            },
+            "nullable": true
+          },
+          "bookingServices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAllBookingServices"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetCancellationBookingBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GetCancellationBooking"
           }
         },
         "additionalProperties": false
@@ -7327,8 +7548,7 @@
             "type": "boolean"
           },
           "dayType": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/DataType"
           },
           "description": {
             "type": "string",

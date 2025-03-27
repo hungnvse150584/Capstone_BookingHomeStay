@@ -404,5 +404,55 @@ namespace Service.Service
             return new BaseResponse<IEnumerable<GetAllRoomType>>("Get all RoomType as base success",
                 StatusCodeEnum.OK_200, roomTypes);
         }
+        public async Task<BaseResponse<IEnumerable<GetAllRoomTypeByRental>>> GetAllRoomTypeByHomeStayRentalID(int homeStayRentalId)
+        {
+            try
+            {
+                var homeStayRental = await _homeStayRentalRepository.GetByIdAsync(homeStayRentalId);
+                if (homeStayRental == null)
+                {
+                    return new BaseResponse<IEnumerable<GetAllRoomTypeByRental>>(
+                        "HomeStayRental not found!",
+                        StatusCodeEnum.NotFound_404,
+                        null);
+                }
+
+                var roomTypes = await _roomTypeRepository.GetAllRoomTypeByHomeStayRentalID(homeStayRentalId);
+                if (roomTypes == null || !roomTypes.Any())
+                {
+                    return new BaseResponse<IEnumerable<GetAllRoomTypeByRental>>(
+                        "No RoomTypes found for the specified HomeStayRentalID.",
+                        StatusCodeEnum.OK_200,
+                        new List<GetAllRoomTypeByRental>());
+                }
+
+                // Thêm log để kiểm tra dữ liệu Prices
+                foreach (var roomType in roomTypes)
+                {
+                    Console.WriteLine($"RoomTypesID: {roomType.RoomTypesID}, Prices Count: {(roomType.Prices != null ? roomType.Prices.Count : 0)}");
+                    if (roomType.Prices != null && roomType.Prices.Any())
+                    {
+                        foreach (var price in roomType.Prices)
+                        {
+                            Console.WriteLine($"Price: PricingID={price.PricingID}, UnitPrice={price.UnitPrice}, RentPrice={price.RentPrice}");
+                        }
+                    }
+                }
+
+                var roomTypeResponses = _mapper.Map<IEnumerable<GetAllRoomTypeByRental>>(roomTypes);
+
+                return new BaseResponse<IEnumerable<GetAllRoomTypeByRental>>(
+                    "RoomTypes retrieved successfully!",
+                    StatusCodeEnum.OK_200,
+                    roomTypeResponses);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<IEnumerable<GetAllRoomTypeByRental>>(
+                    $"An error occurred while retrieving RoomTypes: {ex.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
+            }
+        }
     }
 }

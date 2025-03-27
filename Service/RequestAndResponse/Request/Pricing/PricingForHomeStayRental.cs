@@ -17,7 +17,7 @@ namespace Service.RequestAndResponse.Request.Pricing
         public DateTime? EndDate { get; set; }
         public bool IsDefault { get; set; } = true;
         public bool IsActive { get; set; } = true;
-        public int DayType { get; set; }
+        public DataType DayType { get; set; }
         public string Description { get; set; }
        
     }
