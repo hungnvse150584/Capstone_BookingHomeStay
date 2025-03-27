@@ -2458,6 +2458,22 @@
         ],
         "parameters": [
           {
+            "name": "HomeStayID",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "RentWhole",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "name": "CheckInDate",
             "in": "query",
             "schema": {
@@ -2491,13 +2507,6 @@
               "minimum": 0,
               "type": "integer",
               "format": "int32"
-            }
-          },
-          {
-            "name": "RentWhole",
-            "in": "query",
-            "schema": {
-              "type": "boolean"
             }
           }
         ],

@@ -9,7 +9,10 @@ namespace Service.RequestAndResponse.Request.HomeStayType
 {
     public class FilterHomeStayRentalRequest
     {
-    
+
+        [Required(ErrorMessage = "HomeStayID is required.")]
+        public int HomeStayID { get; set; }
+        public bool? RentWhole { get; set; }
         public DateTime CheckInDate { get; set; }
 
        
@@ -21,6 +24,6 @@ namespace Service.RequestAndResponse.Request.HomeStayType
         [Range(0, int.MaxValue, ErrorMessage = "Number of children cannot be negative.")]
         public int NumberOfChildren { get; set; }
 
-        public bool? RentWhole { get; set; } 
+       
     }
 }

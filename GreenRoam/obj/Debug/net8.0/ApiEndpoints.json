@@ -1628,6 +1628,16 @@
     "Order": 0,
     "Parameters": [
       {
+        "Name": "HomeStayID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "RentWhole",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
         "Name": "CheckInDate",
         "Type": "System.DateTime",
         "IsRequired": false
@@ -1645,11 +1655,6 @@
       {
         "Name": "NumberOfChildren",
         "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "RentWhole",
-        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
