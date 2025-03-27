@@ -99,7 +99,9 @@ namespace DataAccessObject
             return await _context.HomeStays
                 .Include(h => h.HomeStayRentals)
                 .Include(h => h.Bookings)
-                    .ThenInclude(b => b.BookingDetails)
+                 .ThenInclude(b => b.BookingDetails)
+                .Include(h => h.ImageHomeStays)
+                   
                 .ToListAsync();
         }
         public async Task<HomeStay> GetOwnerHomeStayByIdAsync(string accountId)

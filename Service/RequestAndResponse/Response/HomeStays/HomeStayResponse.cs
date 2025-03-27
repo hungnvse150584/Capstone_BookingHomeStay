@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service.RequestAndResponse.Response.CommissionRate;
+using Service.RequestAndResponse.Response.ImageHomeStay;
 
 namespace Service.RequestAndResponse.Response.HomeStays
 {
@@ -36,5 +37,6 @@ namespace Service.RequestAndResponse.Response.HomeStays
         public int? CommissionRateID { get; set; }
         public string AccountID { get; set; }
         public Account Account { get; set; }
+        public IEnumerable<ImageHomeStayResponse> ImageHomeStays { get; set; }
     }
 }

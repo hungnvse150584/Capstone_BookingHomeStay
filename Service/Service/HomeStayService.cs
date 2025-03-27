@@ -478,20 +478,24 @@ namespace Service.Service
                 var checkInDate = request.CheckInDate.Date;
                 var checkOutDate = request.CheckOutDate.Date;
 
+                // Bước 1: Lấy tất cả HomeStay và lọc theo Status trước
                 var allHomeStays = await _homeStayRepository.GetAllWithDetailsAsync();
+                var acceptedHomeStays = allHomeStays
+                    .Where(h => (int)h.Status == (int)HomeStayStatus.Accepted)
+                    .ToList();
 
-                // Tạo danh sách HomeStay với khoảng cách
-                var homeStaysWithDistance = new List<(HomeStay HomeStay, double Distance)>();
-                foreach (var homeStay in allHomeStays)
+                if (!acceptedHomeStays.Any())
                 {
-                    // Kiểm tra trạng thái của HomeStay
-                    if ((int)homeStay.Status != (int)HomeStayStatus.Accepted)
-                    {
-                        Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is excluded due to status: {homeStay.Status}.");
-                        continue;
-                    }
+                    return new BaseResponse<IEnumerable<HomeStayResponse>>(
+                        "No HomeStays available with Accepted status.",
+                        StatusCodeEnum.OK_200,
+                        new List<HomeStayResponse>());
+                }
 
-                    // Tính khoảng cách
+                // Bước 2: Lọc theo Location (khoảng cách)
+                var homeStaysWithDistance = new List<(HomeStay HomeStay, double Distance)>();
+                foreach (var homeStay in acceptedHomeStays)
+                {
                     var distance = await _homeStayRepository.CalculateHaversineDistance(
                         request.Latitude, request.Longitude, homeStay.Latitude, homeStay.Longitude);
                     if (distance > request.MaxDistance)
@@ -499,7 +503,22 @@ namespace Service.Service
                         Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is excluded due to distance: {distance} km (max: {request.MaxDistance} km).");
                         continue;
                     }
+                    homeStaysWithDistance.Add((homeStay, distance));
+                }
 
+                if (!homeStaysWithDistance.Any())
+                {
+                    return new BaseResponse<IEnumerable<HomeStayResponse>>(
+                        "No HomeStays available within the specified distance.",
+                        StatusCodeEnum.OK_200,
+                        new List<HomeStayResponse>());
+                }
+
+                // Bước 3: Lọc theo CheckIn/CheckOut và sức chứa
+                var filteredHomeStays = new List<(HomeStay HomeStay, double Distance)>();
+                foreach (var (homeStay, distance) in homeStaysWithDistance)
+                {
+                    // Kiểm tra sức chứa
                     bool isCapacitySuitable = false;
                     foreach (var rental in homeStay.HomeStayRentals ?? new List<HomeStayRentals>())
                     {
@@ -518,6 +537,7 @@ namespace Service.Service
                         continue;
                     }
 
+                    // Kiểm tra CheckIn/CheckOut
                     bool isAvailable = true;
                     var activeBookings = homeStay.Bookings?
                         .Where(b => b.Status == BookingStatus.Pending ||
@@ -551,21 +571,21 @@ namespace Service.Service
 
                     if (isAvailable)
                     {
-                        homeStaysWithDistance.Add((homeStay, distance));
+                        filteredHomeStays.Add((homeStay, distance));
                         Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is available and added to filtered list (distance: {distance} km).");
                     }
                 }
 
                 // Sắp xếp theo khoảng cách (tăng dần)
-                var filteredHomeStays = homeStaysWithDistance
+                var finalHomeStays = filteredHomeStays
                     .OrderBy(hs => hs.Distance)
                     .Select(hs => hs.HomeStay)
                     .ToList();
 
-                var response = _mapper.Map<IEnumerable<HomeStayResponse>>(filteredHomeStays);
+                var response = _mapper.Map<IEnumerable<HomeStayResponse>>(finalHomeStays);
 
                 return new BaseResponse<IEnumerable<HomeStayResponse>>(
-                    filteredHomeStays.Any() ? "HomeStays filtered successfully!" : "No HomeStays available for the given criteria.",
+                    finalHomeStays.Any() ? "HomeStays filtered successfully!" : "No HomeStays available for the given criteria.",
                     StatusCodeEnum.OK_200,
                     response);
             }
