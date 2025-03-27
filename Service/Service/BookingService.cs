@@ -33,6 +33,7 @@ namespace Service.Service
         private readonly ICommissionRateRepository _commissionRateRepository;
         private readonly IBookingDetailRepository _bookingDetailRepository;
         private readonly IBookingServiceDetailRepository _bookingServiceDetailRepository;
+        private readonly ICancellationPolicyRepository _cancelltaionRepository;
 
 
         public BookingService(IMapper mapper, IBookingRepository bookingRepository,
@@ -44,7 +45,8 @@ namespace Service.Service
                               IPricingRepository pricingRepository,
                               ICommissionRateRepository commissionRateRepository, 
                               IBookingDetailRepository bookingDetailRepository, 
-                              IBookingServiceDetailRepository bookingServiceDetailRepository)
+                              IBookingServiceDetailRepository bookingServiceDetailRepository, 
+                              ICancellationPolicyRepository cancelltaionRepository)
         {
             _mapper = mapper;
             _bookingRepository = bookingRepository;
@@ -57,6 +59,7 @@ namespace Service.Service
             _commissionRateRepository = commissionRateRepository;
             _bookingDetailRepository = bookingDetailRepository;
             _bookingServiceDetailRepository = bookingServiceDetailRepository;
+            _cancelltaionRepository = cancelltaionRepository;
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllBookings>>> GetAllBooking(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
@@ -75,6 +78,40 @@ namespace Service.Service
             }
             return new BaseResponse<IEnumerable<GetAllBookings>>("Get all bookings as base success",
                 StatusCodeEnum.OK_200, bookings);
+        }
+
+        public async Task<BaseResponse<GetCancellationBooking>> GetCancellationBooking(int bookingID)
+        {
+            var booking = await _bookingRepository.GetBookingByIdAsync(bookingID);
+            if (booking == null)
+            {
+                return new BaseResponse<GetCancellationBooking>("Get Booking Fail", StatusCodeEnum.BadGateway_502, null);
+            }
+
+            if (booking.Status == BookingStatus.Cancelled && booking.paymentStatus == PaymentStatus.Refunded)
+            {
+                var cancellationRate = await _cancelltaionRepository.GetCancellationPolicyByHomeStayAsync(booking.HomeStayID);
+                if (cancellationRate == null)
+                {
+                    return new BaseResponse<GetCancellationBooking>("Get CancellationPolicy Fail", StatusCodeEnum.BadGateway_502, null);
+                }
+
+                var bookingResponse = _mapper.Map<GetCancellationBooking>(booking);
+
+                var checkInDate = booking.BookingDetails.First().CheckInDate;
+
+                var daysBeforeCheckIn = (checkInDate - DateTime.Now).TotalDays;
+
+                bookingResponse.CancelFee = daysBeforeCheckIn >= cancellationRate.DayBeforeCancel
+                ? booking.Total * (1 - cancellationRate.RefundPercentage)
+                : booking.Total; // Không hoàn tiền nếu hủy sát ngày
+
+                return new BaseResponse<GetCancellationBooking>("Get Success Cancellation Booking", StatusCodeEnum.OK_200, bookingResponse);
+            }
+            else
+            {
+                return new BaseResponse<GetCancellationBooking>("Booking is not cancelled or refunded", StatusCodeEnum.BadRequest_400, null);
+            }
         }
 
         public async Task<BaseResponse<Booking>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod)
@@ -264,7 +301,7 @@ namespace Service.Service
             return new BaseResponse<Booking>("Create Booking Successfully!!!", StatusCodeEnum.Created_201, booking);
         }
 
-        public async Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus)
+        public async Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)
         {
             var bookingExist = await _bookingRepository.GetBookingByIdAsync(bookingId);
             if (bookingExist == null)
@@ -283,7 +320,7 @@ namespace Service.Service
                                  StatusCodeEnum.NotFound_404, null);
                     }
 
-                    var bookingService = await _bookingServiceRepository.ChangeBookingServicesStatus(bookingServiceExist.BookingServicesID, servicesStatus);
+                    var bookingService = await _bookingServiceRepository.ChangeBookingServicesStatus(bookingServiceExist.BookingServicesID, servicesStatus, statusPayment);
                 }
                 var booking = await _bookingRepository.ChangeBookingStatus(bookingExist.BookingID, status, paymentStatus);
 

@@ -45,6 +45,14 @@ namespace GreenRoam.Controllers
             return Ok(bookings);
         }
 
+        [HttpGet]
+        [Route("GetCancellationBooking/{bookingID}")]
+        public async Task<ActionResult<BaseResponse<GetCancellationBooking>>> GetCancellationBooking(int bookingID)
+        {
+            var bookings = await _bookingService.GetCancellationBooking(bookingID);
+            return Ok(bookings);
+        }
+
 
 
         [HttpGet("adminDashBoard/GetStaticBookings")]
@@ -92,9 +100,9 @@ namespace GreenRoam.Controllers
 
         [HttpPut]
         [Route("ChangeBookingStatus")]
-        public async Task<ActionResult<BaseResponse<Booking>>> ChangeTheBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus)
+        public async Task<ActionResult<BaseResponse<Booking>>> ChangeTheBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)
         {
-            var booking = await _bookingService.ChangeBookingStatus(bookingId, bookingServiceID, status, paymentStatus, servicesStatus);
+            var booking = await _bookingService.ChangeBookingStatus(bookingId, bookingServiceID, status, paymentStatus, servicesStatus, statusPayment);
             return Ok(booking);
         }
 

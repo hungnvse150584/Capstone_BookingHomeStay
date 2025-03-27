@@ -165,9 +165,12 @@ namespace Service.Mapping
             CreateMap<ImageHomeStayRentals, AddImageHomeStayTypesRequest>().ReverseMap();
             CreateMap<ImageHomeStayRentals, UpdateImageHomeStayTypesRequest>().ReverseMap();
             CreateMap<ImageHomeStayRentals, GetAllImageHomeStayType>();
+
             CreateMap<BookingDetail, GetBookingDetails>();
             CreateMap<BookingServices, GetAllBookingServices>();
             CreateMap<Booking, GetAllBookings>();
+            CreateMap<Booking, GetCancellationBooking>();
+
             CreateMap<ImageServices, GetAllImageService>();
             CreateMap<ImageServices, GetImageService>();
             CreateMap<ImageServices, UploadImageServiceRequest>().ReverseMap();

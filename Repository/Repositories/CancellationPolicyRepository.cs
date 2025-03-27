@@ -60,6 +60,11 @@ namespace Repository.Repositories
             return await _canclepolicyDao.GetByStringIdAsync(id); // Bạn cần thêm một phương thức cho chuỗi id nếu có.
         }
 
+        public async Task<CancellationPolicy?> GetCancellationPolicyByHomeStayAsync(int? homeStayID)
+        {
+            return await _canclepolicyDao.GetCancellationPolicyByHomeStayAsync(homeStayID);
+        }
+
         // Cập nhật một CancellationPolicy
         public async Task<CancellationPolicy> UpdateAsync(CancellationPolicy entity)
         {
