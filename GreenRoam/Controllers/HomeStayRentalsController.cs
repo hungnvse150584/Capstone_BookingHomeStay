@@ -66,6 +66,33 @@ namespace GreenRoam.Controllers
             }
         }
 
+        [HttpGet("filter")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>>> FilterHomeStayRentals([FromQuery] FilterHomeStayRentalRequest request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>(
+                        "Invalid request data!",
+                        StatusCodeEnum.BadRequest_400,
+                        null));
+                }
+
+                var response = await _homeStayTypeService.FilterHomeStayRentalsAsync(request);
+                return StatusCode((int)response.StatusCode, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>(
+                    $"An error occurred while filtering HomeStayRentals: {ex.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null));
+            }
+        }
 
         //RoomTypes
         [HttpGet]
