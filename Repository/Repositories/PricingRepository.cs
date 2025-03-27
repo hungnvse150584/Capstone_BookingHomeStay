@@ -68,5 +68,10 @@ namespace Repository.Repositories
         {
             await _pricingDao.SaveChangesAsync();
         }
+
+        public async Task<List<Pricing>> GetPricingDetailsToRemoveAsync(int homeStayRentalID, List<int> updatedDetailIds)
+        {
+            return await _pricingDao.GetPricingDetailsToRemoveAsync(homeStayRentalID, updatedDetailIds);
+        }
     }
 }

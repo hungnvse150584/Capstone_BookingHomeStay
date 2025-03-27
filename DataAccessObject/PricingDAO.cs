@@ -75,6 +75,13 @@ namespace DataAccessObject
             return entity;
         }
 
+        public async Task<List<Pricing>> GetPricingDetailsToRemoveAsync(int homeStayRentalID, List<int> updatedDetailIds)
+        {
+            return await _context.Prices
+                                 .Where(d => d.HomeStayRentalID == homeStayRentalID && !updatedDetailIds.Contains(d.PricingID))
+                                 .ToListAsync();
+        }
+
         public async Task<DayType> GetDayType(DateTime date)
         {
             // Kiểm tra xem ngày có nằm trong một khoảng Holiday không
