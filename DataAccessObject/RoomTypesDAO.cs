@@ -50,6 +50,14 @@ namespace DataAccessObject
             }
             return entity;
         }
-
+        public async Task<IEnumerable<RoomTypes>> GetAllRoomTypeByHomeStayRentalID(int homeStayRentalId)
+        {
+            return await _context.RoomTypes
+                .Where(rt => rt.HomeStayRentalID == homeStayRentalId)
+                .Include(rt => rt.ImageRoomTypes)
+                .Include(rt => rt.Prices)
+                .Include(rt => rt.Rooms)
+                .ToListAsync();
+        }
     }
 }

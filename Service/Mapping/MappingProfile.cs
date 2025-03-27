@@ -94,6 +94,9 @@ namespace Service.Mapping
             .ForMember(dest => dest.BookingDetails, opt => opt.Ignore())
             .ForMember(dest => dest.RoomTypes, opt => opt.Ignore());
             CreateMap<GetAllRoomType, RoomTypes>().ReverseMap();
+            CreateMap<RoomTypes, GetAllRoomTypeByRental>()
+                  .ForMember(dest => dest.Pricings, opt => opt.MapFrom(src => src.Prices))
+                  .ForMember(dest => dest.ImageRoomTypes, opt => opt.MapFrom(src => src.ImageRoomTypes));
             CreateMap<PricingForHomeStayRental, Pricing>()
             .ForMember(dest => dest.PricingID, opt => opt.Ignore())
             .ForMember(dest => dest.HomeStayRentalID, opt => opt.Ignore())

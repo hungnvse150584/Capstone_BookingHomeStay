@@ -19,7 +19,24 @@ namespace GreenRoam.Controllers
         {
             _roomTypeService = roomTypeService;
         }
+    
+        [HttpGet("GetAllRoomTypeByHomeStayRentalID/{homeStayRentalId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllRoomTypeByHomeStayRentalID(int homeStayRentalId)
+        {
+            if (homeStayRentalId <= 0)
+            {
+                return BadRequest(new BaseResponse<IEnumerable<GetAllRoomType>>(
+                    "Invalid HomeStayRentalID!",
+                    StatusCodeEnum.BadRequest_400,
+                    null));
+            }
 
+            var result = await _roomTypeService.GetAllRoomTypeByHomeStayRentalID(homeStayRentalId);
+            return StatusCode((int)result.StatusCode, result);
+        }
         [HttpPost("CreateRoomType")]
         public async Task<IActionResult> CreateRoomType([FromForm] CreateRoomTypeRequest request, [FromQuery] int homeStayRentalId)
         {
@@ -36,5 +53,6 @@ namespace GreenRoam.Controllers
             var result = await _roomTypeService.CreateRoomType(request, homeStayRentalId);
             return StatusCode((int)result.StatusCode, result);
         }
+
     }
 }
