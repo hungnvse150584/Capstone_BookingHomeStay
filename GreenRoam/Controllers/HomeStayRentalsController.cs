@@ -66,6 +66,35 @@ namespace GreenRoam.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("UpdateHomeStayRental/{homeStayRentalID}")]
+        public async Task<ActionResult<BaseResponse<HomeStayRentals>>> UpdateHomeStayRental(int homeStayRentalID, UpdateHomeStayTypeRequest request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    return BadRequest(new BaseResponse<HomeStayRentals>("Request body cannot be null!", StatusCodeEnum.BadRequest_400, null));
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new BaseResponse<HomeStayRentals>("Invalid request data!", StatusCodeEnum.BadRequest_400, null));
+                }
+                if (homeStayRentalID <= 0)
+                {
+                    return BadRequest(new BaseResponse<HomeStayRentals>($"Invalid ID: {homeStayRentalID}!", StatusCodeEnum.BadRequest_400, null));
+                }
+
+                var homeStays = await _homeStayTypeService.UpdateHomeStayType(homeStayRentalID, request);
+                return StatusCode((int)homeStays.StatusCode, homeStays);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new BaseResponse<HomeStayRentals>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null));
+            }
+        }
+
         [HttpGet("filter")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -13,6 +13,7 @@ namespace Repository.IRepositories
         Task<IEnumerable<Pricing>> GetAllPricingByHomeStayAsync(int homestayID);
         Task<IEnumerable<Pricing>> GetPricingByHomeStayRentalAsync(int rentalID);
         Task<IEnumerable<Pricing>> GetPricingByRoomTypeAsync(int roomTypeID);
+        Task<List<Pricing>> GetPricingDetailsToRemoveAsync(int homeStayRentalID, List<int> updatedDetailIds);
         Task<Pricing> GetPricingByIdAsync(int id);
         Task<DayType> GetDayType(DateTime date);
         Task SaveChangesAsync();

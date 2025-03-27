@@ -17,6 +17,7 @@ namespace Service.IService
         Task<BaseResponse<IEnumerable<GetAllHomeStayType>>> GetAllHomeStayTypes();
         Task<BaseResponse<IEnumerable<GetAllHomeStayType>>> GetAllHomeStayTypesByHomeStayID(int homestayId);
         Task<BaseResponse<HomeStayRentals>> CreateHomeStayType(CreateHomeStayTypeRequest request);
+        Task<BaseResponse<HomeStayRentals>> UpdateHomeStayType(int homeStayRentalID, UpdateHomeStayTypeRequest request);
         Task<BaseResponse<GetHomeStayRentalDetailResponse>> GetHomeStayRentalDetail(int homeStayRentalId); // Sửa kiểu trả về
         Task<BaseResponse<string>> DeleteHomeStayRental(int id);
         Task<BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>> FilterHomeStayRentalsAsync(FilterHomeStayRentalRequest request);
