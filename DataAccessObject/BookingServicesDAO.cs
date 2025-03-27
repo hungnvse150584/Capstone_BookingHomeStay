@@ -57,12 +57,13 @@ namespace DataAccessObject
                 .ToListAsync();
         }
 
-        public async Task<BookingServices?> ChangeBookingServicesStatus(int bookingId, BookingServicesStatus status)
+        public async Task<BookingServices?> ChangeBookingServicesStatus(int bookingId, BookingServicesStatus status, PaymentServicesStatus statusPayment)
         {
             var booking = await _context.BookingServices.FindAsync(bookingId);
             if (booking != null)
             {
                 booking.Status = status;
+                booking.PaymentServiceStatus = statusPayment;
                 await _context.SaveChangesAsync();
             }
 

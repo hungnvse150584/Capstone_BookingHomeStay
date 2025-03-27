@@ -23,9 +23,9 @@ namespace Repository.Repositories
              await _bookingservicesDao.AddBookingServicesAsync(booking);
         }
 
-        public async Task<BookingServices?> ChangeBookingServicesStatus(int bookingId, BookingServicesStatus status)
+        public async Task<BookingServices?> ChangeBookingServicesStatus(int bookingId, BookingServicesStatus status, PaymentServicesStatus statusPayment)
         {
-           return await _bookingservicesDao.ChangeBookingServicesStatus(bookingId, status);
+            return await _bookingservicesDao.ChangeBookingServicesStatus(bookingId, status, statusPayment);
         }
 
         public async Task<BookingServices?> FindBookingServicesByIdAsync(int? bookingId)

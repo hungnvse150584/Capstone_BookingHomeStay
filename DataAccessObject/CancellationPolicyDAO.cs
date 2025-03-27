@@ -28,6 +28,12 @@ namespace DataAccessObject
                                                       .FirstOrDefaultAsync(cp => cp.CancellationID == cancellationID);
         }
 
+        public async Task<CancellationPolicy?> GetCancellationPolicyByHomeStayAsync(int? homeStayID)
+        {
+            return await _context.CancelPolicy.Include(cp => cp.HomeStay)
+                                                      .FirstOrDefaultAsync(cp => cp.HomeStayID == homeStayID);
+        }
+
         public async Task<CancellationPolicy> AddAsync(CancellationPolicy cancellationPolicy)
         {
             await _context.CancelPolicy.AddAsync(cancellationPolicy);

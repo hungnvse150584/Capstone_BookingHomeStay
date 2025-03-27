@@ -34,8 +34,7 @@ namespace Service.RequestAndResponse.Response.Bookings
 
         public PaymentMethod PaymentMethod { get; set; }
 
-        public string? transactionID { get; set; }
-        public Transaction? Transaction { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
 
         public ICollection<GetBookingDetails> BookingDetails { get; set; }
 

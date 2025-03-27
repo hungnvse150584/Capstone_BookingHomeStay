@@ -12,6 +12,7 @@ namespace Repository.IRepositories
     {
         Task<IEnumerable<CancellationPolicy>> GetAllAsync();
         Task<CancellationPolicy> GetByIdAsync(int id);
-        
+        Task<CancellationPolicy?> GetCancellationPolicyByHomeStayAsync(int? homeStayID);
+
     }
 }
