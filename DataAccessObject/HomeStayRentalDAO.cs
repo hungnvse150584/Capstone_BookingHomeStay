@@ -26,9 +26,39 @@ namespace DataAccessObject
            .Include(c => c.ImageHomeStayRentals)
            .Include(c => c.RoomTypes)
            .Include(c => c.BookingDetails)
+            .ThenInclude(bd => bd.Booking)
            .ToListAsync();
+
         }
 
+        public async Task<IEnumerable<HomeStayRentals>> GetAllHomeStayTypesAsyncFilter(int? homestayId, bool? rentWhole = null)
+        {
+            var query = _context.HomeStayRentals.AsQueryable();
+
+            // Áp dụng điều kiện Where trước Include
+            query = query.Where(r => r.Status == true);
+
+            if (homestayId.HasValue)
+            {
+                query = query.Where(c => c.HomeStayID == homestayId);
+            }
+
+            if (rentWhole.HasValue)
+            {
+                query = query.Where(c => c.RentWhole == rentWhole.Value);
+            }
+
+            // Sau đó áp dụng Include và ThenInclude
+            query = query
+                .Include(c => c.Prices)
+                .Include(c => c.HomeStay)
+                .Include(c => c.ImageHomeStayRentals)
+                .Include(c => c.RoomTypes)
+                .Include(c => c.BookingDetails)
+                    .ThenInclude(bd => bd.Booking);
+
+            return await query.ToListAsync();
+        }
         public async Task AddRoomTypeAsync(RoomTypes roomType)
         {
             await _context.RoomTypes.AddAsync(roomType);

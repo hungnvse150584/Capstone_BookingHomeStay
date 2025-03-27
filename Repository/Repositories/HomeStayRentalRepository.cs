@@ -35,6 +35,10 @@ namespace Repository.Repositories
             return _homestayrentalDao.DeleteAsync(entity);
         }
 
+        public async Task<IEnumerable<HomeStayRentals>> GetAllAsyncFilter(bool? rentWhole = null)
+        {
+            return await _homestayrentalDao.GetAllHomeStayTypesAsyncFilter(null, rentWhole);
+        }
         public Task<IEnumerable<HomeStayRentals>> GetAllAsync(int homestayId)
         {
             return _homestayrentalDao.GetAllHomeStayTypesAsync(homestayId);
@@ -58,6 +62,10 @@ namespace Repository.Repositories
         public async Task AddRoomTypeAsync(RoomTypes roomType)
         {
             await _homestayrentalDao.AddRoomTypeAsync(roomType);
+        }
+        public async Task<IEnumerable<HomeStayRentals>> GetAllHomeStayTypesAsyncFilter(int? homestayId, bool? rentWhole = null)
+        {
+            return await _homestayrentalDao.GetAllHomeStayTypesAsyncFilter(homestayId, rentWhole);
         }
     }
 }

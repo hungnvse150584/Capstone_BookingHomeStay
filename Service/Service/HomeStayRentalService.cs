@@ -318,6 +318,115 @@ namespace Service.Service
                 StatusCodeEnum.OK_200, homeStayTypes);
         }
 
-        
+        public async Task<BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>> FilterHomeStayRentalsAsync(FilterHomeStayRentalRequest request)
+        {
+            try
+            {
+                // Kiểm tra CheckInDate và CheckOutDate hợp lệ
+                if (request.CheckInDate > request.CheckOutDate)
+                {
+                    return new BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>(
+                        "Check-out date must be after check-in date.",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
+
+                if (request.CheckInDate < DateTime.UtcNow.Date)
+                {
+                    return new BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>(
+                        "Check-in date cannot be in the past.",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
+
+                var checkInDate = request.CheckInDate.Date;
+                var checkOutDate = request.CheckOutDate.Date;
+
+                // Bước 1: Lấy tất cả HomeStayRentals (đã lọc Status và RentWhole tại database)
+                var filteredHomeStayRentals = await _homeStayTypeRepository.GetAllAsyncFilter(request.RentWhole);
+
+                if (!filteredHomeStayRentals.Any())
+                {
+                    return new BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>(
+                        "No HomeStayRentals available with the specified conditions.",
+                        StatusCodeEnum.OK_200,
+                        new List<GetHomeStayRentalDetailResponse>());
+                }
+
+                // Bước 2: Lọc theo CheckIn/CheckOut, MaxAdults, MaxChildren
+                var finalFilteredRentals = new List<HomeStayRentals>();
+                foreach (var rental in filteredHomeStayRentals)
+                {
+                    // Kiểm tra sức chứa (MaxAdults, MaxChildren)
+                    if (rental.MaxAdults < request.NumberOfAdults ||
+                        rental.MaxChildren < request.NumberOfChildren ||
+                        rental.MaxPeople < (request.NumberOfAdults + request.NumberOfChildren))
+                    {
+                        Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID} is excluded due to insufficient capacity. " +
+                                          $"MaxAdults: {rental.MaxAdults}, Requested: {request.NumberOfAdults}, " +
+                                          $"MaxChildren: {rental.MaxChildren}, Requested: {request.NumberOfChildren}, " +
+                                          $"MaxPeople: {rental.MaxPeople}, Requested: {request.NumberOfAdults + request.NumberOfChildren}");
+                        continue;
+                    }
+
+                    // Kiểm tra CheckIn/CheckOut
+                    bool isAvailable = true;
+                    var activeBookings = rental.BookingDetails?
+                        .Where(bd => bd.Booking != null &&
+                                     (bd.Booking.Status == BookingStatus.Pending ||
+                                      bd.Booking.Status == BookingStatus.Confirmed ||
+                                      bd.Booking.Status == BookingStatus.InProgress))
+                        .ToList() ?? new List<BookingDetail>();
+
+                    foreach (var bookingDetail in activeBookings)
+                    {
+                        var detailCheckInDate = bookingDetail.CheckInDate.Date;
+                        var detailCheckOutDate = bookingDetail.CheckOutDate.Date;
+
+                        Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID}, BookingDetailID: {bookingDetail.BookingDetailID}, " +
+                                          $"CheckIn: {detailCheckInDate:yyyy-MM-dd}, CheckOut: {detailCheckOutDate:yyyy-MM-dd}, " +
+                                          $"Request CheckIn: {checkInDate:yyyy-MM-dd}, Request CheckOut: {checkOutDate:yyyy-MM-dd}");
+
+                        if (detailCheckInDate <= checkOutDate && detailCheckOutDate >= checkInDate)
+                        {
+                            isAvailable = false;
+                            Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID} is not available due to overlapping booking.");
+                            break;
+                        }
+                    }
+
+                    if (isAvailable)
+                    {
+                        finalFilteredRentals.Add(rental);
+                        Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID} is available and added to filtered list.");
+                    }
+                }
+
+                // Ánh xạ sang GetHomeStayRentalDetailResponse
+                var response = _mapper.Map<IEnumerable<GetHomeStayRentalDetailResponse>>(finalFilteredRentals);
+
+                // Gán thêm HomeStayName cho từng item trong response
+                foreach (var item in response)
+                {
+                    var rental = finalFilteredRentals.FirstOrDefault(r => r.HomeStayRentalID == item.HomeStayRentalID);
+                    if (rental != null && rental.HomeStay != null)
+                    {
+                        item.HomeStayName = rental.HomeStay.Name;
+                    }
+                }
+
+                return new BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>(
+                    finalFilteredRentals.Any() ? "HomeStayRentals filtered successfully!" : "No HomeStayRentals available for the given criteria.",
+                    StatusCodeEnum.OK_200,
+                    response);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>(
+                    $"An error occurred while filtering HomeStayRentals: {ex.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
+            }
+        }
     } 
 }
