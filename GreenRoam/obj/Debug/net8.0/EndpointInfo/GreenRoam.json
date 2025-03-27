@@ -6752,6 +6752,13 @@
           },
           "account": {
             "$ref": "#/components/schemas/Account"
+          },
+          "imageHomeStays": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageHomeStayResponse"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
