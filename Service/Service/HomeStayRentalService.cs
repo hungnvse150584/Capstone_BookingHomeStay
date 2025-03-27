@@ -342,8 +342,13 @@ namespace Service.Service
                 var checkInDate = request.CheckInDate.Date;
                 var checkOutDate = request.CheckOutDate.Date;
 
-                // Bước 1: Lấy tất cả HomeStayRentals (đã lọc Status và RentWhole tại database)
+                // Bước 1: Lấy tất cả HomeStayRentals (đã lọc Status, RentWhole và HomeStayID tại database)
                 var filteredHomeStayRentals = await _homeStayTypeRepository.GetAllAsyncFilter(request.RentWhole);
+
+                // Lọc thêm theo HomeStayID
+                filteredHomeStayRentals = filteredHomeStayRentals
+                    .Where(h => h.HomeStayID == request.HomeStayID)
+                    .ToList();
 
                 if (!filteredHomeStayRentals.Any())
                 {
