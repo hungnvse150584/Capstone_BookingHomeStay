@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
+using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.Room;
 using Service.RequestAndResponse.Response.Room;
 using Service.Service;
@@ -64,6 +65,30 @@ namespace GreenRoam.Controllers
                 return BadRequest("Please Input Id!");
             }
             return await _roomService.UpdateRoom(roomID, request);
+        }
+        [HttpGet]
+        [Route("FilterRoomsByRoomTypeAndDates")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllRooms>>>> FilterRoomsByRoomTypeAndDates(
+            int roomTypeId, DateTime checkInDate, DateTime checkOutDate)
+        {
+            if (roomTypeId <= 0)
+            {
+                return BadRequest(new BaseResponse<IEnumerable<GetAllRooms>>(
+                    "Invalid RoomTypeId!",
+                    StatusCodeEnum.BadRequest_400,
+                    null));
+            }
+
+            if (checkInDate >= checkOutDate)
+            {
+                return BadRequest(new BaseResponse<IEnumerable<GetAllRooms>>(
+                    "Check-out date must be after check-in date!",
+                    StatusCodeEnum.BadRequest_400,
+                    null));
+            }
+
+            var rooms = await _roomService.FilterRoomsByRoomTypeAndDates(roomTypeId, checkInDate, checkOutDate);
+            return Ok(rooms);
         }
     }
 }

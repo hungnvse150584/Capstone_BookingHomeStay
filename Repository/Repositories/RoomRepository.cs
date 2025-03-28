@@ -63,5 +63,9 @@ namespace Repository.Repositories
         {
             await _roomDao.SaveChangesAsync();
         }
+        public async Task<IEnumerable<Room>> FilterRoomsByRoomTypeAndDates(int roomTypeId, DateTime checkInDate, DateTime checkOutDate)
+        {
+            return await _roomDao.FilterRoomsByRoomTypeAndDates(roomTypeId, checkInDate, checkOutDate);
+        }
     }
 }
