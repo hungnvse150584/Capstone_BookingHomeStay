@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Model;
+using Service.RequestAndResponse.Response.Accounts;
 using Service.RequestAndResponse.Response.BookingDetails;
 using Service.RequestAndResponse.Response.BookingOfServices;
 using System;
@@ -29,7 +30,7 @@ namespace Service.RequestAndResponse.Response.Bookings
         public Report? Report { get; set; }
 
         public string AccountID { get; set; }
-        public Account Account { get; set; }
+        public GetAccountUser Account { get; set; }
 
         public PaymentMethod PaymentMethod { get; set; }
 
