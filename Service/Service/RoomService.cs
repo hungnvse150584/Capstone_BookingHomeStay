@@ -145,5 +145,36 @@ namespace Service.Service
 
             return new BaseResponse<GetAllRooms>("Update Room status successfully", StatusCodeEnum.OK_200, roomResponse);
         }
+        public async Task<BaseResponse<IEnumerable<GetAllRooms>>> FilterRoomsByRoomTypeAndDates(int roomTypeId, DateTime checkInDate, DateTime checkOutDate)
+        {
+            try
+            {
+                // Gọi repository để lấy danh sách Room theo RoomTypeId và CheckInDate/CheckOutDate
+                var rooms = await _roomRepository.FilterRoomsByRoomTypeAndDates(roomTypeId, checkInDate, checkOutDate);
+
+                if (rooms == null || !rooms.Any())
+                {
+                    return new BaseResponse<IEnumerable<GetAllRooms>>(
+                        "No available rooms found for the specified RoomTypeId and dates.",
+                        StatusCodeEnum.OK_200,
+                        new List<GetAllRooms>());
+                }
+
+                // Ánh xạ sang GetAllRooms
+                var roomResponses = _mapper.Map<IEnumerable<GetAllRooms>>(rooms);
+
+                return new BaseResponse<IEnumerable<GetAllRooms>>(
+                    "Rooms retrieved successfully!",
+                    StatusCodeEnum.OK_200,
+                    roomResponses);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<IEnumerable<GetAllRooms>>(
+                    $"An error occurred while retrieving rooms: {ex.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
+            }
+        }
     }
 }

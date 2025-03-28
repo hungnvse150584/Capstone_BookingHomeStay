@@ -2498,6 +2498,70 @@
         }
       }
     },
+    "/api/homestayrental/UpdateHomeStayRental/{homeStayRentalID}": {
+      "put": {
+        "tags": [
+          "HomeStayRentals"
+        ],
+        "parameters": [
+          {
+            "name": "homeStayRentalID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHomeStayTypeRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHomeStayTypeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHomeStayTypeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHomeStayTypeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeStayRentalsBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeStayRentalsBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeStayRentalsBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/homestayrental/filter": {
       "get": {
         "tags": [
@@ -3720,6 +3784,61 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UpdateRoomRequestBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rooms/FilterRoomsByRoomTypeAndDates": {
+      "get": {
+        "tags": [
+          "Room"
+        ],
+        "parameters": [
+          {
+            "name": "roomTypeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "checkInDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "checkOutDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllRoomsIEnumerableBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllRoomsIEnumerableBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllRoomsIEnumerableBaseResponse"
                 }
               }
             }
@@ -6316,6 +6435,58 @@
         },
         "additionalProperties": false
       },
+      "GetAllUpdatePricicing": {
+        "type": "object",
+        "properties": {
+          "pricingID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "rentPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "dayType": {
+            "$ref": "#/components/schemas/DayType"
+          },
+          "homeStayRentalID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "roomTypesID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "GetBookingDetails": {
         "type": "object",
         "properties": {
@@ -7027,6 +7198,22 @@
               "$ref": "#/components/schemas/Pricing"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HomeStayRentalsBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/HomeStayRentals"
           }
         },
         "additionalProperties": false
@@ -8703,6 +8890,62 @@
           },
           "data": {
             "$ref": "#/components/schemas/UpdateCommissionRateRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateHomeStayTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "numberBedRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberBathRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberKitchen": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberWifi": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "rentWhole": {
+            "type": "boolean"
+          },
+          "maxAdults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxChildren": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pricing": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAllUpdatePricicing"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

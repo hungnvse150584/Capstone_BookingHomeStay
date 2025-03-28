@@ -79,5 +79,24 @@ namespace DataAccessObject
 
             return await _context.Rooms.FindAsync(roomId);
         }
+        public async Task<IEnumerable<Room>> FilterRoomsByRoomTypeAndDates(int roomTypeId, DateTime checkInDate, DateTime checkOutDate)
+        {
+            if (checkInDate >= checkOutDate)
+            {
+                throw new ArgumentException($"{checkOutDate} must be after {checkInDate}.");
+            }
+
+            var availableRooms = await _context.Rooms
+                .Where(r => r.RoomTypesID == roomTypeId) // Lọc theo RoomTypeId
+                .Where(r => r.isActive == true && r.isUsed == false) // Phòng chưa bị chủ khóa và chưa có khách
+                .Where(r => !_context.BookingDetails
+                    .Any(bd => bd.RoomID == r.RoomID &&
+                        bd.Booking.paymentStatus == PaymentStatus.Deposited &&
+                        (checkInDate < bd.CheckOutDate && checkOutDate > bd.CheckInDate))) // Không trùng với BookingDetail đã đặt
+                .Include(r => r.RoomTypes)
+                .ToListAsync();
+
+            return availableRooms;
+        }
     }
 }
