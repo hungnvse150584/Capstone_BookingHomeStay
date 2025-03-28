@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Service.RequestAndResponse.Response.Accounts;
+
 
 namespace Service.RequestAndResponse.Response.BookingOfServices
 {
@@ -21,7 +23,7 @@ namespace Service.RequestAndResponse.Response.BookingOfServices
         public double Total { get; set; }
 
         public string AccountID { get; set; }
-        public Account Account { get; set; }
+        public GetAccountUser Account { get; set; }
 
         public string? transactionID { get; set; }
         public Transaction? Transaction { get; set; }

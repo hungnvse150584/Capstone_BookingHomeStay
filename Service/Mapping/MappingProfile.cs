@@ -11,6 +11,7 @@ using Service.RequestAndResponse.Request.Pricing;
 using Service.RequestAndResponse.Request.Room;
 using Service.RequestAndResponse.Request.RoomType;
 using Service.RequestAndResponse.Request.Services;
+using Service.RequestAndResponse.Response.Accounts;
 using Service.RequestAndResponse.Response.BookingDetails;
 using Service.RequestAndResponse.Response.BookingOfServices;
 using Service.RequestAndResponse.Response.BookingOfServicesDetails;
@@ -57,8 +58,8 @@ namespace Service.Mapping
             CreateMap<UpdateHomeStayRequest, HomeStay>().ReverseMap();
             CreateMap<UploadImageRequest, ImageHomeStay>().ReverseMap();
             CreateMap<UpdateHomeStayImagesBodyRequest, ImageHomeStay>().ReverseMap();
-   
-   
+
+            CreateMap<Account, GetAccountUser>().ReverseMap();
 
 
 

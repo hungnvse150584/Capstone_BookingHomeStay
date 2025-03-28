@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Service.RequestAndResponse.Response.BookingDetails;
 using Service.RequestAndResponse.Response.BookingOfServices;
+using Service.RequestAndResponse.Response.Accounts;
 
 namespace Service.RequestAndResponse.Response.Bookings
 {
@@ -29,7 +30,7 @@ namespace Service.RequestAndResponse.Response.Bookings
         public Report? Report { get; set; }
 
         public string AccountID { get; set; }
-        public Account Account { get; set; }
+        public GetAccountUser Account { get; set; }
 
 
         public PaymentMethod PaymentMethod { get; set; }
