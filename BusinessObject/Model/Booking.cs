@@ -29,6 +29,8 @@ namespace BusinessObject.Model;
         [EnumDataType(typeof(PaymentStatus))]
         public PaymentStatus paymentStatus { get; set; }
 
+        public double TotalRentPrice { get; set; }
+
         public double Total { get; set; }
 
         public double bookingDeposit { get; set; }

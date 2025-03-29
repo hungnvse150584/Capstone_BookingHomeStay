@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service.RequestAndResponse.Response.Accounts;
+using Service.RequestAndResponse.Response.BookingOfServicesDetails;
 
 
 namespace Service.RequestAndResponse.Response.BookingOfServices
@@ -25,14 +26,13 @@ namespace Service.RequestAndResponse.Response.BookingOfServices
         public string AccountID { get; set; }
         public GetAccountUser Account { get; set; }
 
-        public string? transactionID { get; set; }
-        public Transaction? Transaction { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
 
         public BookingServicesStatus Status { get; set; }
 
         public PaymentServicesMethod PaymentServicesMethod { get; set; }
 
-        public ICollection<BookingServicesDetail> BookingServicesDetails { get; set; }
+        public ICollection<GetAllDetailOfServices> BookingServicesDetails { get; set; }
 
         public ICollection<Notification> Notifications { get; set; }
     }

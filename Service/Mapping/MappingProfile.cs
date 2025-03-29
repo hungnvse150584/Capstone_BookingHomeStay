@@ -172,6 +172,7 @@ namespace Service.Mapping
 
             CreateMap<BookingDetail, GetBookingDetails>();
             CreateMap<BookingServices, GetAllBookingServices>();
+            CreateMap<BookingServices, GetSimpleBookingService>();
             CreateMap<Booking, GetAllBookings>();
             CreateMap<Booking, GetCancellationBooking>();
 

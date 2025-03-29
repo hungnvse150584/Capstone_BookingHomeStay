@@ -23,9 +23,17 @@ namespace GreenRoam.Controllers
 
         [HttpGet]
         [Route("GetAllBooking")]
-        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllBookings>>>> GetAllBookings(string? search, DateTime? date = null, BookingStatus? status = null)
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllBookings>>>> GetAllBookings(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
         {
-            var bookings = await _bookingService.GetAllBooking(search, date, status);
+            var bookings = await _bookingService.GetAllBooking(search, date, status, paymentStatus);
+            return Ok(bookings);
+        }
+
+        [HttpGet]
+        [Route("GetAllBookingServices")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllBookings>>>> GetAllBookingServices(string? search, DateTime? date = null, BookingServicesStatus? status = null, PaymentServicesStatus? paymentStatus = null)
+        {
+            var bookings = await _bookingService.GetAllBookingService(search, date, status, paymentStatus);
             return Ok(bookings);
         }
 

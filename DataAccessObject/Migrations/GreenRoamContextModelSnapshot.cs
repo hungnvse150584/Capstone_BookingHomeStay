@@ -145,6 +145,9 @@ namespace DataAccessObject.Migrations
                     b.Property<double>("Total")
                         .HasColumnType("float");
 
+                    b.Property<double>("TotalRentPrice")
+                        .HasColumnType("float");
+
                     b.Property<double>("bookingDeposit")
                         .HasColumnType("float");
 
@@ -1083,26 +1086,6 @@ namespace DataAccessObject.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "cce47e9f-62cb-499f-982c-994dedd7b2c6",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "90338ea8-86e3-4590-a946-a6b1bb5a5bd8",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
-                        },
-                        new
-                        {
-                            Id = "f173272a-35d4-4a38-9edb-e20dc8ac8975",
-                            Name = "Owner",
-                            NormalizedName = "OWNER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

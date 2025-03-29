@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Service.RequestAndResponse.Response.BookingDetails;
 using Service.RequestAndResponse.Response.BookingOfServices;
 using Service.RequestAndResponse.Response.Accounts;
+using Service.RequestAndResponse.Response.Reports;
 
 namespace Service.RequestAndResponse.Response.Bookings
 {
@@ -24,10 +25,16 @@ namespace Service.RequestAndResponse.Response.Bookings
 
         public BookingStatus Status { get; set; }
 
+        public double TotalRentPrice { get; set; }
+
         public double Total { get; set; }
 
+        public double bookingDeposit { get; set; }
+
+        public double remainingBalance { get; set; }
+
         public int? ReportID { get; set; }
-        public Report? Report { get; set; }
+        public GetReportResponse? Report { get; set; }
 
         public string AccountID { get; set; }
         public GetAccountUser Account { get; set; }
@@ -39,7 +46,7 @@ namespace Service.RequestAndResponse.Response.Bookings
 
         public ICollection<GetBookingDetails> BookingDetails { get; set; }
 
-        public ICollection<GetAllBookingServices> BookingServices { get; set; }
+        public ICollection<GetSimpleBookingService> BookingServices { get; set; }
 
         public ICollection<Notification> Notifications { get; set; }
     }
