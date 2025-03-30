@@ -13,6 +13,6 @@ namespace Service.RequestAndResponse.Request.BookingServices
 
         public string AccountID { get; set; }
 
-        public ICollection<BookingServiceDetailRequest> BookingServicesDetails { get; set; }
+        public ICollection<UpdateBookingServiceDetailRequest> BookingServicesDetails { get; set; }
     }
 }
