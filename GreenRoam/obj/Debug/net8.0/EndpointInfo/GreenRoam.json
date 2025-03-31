@@ -5408,6 +5408,32 @@
         "type": "integer",
         "format": "int32"
       },
+      "GetAccountUser": {
+        "type": "object",
+        "properties": {
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "GetAllBookingServices": {
         "type": "object",
         "properties": {
@@ -5436,7 +5462,7 @@
             "nullable": true
           },
           "account": {
-            "$ref": "#/components/schemas/Account"
+            "$ref": "#/components/schemas/GetAccountUser"
           },
           "transactionID": {
             "type": "string",
@@ -5507,7 +5533,7 @@
             "nullable": true
           },
           "account": {
-            "$ref": "#/components/schemas/Account"
+            "$ref": "#/components/schemas/GetAccountUser"
           },
           "paymentMethod": {
             "$ref": "#/components/schemas/PaymentMethod"
@@ -6572,7 +6598,7 @@
             "nullable": true
           },
           "account": {
-            "$ref": "#/components/schemas/Account"
+            "$ref": "#/components/schemas/GetAccountUser"
           },
           "paymentMethod": {
             "$ref": "#/components/schemas/PaymentMethod"
@@ -7285,7 +7311,7 @@
             "nullable": true
           },
           "account": {
-            "$ref": "#/components/schemas/Account"
+            "$ref": "#/components/schemas/GetAccountUser"
           },
           "imageHomeStays": {
             "type": "array",
