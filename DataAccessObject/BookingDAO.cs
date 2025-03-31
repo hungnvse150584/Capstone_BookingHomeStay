@@ -55,6 +55,10 @@ namespace DataAccessObject
         {
             return await _context.Bookings
                 .Include(b => b.BookingDetails)
+                .ThenInclude(bd => bd.HomeStayRentals)
+                .Include(b => b.BookingDetails)
+                .ThenInclude(bd => bd.Rooms)
+                .Include(b => b.HomeStay)
                 .Where(b => b.AccountID == accountId)
                 .ToListAsync();
         }
@@ -63,6 +67,10 @@ namespace DataAccessObject
         {
             return await _context.Bookings
                 .Include(b => b.BookingDetails)
+                .ThenInclude(bd => bd.HomeStayRentals)
+                .Include(b => b.BookingDetails)
+                .ThenInclude(bd => bd.Rooms)
+                .Include (b => b.Account)
                 .Where(b => b.HomeStayID == homeStayID)
                 .ToListAsync();
         }

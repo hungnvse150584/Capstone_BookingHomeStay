@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Service.RequestAndResponse.Response.Accounts;
 using Service.RequestAndResponse.Response.BookingOfServicesDetails;
+using Service.RequestAndResponse.Response.Bookings;
 
 
 namespace Service.RequestAndResponse.Response.BookingOfServices

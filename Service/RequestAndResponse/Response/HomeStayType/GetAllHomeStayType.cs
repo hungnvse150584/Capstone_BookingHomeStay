@@ -50,7 +50,7 @@ namespace Service.RequestAndResponse.Response.HomeStayType
         public ICollection<GetAllRoomType> RoomTypes { get; set; }
 
        
-        public IEnumerable<GetBookingDetails> BookingDetails { get; set; }
+        public IEnumerable<GetSimpleBookingDetail> BookingDetails { get; set; }
 
         public ICollection<GetAllPricing> Pricing { get; set; }
     }
