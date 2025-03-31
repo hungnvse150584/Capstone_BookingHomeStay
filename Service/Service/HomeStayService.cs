@@ -459,6 +459,7 @@ namespace Service.Service
         {
             try
             {
+                // Kiểm tra ngày hợp lệ
                 if (request.CheckInDate > request.CheckOutDate)
                 {
                     return new BaseResponse<IEnumerable<HomeStayResponse>>(
@@ -514,65 +515,80 @@ namespace Service.Service
                         new List<HomeStayResponse>());
                 }
 
-                // Bước 3: Lọc theo CheckIn/CheckOut và sức chứa
+                // Bước 3: Lọc theo sức chứa và kiểm tra phòng trống
                 var filteredHomeStays = new List<(HomeStay HomeStay, double Distance)>();
                 foreach (var (homeStay, distance) in homeStaysWithDistance)
                 {
-                    // Kiểm tra sức chứa
-                    bool isCapacitySuitable = false;
-                    foreach (var rental in homeStay.HomeStayRentals ?? new List<HomeStayRentals>())
-                    {
-                        if (rental.MaxAdults >= request.NumberOfAdults &&
-                            rental.MaxChildren >= request.NumberOfChildren &&
-                            rental.MaxPeople >= (request.NumberOfAdults + request.NumberOfChildren))
-                        {
-                            isCapacitySuitable = true;
-                            break;
-                        }
-                    }
+                    // Kiểm tra sức chứa và phòng trống
+                    bool hasAvailableRental = false;
+                    var rentals = homeStay.HomeStayRentals ?? new List<HomeStayRentals>();
 
-                    if (!isCapacitySuitable)
+                    if (!rentals.Any())
                     {
-                        Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is excluded due to insufficient capacity.");
+                        Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is excluded due to no rentals.");
                         continue;
                     }
 
-                    // Kiểm tra CheckIn/CheckOut
-                    bool isAvailable = true;
+                    // Lấy danh sách các BookingDetail liên quan đến HomeStay này
                     var activeBookings = homeStay.Bookings?
                         .Where(b => b.Status == BookingStatus.Pending ||
                                     b.Status == BookingStatus.Confirmed ||
                                     b.Status == BookingStatus.InProgress)
                         .ToList() ?? new List<Booking>();
 
-                    foreach (var booking in activeBookings)
+                    foreach (var rental in rentals)
                     {
-                        foreach (var detail in booking.BookingDetails ?? new List<BookingDetail>())
+                        // Kiểm tra sức chứa của rental
+                        if (rental.MaxAdults < request.NumberOfAdults ||
+                            rental.MaxChildren < request.NumberOfChildren ||
+                            rental.MaxPeople < (request.NumberOfAdults + request.NumberOfChildren))
                         {
-                            var detailCheckInDate = detail.CheckInDate.Date;
-                            var detailCheckOutDate = detail.CheckOutDate.Date;
-
-                            Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, BookingDetailID: {detail.BookingDetailID}, " +
-                                              $"CheckIn: {detailCheckInDate:yyyy-MM-dd}, CheckOut: {detailCheckOutDate:yyyy-MM-dd}, " +
-                                              $"Request CheckIn: {checkInDate:yyyy-MM-dd}, Request CheckOut: {checkOutDate:yyyy-MM-dd}");
-
-                            if (detail.HomeStayRentalID.HasValue &&
-                                homeStay.HomeStayRentals.Any(r => r.HomeStayRentalID == detail.HomeStayRentalID) &&
-                                detailCheckInDate <= checkOutDate &&
-                                detailCheckOutDate >= checkInDate)
-                            {
-                                isAvailable = false;
-                                Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is not available due to overlapping booking.");
-                                break;
-                            }
+                            Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, RentalID: {rental.HomeStayRentalID} is excluded due to insufficient capacity.");
+                            continue;
                         }
-                        if (!isAvailable) break;
+
+                        // Kiểm tra xem rental này có lịch đặt trùng không
+                        bool isRentalAvailable = true;
+                        foreach (var booking in activeBookings)
+                        {
+                            foreach (var detail in booking.BookingDetails ?? new List<BookingDetail>())
+                            {
+                                if (detail.HomeStayRentalID != rental.HomeStayRentalID)
+                                    continue;
+
+                                var detailCheckInDate = detail.CheckInDate.Date;
+                                var detailCheckOutDate = detail.CheckOutDate.Date;
+
+                                Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, RentalID: {rental.HomeStayRentalID}, BookingDetailID: {detail.BookingDetailID}, " +
+                                                  $"CheckIn: {detailCheckInDate:yyyy-MM-dd}, CheckOut: {detailCheckOutDate:yyyy-MM-dd}, " +
+                                                  $"Request CheckIn: {checkInDate:yyyy-MM-dd}, Request CheckOut: {checkOutDate:yyyy-MM-dd}");
+
+                                if (detailCheckInDate <= checkOutDate && detailCheckOutDate >= checkInDate)
+                                {
+                                    isRentalAvailable = false;
+                                    Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, RentalID: {rental.HomeStayRentalID} is not available due to overlapping booking.");
+                                    break;
+                                }
+                            }
+                            if (!isRentalAvailable) break;
+                        }
+
+                        if (isRentalAvailable)
+                        {
+                            hasAvailableRental = true;
+                            Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, RentalID: {rental.HomeStayRentalID} is available.");
+                            break; // Nếu tìm thấy một rental trống, không cần kiểm tra tiếp
+                        }
                     }
 
-                    if (isAvailable)
+                    if (hasAvailableRental)
                     {
                         filteredHomeStays.Add((homeStay, distance));
                         Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is available and added to filtered list (distance: {distance} km).");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} is excluded due to no available rentals.");
                     }
                 }
 
