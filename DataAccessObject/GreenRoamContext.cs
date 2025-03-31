@@ -43,31 +43,68 @@ namespace DataAccessObject
                 .WithOne(e => e.CancelPolicy)
                 .HasForeignKey<CancellationPolicy>(e => e.HomeStayID);
 
-            List<IdentityRole> roles = new List<IdentityRole>
-              {
-                  new IdentityRole
+            // Cấu hình quan hệ cho Conversation với User1
+            modelBuilder.Entity<Conversation>()
+                .HasOne(c => c.User1)
+                .WithMany(a => a.ConversationsAsUser1) // Liên kết với ConversationsAsUser1
+                .HasForeignKey(c => c.User1ID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Cấu hình quan hệ cho Conversation với User2
+            modelBuilder.Entity<Conversation>()
+                .HasOne(c => c.User2)
+                .WithMany(a => a.ConversationsAsUser2) // Liên kết với ConversationsAsUser2
+                .HasForeignKey(c => c.User2ID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Cấu hình quan hệ cho Message
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Conversation)
+                .WithMany(c => c.Messages)
+                .HasForeignKey(m => m.ConversationID);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany()
+                .HasForeignKey(m => m.SenderID);
+
+            // Thêm chỉ mục để tối ưu hóa truy vấn
+            modelBuilder.Entity<Message>()
+                .HasIndex(m => m.ConversationID);
+
+            modelBuilder.Entity<Conversation>()
+                .HasIndex(c => c.User1ID);
+
+            modelBuilder.Entity<Conversation>()
+                .HasIndex(c => c.User2ID);
+
+            /* List<IdentityRole> roles = new List<IdentityRole>
+               {
+                   new IdentityRole
+                   {
+                       Name = "Admin",
+                       NormalizedName = "ADMIN"
+                   },
+                   new IdentityRole
+                   {
+                       Name = "Customer",
+                       NormalizedName = "CUSTOMER"
+                   },
+                   new IdentityRole
                   {
-                      Name = "Admin",
-                      NormalizedName = "ADMIN"
-                  },
-                  new IdentityRole
-                  {
-                      Name = "Customer",
-                      NormalizedName = "CUSTOMER"
-                  },
-                  new IdentityRole
-                 {
-                      Name = "Owner",
-                      NormalizedName = "OWNER"
-                  }
-             };
-            modelBuilder.Entity<IdentityRole>().HasData(roles);
+                       Name = "Owner",
+                       NormalizedName = "OWNER"
+                   }
+              };
+             modelBuilder.Entity<IdentityRole>().HasData(roles);*/
         }
         public DbSet<HomeStay> HomeStays { get; set; }
         public DbSet<Pricing> Prices { get; set; }
         public DbSet<CancellationPolicy> CancelPolicy { get; set; }
         public DbSet<CommissionRate> CommissionRates { get; set; }
         public DbSet<CultureExperience> CultureExperiences { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public DbSet<HomeStayRentals> HomeStayRentals { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<BookingDetail> BookingDetails { get; set; }

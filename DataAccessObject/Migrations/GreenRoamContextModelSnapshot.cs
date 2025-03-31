@@ -352,6 +352,34 @@ namespace DataAccessObject.Migrations
                     b.ToTable("CommissionRates");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.Conversation", b =>
+                {
+                    b.Property<int>("ConversationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ConversationID"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("User1ID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("User2ID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ConversationID");
+
+                    b.HasIndex("User1ID");
+
+                    b.HasIndex("User2ID");
+
+                    b.ToTable("Conversations");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.CultureExperience", b =>
                 {
                     b.Property<int>("CultureExperienceID")
@@ -623,6 +651,45 @@ namespace DataAccessObject.Migrations
                     b.HasIndex("ServicesID");
 
                     b.ToTable("ImageServices");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.Message", b =>
+                {
+                    b.Property<int>("MessageID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MessageID"));
+
+                    b.Property<string>("AccountId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ConversationID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SenderID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("MessageID");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("ConversationID");
+
+                    b.HasIndex("SenderID");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Notification", b =>
@@ -1281,6 +1348,25 @@ namespace DataAccessObject.Migrations
                     b.Navigation("HomeStay");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.Conversation", b =>
+                {
+                    b.HasOne("BusinessObject.Model.Account", "User1")
+                        .WithMany("ConversationsAsUser1")
+                        .HasForeignKey("User1ID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BusinessObject.Model.Account", "User2")
+                        .WithMany("ConversationsAsUser2")
+                        .HasForeignKey("User2ID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User1");
+
+                    b.Navigation("User2");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.CultureExperience", b =>
                 {
                     b.HasOne("BusinessObject.Model.Account", "Account")
@@ -1367,6 +1453,29 @@ namespace DataAccessObject.Migrations
                         .HasForeignKey("ServicesID");
 
                     b.Navigation("Services");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.Message", b =>
+                {
+                    b.HasOne("BusinessObject.Model.Account", null)
+                        .WithMany("Messages")
+                        .HasForeignKey("AccountId");
+
+                    b.HasOne("BusinessObject.Model.Conversation", "Conversation")
+                        .WithMany("Messages")
+                        .HasForeignKey("ConversationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BusinessObject.Model.Account", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Conversation");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Notification", b =>
@@ -1568,9 +1677,15 @@ namespace DataAccessObject.Migrations
 
                     b.Navigation("Bookings");
 
+                    b.Navigation("ConversationsAsUser1");
+
+                    b.Navigation("ConversationsAsUser2");
+
                     b.Navigation("CultureExperiences");
 
                     b.Navigation("HomeStays");
+
+                    b.Navigation("Messages");
 
                     b.Navigation("Notifications");
 
@@ -1602,6 +1717,11 @@ namespace DataAccessObject.Migrations
             modelBuilder.Entity("BusinessObject.Model.CommissionRate", b =>
                 {
                     b.Navigation("HomeStays");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.Conversation", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.CultureExperience", b =>
