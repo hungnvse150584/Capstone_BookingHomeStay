@@ -33,9 +33,9 @@ namespace Repository.Repositories
             return await _bookingservicesDao.FindBookingServicesByIdAsync(bookingId);
         }
 
-        public async Task<IEnumerable<BookingServices>> GetAllBookingServicesAsync(string? search, DateTime? date = null, BookingServicesStatus? status = null)
+        public async Task<IEnumerable<BookingServices>> GetAllBookingServicesAsync(string? search, DateTime? date = null, BookingServicesStatus? status = null, PaymentServicesStatus? paymentStatus = null)
         {
-           return await _bookingservicesDao.GetAllBookingServicesAsync(search, date, status);
+           return await _bookingservicesDao.GetAllBookingServicesAsync(search, date, status, paymentStatus);
         }
 
         public async Task<IEnumerable<BookingServices>> GetBookingServicesByAccountId(string accountId)

@@ -1,18 +1,15 @@
 ﻿using BusinessObject.Model;
+using Service.RequestAndResponse.Response.Accounts;
+using Service.RequestAndResponse.Response.BookingOfServicesDetails;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Service.RequestAndResponse.Response.Accounts;
-using Service.RequestAndResponse.Response.BookingOfServicesDetails;
-
 
 namespace Service.RequestAndResponse.Response.BookingOfServices
 {
-    public class GetAllBookingServices
+    public class GetSimpleBookingService
     {
         public int BookingServicesID { get; set; }
 
@@ -22,9 +19,6 @@ namespace Service.RequestAndResponse.Response.BookingOfServices
         public DateTime BookingServicesDate { get; set; }
 
         public double Total { get; set; }
-
-        public string AccountID { get; set; }
-        public GetAccountUser Account { get; set; }
 
         public ICollection<Transaction> Transactions { get; set; }
 

@@ -9,7 +9,7 @@ namespace Repository.IRepositories
 {
     public interface IBookingServiceRepository
     {
-        Task<IEnumerable<BookingServices>> GetAllBookingServicesAsync(string? search, DateTime? date = null, BookingServicesStatus? status = null);
+        Task<IEnumerable<BookingServices>> GetAllBookingServicesAsync(string? search, DateTime? date = null, BookingServicesStatus? status = null, PaymentServicesStatus? paymentStatus = null);
         Task<IEnumerable<BookingServices>> GetBookingServicesByAccountId(string accountId);
         Task<BookingServices?> ChangeBookingServicesStatus(int bookingId, BookingServicesStatus status, PaymentServicesStatus statusPayment);
         Task AddBookingServicesAsync(BookingServices booking);

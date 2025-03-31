@@ -17,7 +17,7 @@ namespace DataAccessObject
             _context = context;
         }
 
-        public async Task<IEnumerable<BookingServices>> GetAllBookingServicesAsync(string? search, DateTime? date = null, BookingServicesStatus? status = null)
+        public async Task<IEnumerable<BookingServices>> GetAllBookingServicesAsync(string? search, DateTime? date = null, BookingServicesStatus? status = null, PaymentServicesStatus? paymentStatus = null)
         {
             IQueryable<BookingServices> bookings = _context.BookingServices
                 .Include(b => b.Account)
@@ -35,6 +35,11 @@ namespace DataAccessObject
             if (status.HasValue)
             {
                 bookings = bookings.Where(o => o.Status == status.Value);
+            }
+
+            if (paymentStatus.HasValue)
+            {
+                bookings = bookings.Where(o => o.PaymentServiceStatus == paymentStatus.Value);
             }
 
             if (!string.IsNullOrEmpty(search))

@@ -10,6 +10,7 @@ using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.Booking;
 using Service.RequestAndResponse.Request.BookingDetail;
 using Service.RequestAndResponse.Request.BookingServices;
+using Service.RequestAndResponse.Response.BookingOfServices;
 using Service.RequestAndResponse.Response.Bookings;
 using System;
 using System.Collections.Generic;
@@ -77,6 +78,24 @@ namespace Service.Service
                 StatusCodeEnum.BadGateway_502, null);
             }
             return new BaseResponse<IEnumerable<GetAllBookings>>("Get all bookings as base success",
+                StatusCodeEnum.OK_200, bookings);
+        }
+
+        public async Task<BaseResponse<IEnumerable<GetAllBookingServices>>> GetAllBookingService(string? search, DateTime? date = null, BookingServicesStatus? status = null, PaymentServicesStatus? paymentStatus = null)
+        {
+            IEnumerable<BookingServices> booking = await _bookingServiceRepository.GetAllBookingServicesAsync(search, date, status, paymentStatus);
+            if (booking == null || !booking.Any())
+            {
+                return new BaseResponse<IEnumerable<GetAllBookingServices>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            var bookings = _mapper.Map<IEnumerable<GetAllBookingServices>>(booking);
+            if (bookings == null || !bookings.Any())
+            {
+                return new BaseResponse<IEnumerable<GetAllBookingServices>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            return new BaseResponse<IEnumerable<GetAllBookingServices>>("Get all bookings as base success",
                 StatusCodeEnum.OK_200, bookings);
         }
 
@@ -292,7 +311,7 @@ namespace Service.Service
             var totalAmount = totalPriceBooking + totalPriceServices;
             var deposit = commissionrate.PlatformShare * totalAmount;
             var remaining = totalAmount - deposit;
-
+            booking.TotalRentPrice = totalPriceBooking;
             booking.Total = totalAmount;
             booking.bookingDeposit = deposit;
             booking.remainingBalance = remaining;
@@ -942,6 +961,8 @@ namespace Service.Service
             return new BaseResponse<IEnumerable<GetAllBookings>>("Get all bookings as base success",
                 StatusCodeEnum.OK_200, bookings);
         }
+
+        
 
 
 
