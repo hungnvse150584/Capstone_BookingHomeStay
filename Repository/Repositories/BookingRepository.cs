@@ -35,7 +35,7 @@ namespace Repository.Repositories
 
         public async Task<IEnumerable<Booking>> GetAllBookingAsync(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
         {
-           return await _bookingDao.GetAllBookingAsync(search, date);
+           return await _bookingDao.GetAllBookingAsync(search, date, status, paymentStatus);
         }
 
         public async Task<Booking?> GetBookingByIdAsync(int bookingId)

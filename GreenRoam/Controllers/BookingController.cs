@@ -29,17 +29,10 @@ namespace GreenRoam.Controllers
             return Ok(bookings);
         }
 
-        [HttpGet]
-        [Route("GetAllBookingServices")]
-        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllBookings>>>> GetAllBookingServices(string? search, DateTime? date = null, BookingServicesStatus? status = null, PaymentServicesStatus? paymentStatus = null)
-        {
-            var bookings = await _bookingService.GetAllBookingService(search, date, status, paymentStatus);
-            return Ok(bookings);
-        }
 
         [HttpGet]
         [Route("GetBookingByHomeStay/{homeStayID}")]
-        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllBookings>>>> GetBookingsByHomeStayId(int homeStayID)
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetBookingByHomeStay>>>> GetBookingsByHomeStayId(int homeStayID)
         {
             var bookings = await _bookingService.GetBookingsByHomeStayId(homeStayID);
             return Ok(bookings);
@@ -47,7 +40,7 @@ namespace GreenRoam.Controllers
 
         [HttpGet]
         [Route("GetBookingByAccountID/{accountId}")]
-        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllBookings>>>> GetBookingsByAccountId(string accountId)
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetBookingByAccount>>>> GetBookingsByAccountId(string accountId)
         {
             var bookings = await _bookingService.GetBookingsByAccountId(accountId);
             return Ok(bookings);
@@ -81,64 +74,5 @@ namespace GreenRoam.Controllers
         {
             return await _bookingService.GetTotalBookingsTotalBookingsAmount(startDate, endDate, timeSpanType);
         }
-
-        [HttpPost]
-        [Route("CreateBooking")]
-        public async Task<ActionResult<BaseResponse<Booking>>> CreateBooking([FromBody] CreateBookingRequest bookingRequest, PaymentMethod paymentMethod)
-        {
-            if (bookingRequest == null)
-            {
-                return BadRequest("Please Implement all Information");
-            }
-            var booking = await _bookingService.CreateBooking(bookingRequest, paymentMethod);
-            return booking;
-        }
-
-        [HttpPut]
-        [Route("UpdateBooking")]
-        public async Task<ActionResult<BaseResponse<UpdateBookingRequest>>> UpdateBooking(int bookingID, UpdateBookingRequest request)
-        {
-            if (request == null)
-            {
-                return BadRequest("Please Implement all Information");
-            }
-            var booking = await _bookingService.UpdateBooking(bookingID, request);
-            return booking;
-        }
-
-        [HttpPut]
-        [Route("ChangeBookingStatus")]
-        public async Task<ActionResult<BaseResponse<Booking>>> ChangeTheBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)
-        {
-            var booking = await _bookingService.ChangeBookingStatus(bookingId, bookingServiceID, status, paymentStatus, servicesStatus, statusPayment);
-            return Ok(booking);
-        }
-
-        [HttpPost]
-        [Route("CreateBookingServices")]
-        public async Task<ActionResult<BaseResponse<BookingServices>>> CreateBookingServices([FromBody] CreateBookingServices bookingServiceRequest, PaymentServicesMethod paymentServicesMethod)
-        {
-
-            if (bookingServiceRequest == null)
-            {
-                return BadRequest("Please Implement all Information");
-            }
-            var booking = await _bookingService.CreateServiceBooking(bookingServiceRequest, paymentServicesMethod);
-            return booking;
-        }
-
-        [HttpPut]
-        [Route("UpdateBookingServices")]
-        public async Task<ActionResult<BaseResponse<UpdateBookingService>>> UpdateBookingServices(int bookingServiceID, UpdateBookingService request)
-        {
-            if (request == null)
-            {
-                return BadRequest("Please Implement all Information");
-            }
-            var bookingServices = await _bookingService.UpdateBookingServices(bookingServiceID, request);
-            return bookingServices;
-        }
-
-
     }
 }

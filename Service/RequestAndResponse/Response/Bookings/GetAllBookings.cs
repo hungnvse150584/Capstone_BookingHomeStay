@@ -10,6 +10,7 @@ using Service.RequestAndResponse.Response.BookingDetails;
 using Service.RequestAndResponse.Response.BookingOfServices;
 using Service.RequestAndResponse.Response.Accounts;
 using Service.RequestAndResponse.Response.Reports;
+using Service.RequestAndResponse.Response.HomeStays;
 
 namespace Service.RequestAndResponse.Response.Bookings
 {
@@ -39,6 +40,9 @@ namespace Service.RequestAndResponse.Response.Bookings
         public string AccountID { get; set; }
         public GetAccountUser Account { get; set; }
 
+        public int HomeStayID { get; set; }
+        public HomeStayResponse HomeStay { get; set; }
+
 
         public PaymentMethod PaymentMethod { get; set; }
 
@@ -46,7 +50,7 @@ namespace Service.RequestAndResponse.Response.Bookings
 
         public ICollection<GetBookingDetails> BookingDetails { get; set; }
 
-        public ICollection<GetSimpleBookingService> BookingServices { get; set; }
+        public ICollection<GetBookingService> BookingServices { get; set; }
 
         public ICollection<Notification> Notifications { get; set; }
     }

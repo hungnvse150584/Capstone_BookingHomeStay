@@ -23,9 +23,9 @@ namespace Service.RequestAndResponse.Response.BookingDetails
         public double TotalAmount { get; set; }
 
         public int? HomeStayTypesID { get; set; }
-        public GetAllHomeStayType? HomeStayTypes { get; set; }
+        public GetSimpleHomeStayType? HomeStayTypes { get; set; }
 
         public int? BookingID { get; set; }
-        public GetAllBookings? Booking { get; set; }
+        /*public GetSimpleBooking? Booking { get; set; }*/
     }
 }

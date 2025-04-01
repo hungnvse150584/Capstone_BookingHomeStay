@@ -29,6 +29,8 @@ namespace Service
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IPricingService, PricingService>();
             services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<ICheckOutService, CheckOutService>();
+            services.AddScoped<IBookingForService, BookingForService>();
             services.AddScoped<ICommissionRateService, CommissionRateService>();
             services.AddScoped<IImageHomeStayService, ImageHomeStayService>();
             services.AddScoped<ICancellationPolicyService, CancellationPolicyService>();

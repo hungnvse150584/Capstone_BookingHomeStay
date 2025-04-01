@@ -55,6 +55,7 @@ namespace Service.Mapping
             CreateMap<UploadImageRequest, ImageHomeStay>().ReverseMap();
             CreateMap<UpdateHomeStayImagesBodyRequest, ImageHomeStay>().ReverseMap();
 
+
             CreateMap<Account, GetAccountUser>().ReverseMap();
 
             CreateMap<RoomTypes, GetAllRoomType>().ReverseMap();
@@ -91,6 +92,8 @@ namespace Service.Mapping
             CreateMap<CreateHomeStayTypeRequest, HomeStayRentals>()
                 .ForMember(dest => dest.Prices, opt => opt.MapFrom(src => src.PricingJson));
 
+
+            CreateMap<HomeStayRentals, GetSimpleHomeStayType>();
             CreateMap<HomeStayRentals, GetHomeStayRentalDetailResponse>()
                 .ForMember(dest => dest.Pricing, opt => opt.MapFrom(src => src.Prices))
                 .ForMember(dest => dest.ImageHomeStayRentals, opt => opt.MapFrom(src => src.ImageHomeStayRentals))
@@ -194,6 +197,7 @@ namespace Service.Mapping
             CreateMap<ImageHomeStayRentals, UpdateImageHomeStayTypesRequest>().ReverseMap();
             CreateMap<ImageHomeStayRentals, GetAllImageHomeStayType>();
 
+<<<<<<< HEAD
             CreateMap<BookingDetail, GetBookingDetails>();
             CreateMap<BookingDetail, GetBookingDetailFilter>()
                 .ForMember(dest => dest.rentPrice, opt => opt.MapFrom(src => src.rentPrice));
@@ -201,7 +205,22 @@ namespace Service.Mapping
             CreateMap<BookingServices, GetAllBookingServices>();
             CreateMap<BookingServices, GetSimpleBookingService>();
             CreateMap<Booking, GetAllBookings>();
+=======
+            CreateMap<BookingDetail, GetBookingDetails>().ReverseMap();
+            CreateMap<BookingDetail, GetSimpleBookingDetail>().ReverseMap();
+            CreateMap<BookingServicesDetail, GetSimpleDetailOfService>().ReverseMap();
+            CreateMap<BookingServices, GetAllBookingServices>().ReverseMap();
+            CreateMap<BookingServices, GetSimpleBookingService>().ReverseMap();
+            CreateMap<BookingServices, GetBookingServiceByAccount>().ReverseMap();
+            CreateMap<BookingServices, GetBookingServiceByHomeStay>().ReverseMap();
+            CreateMap<BookingServices, GetBookingService>().ReverseMap();
+            CreateMap<Booking, GetAllBookings>().ReverseMap();
+>>>>>>> main
             CreateMap<Booking, GetCancellationBooking>();
+            CreateMap<Booking, GetBookingByAccount>().ReverseMap();
+            CreateMap<Booking, GetBookingByHomeStay>().ReverseMap();
+            CreateMap<Booking, GetSimpleBooking>().ReverseMap();
+
 
             CreateMap<ImageServices, GetAllImageService>();
             CreateMap<ImageServices, GetImageService>();
@@ -213,7 +232,9 @@ namespace Service.Mapping
             CreateMap<Report, GetReportResponse>().ReverseMap();
             CreateMap<CultureExperience, GetAllCultureExperiencesResponse>().ReverseMap();
             CreateMap<Services, GetServiceForHomeStay>().ReverseMap();
+            CreateMap<Services, GetSingleService>().ReverseMap();
             CreateMap<HomeStay, SimpleHomeStayResponse>().ReverseMap();
+            CreateMap<HomeStay, GetHomeStayResponse>();
             CreateMap<HomeStay, GetAllHomeStayWithOwnerName>()
                 .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.Account.Name));
         }

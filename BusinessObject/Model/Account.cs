@@ -36,5 +36,11 @@ namespace BusinessObject.Model;
         public ICollection<Notification> Notifications { get; set; }
 
         public ICollection<CultureExperience> CultureExperiences { get; set; }
+
+        public ICollection<Conversation> ConversationsAsUser1 { get; set; }
+
+        public ICollection<Conversation> ConversationsAsUser2 { get; set; }
+
+        public ICollection<Message> Messages { get; set; }
     }
 
