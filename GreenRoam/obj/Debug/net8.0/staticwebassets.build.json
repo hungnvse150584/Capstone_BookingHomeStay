@@ -1,16 +1,11 @@
 {
   "Version": 1,
-<<<<<<< HEAD
-  "Hash": "8yLKgt0WKdsPp53pmajSnd/kv+eiesFCV5t5AGQ+UEM=",
-=======
-  "Hash": "0Bji18ens962YT8Ci2Bo3yH6bEhurs1SurNweoI0TYM=",
->>>>>>> main
+  "Hash": "AEJ0l+cMPtVozPcxjvCljvbHZby2Pl8oWjZU9eo3BUw=",
   "Source": "GreenRoam",
   "BasePath": "_content/GreenRoam",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-<<<<<<< HEAD
   "DiscoveryPatterns": [
     {
       "Name": "GreenRoam\\wwwroot",
@@ -67,7 +62,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 01 Apr 2025 12:38:41 GMT"
+          "Value": "Tue, 01 Apr 2025 14:36:06 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -112,7 +107,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 01 Apr 2025 12:38:41 GMT"
+          "Value": "Tue, 01 Apr 2025 14:36:06 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -127,8 +122,4 @@
       ]
     }
   ]
-=======
-  "DiscoveryPatterns": [],
-  "Assets": []
->>>>>>> main
 }
