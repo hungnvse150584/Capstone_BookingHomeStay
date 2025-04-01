@@ -22,6 +22,7 @@ namespace Service.IService
         /*Task<BaseResponse<UpdateBookingRequest>> UpdateBooking(int bookingID, UpdateBookingRequest request);*/
         
         Task<BaseResponse<IEnumerable<GetBookingByHomeStay>>> GetBookingsByHomeStayId(int homeStayID);
+        Task<BaseResponse<Booking>> GetBookingsById(int bookingID);
         Task<BaseResponse<IEnumerable<GetBookingByAccount>>> GetBookingsByAccountId(string accountId);
         Task<BaseResponse<GetCancellationBooking>> GetCancellationBooking(int bookingID);
         //For Admin DashBoard

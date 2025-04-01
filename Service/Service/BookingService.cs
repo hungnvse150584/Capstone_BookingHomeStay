@@ -96,6 +96,19 @@ namespace Service.Service
             }
         }
 
+        public async Task<BaseResponse<Booking>> GetBookingsById(int bookingID)
+        {
+            var booking = await _bookingRepository.GetBookingByIdAsync(bookingID);
+            if (booking == null)
+            {
+                return new BaseResponse<Booking>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+
+            return new BaseResponse<Booking>("Get all bookings as base success",
+                StatusCodeEnum.OK_200, booking);
+        }
+
         // For Admin and Owner DashBoard
         public async Task<BaseResponse<GetStaticBookings>> GetStaticBookings()
         {
