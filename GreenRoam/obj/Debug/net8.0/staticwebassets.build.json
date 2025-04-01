@@ -1,12 +1,125 @@
 {
   "Version": 1,
-  "Hash": "MLGUdaaYouR/2iCyDAPVdGmMz4VQ2ZjqG8th+ZoKsC4=",
+  "Hash": "8yLKgt0WKdsPp53pmajSnd/kv+eiesFCV5t5AGQ+UEM=",
   "Source": "GreenRoam",
   "BasePath": "_content/GreenRoam",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "GreenRoam\\wwwroot",
+      "Source": "GreenRoam",
+      "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
+      "BasePath": "_content/GreenRoam",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\index.html",
+      "SourceId": "GreenRoam",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
+      "BasePath": "_content/GreenRoam",
+      "RelativePath": "index#[.{fingerprint}]?.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ear1ndnans",
+      "Integrity": "Zvt43OIsDuckAEiDv3PauZlAEq3T+N+eL3ixygDgzMo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "index.ear1ndnans.html",
+      "AssetFile": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6584"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Zvt43OIsDuckAEiDv3PauZlAEq3T+N+eL3ixygDgzMo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 01 Apr 2025 12:38:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ear1ndnans"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Zvt43OIsDuckAEiDv3PauZlAEq3T+N+eL3ixygDgzMo="
+        }
+      ]
+    },
+    {
+      "Route": "index.html",
+      "AssetFile": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6584"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Zvt43OIsDuckAEiDv3PauZlAEq3T+N+eL3ixygDgzMo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 01 Apr 2025 12:38:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Zvt43OIsDuckAEiDv3PauZlAEq3T+N+eL3ixygDgzMo="
+        }
+      ]
+    }
+  ]
 }
