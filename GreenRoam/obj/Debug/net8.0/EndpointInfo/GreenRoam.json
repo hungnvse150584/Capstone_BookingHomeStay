@@ -1184,6 +1184,52 @@
         }
       }
     },
+    "/api/booking-checkout/BookingPayment": {
+      "post": {
+        "tags": [
+          "CheckOut"
+        ],
+        "parameters": [
+          {
+            "name": "bookingID",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "isFullPayment",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/booking-checkout/UpdateBooking": {
       "put": {
         "tags": [
@@ -7251,13 +7297,21 @@
             "type": "number",
             "format": "double"
           },
-          "homeStayTypesID": {
+          "homeStayRentalID": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "homeStayTypes": {
+          "homeStayRentals": {
             "$ref": "#/components/schemas/GetSimpleHomeStayType"
+          },
+          "roomID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "rooms": {
+            "$ref": "#/components/schemas/GetAllRooms"
           }
         },
         "additionalProperties": false
