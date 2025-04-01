@@ -198,6 +198,7 @@ namespace Service.Mapping
             CreateMap<Report, GetReportResponse>().ReverseMap();
             CreateMap<CultureExperience, GetAllCultureExperiencesResponse>().ReverseMap();
             CreateMap<Services, GetServiceForHomeStay>().ReverseMap();
+            CreateMap<Services, GetSingleService>().ReverseMap();
             CreateMap<HomeStay, SimpleHomeStayResponse>().ReverseMap();
             CreateMap<HomeStay, GetHomeStayResponse>();
             CreateMap<HomeStay, GetAllHomeStayWithOwnerName>()
