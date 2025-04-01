@@ -323,7 +323,6 @@ namespace Service.Service
         {
             try
             {
-               
                 if (!request.CheckInDate.HasValue)
                 {
                     return new BaseResponse<IEnumerable<GetAllHomeStayTypeFilter>>(
@@ -348,7 +347,6 @@ namespace Service.Service
                         null);
                 }
 
-             
                 if (request.CheckInDate > request.CheckOutDate)
                 {
                     return new BaseResponse<IEnumerable<GetAllHomeStayTypeFilter>>(
@@ -368,24 +366,24 @@ namespace Service.Service
                 var checkInDate = request.CheckInDate.Value.Date;
                 var checkOutDate = request.CheckOutDate.Value.Date;
 
-             
-                bool rentWhole = request.RentWhole ?? false;
-                int numberOfAdults = request.NumberOfAdults.Value; 
-                int numberOfChildren = request.NumberOfChildren ?? 0; 
+                // Kiểm tra lại NumberOfAdults trước khi truy cập .Value
+                if (!request.NumberOfAdults.HasValue)
+                {
+                    throw new InvalidOperationException("NumberOfAdults is unexpectedly null after validation.");
+                }
+                int numberOfAdults = request.NumberOfAdults.Value;
+                int numberOfChildren = request.NumberOfChildren ?? 0;
 
-               
                 var finalFilteredRentals = await _homeStayTypeRepository.FilterHomeStayRentalsAsync(
                     request.HomeStayID,
-                    rentWhole,
+                    request.RentWhole,
                     checkInDate,
                     checkOutDate,
                     numberOfAdults,
                     numberOfChildren);
 
-             
                 var response = _mapper.Map<IEnumerable<GetAllHomeStayTypeFilter>>(finalFilteredRentals);
 
-            
                 foreach (var rental in response)
                 {
                     var hasBooking = rental.BookingDetails
@@ -397,7 +395,6 @@ namespace Service.Service
                                    bd.CheckInDate.Date <= checkOutDate &&
                                    bd.CheckOutDate.Date >= checkInDate);
 
-                
                     var roomIds = rental.RoomTypes
                         .SelectMany(rt => rt.Rooms)
                         .Where(r => r.IsActive)
@@ -406,29 +403,25 @@ namespace Service.Service
 
                     if (!roomIds.Any())
                     {
-                     
                         if (hasBooking)
                         {
                             rental.TotalAvailableRooms = 0;
                         }
                         else
                         {
-                            rental.TotalAvailableRooms = 0; 
+                            rental.TotalAvailableRooms = 0;
                         }
                         continue;
                     }
 
                     if (hasBooking)
                     {
-                  
                         rental.TotalAvailableRooms = 0;
                     }
                     else
                     {
-                    
                         rental.TotalAvailableRooms = roomIds.Count;
 
-                
                         foreach (var roomType in rental.RoomTypes)
                         {
                             var roomTypeRoomIds = roomType.Rooms
@@ -439,26 +432,22 @@ namespace Service.Service
                         }
                     }
 
-                    // Áp dụng điều kiện RentWhole
-                    if (rentWhole)
+                    if (request.RentWhole.HasValue && request.RentWhole.Value)
                     {
-                    
                         if (rental.TotalAvailableRooms != roomIds.Count)
                         {
-                            rental.TotalAvailableRooms = 0; // Đặt lại để không hiển thị nếu không thỏa mãn
+                            rental.TotalAvailableRooms = 0;
                         }
                     }
                     else
                     {
-                        // Nếu RentWhole = false, chỉ cần có ít nhất 1 phòng trống
                         if (rental.TotalAvailableRooms == 0)
                         {
-                            rental.TotalAvailableRooms = 0; // Đặt lại để không hiển thị nếu không có phòng trống
+                            rental.TotalAvailableRooms = 0;
                         }
                     }
                 }
 
-           
                 var filteredResponse = response
                     .Where(r => r.TotalAvailableRooms > 0 ||
                                 (!r.BookingDetails.Any(bd => bd.Booking != null &&
@@ -467,7 +456,7 @@ namespace Service.Service
                                                               bd.Booking.Status == BookingStatus.Confirmed ||
                                                               bd.Booking.Status == BookingStatus.InProgress) &&
                                                              bd.CheckInDate.Date <= checkOutDate &&
-                                                             bd.CheckOutDate.Date >= checkInDate))) 
+                                                             bd.CheckOutDate.Date >= checkInDate)))
                     .ToList();
 
                 foreach (var item in filteredResponse)
@@ -475,7 +464,7 @@ namespace Service.Service
                     var rental = finalFilteredRentals.FirstOrDefault(r => r.HomeStayRentalID == item.HomeStayRentalID);
                     if (rental != null)
                     {
-                        item.Name = rental.Name; 
+                        item.Name = rental.Name;
                     }
                 }
 
@@ -492,7 +481,6 @@ namespace Service.Service
                     null);
             }
         }
-
         public async Task<BaseResponse<HomeStayRentals>> UpdateHomeStayType(int homeStayRentalID, UpdateHomeStayTypeRequest request)
         {
             var existingRental = await _homeStayTypeRepository.GetHomeStayTypesByIdAsync(homeStayRentalID);

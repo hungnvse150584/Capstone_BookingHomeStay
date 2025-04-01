@@ -98,7 +98,7 @@ namespace DataAccessObject
         }
         public async Task<IEnumerable<HomeStayRentals>> FilterHomeStayRentalsAsync(
      int homeStayId,
-     bool rentWhole,
+     bool? rentWhole,
      DateTime checkInDate,
      DateTime checkOutDate,
      int numberOfAdults,
@@ -109,15 +109,21 @@ namespace DataAccessObject
                 throw new ArgumentException("HomeStayID must be greater than 0.");
             }
 
-            // Bước 1: Lấy tất cả HomeStayRentals (đã lọc Status, RentWhole và HomeStayID tại database)
             var query = _context.HomeStayRentals
                 .AsNoTracking()
                 .Where(h => h.HomeStayID == homeStayId &&
-                            h.RentWhole == rentWhole &&
                             h.Status == true &&
                             h.MaxAdults >= numberOfAdults &&
                             h.MaxChildren >= numberOfChildren &&
-                            h.MaxPeople >= (numberOfAdults + numberOfChildren))
+                            h.MaxPeople >= (numberOfAdults + numberOfChildren));
+
+            // Chỉ thêm điều kiện RentWhole nếu rentWhole có giá trị
+            if (rentWhole.HasValue)
+            {
+                query = query.Where(h => h.RentWhole == rentWhole.Value);
+            }
+
+            query = query
                 .Include(h => h.RoomTypes)
                     .ThenInclude(rt => rt.Rooms)
                 .Include(h => h.RoomTypes)
@@ -132,7 +138,6 @@ namespace DataAccessObject
 
             var homeStayRentals = await query.ToListAsync();
 
-            // Bước 2: Lọc BookingDetails theo HomeStayRentalID
             foreach (var rental in homeStayRentals)
             {
                 rental.BookingDetails = rental.BookingDetails
