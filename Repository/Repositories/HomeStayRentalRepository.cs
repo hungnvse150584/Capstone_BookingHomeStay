@@ -67,5 +67,21 @@ namespace Repository.Repositories
         {
             return await _homestayrentalDao.GetAllHomeStayTypesAsyncFilter(homestayId, rentWhole);
         }
+        public async Task<IEnumerable<HomeStayRentals>> FilterHomeStayRentalsAsync(
+            int homeStayId,
+            bool rentWhole,
+            DateTime checkInDate,
+            DateTime checkOutDate,
+            int numberOfAdults,
+            int numberOfChildren)
+        {
+            return await _homestayrentalDao.FilterHomeStayRentalsAsync(
+                homeStayId,
+                rentWhole,
+                checkInDate,
+                checkOutDate,
+                numberOfAdults,
+                numberOfChildren);
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace BusinessObject.Model;
 
         [Required]
         public double Longitude { get; set; } // Kinh độ
-
+ 
         public DateTime CreateAt { get; set; }
 
         public DateTime UpdateAt { get; set; }

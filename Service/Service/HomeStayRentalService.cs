@@ -319,14 +319,14 @@ namespace Service.Service
                 StatusCodeEnum.OK_200, homeStayTypes);
         }
 
-        public async Task<BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>> FilterHomeStayRentalsAsync(FilterHomeStayRentalRequest request)
+        public async Task<BaseResponse<IEnumerable<GetAllHomeStayTypeFilter>>> FilterHomeStayRentalsAsync(FilterHomeStayRentalRequest request)
         {
             try
             {
                 // Kiểm tra CheckInDate và CheckOutDate hợp lệ
                 if (request.CheckInDate > request.CheckOutDate)
                 {
-                    return new BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>(
+                    return new BaseResponse<IEnumerable<GetAllHomeStayTypeFilter>>(
                         "Check-out date must be after check-in date.",
                         StatusCodeEnum.BadRequest_400,
                         null);
@@ -334,7 +334,7 @@ namespace Service.Service
 
                 if (request.CheckInDate < DateTime.UtcNow.Date)
                 {
-                    return new BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>(
+                    return new BaseResponse<IEnumerable<GetAllHomeStayTypeFilter>>(
                         "Check-in date cannot be in the past.",
                         StatusCodeEnum.BadRequest_400,
                         null);
@@ -343,73 +343,63 @@ namespace Service.Service
                 var checkInDate = request.CheckInDate.Date;
                 var checkOutDate = request.CheckOutDate.Date;
 
-                // Bước 1: Lấy tất cả HomeStayRentals (đã lọc Status, RentWhole và HomeStayID tại database)
-                var filteredHomeStayRentals = await _homeStayTypeRepository.GetAllAsyncFilter(request.RentWhole);
+                // Gọi repository để lọc HomeStayRentals
+                var finalFilteredRentals = await _homeStayTypeRepository.FilterHomeStayRentalsAsync(
+                    request.HomeStayID,
+                    (bool)request.RentWhole,
+                    checkInDate,
+                    checkOutDate,
+                    request.NumberOfAdults,
+                    request.NumberOfChildren);
 
-                // Lọc thêm theo HomeStayID
-                filteredHomeStayRentals = filteredHomeStayRentals
-                    .Where(h => h.HomeStayID == request.HomeStayID)
-                    .ToList();
+                // Ánh xạ sang GetAllHomeStayTypeFilter
+                var response = _mapper.Map<IEnumerable<GetAllHomeStayTypeFilter>>(finalFilteredRentals);
 
-                if (!filteredHomeStayRentals.Any())
+                // Tính toán số lượng phòng trống
+                foreach (var rental in response)
                 {
-                    return new BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>(
-                        "No HomeStayRentals available with the specified conditions.",
-                        StatusCodeEnum.OK_200,
-                        new List<GetHomeStayRentalDetailResponse>());
-                }
+                    // Lấy danh sách RoomID từ tất cả RoomTypes
+                    var roomIds = rental.RoomTypes
+                        .SelectMany(rt => rt.Rooms)
+                        .Where(r => r.IsActive)
+                        .Select(r => r.RoomID)
+                        .ToList();
 
-                // Bước 2: Lọc theo CheckIn/CheckOut, MaxAdults, MaxChildren
-                var finalFilteredRentals = new List<HomeStayRentals>();
-                foreach (var rental in filteredHomeStayRentals)
-                {
-                    // Kiểm tra sức chứa (MaxAdults, MaxChildren)
-                    if (rental.MaxAdults < request.NumberOfAdults ||
-                        rental.MaxChildren < request.NumberOfChildren ||
-                        rental.MaxPeople < (request.NumberOfAdults + request.NumberOfChildren))
+                    if (!roomIds.Any())
                     {
-                        Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID} is excluded due to insufficient capacity. " +
-                                          $"MaxAdults: {rental.MaxAdults}, Requested: {request.NumberOfAdults}, " +
-                                          $"MaxChildren: {rental.MaxChildren}, Requested: {request.NumberOfChildren}, " +
-                                          $"MaxPeople: {rental.MaxPeople}, Requested: {request.NumberOfAdults + request.NumberOfChildren}");
+                        rental.TotalAvailableRooms = 0;
                         continue;
                     }
 
-                    // Kiểm tra CheckIn/CheckOut
-                    bool isAvailable = true;
-                    var activeBookings = rental.BookingDetails?
+                    // Lấy danh sách RoomID đã bị đặt trong khoảng thời gian yêu cầu
+                    var bookedRoomIds = rental.BookingDetails
                         .Where(bd => bd.Booking != null &&
                                      (bd.Booking.Status == BookingStatus.Pending ||
                                       bd.Booking.Status == BookingStatus.Confirmed ||
-                                      bd.Booking.Status == BookingStatus.InProgress))
-                        .ToList() ?? new List<BookingDetail>();
+                                      bd.Booking.Status == BookingStatus.InProgress) &&
+                                     bd.CheckInDate.Date <= checkOutDate &&
+                                     bd.CheckOutDate.Date >= checkInDate)
+                        .Select(bd => bd.RoomID)
+                        .Where(rid => rid.HasValue)
+                        .Select(rid => rid.Value)
+                        .Distinct()
+                        .ToList();
 
-                    foreach (var bookingDetail in activeBookings)
+                    // Tính số lượng phòng trống cho mỗi RoomType
+                    foreach (var roomType in rental.RoomTypes)
                     {
-                        var detailCheckInDate = bookingDetail.CheckInDate.Date;
-                        var detailCheckOutDate = bookingDetail.CheckOutDate.Date;
+                        var roomTypeRoomIds = roomType.Rooms
+                            .Where(r => r.IsActive)
+                            .Select(r => r.RoomID)
+                            .ToList();
 
-                        Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID}, BookingDetailID: {bookingDetail.BookingDetailID}, " +
-                                          $"CheckIn: {detailCheckInDate:yyyy-MM-dd}, CheckOut: {detailCheckOutDate:yyyy-MM-dd}, " +
-                                          $"Request CheckIn: {checkInDate:yyyy-MM-dd}, Request CheckOut: {checkOutDate:yyyy-MM-dd}");
-
-                        if (detailCheckInDate <= checkOutDate && detailCheckOutDate >= checkInDate)
-                        {
-                            isAvailable = false;
-                            Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID} is not available due to overlapping booking.");
-                            break;
-                        }
+                        var availableRooms = roomTypeRoomIds.Count(rid => !bookedRoomIds.Contains(rid));
+                        roomType.AvailableRoomsCount = availableRooms;
                     }
 
-                    if (isAvailable)
-                    {
-                        finalFilteredRentals.Add(rental);
-                        Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID} is available and added to filtered list.");
-                    }
+                    // Tính tổng số phòng trống
+                    rental.TotalAvailableRooms = rental.RoomTypes.Sum(rt => rt.AvailableRoomsCount);
                 }
-
-                // Ánh xạ sang GetHomeStayRentalDetailResponse
-                var response = _mapper.Map<IEnumerable<GetHomeStayRentalDetailResponse>>(finalFilteredRentals);
 
                 // Gán thêm HomeStayName cho từng item trong response
                 foreach (var item in response)
@@ -417,18 +407,18 @@ namespace Service.Service
                     var rental = finalFilteredRentals.FirstOrDefault(r => r.HomeStayRentalID == item.HomeStayRentalID);
                     if (rental != null && rental.HomeStay != null)
                     {
-                        item.HomeStayName = rental.HomeStay.Name;
+                        item.Name = rental.HomeStay.Name;
                     }
                 }
 
-                return new BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>(
+                return new BaseResponse<IEnumerable<GetAllHomeStayTypeFilter>>(
                     finalFilteredRentals.Any() ? "HomeStayRentals filtered successfully!" : "No HomeStayRentals available for the given criteria.",
                     StatusCodeEnum.OK_200,
                     response);
             }
             catch (Exception ex)
             {
-                return new BaseResponse<IEnumerable<GetHomeStayRentalDetailResponse>>(
+                return new BaseResponse<IEnumerable<GetAllHomeStayTypeFilter>>(
                     $"An error occurred while filtering HomeStayRentals: {ex.Message}",
                     StatusCodeEnum.InternalServerError_500,
                     null);

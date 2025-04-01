@@ -458,6 +458,73 @@
             "schema": {
               "$ref": "#/components/schemas/BookingStatus"
             }
+          },
+          {
+            "name": "paymentStatus",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/PaymentStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllBookingsIEnumerableBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllBookingsIEnumerableBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllBookingsIEnumerableBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/booking-bookingservices/GetAllBookingServices": {
+      "get": {
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/BookingServicesStatus"
+            }
+          },
+          {
+            "name": "paymentStatus",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/PaymentServicesStatus"
+            }
           }
         ],
         "responses": {
@@ -4552,6 +4619,10 @@
           "paymentStatus": {
             "$ref": "#/components/schemas/PaymentStatus"
           },
+          "totalRentPrice": {
+            "type": "number",
+            "format": "double"
+          },
           "total": {
             "type": "number",
             "format": "double"
@@ -4720,11 +4791,6 @@
       "BookingServiceDetailRequest": {
         "type": "object",
         "properties": {
-          "serviceDetailID": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
           "quantity": {
             "type": "integer",
             "format": "int32"
@@ -5464,12 +5530,12 @@
           "account": {
             "$ref": "#/components/schemas/GetAccountUser"
           },
-          "transactionID": {
-            "type": "string",
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            },
             "nullable": true
-          },
-          "transaction": {
-            "$ref": "#/components/schemas/Transaction"
           },
           "status": {
             "$ref": "#/components/schemas/BookingServicesStatus"
@@ -5480,7 +5546,7 @@
           "bookingServicesDetails": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/BookingServicesDetail"
+              "$ref": "#/components/schemas/GetAllDetailOfServices"
             },
             "nullable": true
           },
@@ -5516,7 +5582,19 @@
           "status": {
             "$ref": "#/components/schemas/BookingStatus"
           },
+          "totalRentPrice": {
+            "type": "number",
+            "format": "double"
+          },
           "total": {
+            "type": "number",
+            "format": "double"
+          },
+          "bookingDeposit": {
+            "type": "number",
+            "format": "double"
+          },
+          "remainingBalance": {
             "type": "number",
             "format": "double"
           },
@@ -5526,7 +5604,7 @@
             "nullable": true
           },
           "report": {
-            "$ref": "#/components/schemas/Report"
+            "$ref": "#/components/schemas/GetReportResponse"
           },
           "accountID": {
             "type": "string",
@@ -5555,7 +5633,7 @@
           "bookingServices": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/GetAllBookingServices"
+              "$ref": "#/components/schemas/GetSimpleBookingService"
             },
             "nullable": true
           },
@@ -5853,6 +5931,10 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "totalAvailableRooms": {
+            "type": "integer",
+            "format": "int32"
           },
           "imageHomeStayRentals": {
             "type": "array",
@@ -6815,6 +6897,59 @@
           },
           "status": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSimpleBookingService": {
+        "type": "object",
+        "properties": {
+          "bookingServicesID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "booking": {
+            "$ref": "#/components/schemas/Booking"
+          },
+          "bookingServicesDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "total": {
+            "type": "number",
+            "format": "double"
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            },
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/BookingServicesStatus"
+          },
+          "paymentServicesMethod": {
+            "$ref": "#/components/schemas/PaymentServicesMethod"
+          },
+          "bookingServicesDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAllDetailOfServices"
+            },
+            "nullable": true
+          },
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -8801,7 +8936,7 @@
           "bookingServicesDetails": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/BookingServiceDetailRequest"
+              "$ref": "#/components/schemas/UpdateBookingServiceDetailRequest"
             },
             "nullable": true
           }
@@ -8820,6 +8955,25 @@
           },
           "data": {
             "$ref": "#/components/schemas/UpdateBookingService"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBookingServiceDetailRequest": {
+        "type": "object",
+        "properties": {
+          "serviceDetailID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "servicesID": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
