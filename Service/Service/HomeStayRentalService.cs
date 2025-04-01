@@ -401,34 +401,36 @@ namespace Service.Service
                         continue;
                     }
 
-                    // Lấy danh sách RoomID đã bị đặt trong khoảng thời gian yêu cầu
-                    var bookedRoomIds = rental.BookingDetails
-                        .Where(bd => bd.Booking != null &&
-                                     (bd.Booking.Status == BookingStatus.Pending ||
-                                      bd.Booking.Status == BookingStatus.Confirmed ||
-                                      bd.Booking.Status == BookingStatus.InProgress) &&
-                                     bd.CheckInDate.Date <= checkOutDate &&
-                                     bd.CheckOutDate.Date >= checkInDate)
-                        .Select(bd => bd.RoomID)
-                        .Where(rid => rid.HasValue)
-                        .Select(rid => rid.Value)
-                        .Distinct()
-                        .ToList();
+                    // Kiểm tra xem có BookingDetail nào trùng với khoảng thời gian yêu cầu không
+                    var hasBooking = rental.BookingDetails
+                        .Any(bd => bd.Booking != null &&
+                                   bd.HomeStayTypesID == rental.HomeStayRentalID && // Đảm bảo BookingDetail thuộc về HomeStayRental này
+                                   (bd.Booking.Status == BookingStatus.Pending ||
+                                    bd.Booking.Status == BookingStatus.Confirmed ||
+                                    bd.Booking.Status == BookingStatus.InProgress) &&
+                                   bd.CheckInDate.Date <= checkOutDate &&
+                                   bd.CheckOutDate.Date >= checkInDate);
 
-                    // Tính số lượng phòng trống cho mỗi RoomType
-                    foreach (var roomType in rental.RoomTypes)
+                    if (hasBooking)
                     {
-                        var roomTypeRoomIds = roomType.Rooms
-                            .Where(r => r.IsActive)
-                            .Select(r => r.RoomID)
-                            .ToList();
-
-                        var availableRooms = roomTypeRoomIds.Count(rid => !bookedRoomIds.Contains(rid));
-                        roomType.AvailableRoomsCount = availableRooms;
+                        // Nếu có booking trùng, giả định rằng không có phòng trống (vì RentWhole = true yêu cầu tất cả phòng trống)
+                        rental.TotalAvailableRooms = 0;
                     }
+                    else
+                    {
+                        // Nếu không có booking trùng, tất cả phòng đều trống
+                        rental.TotalAvailableRooms = roomIds.Count;
 
-                    // Tính tổng số phòng trống
-                    rental.TotalAvailableRooms = rental.RoomTypes.Sum(rt => rt.AvailableRoomsCount);
+                        // Cập nhật AvailableRoomsCount cho mỗi RoomType
+                        foreach (var roomType in rental.RoomTypes)
+                        {
+                            var roomTypeRoomIds = roomType.Rooms
+                                .Where(r => r.IsActive)
+                                .Select(r => r.RoomID)
+                                .ToList();
+                            roomType.AvailableRoomsCount = roomTypeRoomIds.Count;
+                        }
+                    }
 
                     // Áp dụng điều kiện RentWhole
                     if (rentWhole)
@@ -444,7 +446,7 @@ namespace Service.Service
                         // Nếu RentWhole = false, chỉ cần có ít nhất 1 phòng trống
                         if (rental.TotalAvailableRooms == 0)
                         {
-                            continue; // Bỏ qua nếu không có phòng trống
+                            rental.TotalAvailableRooms = 0; // Đặt lại để không hiển thị nếu không có phòng trống
                         }
                     }
                 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GreenRoam")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4b4cb220b0451f83be5b687a136c3a4a5ec2e53")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+264b4469c1d264c8c9c6d7912f915ef2304fbcca")]
 [assembly: System.Reflection.AssemblyProductAttribute("GreenRoam")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GreenRoam")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
