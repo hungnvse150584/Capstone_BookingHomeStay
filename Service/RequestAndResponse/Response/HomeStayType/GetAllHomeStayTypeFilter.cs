@@ -18,7 +18,7 @@ namespace Service.RequestAndResponse.Response.HomeStayType
         public int numberBathRoom { get; set; }
         public int numberKitchen { get; set; }
         public int numberWifi { get; set; }
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
         public bool RentWhole { get; set; }
         public int MaxAdults { get; set; }
         public int MaxChildren { get; set; }
