@@ -89,13 +89,18 @@ namespace Service.Mapping
                 .ForMember(dest => dest.CheckOutDate, opt => opt.MapFrom(src => src.CheckOutDate))
                 .ForMember(dest => dest.Booking, opt => opt.MapFrom(src => src.Booking));
 
-            // Ánh xạ Booking sang BookingForFilter
+            // Ánh xạ Booking sang GetAllBookings
             CreateMap<Booking, GetAllBookings>()
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Transactions, opt => opt.Ignore())
+                .ForMember(dest => dest.Notifications, opt => opt.Ignore());
 
             CreateMap<Pricing, GetAllPricing>().ReverseMap();
             CreateMap<Room, GetAllRooms>()
                 .ForMember(dest => dest.isActive, opt => opt.MapFrom(src => src.isActive));
+
+            // Thêm ánh xạ từ Room sang GetRoomResponse
+            CreateMap<Room, GetRoomResponse>().ReverseMap();
 
             CreateMap<Booking, GetAllBookings>().ReverseMap();
             CreateMap<ImageRoomTypes, ImageRoomTypeResponse>().ReverseMap();
@@ -103,10 +108,6 @@ namespace Service.Mapping
 
             CreateMap<CreateHomeStayTypeRequest, HomeStayRentals>()
                 .ForMember(dest => dest.Prices, opt => opt.MapFrom(src => src.PricingJson));
-
-
-            CreateMap<HomeStayRentals, GetSimpleHomeStayType>();
-
 
             CreateMap<HomeStayRentals, GetSimpleHomeStayType>().ReverseMap();
 

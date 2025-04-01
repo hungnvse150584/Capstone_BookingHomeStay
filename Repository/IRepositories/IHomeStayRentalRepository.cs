@@ -18,7 +18,7 @@ namespace Repository.IRepositories
         Task<IEnumerable<HomeStayRentals>> GetAllHomeStayTypesAsyncFilter(int? homestayId, bool? rentWhole = null);
         Task<IEnumerable<HomeStayRentals>> FilterHomeStayRentalsAsync(
             int homeStayId,
-            bool rentWhole,
+            bool? rentWhole,
             DateTime checkInDate,
             DateTime checkOutDate,
             int numberOfAdults,
