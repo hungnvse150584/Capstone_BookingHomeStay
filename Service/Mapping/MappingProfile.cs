@@ -18,12 +18,14 @@ using Service.RequestAndResponse.Response.BookingOfServicesDetails;
 using Service.RequestAndResponse.Response.Bookings;
 using Service.RequestAndResponse.Response.CancellationPolicyRequest;
 using Service.RequestAndResponse.Response.CommissionRate;
+using Service.RequestAndResponse.Response.Conversation;
 using Service.RequestAndResponse.Response.CultureExperiences;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.HomeStayType;
 using Service.RequestAndResponse.Response.ImageHomeStay;
 using Service.RequestAndResponse.Response.ImageHomeStayTypes;
 using Service.RequestAndResponse.Response.ImageService;
+using Service.RequestAndResponse.Response.Messages;
 using Service.RequestAndResponse.Response.Pricing;
 using Service.RequestAndResponse.Response.Ratings;
 using Service.RequestAndResponse.Response.Reports;
@@ -252,6 +254,30 @@ namespace Service.Mapping
             CreateMap<HomeStay, GetHomeStayResponse>();
             CreateMap<HomeStay, GetAllHomeStayWithOwnerName>()
                 .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.Account.Name));
+
+            CreateMap<Conversation, ConversationResponse>()
+                .ForMember(dest => dest.OtherUser, opt => opt.Ignore())
+                .ForMember(dest => dest.LastMessage, opt => opt.MapFrom(src => src.Messages.OrderByDescending(m => m.SentAt).FirstOrDefault()));
+
+            CreateMap<Message, MessageResponse>()
+                .ForMember(dest => dest.SenderName, opt => opt.MapFrom(src => src.Sender != null ? src.Sender.Name : null));
+
+            CreateMap<Conversation, SimplifiedConversationResponse>()
+                .ForMember(dest => dest.ConversationID, opt => opt.MapFrom(src => src.ConversationID))
+                .ForMember(dest => dest.OtherUser, opt => opt.Ignore())
+                .ForMember(dest => dest.LastMessage, opt => opt.MapFrom(src => src.Messages.OrderByDescending(m => m.SentAt).FirstOrDefault()));
+
+            CreateMap<Account, SimplifiedAccountResponse>()
+                .ForMember(dest => dest.AccountID, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
+
+            // Thêm ánh xạ từ Message sang SimplifiedMessageResponse
+            CreateMap<Message, SimplifiedMessageResponse>()
+                .ForMember(dest => dest.MessageID, opt => opt.MapFrom(src => src.MessageID))
+                .ForMember(dest => dest.SenderID, opt => opt.MapFrom(src => src.SenderID))
+                .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
+                .ForMember(dest => dest.SentAt, opt => opt.MapFrom(src => src.SentAt))
+                .ForMember(dest => dest.IsRead, opt => opt.MapFrom(src => src.IsRead));
         }
     }
 }

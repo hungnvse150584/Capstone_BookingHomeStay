@@ -1,0 +1,181 @@
+﻿<!-- wwwroot/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chat Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #chat-container {
+            width: 600px;
+            margin: 20px auto;
+        }
+
+        #conversations {
+            width: 200px;
+            float: left;
+            border-right: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        #messages {
+            width: 380px;
+            float: right;
+            padding: 10px;
+            height: 400px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+        }
+
+        #message-input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        #send-button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+
+        #user-id-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #conversations ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #conversations li {
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+            #conversations li:hover {
+                background-color: #f0f0f0;
+            }
+
+        #messages div {
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="conversations">
+            <h3>Conversations</h3>
+            <input type="text" id="user-id-input" placeholder="Enter your User ID (e.g., edb9b834-4fbd-4659-d549-0c27161ab0b7)" />
+            <button onclick="loadConversations()">Load Conversations</button>
+            <ul id="conversation-list"></ul>
+        </div>
+        <div id="messages">
+            <h3>Messages</h3>
+            <div id="message-list"></div>
+            <input type="text" id="message-input" placeholder="Type a message..." />
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <!-- Thêm SignalR client -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+    <script>
+        let currentUserId = null;
+        let selectedConversationId = null;
+        let receiverId = null;
+
+        // Kết nối đến SignalR Hub
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("https://localhost:7221/chatHub")
+            .build();
+
+        // Nhận tin nhắn từ server
+        connection.on("ReceiveMessage", (senderId, content, sentAt, messageId, conversationId) => {
+            if (conversationId === selectedConversationId) {
+                const messageList = document.getElementById("message-list");
+                const messageDiv = document.createElement("div");
+                messageDiv.textContent = `${senderId}: ${content} (${new Date(sentAt).toLocaleString()})`;
+                messageList.appendChild(messageDiv);
+                messageList.scrollTop = messageList.scrollHeight;
+            }
+        });
+
+        // Nhận thông báo tin nhắn đã đọc
+        connection.on("MessageRead", (messageId) => {
+            console.log(`Message ${messageId} has been read.`);
+        });
+
+        // Bắt đầu kết nối và đăng ký UserId
+        connection.start().then(() => {
+            console.log("Connected to SignalR Hub");
+        }).catch(err => console.error(err));
+
+        // Gửi tin nhắn
+        document.getElementById("send-button").addEventListener("click", () => {
+            const content = document.getElementById("message-input").value;
+            if (content && receiverId && currentUserId) {
+                connection.invoke("SendMessage", currentUserId, receiverId, content)
+                    .catch(err => console.error(err));
+                document.getElementById("message-input").value = "";
+            } else {
+                alert("Please select a conversation and enter your User ID.");
+            }
+        });
+
+        // Tải danh sách cuộc trò chuyện
+        async function loadConversations() {
+            currentUserId = document.getElementById("user-id-input").value;
+            if (!currentUserId) {
+                alert("Please enter your User ID.");
+                return;
+            }
+
+            // Đăng ký UserId với SignalR
+            await connection.invoke("RegisterUser", currentUserId);
+
+            const response = await fetch(`https://localhost:7221/api/Chat/conversations/${currentUserId}`);
+            const conversations = await response.json();
+            const conversationList = document.getElementById("conversation-list");
+            conversationList.innerHTML = "";
+
+            conversations.forEach(conv => {
+                const li = document.createElement("li");
+                li.textContent = conv.otherUser.name || conv.otherUser.accountID;
+                li.style.cursor = "pointer";
+                li.addEventListener("click", () => {
+                    selectedConversationId = conv.conversationID;
+                    receiverId = conv.otherUser.accountID;
+                    loadMessages(conv.conversationID);
+                });
+                conversationList.appendChild(li);
+            });
+        }
+
+        // Tải tin nhắn trong cuộc trò chuyện
+        async function loadMessages(conversationId) {
+            const response = await fetch(`https://localhost:7221/api/Chat/messages/${conversationId}`);
+            const messages = await response.json();
+            const messageList = document.getElementById("message-list");
+            messageList.innerHTML = "";
+
+            messages.forEach(msg => {
+                const messageDiv = document.createElement("div");
+                messageDiv.textContent = `${msg.senderName || msg.senderID}: ${msg.content} (${new Date(msg.sentAt).toLocaleString()})`;
+                messageList.appendChild(messageDiv);
+            });
+            messageList.scrollTop = messageList.scrollHeight;
+
+            // Đánh dấu tất cả tin nhắn trong cuộc trò chuyện là đã đọc
+            await connection.invoke("MarkAllMessagesAsRead", conversationId, currentUserId);
+        }
+    </script>
+</body>
+</html>

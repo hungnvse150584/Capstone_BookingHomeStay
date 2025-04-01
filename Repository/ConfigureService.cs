@@ -50,8 +50,11 @@ namespace Repository
             services.AddScoped<IImageHomeStayTypesRepository, ImageHomeStayTypesRepository>();
             services.AddScoped<IImageRoomTypesRepository, ImageRoomTypesRepository>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-          
-            
+            services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IConversationRepository, ConversationRepository>();
+
+            services.AddScoped<MessageDAO>();
+            services.AddScoped<ConversationDAO>();
             services.AddScoped<AccountDAO>();
             services.AddScoped<ImageRoomTypeDAO>();
             services.AddScoped<HomeStayDAO>();

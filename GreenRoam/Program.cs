@@ -1,6 +1,7 @@
 ﻿using BusinessObject.Model;
 using CloudinaryDotNet;
 using DataAccessObject;
+using GreenRoam.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -115,6 +116,7 @@ builder.Services.AddAuthentication(options =>
         )
     };
 });
+builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
@@ -144,10 +146,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ChatHub>("/chatHub");
 app.MapFallbackToFile("/index.html");
 
 app.Run();

@@ -520,3 +520,4 @@ D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\refint\GreenRoam.dll
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.pdb
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.genruntimeconfig.cache
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\ref\GreenRoam.dll
+D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\GreenRoam.staticwebassets.runtime.json
