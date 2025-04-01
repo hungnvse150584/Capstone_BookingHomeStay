@@ -93,7 +93,7 @@ namespace Service.Mapping
                 .ForMember(dest => dest.Prices, opt => opt.MapFrom(src => src.PricingJson));
 
 
-            CreateMap<HomeStayRentals, GetSimpleHomeStayType>();
+            CreateMap<HomeStayRentals, GetSimpleHomeStayType>().ReverseMap();
             CreateMap<HomeStayRentals, GetHomeStayRentalDetailResponse>()
                 .ForMember(dest => dest.Pricing, opt => opt.MapFrom(src => src.Prices))
                 .ForMember(dest => dest.ImageHomeStayRentals, opt => opt.MapFrom(src => src.ImageHomeStayRentals))

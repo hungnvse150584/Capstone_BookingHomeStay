@@ -1,4 +1,5 @@
 ﻿using Service.RequestAndResponse.Response.HomeStayType;
+using Service.RequestAndResponse.Response.Room;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,10 @@ namespace Service.RequestAndResponse.Response.BookingDetails
 
         public double TotalAmount { get; set; }
 
-        public int? HomeStayTypesID { get; set; }
-        public GetSimpleHomeStayType? HomeStayTypes { get; set; }
+        public int? HomeStayRentalID { get; set; }
+        public GetSimpleHomeStayType? HomeStayRentals { get; set; }
+
+        public int? RoomID { get; set; }
+        public GetAllRooms Rooms { get; set; }
     }
 }
