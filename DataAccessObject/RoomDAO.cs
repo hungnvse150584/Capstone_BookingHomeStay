@@ -91,8 +91,12 @@ namespace DataAccessObject
                 .Where(r => r.isActive == true && r.isUsed == false) // Phòng chưa bị chủ khóa và chưa có khách
                 .Where(r => !_context.BookingDetails
                     .Any(bd => bd.RoomID == r.RoomID &&
-                        bd.Booking.paymentStatus == PaymentStatus.Deposited &&
-                        (checkInDate < bd.CheckOutDate && checkOutDate > bd.CheckInDate))) // Không trùng với BookingDetail đã đặt
+                        // Kiểm tra các trạng thái booking hợp lệ dựa trên BookingStatus
+                        (bd.Booking.Status == BookingStatus.Pending ||
+                         bd.Booking.Status == BookingStatus.Confirmed ||
+                         bd.Booking.Status == BookingStatus.InProgress) &&
+                        // Sửa điều kiện kiểm tra trùng ngày
+                        (checkInDate <= bd.CheckOutDate && checkOutDate >= bd.CheckInDate))) // Không trùng với BookingDetail đã đặt
                 .Include(r => r.RoomTypes)
                 .ToListAsync();
 
