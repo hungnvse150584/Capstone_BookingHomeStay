@@ -16,6 +16,7 @@ namespace BusinessObject.IdentityModel
         public string? Phone { get; set; }
         public string? Taxcode { get; set; }
         public string? BankAccountNumber { get; set; }
+        public bool? isActive { get; set; }
         public IList<string> Roles { get; set; }
         public string Token { get; set; }
         public string RefreshToken { get; set; }

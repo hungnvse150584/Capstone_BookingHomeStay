@@ -539,6 +539,7 @@ namespace GreenRoam.Controllers
                     BankAccountNumber = user.BankAccountNumber,
                     Taxcode = user.TaxCode,
                     Phone = user.Phone,
+                    isActive = user.Status,
                     Roles = _userManager.GetRolesAsync(user).Result.ToList() // This should ideally be await _userManager.GetRolesAsync(user)
                 }).ToList();
 
