@@ -104,12 +104,12 @@ namespace Service.Mapping
             CreateMap<CreateHomeStayTypeRequest, HomeStayRentals>()
                 .ForMember(dest => dest.Prices, opt => opt.MapFrom(src => src.PricingJson));
 
-<<<<<<< HEAD
+
             CreateMap<HomeStayRentals, GetSimpleHomeStayType>();
-=======
+
 
             CreateMap<HomeStayRentals, GetSimpleHomeStayType>().ReverseMap();
->>>>>>> main
+
             CreateMap<HomeStayRentals, GetHomeStayRentalDetailResponse>()
                 .ForMember(dest => dest.Pricing, opt => opt.MapFrom(src => src.Prices))
                 .ForMember(dest => dest.ImageHomeStayRentals, opt => opt.MapFrom(src => src.ImageHomeStayRentals))
