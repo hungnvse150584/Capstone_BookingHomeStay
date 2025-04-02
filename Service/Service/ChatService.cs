@@ -16,12 +16,15 @@ namespace Service
         private readonly IConversationRepository _conversationRepository;
         private readonly IMessageRepository _messageRepository;
         private readonly IHomeStayRepository _homeStayRepository;
-        private readonly GreenRoamContext _context;
 
-        public ChatService(IConversationRepository conversationRepository, IMessageRepository messageRepository)
+        public ChatService(
+            IConversationRepository conversationRepository,
+            IMessageRepository messageRepository,
+            IHomeStayRepository homeStayRepository)
         {
             _conversationRepository = conversationRepository;
             _messageRepository = messageRepository;
+            _homeStayRepository = homeStayRepository;
         }
 
         public async Task<Conversation> GetOrCreateConversationAsync(string user1Id, string user2Id)
@@ -73,10 +76,11 @@ namespace Service
                 await _messageRepository.UpdateMessageAsync(message);
             }
         }
+
         public async Task MarkAllMessagesAsReadAsync(int conversationId, string userId)
         {
             var messages = await _messageRepository.GetMessagesByConversationAsync(conversationId);
-            var unreadMessages = messages.Where(m => !m.IsRead && m.SenderID != userId).ToList();
+            var unreadMessages = messages.Where(m => !m.IsRead).ToList(); 
 
             foreach (var message in unreadMessages)
             {
@@ -84,6 +88,7 @@ namespace Service
                 await _messageRepository.UpdateMessageAsync(message);
             }
         }
+
         public async Task<string> GetOwnerIdByHomeStayIdAsync(int homeStayId)
         {
             var homeStay = await _homeStayRepository.GetByIdAsync(homeStayId);
@@ -92,20 +97,9 @@ namespace Service
                 throw new Exception("HomeStay not found.");
             }
 
-            // Kiểm tra xem AccountID có vai trò OWNER hay không
-            var userRole = await _context.UserRoles
-                .Where(ur => ur.UserId == homeStay.AccountID && ur.RoleId == "2ad2e3fe-065c-41bd-a6eb-7c83ba258929") // RoleId của OWNER
-                .FirstOrDefaultAsync();
-
-            if (userRole == null)
-            {
-                throw new Exception("The account associated with this HomeStay is not an OWNER.");
-            }
-
-            return homeStay.AccountID; // Sử dụng AccountID thay vì OwnerId
+            return homeStay.AccountID; // Trả về AccountID mà không kiểm tra vai trò OWNER
         }
 
-        
         public async Task<List<Conversation>> GetConversationsForOwnerAsync(string ownerId)
         {
             var conversations = await _conversationRepository.GetConversationsByUserAsync(ownerId);
@@ -117,6 +111,7 @@ namespace Service
             var messages = await _messageRepository.GetMessagesByConversationAsync(conversationId);
             return messages.Count(m => !m.IsRead && m.SenderID != userId);
         }
+
         public async Task<Conversation> GetOrCreateConversationWithHomeStayOwnerAsync(string customerId, int homeStayId)
         {
             var ownerId = await GetOwnerIdByHomeStayIdAsync(homeStayId);

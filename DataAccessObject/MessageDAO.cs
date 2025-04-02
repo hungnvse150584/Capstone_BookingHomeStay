@@ -12,10 +12,12 @@ namespace DataAccessObject
     public class MessageDAO : BaseDAO<Message>
     {
         private readonly GreenRoamContext _context;
+
         public MessageDAO(GreenRoamContext context) : base(context)
         {
             _context = context;
         }
+
         public async Task<List<Message>> GetMessagesByConversationAsync(int conversationId)
         {
             return await _context.Messages

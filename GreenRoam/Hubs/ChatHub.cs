@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿// GreenRoam/Hubs/ChatHub.cs
+using Microsoft.AspNetCore.SignalR;
 using Repository.IRepositories;
 using Service.IService;
 using System.Collections.Concurrent;
@@ -20,13 +21,11 @@ namespace GreenRoam.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            // Khi người dùng kết nối, yêu cầu họ gửi UserId
             await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            // Khi người dùng ngắt kết nối, xóa ánh xạ
             var userId = _userConnections.FirstOrDefault(x => x.Value == Context.ConnectionId).Key;
             if (userId != null)
             {
@@ -37,7 +36,6 @@ namespace GreenRoam.Hubs
 
         public async Task RegisterUser(string userId)
         {
-            // Lưu ánh xạ giữa UserId và ConnectionId
             _userConnections[userId] = Context.ConnectionId;
         }
 
@@ -45,13 +43,11 @@ namespace GreenRoam.Hubs
         {
             var message = await _chatService.SendMessageAsync(senderId, receiverId, content);
 
-            // Gửi tin nhắn đến người nhận
             if (_userConnections.TryGetValue(receiverId, out var receiverConnectionId))
             {
                 await Clients.Client(receiverConnectionId).SendAsync("ReceiveMessage", senderId, content, message.SentAt, message.MessageID, message.ConversationID);
             }
 
-            // Gửi tin nhắn đến chính người gửi
             if (_userConnections.TryGetValue(senderId, out var senderConnectionId))
             {
                 await Clients.Client(senderConnectionId).SendAsync("ReceiveMessage", senderId, content, message.SentAt, message.MessageID, message.ConversationID);
@@ -70,11 +66,11 @@ namespace GreenRoam.Hubs
                 }
             }
         }
+
         public async Task MarkAllMessagesAsRead(int conversationId, string userId)
         {
             await _chatService.MarkAllMessagesAsReadAsync(conversationId, userId);
 
-            // Thông báo cho người gửi của các tin nhắn rằng tin nhắn của họ đã được đọc
             var messages = await _messageRepository.GetMessagesByConversationAsync(conversationId);
             var unreadMessages = messages.Where(m => m.IsRead && m.SenderID != userId).ToList();
 
