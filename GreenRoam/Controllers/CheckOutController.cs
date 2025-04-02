@@ -5,6 +5,7 @@ using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.Booking;
 using Service.RequestAndResponse.Request.VnPayModel;
 using Service.Service;
+using System.Globalization;
 
 namespace GreenRoam.Controllers
 {
@@ -16,12 +17,18 @@ namespace GreenRoam.Controllers
         private readonly IBookingService _bookingService;
         private readonly IBookingForService _bookingForService;
         private readonly IVnPayService _vpnPayService;
-        public CheckOutController(ICheckOutService checkoutService, IBookingService bookingService, IBookingForService bookingForService, IVnPayService vpnPayService)
+        private readonly IConfiguration _configuration;
+        public CheckOutController(ICheckOutService checkoutService,
+            IBookingService bookingService,
+            IBookingForService bookingForService,
+            IVnPayService vpnPayService,
+            IConfiguration configuration)
         {
             _checkoutService = checkoutService;
             _bookingService = bookingService;
             _bookingForService = bookingForService;
             _vpnPayService = vpnPayService;
+            _configuration = configuration;
         }
         [HttpPost]
         [Route("CreateBooking")]
@@ -40,8 +47,9 @@ namespace GreenRoam.Controllers
         public async Task<string> CheckOutBooking(int bookingID, bool isFullPayment)
         {
             var booking = await _bookingService.GetBookingsById(bookingID);
+            var bookingId = booking.Data.BookingID;
             double amount = isFullPayment ? booking.Data.Total : booking.Data.bookingDeposit;
-            var bookingServiceID = booking.Data.BookingServices.FirstOrDefault()?.BookingServicesID;
+            var bookingServiceID = booking.Data.BookingServices.SingleOrDefault()?.BookingServicesID;
 
             var vnPayModel = new VnPayRequestModel
             {
@@ -49,9 +57,53 @@ namespace GreenRoam.Controllers
                 BookingServiceID = bookingServiceID.HasValue ? bookingServiceID : null,
                 Amount = amount,
                 FullName = booking.Data.Account.Name,
+                Description = $"{booking.Data.Account.Name} {booking.Data.Account.Phone}",
                 CreatedDate = DateTime.UtcNow,
             };
             return _vpnPayService.CreatePaymentUrl(HttpContext, vnPayModel);
+        }
+
+        [HttpGet("vnpay-return")]
+        public async Task<IActionResult> HandleVnPayReturn([FromQuery] VnPayReturnModel model)
+        {
+            if (model.Vnp_TransactionStatus != "00") return BadRequest();
+
+            var (bookingId, bookingserviceId) = _bookingService.ParseOrderInfo(model.Vnp_OrderInfo);
+
+            if (bookingId.HasValue)
+            {
+                var booking = await _bookingService.GetBookingsById(bookingId.Value);
+                if (booking == null)
+                    return BadRequest($"Booking with ID {bookingId} not found.");
+            }
+
+            if (bookingserviceId.HasValue)
+            {
+                var bookingService = await _bookingForService.GetBookingServicesById(bookingserviceId.Value);
+                if (bookingService == null)
+                    return BadRequest($"Booking with ID {bookingserviceId} not found.");
+            }
+
+            var transaction = new Transaction
+            {
+                Amount = model.Vnp_Amount,
+                BankCode = model.Vnp_BankCode,
+                BankTranNo = model.Vnp_BankTranNo,
+                TransactionType = model.Vnp_CardType,
+                OrderInfo = model.Vnp_OrderInfo,
+                PayDate = DateTime.ParseExact((string)model.Vnp_PayDate, "yyyyMMddHHmmss", CultureInfo.InvariantCulture),
+                ResponseCode = model.Vnp_ResponseCode,
+                TmnCode = model.Vnp_TmnCode,
+                TransactionNo = model.Vnp_TransactionNo,
+                TransactionStatus = model.Vnp_TransactionStatus,
+                TxnRef = model.Vnp_TxnRef,
+                SecureHash = model.Vnp_SecureHash,
+                ResponseId = model.Vnp_TransactionNo,
+                Message = model.Vnp_ResponseCode
+            };
+
+            await _checkoutService.CreateBookingPayment(bookingId, bookingserviceId, transaction);
+            return Redirect($"{_configuration["VnPay:UrlReturnPayment"]}/{bookingId}");
         }
 
         [HttpPut]

@@ -72,5 +72,10 @@ namespace Repository.Repositories
         {
            await _bookingservicesDao.UpdateAsync(booking);
         }
+
+        public async Task<BookingServices?> GetBookingServiceByIdAsync(int? bookingId)
+        {
+            return await _bookingservicesDao.GetBookingServiceByIdAsync(bookingId);
+        }
     }
 }

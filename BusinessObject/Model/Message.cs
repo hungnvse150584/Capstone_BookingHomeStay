@@ -22,6 +22,10 @@ namespace BusinessObject.Model
         public Account Sender { get; set; }
 
         [Required]
+        public string receiverID { get; set; }
+        public string senderName { get; set; }
+
+        [Required]
         public string Content { get; set; } // Nội dung tin nhắn
 
         public DateTime SentAt { get; set; } = DateTime.UtcNow;

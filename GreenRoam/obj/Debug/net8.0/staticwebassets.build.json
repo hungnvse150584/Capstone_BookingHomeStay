@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "Hash": "w/H2dpu6VUI0x1NfvPonusIQLuVa7/gN7Kh5AeYeAW8=",
+=======
+  "Hash": "2z0sEPvs8h+FINE2umfJ3zI7ztWgY+J3RqANdhkgUuQ=",
+>>>>>>> main
   "Source": "GreenRoam",
   "BasePath": "_content/GreenRoam",
   "Mode": "Default",
@@ -10,33 +14,32 @@
     {
       "Name": "GreenRoam\\wwwroot",
       "Source": "GreenRoam",
-      "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\",
       "BasePath": "_content/GreenRoam",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\index.html",
+      "Identity": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\index.html",
       "SourceId": "GreenRoam",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\",
       "BasePath": "_content/GreenRoam",
-      "RelativePath": "index#[.{fingerprint}]?.html",
+      "RelativePath": "index.html",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
+      "AssetMergeBehavior": "PreferTarget",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "ear1ndnans",
-      "Integrity": "Zvt43OIsDuckAEiDv3PauZlAEq3T+N+eL3ixygDgzMo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
     }
+<<<<<<< HEAD
   ],
   "Endpoints": [
     {
@@ -121,5 +124,7 @@
         }
       ]
     }
+=======
+>>>>>>> main
   ]
 }

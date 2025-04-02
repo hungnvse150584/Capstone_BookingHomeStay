@@ -529,5 +529,61 @@ namespace Service.Service
             await _bookingRepository.UpdateBookingAsync(existingBooking);
             return new BaseResponse<UpdateBookingRequest>("Booking updated successfully!", StatusCodeEnum.OK_200, request);
         }
+
+        public async Task<Booking> CreateBookingPayment(int? bookingID, int? bookingServiceID, Transaction transaction)
+        {
+            var booking = await _bookingRepository.GetBookingsByIdAsync(bookingID);
+            if (booking == null)
+            {
+                throw new Exception("Booking not found");
+            }
+            double totalAmount = booking.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
+            double amountPaid = booking.Transactions.Sum(t => t.Amount); // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
+
+            // Kiểm tra trạng thái thanh toán
+            if (amountPaid >= totalAmount)
+            {
+                booking.paymentStatus = PaymentStatus.FullyPaid; // Thanh toán đầy đủ
+            }
+            else if (amountPaid > 0)
+            {
+                booking.paymentStatus = PaymentStatus.Deposited; // Đặt cọc
+            }
+
+            if (bookingServiceID.HasValue && bookingServiceID.Value > 0)
+            {
+                var bookingService = await _bookingServiceRepository.GetBookingServiceByIdAsync(bookingServiceID);
+                if (bookingService == null)
+                {
+                    throw new Exception("BookingService not found");
+                }
+
+                if (amountPaid >= totalAmount)
+                {
+                    bookingService.PaymentServiceStatus = PaymentServicesStatus.FullyPaid; // Thanh toán đầy đủ
+                }
+                else if (amountPaid > 0)
+                {
+                    bookingService.PaymentServiceStatus = PaymentServicesStatus.Deposited; // Đặt cọc
+                }
+
+                bookingService.Status = BookingServicesStatus.Confirmed;
+
+                bookingService.Transactions ??= new List<Transaction>();
+
+                bookingService.Transactions.Add(transaction);
+                await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
+            }
+            booking.Status = BookingStatus.Confirmed;
+
+            booking.Transactions ??= new List<Transaction>();
+
+            // Thêm transaction vào trong danh sách Transactions
+            booking.Transactions.Add(transaction);
+
+            // Lưu booking vào cơ sở dữ liệu nếu cần
+            await _bookingRepository.UpdateBookingAsync(booking);
+            return booking;
+        }
     }
 }
