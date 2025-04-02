@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< HEAD
+  "Hash": "w/H2dpu6VUI0x1NfvPonusIQLuVa7/gN7Kh5AeYeAW8=",
+=======
   "Hash": "2z0sEPvs8h+FINE2umfJ3zI7ztWgY+J3RqANdhkgUuQ=",
+>>>>>>> main
   "Source": "GreenRoam",
   "BasePath": "_content/GreenRoam",
   "Mode": "Default",
@@ -35,5 +39,92 @@
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
     }
+<<<<<<< HEAD
+  ],
+  "Endpoints": [
+    {
+      "Route": "index.ear1ndnans.html",
+      "AssetFile": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6584"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Zvt43OIsDuckAEiDv3PauZlAEq3T+N+eL3ixygDgzMo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 02 Apr 2025 13:24:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ear1ndnans"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Zvt43OIsDuckAEiDv3PauZlAEq3T+N+eL3ixygDgzMo="
+        }
+      ]
+    },
+    {
+      "Route": "index.html",
+      "AssetFile": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6584"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Zvt43OIsDuckAEiDv3PauZlAEq3T+N+eL3ixygDgzMo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 02 Apr 2025 13:24:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Zvt43OIsDuckAEiDv3PauZlAEq3T+N+eL3ixygDgzMo="
+        }
+      ]
+    }
+=======
+>>>>>>> main
   ]
 }

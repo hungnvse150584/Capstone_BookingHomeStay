@@ -115,15 +115,39 @@ builder.Services.AddAuthentication(options =>
             System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
         )
     };
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chatHub"))
+            {
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        }
+    };
 });
 builder.Services.AddSignalR();
+//builder.Services.AddCors(options =>
+//{
+//    options.AddDefaultPolicy(
+//        builder => builder
+//            .AllowAnyOrigin()
+//            .AllowAnyHeader()
+//            .AllowAnyMethod()
+//            .AllowCredentials());
+//});
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        builder => builder
-            .AllowAnyOrigin()   
-            .AllowAnyHeader()
-            .AllowAnyMethod());
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.WithOrigins("http://localhost:5173", "https://localhost:7221")
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials();
+    });
 });
 builder.Services.AddAuthorization();
 var cloudName = builder.Configuration["Cloudinary:CloudName"];
@@ -145,12 +169,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
 app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseCors("AllowAll");
 app.MapHub<ChatHub>("/chatHub");
 app.MapFallbackToFile("/index.html");
 
