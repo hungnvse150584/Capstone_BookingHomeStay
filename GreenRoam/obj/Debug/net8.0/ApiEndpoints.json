@@ -1516,7 +1516,7 @@
   {
     "ContainingType": "GreenRoam.Controllers.HomeStayController",
     "Method": "UpdateHomeStay",
-    "RelativePath": "api/homestay/UpdateHomeStay",
+    "RelativePath": "api/homestay/UpdateHomeStay/{homestayId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -1524,52 +1524,12 @@
       {
         "Name": "homestayId",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
-        "Name": "Name",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Description",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Address",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Longtitude",
-        "Type": "System.Double",
-        "IsRequired": false
-      },
-      {
-        "Name": "Latitude",
-        "Type": "System.Double",
-        "IsRequired": false
-      },
-      {
-        "Name": "RentalType",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Area",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "AccountID",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Images",
-        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "Service.RequestAndResponse.Request.HomeStay.UpdateHomeStayRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [

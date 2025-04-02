@@ -396,53 +396,30 @@ namespace Service.Service
                 return new BaseResponse<List<HomeStay>>($"Something went wrong! Error: {ex.Message}. Inner Exception: {ex.InnerException?.Message}", StatusCodeEnum.InternalServerError_500, null);
             }
         }
-        public async Task<BaseResponse<HomeStay>> UpdateHomeStay(int homestayId, CreateHomeStayRequest request)
+        public async Task<BaseResponse<HomeStay>> UpdateHomeStay(int homestayId, UpdateHomeStayRequest request)
         {
             try
             {
-                // 1. Tìm homestay
+          
                 var homeStayExist = await _homeStayRepository.GetHomeStayDetailByIdAsync(homestayId);
                 if (homeStayExist == null)
                 {
                     return new BaseResponse<HomeStay>("Cannot find HomeStay", StatusCodeEnum.BadGateway_502, null);
                 }
 
-                // 2. Cập nhật các trường cần thiết
-                //    - Map từ request sang entity sẵn có (tránh ghi đè CreateAt, Status, v.v.)
+               
                 var updatedHomeStay = _mapper.Map(request, homeStayExist);
-                updatedHomeStay.CreateAt = homeStayExist.CreateAt;  // Giữ nguyên thời gian tạo
-                updatedHomeStay.Status = homeStayExist.Status;      // Giữ nguyên status cũ (nếu muốn)
-                updatedHomeStay.UpdateAt = DateTime.Now;            // Thời gian cập nhật
-                updatedHomeStay.Address = request.Address;          // Gán lại Address (nếu muốn tường minh)
-                updatedHomeStay.TypeOfRental = request.RentalType;  // Gán lại TypeOfRental
+                updatedHomeStay.CreateAt = homeStayExist.CreateAt; 
+                updatedHomeStay.Status = homeStayExist.Status;      
+                updatedHomeStay.UpdateAt = DateTime.Now;          
+                updatedHomeStay.Address = request.Address;          
+                updatedHomeStay.TypeOfRental = request.RentalType;  
 
-                // 3. Lưu thay đổi phần text (nếu có) trước khi thêm ảnh
+
                 await _homeStayRepository.UpdateAsync(updatedHomeStay);
                 await _homeStayRepository.SaveChangesAsync();
-                // Hoặc tuỳ ý, có thể SaveChanges một lần cuối ở dưới cùng.
 
-                // 4. Nếu request có ảnh mới => Upload lên Cloudinary
-                if (request.Images != null && request.Images.Any())
-                {
-                    var imageUrls = await UploadImagesToCloudinary(request.Images);
-
-                    // 5. Tạo đối tượng ImageHomeStay mới và lưu vào DB
-                    foreach (var url in imageUrls)
-                    {
-                        var imageHomeStay = new ImageHomeStay
-                        {
-                            Image = url,
-                            HomeStayID = updatedHomeStay.HomeStayID
-                        };
-                        await _imageHomeStayRepository.AddImageAsync(imageHomeStay);
-                    }
-                }
-
-                // 6. (Tuỳ chọn) SaveChanges cuối cùng
-                await _homeStayRepository.SaveChangesAsync();
-
-                // 7. Trả về
-                return new BaseResponse<HomeStay>("Update HomeStay successfully (with images)",
+                return new BaseResponse<HomeStay>("Update HomeStay successfully",
                                                   StatusCodeEnum.OK_200, updatedHomeStay);
             }
             catch (Exception ex)

@@ -2032,7 +2032,7 @@
         }
       }
     },
-    "/api/homestay/UpdateHomeStay": {
+    "/api/homestay/UpdateHomeStay/{homestayId}": {
       "put": {
         "tags": [
           "HomeStay"
@@ -2040,96 +2040,34 @@
         "parameters": [
           {
             "name": "homestayId",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
-            }
-          },
-          {
-            "name": "Name",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Description",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Address",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Longtitude",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "Latitude",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          {
-            "name": "RentalType",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/RentalType"
-            }
-          },
-          {
-            "name": "Area",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "AccountID",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
             }
           }
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json-patch+json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "Images": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "format": "binary"
-                    }
-                  }
-                }
-              },
-              "encoding": {
-                "Images": {
-                  "style": "form"
-                }
+                "$ref": "#/components/schemas/UpdateHomeStayRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHomeStayRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHomeStayRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHomeStayRequest"
               }
             }
           }
@@ -6902,6 +6840,13 @@
             "type": "string",
             "format": "date-time"
           },
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          },
+          "account": {
+            "$ref": "#/components/schemas/GetAccountUser"
+          },
           "numberOfChildren": {
             "type": "integer",
             "format": "int32"
@@ -9759,6 +9704,41 @@
           },
           "data": {
             "$ref": "#/components/schemas/UpdateCommissionRateRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateHomeStayRequest": {
+        "required": [
+          "accountID",
+          "address",
+          "description",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "address": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "rentalType": {
+            "$ref": "#/components/schemas/RentalType"
+          },
+          "area": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountID": {
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false

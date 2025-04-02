@@ -107,32 +107,26 @@ namespace GreenRoam.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateHomeStay")]
-        public async Task<ActionResult<BaseResponse<HomeStay>>> UpdateHomeStay(int homestayId, CreateHomeStayRequest request)
+        [Route("UpdateHomeStay/{homestayId}")]
+        public async Task<ActionResult<BaseResponse<HomeStay>>> UpdateHomeStay(int homestayId, [FromBody] UpdateHomeStayRequest request)
         {
             if (homestayId <= 0)
             {
-                return BadRequest("Invalid HomeStay ID.");
+                return BadRequest(new BaseResponse<HomeStay>("Invalid HomeStay ID.", StatusCodeEnum.BadRequest_400, null));
             }
 
             if (request == null)
             {
-                return BadRequest("Request body cannot be null.");
+                return BadRequest(new BaseResponse<HomeStay>("Request body cannot be null.", StatusCodeEnum.BadRequest_400, null));
             }
 
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new BaseResponse<HomeStay>("Invalid request data.", StatusCodeEnum.BadRequest_400, null));
             }
 
             var result = await _homestayService.UpdateHomeStay(homestayId, request);
-
-            if (result == null)
-            {
-                return StatusCode(500, "An error occurred while updating the HomeStay.");
-            }
-
-            return Ok(result);
+            return StatusCode((int)result.StatusCode, result);
         }
         [HttpPut("UpdateImages/{homeStayId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
