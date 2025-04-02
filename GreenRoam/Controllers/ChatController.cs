@@ -19,93 +19,93 @@ public class ChatController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet("conversations/{userId}")]
-    public async Task<IActionResult> GetConversations(string userId)
-    {
-        var conversations = await _chatService.GetConversationsByUserAsync(userId);
-        var conversationResponses = new List<SimplifiedConversationResponse>();
+    //[HttpGet("conversations/{userId}")]
+    //public async Task<IActionResult> GetConversations(string userId)
+    //{
+    //    var conversations = await _chatService.GetConversationsByUserAsync(userId);
+    //    var conversationResponses = new List<SimplifiedConversationResponse>();
 
-        foreach (var conversation in conversations)
-        {
-            var response = _mapper.Map<SimplifiedConversationResponse>(conversation);
+    //    foreach (var conversation in conversations)
+    //    {
+    //        var response = _mapper.Map<SimplifiedConversationResponse>(conversation);
 
-            if (conversation.User1ID == userId)
-            {
-                response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User2);
-            }
-            else
-            {
-                response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User1);
-            }
+    //        if (conversation.User1ID == userId)
+    //        {
+    //            response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User2);
+    //        }
+    //        else
+    //        {
+    //            response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User1);
+    //        }
 
-            conversationResponses.Add(response);
-        }
+    //        conversationResponses.Add(response);
+    //    }
 
-        return Ok(conversationResponses);
-    }
+    //    return Ok(conversationResponses);
+    //}
 
-    [HttpGet("messages/{conversationId}")]
-    public async Task<IActionResult> GetMessages(int conversationId)
-    {
-        var messages = await _chatService.GetMessagesByConversationAsync(conversationId);
-        var messageResponses = _mapper.Map<List<SimplifiedMessageResponse>>(messages);
-        return Ok(messageResponses);
-    }
+    //[HttpGet("messages/{conversationId}")]
+    //public async Task<IActionResult> GetMessages(int conversationId)
+    //{
+    //    var messages = await _chatService.GetMessagesByConversationAsync(conversationId);
+    //    var messageResponses = _mapper.Map<List<SimplifiedMessageResponse>>(messages);
+    //    return Ok(messageResponses);
+    //}
 
-    [HttpGet("conversation-with-homestay-owner/{customerId}/{homeStayId}")]
-    public async Task<IActionResult> GetOrCreateConversationWithHomeStayOwner(string customerId, int homeStayId)
-    {
-        var conversation = await _chatService.GetOrCreateConversationWithHomeStayOwnerAsync(customerId, homeStayId);
-        var response = _mapper.Map<SimplifiedConversationResponse>(conversation);
+    //[HttpGet("conversation-with-homestay-owner/{customerId}/{homeStayId}")]
+    //public async Task<IActionResult> GetOrCreateConversationWithHomeStayOwner(string customerId, int homeStayId)
+    //{
+    //    var conversation = await _chatService.GetOrCreateConversationWithHomeStayOwnerAsync(customerId, homeStayId);
+    //    var response = _mapper.Map<SimplifiedConversationResponse>(conversation);
 
-        if (conversation.User1ID == customerId)
-        {
-            response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User2);
-        }
-        else
-        {
-            response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User1);
-        }
+    //    if (conversation.User1ID == customerId)
+    //    {
+    //        response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User2);
+    //    }
+    //    else
+    //    {
+    //        response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User1);
+    //    }
 
-        return Ok(response);
-    }
+    //    return Ok(response);
+    //}
 
-    [HttpGet("owner-conversations/{ownerId}")]
-    public async Task<IActionResult> GetOwnerConversations(string ownerId)
-    {
-        var conversations = await _chatService.GetConversationsForOwnerAsync(ownerId);
-        var conversationResponses = new List<OwnerConversationResponse>();
+    //[HttpGet("owner-conversations/{ownerId}")]
+    //public async Task<IActionResult> GetOwnerConversations(string ownerId)
+    //{
+    //    var conversations = await _chatService.GetConversationsForOwnerAsync(ownerId);
+    //    var conversationResponses = new List<OwnerConversationResponse>();
 
-        foreach (var conversation in conversations)
-        {
-            var response = new OwnerConversationResponse
-            {
-                ConversationID = conversation.ConversationID
-            };
+    //    foreach (var conversation in conversations)
+    //    {
+    //        var response = new OwnerConversationResponse
+    //        {
+    //            ConversationID = conversation.ConversationID
+    //        };
 
-            if (conversation.User1ID == ownerId)
-            {
-                response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User2);
-            }
-            else
-            {
-                response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User1);
-            }
+    //        if (conversation.User1ID == ownerId)
+    //        {
+    //            response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User2);
+    //        }
+    //        else
+    //        {
+    //            response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User1);
+    //        }
 
-            var messages = await _chatService.GetMessagesByConversationAsync(conversation.ConversationID);
-            var lastMessage = messages.OrderByDescending(m => m.SentAt).FirstOrDefault();
-            if (lastMessage != null)
-            {
-                response.LastMessage = _mapper.Map<SimplifiedMessageResponse>(lastMessage);
-            }
+    //        var messages = await _chatService.GetMessagesByConversationAsync(conversation.ConversationID);
+    //        var lastMessage = messages.OrderByDescending(m => m.SentAt).FirstOrDefault();
+    //        if (lastMessage != null)
+    //        {
+    //            response.LastMessage = _mapper.Map<SimplifiedMessageResponse>(lastMessage);
+    //        }
 
-            response.UnreadMessageCount = await _chatService.GetUnreadMessageCountAsync(conversation.ConversationID, ownerId);
+    //        response.UnreadMessageCount = await _chatService.GetUnreadMessageCountAsync(conversation.ConversationID, ownerId);
 
-            conversationResponses.Add(response);
-        }
+    //        conversationResponses.Add(response);
+    //    }
 
-        return Ok(conversationResponses);
-    }
+    //    return Ok(conversationResponses);
+    //}
 
     // API 1: Lấy danh sách cuộc trò chuyện dựa trên homeStayId
     [HttpGet("conversations/by-homestay/{homeStayId}")]
@@ -143,7 +143,7 @@ public class ChatController : ControllerBase
 
                 // Lấy tất cả tin nhắn của cuộc trò chuyện
                 var messages = await _chatService.GetMessagesByConversationAsync(conversation.ConversationID);
-                response.Messages = _mapper.Map<List<SimplifiedMessageResponse>>(messages);
+                //response.Messages = _mapper.Map<List<SimplifiedMessageResponse>>(messages);
 
                 // Lấy tin nhắn cuối cùng
                 var lastMessage = messages.OrderByDescending(m => m.SentAt).FirstOrDefault();
@@ -220,7 +220,7 @@ public class ChatController : ControllerBase
 
     // API 2: Lấy lịch sử tin nhắn dựa trên customerId và homeStayId
     // GreenRoam/Controllers/ChatController.cs
-    [HttpGet("messages")]
+    [HttpGet("OwnerMessage")]
     public async Task<IActionResult> GetMessagesByCustomerAndHomeStay([FromQuery] string customerId, [FromQuery] int homeStayId)
     {
         try
@@ -299,7 +299,7 @@ public class ConversationWithMessagesResponse
     public int ConversationID { get; set; }
     public SimplifiedAccountResponse OtherUser { get; set; }
     public SimplifiedMessageResponse LastMessage { get; set; }
-    public List<SimplifiedMessageResponse> Messages { get; set; }
+    //public List<SimplifiedMessageResponse> Messages { get; set; }
 }
 // Request models
 public class MarkAsReadRequest
