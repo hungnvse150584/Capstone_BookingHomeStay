@@ -25,6 +25,8 @@ namespace Service.RequestAndResponse.Response.Bookings
 
         public BookingStatus Status { get; set; }
 
+        public PaymentStatus paymentStatus { get; set; }
+
         public double TotalRentPrice { get; set; }
 
         public double Total { get; set; }
