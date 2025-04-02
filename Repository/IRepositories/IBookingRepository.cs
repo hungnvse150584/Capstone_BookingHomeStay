@@ -19,6 +19,7 @@ namespace Repository.IRepositories
         Task<IEnumerable<Booking>> GetBookingsByDateAsync(DateTime date);
         Task<IEnumerable<Booking>> GetBookingsByStatusAsync(BookingStatus status);
         Task<Booking?> GetBookingByIdAsync(int bookingId);
+        Task<Booking?> GetBookingsByIdAsync(int? bookingId);
         Task<Booking?> UpdateBookingWithReportAsync(int bookingId, Booking booking);
 
 

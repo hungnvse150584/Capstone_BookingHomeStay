@@ -749,7 +749,14 @@
           }
         }
       },
-      "System.Formats.Asn1/8.0.1": {},
+      "System.Formats.Asn1/8.0.1": {
+        "runtime": {
+          "lib/net8.0/System.Formats.Asn1.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.724.31311"
+          }
+        }
+      },
       "System.Globalization/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.1",
@@ -1187,10 +1194,7 @@
           "Swashbuckle.AspNetCore.Swagger": "6.8.1"
         },
         "runtime": {
-          "BusinessObject.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "BusinessObject.dll": {}
         }
       },
       "DataAccessObject/1.0.0": {
@@ -1202,10 +1206,7 @@
           "Microsoft.Extensions.Configuration.Json": "8.0.1"
         },
         "runtime": {
-          "DataAccessObject.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "DataAccessObject.dll": {}
         }
       },
       "Repository/1.0.0": {
@@ -1214,10 +1215,7 @@
           "DataAccessObject": "1.0.0"
         },
         "runtime": {
-          "Repository.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Repository.dll": {}
         }
       },
       "Service/1.0.0": {
@@ -1230,10 +1228,7 @@
           "Repository": "1.0.0"
         },
         "runtime": {
-          "Service.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Service.dll": {}
         }
       }
     }

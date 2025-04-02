@@ -15,5 +15,7 @@ namespace Service.IService
         Task<BaseResponse<BookingServices>> CreateServiceBooking(CreateBookingServices bookingServiceRequest, PaymentServicesMethod paymentServicesMethod);
         Task<BaseResponse<UpdateBookingService>> UpdateBookingServices(int bookingServiceID, UpdateBookingService request);
         Task<BaseResponse<IEnumerable<GetAllBookingServices>>> GetAllBookingService(string? search, DateTime? date = null, BookingServicesStatus? status = null, PaymentServicesStatus? paymentStatus = null);
+        Task<BaseResponse<BookingServices>> GetBookingServicesById(int bookingID);
+        Task<BaseResponse<BookingServices>> GetBookingServiceById(int? bookingID);
     }
 }

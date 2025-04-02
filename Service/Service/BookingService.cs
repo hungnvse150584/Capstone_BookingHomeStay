@@ -205,8 +205,48 @@ namespace Service.Service
                 StatusCodeEnum.OK_200, bookings);
         }
 
-        
 
+        public async Task<BaseResponse<Booking>> GetBookingById(int? bookingID)
+        {
+            var booking = await _bookingRepository.GetBookingsByIdAsync(bookingID);
+            if (booking == null)
+            {
+                return new BaseResponse<Booking>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+
+            return new BaseResponse<Booking>("Get all bookings as base success",
+                StatusCodeEnum.OK_200, booking);
+        }
+
+        public (int? bookingId, int? serviceId) ParseOrderInfo(string orderInfo)
+        {
+            int? bookingId = null;
+            int? serviceId = null;
+
+            if (string.IsNullOrEmpty(orderInfo))
+                return (null, null);
+
+            var parts = orderInfo.Split(',', StringSplitOptions.TrimEntries);
+
+            foreach (var part in parts)
+            {
+                var keyValue = part.Split(':', StringSplitOptions.TrimEntries);
+                if (keyValue.Length == 2)
+                {
+                    if (keyValue[0] == "BookingID" && int.TryParse(keyValue[1], out int bId))
+                    {
+                        bookingId = bId;
+                    }
+                    else if (keyValue[0] == "ServiceID" && int.TryParse(keyValue[1], out int sId))
+                    {
+                        serviceId = sId;
+                    }
+                }
+            }
+
+            return (bookingId, serviceId);
+        }
 
 
 

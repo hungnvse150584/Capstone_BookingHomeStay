@@ -315,5 +315,31 @@ namespace Service.Service
             return new BaseResponse<UpdateBookingService>("Booking updated successfully!", StatusCodeEnum.OK_200, request);
         }
 
+        public async Task<BaseResponse<BookingServices>> GetBookingServicesById(int bookingID)
+        {
+            var booking = await _bookingServiceRepository.GetBookingServicesByIdAsync(bookingID);
+            if (booking == null)
+            {
+                return new BaseResponse<BookingServices>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+
+            return new BaseResponse<BookingServices>("Get all bookings as base success",
+                StatusCodeEnum.OK_200, booking);
+        }
+
+        public async Task<BaseResponse<BookingServices>> GetBookingServiceById(int? bookingID)
+        {
+            var booking = await _bookingServiceRepository.GetBookingServiceByIdAsync(bookingID);
+            if (booking == null)
+            {
+                return new BaseResponse<BookingServices>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+
+            return new BaseResponse<BookingServices>("Get all bookings as base success",
+                StatusCodeEnum.OK_200, booking);
+        }
+
     }
 }

@@ -126,6 +126,16 @@ namespace DataAccessObject
             return await _context.Bookings
                 .Include(o => o.Account)
                 .Include(o => o.BookingDetails)
+                .Include(o => o.BookingServices)
+                .FirstOrDefaultAsync(o => o.BookingID == bookingId);
+        }
+
+        public async Task<Booking?> GetBookingsByIdAsync(int? bookingId)
+        {
+            return await _context.Bookings
+                .Include(o => o.Account)
+                .Include(o => o.BookingDetails)
+                .Include(o => o.BookingServices)
                 .FirstOrDefaultAsync(o => o.BookingID == bookingId);
         }
 
