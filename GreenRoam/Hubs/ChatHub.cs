@@ -21,6 +21,15 @@ namespace GreenRoam.Hubs
 
         public override async Task OnConnectedAsync()
         {
+            // Lấy userId từ token hoặc query string
+            var userId = Context.User?.Identity?.Name; // Nếu dùng JWT
+                                                       // Hoặc từ query string: var userId = Context.GetHttpContext().Request.Query["userId"];
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                _userConnections[userId] = Context.ConnectionId;
+            }
+
             await base.OnConnectedAsync();
         }
 

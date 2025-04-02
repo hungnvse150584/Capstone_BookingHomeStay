@@ -768,43 +768,6 @@
   },
   {
     "ContainingType": "ChatController",
-    "Method": "GetOrCreateConversationWithHomeStayOwner",
-    "RelativePath": "api/Chat/conversation-with-homestay-owner/{customerId}/{homeStayId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "customerId",
-        "Type": "System.String",
-        "IsRequired": true
-      },
-      {
-        "Name": "homeStayId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ChatController",
-    "Method": "GetConversations",
-    "RelativePath": "api/Chat/conversations/{userId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userId",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ChatController",
     "Method": "GetConversationsByHomeStay",
     "RelativePath": "api/Chat/conversations/by-homestay/{homeStayId}",
     "HttpMethod": "GET",
@@ -838,7 +801,7 @@
   {
     "ContainingType": "ChatController",
     "Method": "GetMessagesByCustomerAndHomeStay",
-    "RelativePath": "api/Chat/messages",
+    "RelativePath": "api/Chat/OwnerMessage",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -852,38 +815,6 @@
         "Name": "homeStayId",
         "Type": "System.Int32",
         "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ChatController",
-    "Method": "GetMessages",
-    "RelativePath": "api/Chat/messages/{conversationId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "conversationId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ChatController",
-    "Method": "GetOwnerConversations",
-    "RelativePath": "api/Chat/owner-conversations/{ownerId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "ownerId",
-        "Type": "System.String",
-        "IsRequired": true
       }
     ],
     "ReturnTypes": []
