@@ -264,14 +264,15 @@ namespace Service.Mapping
 
             CreateMap<Conversation, SimplifiedConversationResponse>()
                 .ForMember(dest => dest.ConversationID, opt => opt.MapFrom(src => src.ConversationID))
-                .ForMember(dest => dest.OtherUser, opt => opt.Ignore())
+                .ForMember(dest => dest.OtherUser, opt => opt.Ignore()) // Sẽ xử lý thủ công trong controller
                 .ForMember(dest => dest.LastMessage, opt => opt.MapFrom(src => src.Messages.OrderByDescending(m => m.SentAt).FirstOrDefault()));
 
+            // Ánh xạ từ Account sang SimplifiedAccountResponse
             CreateMap<Account, SimplifiedAccountResponse>()
                 .ForMember(dest => dest.AccountID, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
 
-            // Thêm ánh xạ từ Message sang SimplifiedMessageResponse
+            // Ánh xạ từ Message sang SimplifiedMessageResponse
             CreateMap<Message, SimplifiedMessageResponse>()
                 .ForMember(dest => dest.MessageID, opt => opt.MapFrom(src => src.MessageID))
                 .ForMember(dest => dest.SenderID, opt => opt.MapFrom(src => src.SenderID))

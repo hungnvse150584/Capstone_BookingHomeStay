@@ -1,8 +1,6 @@
-﻿using BusinessObject.Model;
-using System;
+﻿// Service/IService/IChatService.cs
+using BusinessObject.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Service.IService
@@ -16,7 +14,7 @@ namespace Service.IService
         Task MarkMessageAsReadAsync(int messageId);
         Task MarkAllMessagesAsReadAsync(int conversationId, string userId);
         Task<string> GetOwnerIdByHomeStayIdAsync(int homeStayId);
-        Task<List<Conversation>> GetConversationsForOwnerAsync(string ownerId); 
+        Task<List<Conversation>> GetConversationsForOwnerAsync(string ownerId);
         Task<int> GetUnreadMessageCountAsync(int conversationId, string userId);
         Task<Conversation> GetOrCreateConversationWithHomeStayOwnerAsync(string customerId, int homeStayId);
     }
