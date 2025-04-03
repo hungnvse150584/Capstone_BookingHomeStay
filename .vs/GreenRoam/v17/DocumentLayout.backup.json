@@ -438,7 +438,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
@@ -457,17 +457,20 @@
               "Name": "ST:0:0:{f5cd1b51-c771-5648-966f-646d419b1e7c}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "ChatController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\ChatController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\ChatController.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\ChatController.cs*",
-              "RelativeToolTip": "GreenRoam\\Controllers\\ChatController.cs*",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\ChatController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\ChatController.cs",
               "ViewState": "AgIAAGsAAAAAAAAAAAAqwHUAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T11:19:42.912Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T11:19:42.912Z"
             },
             {
               "$type": "Document",
@@ -479,8 +482,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\Message.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T10:39:54.533Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T10:39:54.533Z"
             },
             {
               "$type": "Document",
@@ -492,8 +494,7 @@
               "RelativeToolTip": "Service\\Service\\ChatService.cs",
               "ViewState": "AgIAAEgAAAAAAAAAAAAowF0AAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T11:01:57.719Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T11:01:57.719Z"
             },
             {
               "$type": "Document",
@@ -505,8 +506,7 @@
               "RelativeToolTip": "Service\\IService\\IChatService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwA8AAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T11:01:40.544Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T11:01:40.544Z"
             },
             {
               "$type": "Document",
@@ -518,8 +518,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Conversation\\ConversationResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T11:18:17.402Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T11:18:17.402Z"
             },
             {
               "$type": "Document",
@@ -531,8 +530,7 @@
               "RelativeToolTip": "GreenRoam\\Hubs\\ChatHub.cs",
               "ViewState": "AgIAACAAAAAAAAAAAAD4vzsAAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T11:09:50.284Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T11:09:50.284Z"
             },
             {
               "$type": "Document",
@@ -557,12 +555,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Conversation\\SimplifiedConversationResponse.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAAABgAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T11:49:17.168Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+              "WhenOpened": "2025-04-01T11:49:17.168Z"
             },
             {
               "$type": "Document",
@@ -574,8 +567,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Conversation\\OwnerConversationResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T12:57:32.109Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T12:57:32.109Z"
             },
             {
               "$type": "Document",
@@ -587,8 +579,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Messages\\MessageResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T11:18:36.399Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T11:18:36.399Z"
             },
             {
               "$type": "Document",
@@ -600,8 +591,7 @@
               "RelativeToolTip": "Repository\\Repositories\\ConversationRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T10:52:48.363Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T10:52:48.363Z"
             },
             {
               "$type": "Document",
@@ -613,8 +603,7 @@
               "RelativeToolTip": "Repository\\Repositories\\MessageRepository.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAIwCkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T10:52:40.032Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T10:52:40.032Z"
             },
             {
               "$type": "Document",
@@ -626,8 +615,7 @@
               "RelativeToolTip": "DataAccessObject\\MessageDAO.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAA0wDMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T10:48:37.318Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T10:48:37.318Z"
             },
             {
               "$type": "Document",
@@ -639,8 +627,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\Conversation.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T10:40:05.939Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T10:40:05.939Z"
             },
             {
               "$type": "Document",
@@ -652,8 +639,7 @@
               "RelativeToolTip": "DataAccessObject\\DataAccessObject.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-02T17:30:59.506Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-02T17:30:59.506Z"
             },
             {
               "$type": "Document",
@@ -677,8 +663,7 @@
               "RelativeToolTip": "GreenRoam\\GreenRoam.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-02T14:56:30.147Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-02T14:56:30.147Z"
             },
             {
               "$type": "Document",
@@ -690,8 +675,7 @@
               "RelativeToolTip": "BusinessObject\\BusinessObject.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-02T17:30:57.912Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-02T17:30:57.912Z"
             },
             {
               "$type": "Document",
