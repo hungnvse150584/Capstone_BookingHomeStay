@@ -1263,14 +1263,8 @@
                     "type": "integer",
                     "format": "int32"
                   },
-                  "ConversationID": {
-                    "maximum": 2147483647,
-                    "minimum": 1,
-                    "pattern": "^(?!\\s*$).+",
-                    "type": "integer",
-                    "format": "int32"
-                  },
                   "Content": {
+                    "pattern": "^(?!\\s*$).+",
                     "type": "string"
                   },
                   "Images": {
@@ -1293,9 +1287,6 @@
                   "style": "form"
                 },
                 "HomeStayId": {
-                  "style": "form"
-                },
-                "ConversationID": {
                   "style": "form"
                 },
                 "Content": {

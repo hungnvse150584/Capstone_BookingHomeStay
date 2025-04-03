@@ -293,7 +293,7 @@ public class ChatController : ControllerBase
                 request.Content,
                 request.SenderName,
                 request.HomeStayId,
-                request.ConversationID,
+                //request.ConversationID,
                 request.Images // Truyền danh sách hình ảnh (có thể null)
             );
 
@@ -382,8 +382,8 @@ public class SendMessageRequest
     [Range(1, int.MaxValue, ErrorMessage = "HomeStayId must be greater than 0.")]
     public int HomeStayId { get; set; }
     [RegularExpression(@"^(?!\s*$).+", ErrorMessage = "Content cannot be empty or contain only whitespace.")]
-    [Range(1, int.MaxValue, ErrorMessage = "ConversationID must be greater than 0.")]
-    public int ConversationID { get; set; }
+    //[Range(1, int.MaxValue, ErrorMessage = "ConversationID must be greater than 0.")]
+    //public int ConversationID { get; set; }
     public string? Content { get; set; }
     //[MaxImages(10, ErrorMessage = "You can only upload a maximum of 10 images at a time.")]
     public List<IFormFile>? Images { get; set; }

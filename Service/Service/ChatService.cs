@@ -33,7 +33,7 @@ using Repository;
             _cloudinary = cloudinary;
         }
 
-        public async Task<Conversation> GetOrCreateConversationAsync(string user1Id, string user2Id, int homeStayId, int conversationId)
+        public async Task<Conversation> GetOrCreateConversationAsync(string user1Id, string user2Id, int homeStayId)
         {
             var orderedUserIds = new[] { user1Id, user2Id }.OrderBy(id => id).ToArray();
             string orderedUser1Id = orderedUserIds[0];
@@ -63,9 +63,9 @@ using Repository;
                 return await _messageRepository.GetMessagesByConversationAsync(conversationId);
             }
 
-        public async Task<Message> SendMessageAsync(string senderId, string receiverId, string content, string senderName, int homeStayId,int conversationId, List<IFormFile> images = null)
+        public async Task<Message> SendMessageAsync(string senderId, string receiverId, string content, string senderName, int homeStayId, List<IFormFile> images = null)
         {
-            var conversation = await GetOrCreateConversationAsync(senderId, receiverId, homeStayId, conversationId);
+            var conversation = await GetOrCreateConversationAsync(senderId, receiverId, homeStayId);
 
             string finalContent = content ?? string.Empty;
             if (images != null && images.Any())
