@@ -33,5 +33,9 @@ namespace Repository.Repositories
         {
             return await _converDao.GetConversationsByUserAsync(userId);
         }
+        public async Task<List<Conversation>> GetConversationsByHomeStayIdAsync(int homeStayId)
+        {
+            return await _converDao.GetConversationsByHomeStayIdAsync(homeStayId);
+        }
     }
 }

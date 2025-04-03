@@ -114,10 +114,27 @@ using Repository;
                 return messages.Count(m => !m.IsRead && m.SenderID != userId);
             }
 
-            public async Task<Conversation> GetOrCreateConversationWithHomeStayOwnerAsync(string customerId, int homeStayId)
+        public async Task<Conversation> GetOrCreateConversationWithHomeStayOwnerAsync(string customerId, int homeStayId)
+        {
+            var ownerId = await GetOwnerIdByHomeStayIdAsync(homeStayId);
+            var conversation = await _conversationRepository.GetConversationByUsersAsync(customerId, ownerId);
+            if (conversation == null)
             {
-                var ownerId = await GetOwnerIdByHomeStayIdAsync(homeStayId);
-                return await GetOrCreateConversationAsync(customerId, ownerId);
+                conversation = new Conversation
+                {
+                    User1ID = customerId,
+                    User2ID = ownerId,
+                    CreatedAt = DateTime.UtcNow,
+                    HomeStayID = homeStayId // Gán HomeStayId
+                };
+                await _conversationRepository.CreateConversationAsync(conversation);
             }
+            return conversation;
+        }
+
+        public async Task<List<Conversation>> GetConversationsByHomeStayIdAsync(int homeStayId)
+        {
+            return await _conversationRepository.GetConversationsByHomeStayIdAsync(homeStayId);
         }
     }
+}
