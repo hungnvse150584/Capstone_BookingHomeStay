@@ -935,11 +935,6 @@
         "IsRequired": false
       },
       {
-        "Name": "ConversationID",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
         "Name": "Content",
         "Type": "System.String",
         "IsRequired": false
