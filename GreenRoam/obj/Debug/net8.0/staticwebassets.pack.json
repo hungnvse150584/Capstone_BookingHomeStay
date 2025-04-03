@@ -1,12 +1,8 @@
 {
   "Files": [
     {
-      "Id": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\index.html",
+      "Id": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
-    },
-    {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.GreenRoam.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
-      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.GreenRoam.Microsoft.AspNetCore.StaticWebAssets.props",

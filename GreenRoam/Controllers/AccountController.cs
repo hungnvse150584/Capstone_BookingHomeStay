@@ -327,6 +327,12 @@ namespace GreenRoam.Controllers
                 if (string.IsNullOrEmpty(createAccountDto.Role))
                     return BadRequest("Role is required.");
 
+                var existUser = await _userManager.FindByEmailAsync(createAccountDto.Email);
+                if (existUser != null)
+                {
+                    return BadRequest("This email has already registered, please try another email!!!");
+                }
+
                 var accountApp = new Account
                 {
                     UserName = createAccountDto.Username,
