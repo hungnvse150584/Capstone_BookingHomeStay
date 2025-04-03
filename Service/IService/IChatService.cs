@@ -10,7 +10,7 @@ namespace Service.IService
         Task<Conversation> GetOrCreateConversationAsync(string user1Id, string user2Id);
         Task<List<Conversation>> GetConversationsByUserAsync(string userId);
         Task<List<Message>> GetMessagesByConversationAsync(int conversationId);
-        Task<Message> SendMessageAsync(string senderId, string receiverId, string content);
+        Task<Message> SendMessageAsync(string senderId, string receiverId, string content, string senderName);
         Task MarkMessageAsReadAsync(int messageId);
         Task MarkAllMessagesAsReadAsync(int conversationId, string userId);
         Task<string> GetOwnerIdByHomeStayIdAsync(int homeStayId);

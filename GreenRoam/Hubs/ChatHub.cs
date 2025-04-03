@@ -48,9 +48,9 @@ namespace GreenRoam.Hubs
             _userConnections[userId] = Context.ConnectionId;
         }
 
-        public async Task SendMessage(string senderId, string receiverId, string content)
+        public async Task SendMessage(string senderId, string receiverId, string content, string senderName)
         {
-            var message = await _chatService.SendMessageAsync(senderId, receiverId, content);
+            var message = await _chatService.SendMessageAsync(senderId, receiverId, content, senderName);
 
             if (_userConnections.TryGetValue(receiverId, out var receiverConnectionId))
             {

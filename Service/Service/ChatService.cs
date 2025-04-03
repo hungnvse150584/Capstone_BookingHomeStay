@@ -2,7 +2,7 @@
     using BusinessObject.Model;
     using DataAccessObject;
     using Microsoft.EntityFrameworkCore;
-    using Repository;
+using Repository;
     using Repository.IRepositories;
     using Service.IService;
     using System;
@@ -53,13 +53,15 @@
                 return await _messageRepository.GetMessagesByConversationAsync(conversationId);
             }
 
-            public async Task<Message> SendMessageAsync(string senderId, string receiverId, string content)
+            public async Task<Message> SendMessageAsync(string senderId, string receiverId, string content, string senderName)
             {
                 var conversation = await GetOrCreateConversationAsync(senderId, receiverId);
                 var message = new Message
                 {
                     ConversationID = conversation.ConversationID,
                     SenderID = senderId,
+                    receiverID = receiverId,  
+                    senderName = senderName,
                     Content = content,
                     SentAt = DateTime.UtcNow,
                     IsRead = false
