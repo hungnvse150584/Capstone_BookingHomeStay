@@ -250,14 +250,14 @@ public class ChatController : ControllerBase
         try
         {
             // Lấy hoặc tạo cuộc trò chuyện giữa customerId và owner của homeStayId
-            var conversation = await _chatService.GetOrCreateConversationWithHomeStayOwnerAsync(request.CustomerId, request.HomeStayId);
+            var conversation = await _chatService.GetOrCreateConversationWithHomeStayOwnerAsync(request.SenderId, request.HomeStayId);
             if (conversation == null)
             {
                 return BadRequest(new { message = "Conversation not found." });
             }
 
             // Đánh dấu tất cả tin nhắn là đã đọc
-            await _chatService.MarkAllMessagesAsReadAsync(conversation.ConversationID, request.CustomerId);
+            await _chatService.MarkAllMessagesAsReadAsync(conversation.ConversationID, request.SenderId);
             return Ok(new { message = "Messages marked as read." });
         }
         catch (Exception ex)
@@ -288,11 +288,12 @@ public class ChatController : ControllerBase
             // Gửi tin nhắn với thông tin đầy đủ
             var receiverId = request.ReceiverID ?? ownerId;
             var message = await _chatService.SendMessageAsync(
-                request.ReceiverID,
+                request.SenderID,
                 receiverId,
                 request.Content,
                 request.SenderName,
                 request.HomeStayId,
+                request.ConversationID,
                 request.Images // Truyền danh sách hình ảnh (có thể null)
             );
 
@@ -300,7 +301,7 @@ public class ChatController : ControllerBase
             var hubContext = (IHubContext<ChatHub>)HttpContext.RequestServices.GetService(typeof(IHubContext<ChatHub>));
             await hubContext.Clients.All.SendAsync(
                 "ReceiveMessage",
-                request.ReceiverID,
+                request.SenderID,
                 message.Content, // Sử dụng message.Content để bao gồm cả URL hình ảnh nếu có
                 message.SentAt,
                 message.MessageID,
@@ -366,7 +367,7 @@ public class ConversationWithMessagesResponse
 // Request models
 public class MarkAsReadRequest
 {
-    public string CustomerId { get; set; }
+    public string SenderId { get; set; }
     public int HomeStayId { get; set; }
 }
 
@@ -381,6 +382,8 @@ public class SendMessageRequest
     [Range(1, int.MaxValue, ErrorMessage = "HomeStayId must be greater than 0.")]
     public int HomeStayId { get; set; }
     [RegularExpression(@"^(?!\s*$).+", ErrorMessage = "Content cannot be empty or contain only whitespace.")]
+    [Range(1, int.MaxValue, ErrorMessage = "ConversationID must be greater than 0.")]
+    public int ConversationID { get; set; }
     public string? Content { get; set; }
     //[MaxImages(10, ErrorMessage = "You can only upload a maximum of 10 images at a time.")]
     public List<IFormFile>? Images { get; set; }

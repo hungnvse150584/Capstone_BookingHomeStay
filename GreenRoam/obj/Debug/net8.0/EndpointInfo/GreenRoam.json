@@ -1263,8 +1263,14 @@
                     "type": "integer",
                     "format": "int32"
                   },
-                  "Content": {
+                  "ConversationID": {
+                    "maximum": 2147483647,
+                    "minimum": 1,
                     "pattern": "^(?!\\s*$).+",
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Content": {
                     "type": "string"
                   },
                   "Images": {
@@ -1273,9 +1279,6 @@
                       "type": "string",
                       "format": "binary"
                     }
-                  },
-                  "ValidateAtLeastOneContent": {
-                    "type": "boolean"
                   }
                 }
               },
@@ -1292,13 +1295,13 @@
                 "HomeStayId": {
                   "style": "form"
                 },
+                "ConversationID": {
+                  "style": "form"
+                },
                 "Content": {
                   "style": "form"
                 },
                 "Images": {
-                  "style": "form"
-                },
-                "ValidateAtLeastOneContent": {
                   "style": "form"
                 }
               }
@@ -8504,7 +8507,7 @@
       "MarkAsReadRequest": {
         "type": "object",
         "properties": {
-          "customerId": {
+          "senderId": {
             "type": "string",
             "nullable": true
           },

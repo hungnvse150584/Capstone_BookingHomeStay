@@ -14,5 +14,6 @@ namespace Repository.IRepositories
         Task<List<Conversation>> GetConversationsByUserAsync(string userId);
         Task<Conversation> CreateConversationAsync(Conversation conversation);
         Task<List<Conversation>> GetConversationsByHomeStayIdAsync(int homeStayId);
+
     }
 }

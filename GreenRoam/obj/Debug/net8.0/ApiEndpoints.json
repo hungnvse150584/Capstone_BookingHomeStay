@@ -935,6 +935,11 @@
         "IsRequired": false
       },
       {
+        "Name": "ConversationID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
         "Name": "Content",
         "Type": "System.String",
         "IsRequired": false
@@ -942,11 +947,6 @@
       {
         "Name": "Images",
         "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "ValidateAtLeastOneContent",
-        "Type": "System.Boolean",
         "IsRequired": false
       }
     ],
