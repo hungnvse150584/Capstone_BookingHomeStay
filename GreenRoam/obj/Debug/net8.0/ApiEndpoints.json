@@ -871,6 +871,22 @@
   },
   {
     "ContainingType": "ChatController",
+    "Method": "GetMessages",
+    "RelativePath": "api/Chat/messages/{conversationId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "conversationId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ChatController",
     "Method": "GetMessagesByCustomerAndHomeStay",
     "RelativePath": "api/Chat/OwnerMessage",
     "HttpMethod": "GET",

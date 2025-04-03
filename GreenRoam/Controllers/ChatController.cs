@@ -45,13 +45,13 @@ public class ChatController : ControllerBase
     //    return Ok(conversationResponses);
     //}
 
-    //[HttpGet("messages/{conversationId}")]
-    //public async Task<IActionResult> GetMessages(int conversationId)
-    //{
-    //    var messages = await _chatService.GetMessagesByConversationAsync(conversationId);
-    //    var messageResponses = _mapper.Map<List<SimplifiedMessageResponse>>(messages);
-    //    return Ok(messageResponses);
-    //}
+    [HttpGet("messages/{conversationId}")]
+    public async Task<IActionResult> GetMessages(int conversationId)
+    {
+        var messages = await _chatService.GetMessagesByConversationAsync(conversationId);
+        var messageResponses = _mapper.Map<List<SimplifiedMessageResponse>>(messages);
+        return Ok(messageResponses);
+    }
 
     //[HttpGet("conversation-with-homestay-owner/{customerId}/{homeStayId}")]
     //public async Task<IActionResult> GetOrCreateConversationWithHomeStayOwner(string customerId, int homeStayId)
@@ -281,17 +281,19 @@ public class ChatController : ControllerBase
             // Gửi tin nhắn với thông tin đầy đủ
             var receiverId = request.ReceiverID ?? ownerId;  // Sử dụng receiverID đã gửi hoặc mặc định là ownerId
             var message = await _chatService.SendMessageAsync(
-                request.CustomerId,
+                request.SenderID,
                 receiverId,
                 request.Content,
-                request.SenderName
+                request.SenderName,
+                request.HomeStayId
+              
             );
 
             // Thông báo qua SignalR
             var hubContext = (IHubContext<ChatHub>)HttpContext.RequestServices.GetService(typeof(IHubContext<ChatHub>));
             await hubContext.Clients.All.SendAsync(
                 "ReceiveMessage",
-                request.CustomerId,
+                request.SenderID,
                 request.Content,
                 message.SentAt,
                 message.MessageID,
@@ -324,9 +326,10 @@ public class MarkAsReadRequest
 
 public class SendMessageRequest
 {
-    public string CustomerId { get; set; }
-    public string SenderName { get; set; }  // Thêm trường mới
     public string ReceiverID { get; set; }
+    public string SenderName { get; set; }  // Thêm trường mới
+    public string SenderID { get; set; }
     public int HomeStayId { get; set; }
     public string Content { get; set; }
+    //public List<IFormFile> Images { get; set; }
 }

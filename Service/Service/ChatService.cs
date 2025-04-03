@@ -1,7 +1,10 @@
 ﻿    // Service/ChatService.cs
     using BusinessObject.Model;
-    using DataAccessObject;
-    using Microsoft.EntityFrameworkCore;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using DataAccessObject;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Repository;
     using Repository.IRepositories;
     using Service.IService;
@@ -16,34 +19,37 @@ using Repository;
             private readonly IConversationRepository _conversationRepository;
             private readonly IMessageRepository _messageRepository;
             private readonly IHomeStayRepository _homeStayRepository;
+              private readonly Cloudinary _cloudinary;
 
-            public ChatService(
+        public ChatService(
                 IConversationRepository conversationRepository,
                 IMessageRepository messageRepository,
-                IHomeStayRepository homeStayRepository)
+                IHomeStayRepository homeStayRepository,
+                Cloudinary cloudinary)
             {
                 _conversationRepository = conversationRepository;
                 _messageRepository = messageRepository;
                 _homeStayRepository = homeStayRepository;
-            }
+            _cloudinary = cloudinary;
+        }
 
-            public async Task<Conversation> GetOrCreateConversationAsync(string user1Id, string user2Id)
+        public async Task<Conversation> GetOrCreateConversationAsync(string user1Id, string user2Id, int homeStayId)
+        {
+            var conversation = await _conversationRepository.GetConversationByUsersAsync(user1Id, user2Id);
+            if (conversation == null)
             {
-                var conversation = await _conversationRepository.GetConversationByUsersAsync(user1Id, user2Id);
-                if (conversation == null)
+                conversation = new Conversation
                 {
-                    conversation = new Conversation
-                    {
-                        User1ID = user1Id,
-                        User2ID = user2Id,
-                        CreatedAt = DateTime.UtcNow
-                    };
-                    await _conversationRepository.CreateConversationAsync(conversation);
-                }
-                return conversation;
+                    User1ID = user1Id,
+                    User2ID = user2Id,
+                    CreatedAt = DateTime.UtcNow,
+                    HomeStayID = homeStayId // Gán HomeStayID
+                };
+                await _conversationRepository.CreateConversationAsync(conversation);
             }
-
-            public async Task<List<Conversation>> GetConversationsByUserAsync(string userId)
+            return conversation;
+        }
+        public async Task<List<Conversation>> GetConversationsByUserAsync(string userId)
             {
                 return await _conversationRepository.GetConversationsByUserAsync(userId);
             }
@@ -53,23 +59,34 @@ using Repository;
                 return await _messageRepository.GetMessagesByConversationAsync(conversationId);
             }
 
-            public async Task<Message> SendMessageAsync(string senderId, string receiverId, string content, string senderName)
+        public async Task<Message> SendMessageAsync(string senderId, string receiverId, string content, string senderName, int homeStayId, List<IFormFile> images = null)
+        {
+            var conversation = await GetOrCreateConversationAsync(senderId, receiverId, homeStayId);
+
+            string finalContent = content ?? string.Empty;
+            if (images != null && images.Any())
             {
-                var conversation = await GetOrCreateConversationAsync(senderId, receiverId);
-                var message = new Message
+                var imageUrls = await UploadImagesToCloudinary(images);
+                if (imageUrls.Any())
                 {
-                    ConversationID = conversation.ConversationID,
-                    SenderID = senderId,
-                    receiverID = receiverId,  
-                    senderName = senderName,
-                    Content = content,
-                    SentAt = DateTime.UtcNow,
-                    IsRead = false
-                };
-                return await _messageRepository.CreateMessageAsync(message);
+                    finalContent = finalContent + (string.IsNullOrEmpty(finalContent) ? "" : "\n") + string.Join("\n", imageUrls);
+                }
             }
 
-            public async Task MarkMessageAsReadAsync(int messageId)
+            var message = new Message
+            {
+                ConversationID = conversation.ConversationID,
+                SenderID = senderId,
+                receiverID = receiverId,
+                senderName = senderName,
+                Content = finalContent,
+                SentAt = DateTime.UtcNow,
+                IsRead = false
+            };
+            return await _messageRepository.CreateMessageAsync(message);
+        }
+
+        public async Task MarkMessageAsReadAsync(int messageId)
             {
                 var message = await _messageRepository.GetMessageByIdAsync(messageId);
                 if (message != null)
@@ -136,5 +153,44 @@ using Repository;
         {
             return await _conversationRepository.GetConversationsByHomeStayIdAsync(homeStayId);
         }
+        private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> files)
+        {
+            if (files == null || !files.Any())
+            {
+                return new List<string>(); // Trả về danh sách rỗng nếu không có file
+            }
+
+            var urls = new List<string>();
+
+            foreach (var file in files)
+            {
+                if (file == null || file.Length == 0)
+                {
+                    continue; // Bỏ qua file không hợp lệ
+                }
+
+                using var stream = file.OpenReadStream();
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(file.FileName, stream),
+                    Folder = "ChatImages" // Lưu hình ảnh vào thư mục ChatImages trên Cloudinary
+                };
+
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    urls.Add(uploadResult.SecureUrl.ToString());
+                }
+                else
+                {
+                    throw new Exception($"Failed to upload image to Cloudinary: {uploadResult.Error.Message}");
+                }
+            }
+
+            return urls;
+        }
+
+       
     }
 }
