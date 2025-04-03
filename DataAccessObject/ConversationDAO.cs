@@ -21,8 +21,9 @@ namespace DataAccessObject
         public async Task<Conversation> GetConversationByUsersAsync(string user1Id, string user2Id)
         {
             return await _context.Conversations
-                .FirstOrDefaultAsync(c => (c.User1ID == user1Id && c.User2ID == user2Id) ||
-                                          (c.User1ID == user2Id && c.User2ID == user1Id));
+             .FirstOrDefaultAsync(c =>
+                 (c.User1ID == user1Id && c.User2ID == user2Id) ||
+                 (c.User1ID == user2Id && c.User2ID == user1Id));
         }
 
         public async Task<List<Conversation>> GetConversationsByUserAsync(string userId)
