@@ -22,6 +22,8 @@ namespace Service.RequestAndResponse.Response.Conversation
     {
         public int MessageID { get; set; }
         public string SenderID { get; set; }
+        public string SenderName { get; set; } 
+        public string ReceiverID { get; set; }
         public string Content { get; set; }
         public DateTime SentAt { get; set; }
         public bool IsRead { get; set; }
