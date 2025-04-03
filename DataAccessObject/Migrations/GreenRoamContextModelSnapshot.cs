@@ -363,6 +363,9 @@ namespace DataAccessObject.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("HomeStayID")
+                        .HasColumnType("int");
+
                     b.Property<string>("User1ID")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -372,6 +375,8 @@ namespace DataAccessObject.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ConversationID");
+
+                    b.HasIndex("HomeStayID");
 
                     b.HasIndex("User1ID");
 
@@ -1358,6 +1363,10 @@ namespace DataAccessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Model.Conversation", b =>
                 {
+                    b.HasOne("BusinessObject.Model.HomeStay", "HomeStay")
+                        .WithMany("Conversations")
+                        .HasForeignKey("HomeStayID");
+
                     b.HasOne("BusinessObject.Model.Account", "User1")
                         .WithMany("ConversationsAsUser1")
                         .HasForeignKey("User1ID")
@@ -1369,6 +1378,8 @@ namespace DataAccessObject.Migrations
                         .HasForeignKey("User2ID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("HomeStay");
 
                     b.Navigation("User1");
 
@@ -1742,6 +1753,8 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Bookings");
 
                     b.Navigation("CancelPolicy");
+
+                    b.Navigation("Conversations");
 
                     b.Navigation("CultureExperiences");
 

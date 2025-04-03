@@ -59,6 +59,8 @@ namespace BusinessObject.Model;
 
         public ICollection<Booking> Bookings { get; set; }
 
+        public ICollection<Conversation> Conversations { get; set; }
+
         public ICollection<CultureExperience> CultureExperiences { get; set; }
 
         public ICollection<Services> Services { get; set; }

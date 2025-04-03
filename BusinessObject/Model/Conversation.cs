@@ -21,6 +21,9 @@ namespace BusinessObject.Model
         public string User2ID { get; set; }
         public Account User2 { get; set; }
 
+        public int? HomeStayID { get; set; }
+        public HomeStay? HomeStay { get; set; }
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public ICollection<Message> Messages { get; set; }
