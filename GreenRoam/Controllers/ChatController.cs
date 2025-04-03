@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Service.IService;
 using Service.RequestAndResponse.Response.Conversation;
+using System.ComponentModel.DataAnnotations;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -267,10 +268,16 @@ public class ChatController : ControllerBase
 
     // API 4: Gửi tin nhắn
     [HttpPost("send-message")]
-    public async Task<IActionResult> SendMessage([FromBody] SendMessageRequest request)
+    public async Task<IActionResult> SendMessage([FromForm] SendMessageRequest request)
     {
         try
         {
+            // Kiểm tra dữ liệu đầu vào
+            if (string.IsNullOrEmpty(request.ReceiverID) || string.IsNullOrEmpty(request.SenderName) || request.HomeStayId <= 0)
+            {
+                return BadRequest(new { message = "ReceiverID, SenderName, and HomeStayId are required." });
+            }
+
             // Lấy ownerId từ homeStayId
             var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(request.HomeStayId);
             if (ownerId == null)
@@ -279,27 +286,27 @@ public class ChatController : ControllerBase
             }
 
             // Gửi tin nhắn với thông tin đầy đủ
-            var receiverId = request.ReceiverID ?? ownerId;  // Sử dụng receiverID đã gửi hoặc mặc định là ownerId
+            var receiverId = request.ReceiverID ?? ownerId;
             var message = await _chatService.SendMessageAsync(
-                request.SenderID,
+                request.ReceiverID,
                 receiverId,
                 request.Content,
                 request.SenderName,
-                request.HomeStayId
-              
+                request.HomeStayId,
+                request.Images // Truyền danh sách hình ảnh (có thể null)
             );
 
             // Thông báo qua SignalR
             var hubContext = (IHubContext<ChatHub>)HttpContext.RequestServices.GetService(typeof(IHubContext<ChatHub>));
             await hubContext.Clients.All.SendAsync(
                 "ReceiveMessage",
-                request.SenderID,
-                request.Content,
+                request.ReceiverID,
+                message.Content, // Sử dụng message.Content để bao gồm cả URL hình ảnh nếu có
                 message.SentAt,
                 message.MessageID,
                 message.ConversationID,
-                message.senderName,   
-                message.receiverID           
+                message.senderName,
+                message.receiverID
             );
 
             return Ok(new { message = "Message sent successfully.", data = _mapper.Map<SimplifiedMessageResponse>(message) });
@@ -310,6 +317,45 @@ public class ChatController : ControllerBase
         }
     }
 }
+
+//public class MaxImagesAttribute : ValidationAttribute
+//{
+//    private readonly int _maxCount;
+
+//    public MaxImagesAttribute(int maxCount)
+//    {
+//        _maxCount = maxCount;
+//    }
+
+//    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+//    {
+//        var images = value as List<IFormFile>;
+//        if (images != null && images.Count > _maxCount)
+//        {
+//            return new ValidationResult($"The number of images cannot exceed {_maxCount}.");
+//        }
+//        return ValidationResult.Success;
+//    }
+//}
+//public class AtLeastOneContentAttribute : ValidationAttribute
+//{
+//    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+//    {
+//        var request = (SendMessageRequest)validationContext.ObjectInstance;
+
+//        // Kiểm tra nếu cả Content và Images đều rỗng
+//        bool hasContent = !string.IsNullOrWhiteSpace(request.Content);
+//        bool hasImages = request.Images != null && request.Images.Any();
+
+//        if (!hasContent && !hasImages)
+//        {
+//            return new ValidationResult("Either Content or Images must be provided.");
+//        }
+
+//        return ValidationResult.Success;
+//    }
+//}
+
 public class ConversationWithMessagesResponse
 {
     public int ConversationID { get; set; }
@@ -326,10 +372,18 @@ public class MarkAsReadRequest
 
 public class SendMessageRequest
 {
+    [Required(ErrorMessage = "ReceiverID is required.")]
     public string ReceiverID { get; set; }
-    public string SenderName { get; set; }  // Thêm trường mới
+   
+    public string SenderName { get; set; }
+    [Required(ErrorMessage = "SenderID is required.")]
     public string SenderID { get; set; }
+    [Range(1, int.MaxValue, ErrorMessage = "HomeStayId must be greater than 0.")]
     public int HomeStayId { get; set; }
-    public string Content { get; set; }
-    //public List<IFormFile> Images { get; set; }
+    [RegularExpression(@"^(?!\s*$).+", ErrorMessage = "Content cannot be empty or contain only whitespace.")]
+    public string? Content { get; set; }
+    [MaxImages(10, ErrorMessage = "You can only upload a maximum of 10 images at a time.")]
+    public List<IFormFile>? Images { get; set; }
+    [AtLeastOneContent]
+    //public bool ValidateAtLeastOneContent => true;
 }

@@ -54,7 +54,7 @@ using Repository;
                 return await _conversationRepository.GetConversationsByUserAsync(userId);
             }
 
-            public async Task<List<Message>> GetMessagesByConversationAsync(int conversationId)
+        public async Task<List<Message>> GetMessagesByConversationAsync(int conversationId)
             {
                 return await _messageRepository.GetMessagesByConversationAsync(conversationId);
             }
@@ -96,7 +96,7 @@ using Repository;
                 }
             }
 
-            public async Task MarkAllMessagesAsReadAsync(int conversationId, string userId)
+        public async Task MarkAllMessagesAsReadAsync(int conversationId, string userId)
             {
                 var messages = await _messageRepository.GetMessagesByConversationAsync(conversationId);
                 var unreadMessages = messages.Where(m => !m.IsRead).ToList(); 
@@ -108,7 +108,7 @@ using Repository;
                 }
             }
 
-            public async Task<string> GetOwnerIdByHomeStayIdAsync(int homeStayId)
+        public async Task<string> GetOwnerIdByHomeStayIdAsync(int homeStayId)
             {
                 var homeStay = await _homeStayRepository.GetByIdAsync(homeStayId);
                 if (homeStay == null)
@@ -119,13 +119,13 @@ using Repository;
                 return homeStay.AccountID; // Trả về AccountID mà không kiểm tra vai trò OWNER
             }
 
-            public async Task<List<Conversation>> GetConversationsForOwnerAsync(string ownerId)
+        public async Task<List<Conversation>> GetConversationsForOwnerAsync(string ownerId)
             {
                 var conversations = await _conversationRepository.GetConversationsByUserAsync(ownerId);
                 return conversations;
             }
 
-            public async Task<int> GetUnreadMessageCountAsync(int conversationId, string userId)
+        public async Task<int> GetUnreadMessageCountAsync(int conversationId, string userId)
             {
                 var messages = await _messageRepository.GetMessagesByConversationAsync(conversationId);
                 return messages.Count(m => !m.IsRead && m.SenderID != userId);
@@ -190,7 +190,5 @@ using Repository;
 
             return urls;
         }
-
-       
     }
 }
