@@ -41,5 +41,14 @@ namespace DataAccessObject
             await _context.SaveChangesAsync();
             return conversation;
         }
+        public async Task<List<Conversation>> GetConversationsByHomeStayIdAsync(int homeStayId)
+        {
+            return await _context.Conversations
+                .Where(c => c.HomeStayID == homeStayId)
+                .Include(c => c.User1)
+                .Include(c => c.User2)
+                .Include(c => c.Messages)
+                .ToListAsync();
+        }
     }
 }

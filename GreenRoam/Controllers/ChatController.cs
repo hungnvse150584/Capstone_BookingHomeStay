@@ -114,37 +114,45 @@ public class ChatController : ControllerBase
     {
         try
         {
-            // Lấy OwnerId từ homeStayId
             var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(homeStayId);
             if (ownerId == null)
             {
                 return BadRequest(new { message = "Owner not found for this HomeStay." });
             }
 
-            // Lấy tất cả cuộc trò chuyện liên quan đến homestay này
-            var allConversations = await _chatService.GetConversationsByUserAsync(ownerId);
-
-            // Tạo service mới để lọc conversations theo homeStayId
-            var filteredConversations = new List<Conversation>();
-
-            // Thêm logic để lọc chỉ những cuộc trò chuyện liên quan đến homestay này
-            foreach (var conversation in allConversations)
-            {
-                // Kiểm tra nếu conversation có liên quan đến homestay này
-                // Có thể cần thêm một trường hoặc một bảng mapping để lưu thông tin này
-                var messages = await _chatService.GetMessagesByConversationAsync(conversation.ConversationID);
-
-                // Cần có một cách để xác định liệu conversation này có liên quan đến homestay không
-                // Ví dụ: kiểm tra một trường metadata hoặc kiểm tra từ nội dung tin nhắn
-                // Đây là giả sử bạn có một cách để xác định
-
-                // Thêm vào danh sách nếu liên quan
-                filteredConversations.Add(conversation);
-            }
+            var filteredConversations = await _chatService.GetConversationsByHomeStayIdAsync(homeStayId);
 
             var conversationResponses = new List<ConversationWithMessagesResponse>();
 
-            // Phần code xử lý conversationResponses không thay đổi
+            foreach (var conversation in filteredConversations)
+            {
+                var response = new ConversationWithMessagesResponse
+                {
+                    ConversationID = conversation.ConversationID
+                };
+
+                if (conversation.User1ID == ownerId)
+                {
+                    response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User2);
+                }
+                else if (conversation.User2ID == ownerId)
+                {
+                    response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User1);
+                }
+                else
+                {
+                    response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User1);
+                }
+
+                var messages = await _chatService.GetMessagesByConversationAsync(conversation.ConversationID);
+                var lastMessage = messages.OrderByDescending(m => m.SentAt).FirstOrDefault();
+                if (lastMessage != null)
+                {
+                    response.LastMessage = _mapper.Map<SimplifiedMessageResponse>(lastMessage);
+                }
+
+                conversationResponses.Add(response);
+            }
 
             return Ok(conversationResponses);
         }
