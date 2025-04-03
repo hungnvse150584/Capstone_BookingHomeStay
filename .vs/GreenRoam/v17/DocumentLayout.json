@@ -134,8 +134,7 @@
               "RelativeToolTip": "Service\\Service\\HomeStayRentalService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T09:12:31.083Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T09:12:31.083Z"
             },
             {
               "$type": "Document",
@@ -147,8 +146,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\HomeStays\\SimpleHomeStayResponse.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAUwCMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T09:12:20.787Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T09:12:20.787Z"
             },
             {
               "$type": "Document",
@@ -160,8 +158,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\HomeStays\\GetHomeStayResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T09:12:19.798Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T09:12:19.798Z"
             },
             {
               "$type": "Document",
@@ -173,8 +170,7 @@
               "RelativeToolTip": "Service\\Service\\HomeStayService.cs",
               "ViewState": "AgIAAEwCAAAAAAAAAAAqwHgCAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T08:36:48.233Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T08:36:48.233Z"
             },
             {
               "$type": "Document",
@@ -184,7 +180,7 @@
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\ChatController.cs",
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\ChatController.cs",
               "RelativeToolTip": "GreenRoam\\Controllers\\ChatController.cs",
-              "ViewState": "AgIAADcBAAAAAAAAAAAuwHEBAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAGYBAAAAAAAAAAA/wHYBAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-03T07:21:46.548Z",
               "EditorCaption": ""
@@ -199,8 +195,7 @@
               "RelativeToolTip": "Service\\Service\\ChatService.cs",
               "ViewState": "AgIAABsAAAAAAAAAAAAgwDgAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T07:35:25.452Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T07:35:25.452Z"
             },
             {
               "$type": "Document",
@@ -212,8 +207,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\HomeStay\\CreateHomeStayRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T09:11:48.09Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T09:11:48.09Z"
             },
             {
               "$type": "Document",
@@ -225,8 +219,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\ImageHomeStay\\UploadImageRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T09:11:42.843Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T09:11:42.843Z"
             },
             {
               "$type": "Document",
@@ -238,8 +231,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\HomeStayController.cs",
               "ViewState": "AgIAAI8AAAAAAAAAAAAiwLkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T09:11:16.382Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T09:11:16.382Z"
             },
             {
               "$type": "Document",

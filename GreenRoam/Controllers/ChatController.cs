@@ -382,8 +382,8 @@ public class SendMessageRequest
     public int HomeStayId { get; set; }
     [RegularExpression(@"^(?!\s*$).+", ErrorMessage = "Content cannot be empty or contain only whitespace.")]
     public string? Content { get; set; }
-    [MaxImages(10, ErrorMessage = "You can only upload a maximum of 10 images at a time.")]
+    //[MaxImages(10, ErrorMessage = "You can only upload a maximum of 10 images at a time.")]
     public List<IFormFile>? Images { get; set; }
-    [AtLeastOneContent]
+    //[AtLeastOneContent]
     //public bool ValidateAtLeastOneContent => true;
 }
