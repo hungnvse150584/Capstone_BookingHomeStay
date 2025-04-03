@@ -1240,24 +1240,67 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/SendMessageRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SendMessageRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SendMessageRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/SendMessageRequest"
+                "required": [
+                  "ReceiverID",
+                  "SenderID"
+                ],
+                "type": "object",
+                "properties": {
+                  "ReceiverID": {
+                    "type": "string"
+                  },
+                  "SenderName": {
+                    "type": "string"
+                  },
+                  "SenderID": {
+                    "type": "string"
+                  },
+                  "HomeStayId": {
+                    "maximum": 2147483647,
+                    "minimum": 1,
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Content": {
+                    "pattern": "^(?!\\s*$).+",
+                    "type": "string"
+                  },
+                  "Images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "ValidateAtLeastOneContent": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "encoding": {
+                "ReceiverID": {
+                  "style": "form"
+                },
+                "SenderName": {
+                  "style": "form"
+                },
+                "SenderID": {
+                  "style": "form"
+                },
+                "HomeStayId": {
+                  "style": "form"
+                },
+                "Content": {
+                  "style": "form"
+                },
+                "Images": {
+                  "style": "form"
+                },
+                "ValidateAtLeastOneContent": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -9220,32 +9263,6 @@
             "items": {
               "$ref": "#/components/schemas/Pricing"
             },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "SendMessageRequest": {
-        "type": "object",
-        "properties": {
-          "receiverID": {
-            "type": "string",
-            "nullable": true
-          },
-          "senderName": {
-            "type": "string",
-            "nullable": true
-          },
-          "senderID": {
-            "type": "string",
-            "nullable": true
-          },
-          "homeStayId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "content": {
-            "type": "string",
             "nullable": true
           }
         },
