@@ -1306,6 +1306,28 @@
         }
       }
     },
+    "/api/Chat/conversations/by-customer/{customerId}": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/booking-checkout/CreateBooking": {
       "post": {
         "tags": [

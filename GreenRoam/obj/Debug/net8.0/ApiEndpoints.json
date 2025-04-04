@@ -839,6 +839,22 @@
   },
   {
     "ContainingType": "ChatController",
+    "Method": "GetAllChatByCustomerId",
+    "RelativePath": "api/Chat/conversations/by-customer/{customerId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ChatController",
     "Method": "GetConversationsByHomeStay",
     "RelativePath": "api/Chat/conversations/by-homestay/{homeStayId}",
     "HttpMethod": "GET",

@@ -317,6 +317,64 @@ public class ChatController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
+    [HttpGet("conversations/by-customer/{customerId}")]
+    public async Task<IActionResult> GetAllChatByCustomerId(string customerId)
+    {
+        try
+        {
+            // Kiểm tra CustomerId
+            if (string.IsNullOrEmpty(customerId))
+            {
+                return BadRequest(new { message = "CustomerId is required." });
+            }
+
+            // Lấy danh sách các cuộc trò chuyện của khách hàng
+            var conversations = await _chatService.GetConversationsByCustomerIdAsync(customerId);
+
+            // Nếu không có cuộc trò chuyện nào, trả về danh sách rỗng
+            if (conversations == null || !conversations.Any())
+            {
+                return Ok(new List<SimplifiedConversationResponse>());
+            }
+
+            // Chuyển đổi dữ liệu sang response model
+            var conversationResponses = new List<SimplifiedConversationResponse>();
+
+            foreach (var conversation in conversations)
+            {
+                var response = new SimplifiedConversationResponse
+                {
+                    ConversationID = conversation.ConversationID
+                };
+
+                // Xác định người dùng khác (OtherUser) trong cuộc trò chuyện
+                if (conversation.User1ID == customerId)
+                {
+                    response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User2);
+                }
+                else
+                {
+                    response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User1);
+                }
+
+                // Lấy tin nhắn cuối cùng
+                var messages = await _chatService.GetMessagesByConversationAsync(conversation.ConversationID);
+                var lastMessage = messages.OrderByDescending(m => m.SentAt).FirstOrDefault();
+                if (lastMessage != null)
+                {
+                    response.LastMessage = _mapper.Map<SimplifiedMessageResponse>(lastMessage);
+                }
+
+                conversationResponses.Add(response);
+            }
+
+            return Ok(conversationResponses);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
 }
 
 //public class MaxImagesAttribute : ValidationAttribute

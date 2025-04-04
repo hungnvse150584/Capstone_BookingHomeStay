@@ -19,5 +19,6 @@ namespace Service.IService
         Task<int> GetUnreadMessageCountAsync(int conversationId, string userId);
         Task<Conversation> GetOrCreateConversationWithHomeStayOwnerAsync(string customerId, int homeStayId);
         Task<List<Conversation>> GetConversationsByHomeStayIdAsync(int homeStayId);
+        Task<List<Conversation>> GetConversationsByCustomerIdAsync(string customerId);
     }
 }
