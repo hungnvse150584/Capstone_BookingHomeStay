@@ -397,26 +397,73 @@ namespace Service.Service
                 return new BaseResponse<List<HomeStay>>($"Something went wrong! Error: {ex.Message}. Inner Exception: {ex.InnerException?.Message}", StatusCodeEnum.InternalServerError_500, null);
             }
         }
+        //public async Task<BaseResponse<HomeStay>> UpdateHomeStay(int homestayId, UpdateHomeStayRequest request)
+        //{
+        //    try
+        //    {
+
+        //        var homeStayExist = await _homeStayRepository.GetHomeStayDetailByIdAsync(homestayId);
+        //        if (homeStayExist == null)
+        //        {
+        //            return new BaseResponse<HomeStay>("Cannot find HomeStay", StatusCodeEnum.BadGateway_502, null);
+        //        }
+
+
+        //        var updatedHomeStay = _mapper.Map(request, homeStayExist);
+        //        updatedHomeStay.CreateAt = homeStayExist.CreateAt; 
+        //        updatedHomeStay.Status = homeStayExist.Status;      
+        //        updatedHomeStay.UpdateAt = DateTime.Now;          
+        //        updatedHomeStay.Address = request.Address;          
+        //        updatedHomeStay.TypeOfRental = request.RentalType;
+        //        updatedHomeStay.Longitude = request.Longitude;
+        //        updatedHomeStay.Latitude = request.Latitude;
+
+
+        //        await _homeStayRepository.UpdateAsync(updatedHomeStay);
+        //        await _homeStayRepository.SaveChangesAsync();
+
+        //        return new BaseResponse<HomeStay>("Update HomeStay successfully",
+        //                                          StatusCodeEnum.OK_200, updatedHomeStay);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Error: {ex.Message}");
+        //        Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+        //        return new BaseResponse<HomeStay>($"Something went wrong! Error: {ex.Message}",
+        //                                          StatusCodeEnum.InternalServerError_500, null);
+        //    }
+        //}
+
         public async Task<BaseResponse<HomeStay>> UpdateHomeStay(int homestayId, UpdateHomeStayRequest request)
         {
             try
             {
-          
+                // Kiểm tra dữ liệu đầu vào
+                if (request == null)
+                {
+                    return new BaseResponse<HomeStay>("Request cannot be null", StatusCodeEnum.BadRequest_400, null);
+                }
+
+                // Kiểm tra HomeStayID hợp lệ
+                if (homestayId <= 0)
+                {
+                    return new BaseResponse<HomeStay>("HomeStayID must be greater than 0", StatusCodeEnum.BadRequest_400, null);
+                }
+
+                // Kiểm tra homestay tồn tại
                 var homeStayExist = await _homeStayRepository.GetHomeStayDetailByIdAsync(homestayId);
                 if (homeStayExist == null)
                 {
-                    return new BaseResponse<HomeStay>("Cannot find HomeStay", StatusCodeEnum.BadGateway_502, null);
+                    return new BaseResponse<HomeStay>("Cannot find HomeStay with the provided HomeStayID", StatusCodeEnum.NotFound_404, null);
                 }
 
-               
+                // Ánh xạ dữ liệu từ request sang homestay hiện tại
                 var updatedHomeStay = _mapper.Map(request, homeStayExist);
-                updatedHomeStay.CreateAt = homeStayExist.CreateAt; 
-                updatedHomeStay.Status = homeStayExist.Status;      
-                updatedHomeStay.UpdateAt = DateTime.Now;          
-                updatedHomeStay.Address = request.Address;          
-                updatedHomeStay.TypeOfRental = request.RentalType;  
+                updatedHomeStay.CreateAt = homeStayExist.CreateAt; // Giữ nguyên CreateAt
+                updatedHomeStay.Status = homeStayExist.Status;     // Giữ nguyên Status
+                updatedHomeStay.UpdateAt = DateTime.UtcNow;        // Cập nhật thời gian
 
-
+                // Cập nhật homestay
                 await _homeStayRepository.UpdateAsync(updatedHomeStay);
                 await _homeStayRepository.SaveChangesAsync();
 
@@ -431,8 +478,6 @@ namespace Service.Service
                                                   StatusCodeEnum.InternalServerError_500, null);
             }
         }
-
-
         public async Task<BaseResponse<IEnumerable<HomeStayResponse>>> FilterHomeStaysAsync(FilterHomeStayRequest request)
         {
             try

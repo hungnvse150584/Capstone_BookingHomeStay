@@ -9979,6 +9979,14 @@
             "minLength": 1,
             "type": "string"
           },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
           "rentalType": {
             "$ref": "#/components/schemas/RentalType"
           },

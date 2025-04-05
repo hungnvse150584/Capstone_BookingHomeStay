@@ -18,6 +18,10 @@ namespace Service.RequestAndResponse.Request.HomeStay
 
         [Required(ErrorMessage = "HomeStay must have Address")]
         public string Address { get; set; }
+       
+        public double Latitude { get; set; }
+     
+        public double Longitude { get; set; }
 
         public RentalType RentalType { get; set; }
 
