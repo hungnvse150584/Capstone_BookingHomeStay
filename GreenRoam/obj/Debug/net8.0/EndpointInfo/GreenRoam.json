@@ -1372,17 +1372,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/BookingBaseResponse"
+                  "$ref": "#/components/schemas/StringBaseResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BookingBaseResponse"
+                  "$ref": "#/components/schemas/StringBaseResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BookingBaseResponse"
+                  "$ref": "#/components/schemas/StringBaseResponse"
                 }
               }
             }
@@ -9961,7 +9961,6 @@
       },
       "UpdateHomeStayRequest": {
         "required": [
-          "accountID",
           "address",
           "description",
           "name"
@@ -9986,10 +9985,6 @@
           "area": {
             "type": "string",
             "nullable": true
-          },
-          "accountID": {
-            "minLength": 1,
-            "type": "string"
           }
         },
         "additionalProperties": false
