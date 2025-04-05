@@ -23,8 +23,8 @@ namespace Service.RequestAndResponse.Request.HomeStay
 
         public string? Area { get; set; }
 
-        [Required(ErrorMessage = "Must Include AccountID")]
-        public string AccountID { get; set; }
+        //[Required(ErrorMessage = "Must Include AccountID")]
+        //public string AccountID { get; set; }
         
     }
 }
