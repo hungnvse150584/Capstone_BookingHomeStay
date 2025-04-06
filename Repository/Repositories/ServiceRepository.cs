@@ -49,8 +49,6 @@ namespace Repository.Repositories
             return await _serviceDao.GetAllServiceAsync();
         }
 
-       
-
         public Task SaveChangesAsync()
         {
             return _serviceDao.SaveChangesAsync();
@@ -59,6 +57,11 @@ namespace Repository.Repositories
         public async Task<IEnumerable<Services>> GetAllServiceAsync(int homestayId)
         {
              return await _serviceDao.GetAllServiceAsync(homestayId);
+        }
+
+        public async Task<IEnumerable<Services>> GetServicesByIdsAsync(List<int> servicesIds)
+        {
+            return await _serviceDao.GetServicesByIdsAsync(servicesIds);
         }
     }
 }
