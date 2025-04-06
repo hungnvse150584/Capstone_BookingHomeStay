@@ -21,6 +21,6 @@ namespace Service.RequestAndResponse.Request.HomeStayType
         public bool RentWhole { get; set; } = true;
         public int MaxAdults { get; set; }
         public int MaxChildren { get; set; }
-        public ICollection<GetAllUpdatePricicing> Pricing { get; set; }
+        //public ICollection<GetAllUpdatePricicing> Pricing { get; set; }
     }
 }

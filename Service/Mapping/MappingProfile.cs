@@ -61,7 +61,7 @@ namespace Service.Mapping
 
             CreateMap<RoomTypes, GetAllRoomType>().ReverseMap();
             CreateMap<ImageHomeStayRentals, GetAllImageHomeStayType>().ReverseMap();
-
+            CreateMap<Conversation, ConversationResponse>();
             // Ánh xạ HomeStayRentals sang GetAllHomeStayType
             CreateMap<HomeStayRentals, GetAllHomeStayType>()
                 .ForMember(dest => dest.ImageHomeStayRentals, opt => opt.MapFrom(src => src.ImageHomeStayRentals))

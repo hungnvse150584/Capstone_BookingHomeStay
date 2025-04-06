@@ -1306,6 +1306,42 @@
         }
       }
     },
+    "/api/Chat/create-conversation": {
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConversationRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConversationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConversationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConversationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Chat/conversations/by-customer/{customerId}": {
       "get": {
         "tags": [
@@ -5603,6 +5639,34 @@
         },
         "additionalProperties": false
       },
+      "CreateConversationRequest": {
+        "required": [
+          "receiverID",
+          "senderID"
+        ],
+        "type": "object",
+        "properties": {
+          "receiverID": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "senderID": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "homeStayId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreatePricingRequest": {
         "required": [
           "description",
@@ -6895,58 +6959,6 @@
             "items": {
               "$ref": "#/components/schemas/GetAllServices"
             },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetAllUpdatePricicing": {
-        "type": "object",
-        "properties": {
-          "pricingID": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "unitPrice": {
-            "type": "number",
-            "format": "double"
-          },
-          "rentPrice": {
-            "type": "number",
-            "format": "double"
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "endDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "isDefault": {
-            "type": "boolean"
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "dayType": {
-            "$ref": "#/components/schemas/DayType"
-          },
-          "homeStayRentalID": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "roomTypesID": {
-            "type": "integer",
-            "format": "int32",
             "nullable": true
           }
         },
@@ -10042,13 +10054,6 @@
           "maxChildren": {
             "type": "integer",
             "format": "int32"
-          },
-          "pricing": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetAllUpdatePricicing"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
