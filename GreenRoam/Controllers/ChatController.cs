@@ -5,6 +5,7 @@ using GreenRoam.Hubs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Repository.IRepositories;
 using Service.IService;
 using Service.RequestAndResponse.Response.Conversation;
 using System.ComponentModel.DataAnnotations;
@@ -15,11 +16,15 @@ public class ChatController : ControllerBase
 {
     private readonly IChatService _chatService;
     private readonly IMapper _mapper;
+    private readonly IHomeStayRepository _homeStayRepository;
+    private readonly IAccountRepository _accountRepository;
 
-    public ChatController(IChatService chatService, IMapper mapper)
+    public ChatController(IChatService chatService, IMapper mapper, IHomeStayRepository homeStayRepository, IAccountRepository accountRepository)
     {
         _chatService = chatService;
         _mapper = mapper;
+        _homeStayRepository = homeStayRepository;
+        _accountRepository = accountRepository;
     }
 
     //[HttpGet("conversations/{userId}")]
@@ -109,6 +114,80 @@ public class ChatController : ControllerBase
 
     //    return Ok(conversationResponses);
     //}
+
+    [HttpGet("conversations/by-customer/{customerId}")]
+    public async Task<IActionResult> GetAllChatByCustomerId(string customerId)
+    {
+        try
+        {
+            // Kiểm tra CustomerId
+            if (string.IsNullOrEmpty(customerId))
+            {
+                return BadRequest(new { message = "CustomerId is required." });
+            }
+
+            // Lấy danh sách các cuộc trò chuyện của khách hàng
+            var conversations = await _chatService.GetConversationsByCustomerIdAsync(customerId);
+
+            // Nếu không có cuộc trò chuyện nào, trả về danh sách rỗng
+            if (conversations == null || !conversations.Any())
+            {
+                return Ok(new List<GetConversationResponse>());
+            }
+
+            // Chuyển đổi dữ liệu sang response model
+            var conversationResponses = new List<GetConversationResponse>();
+
+            foreach (var conversation in conversations)
+            {
+                // Kiểm tra xem cuộc trò chuyện có HomeStayID không
+                if (!conversation.HomeStayID.HasValue)
+                {
+                    continue; // Bỏ qua nếu không liên quan đến homestay
+                }
+
+                var response = new GetConversationResponse
+                {
+                    ConversationID = conversation.ConversationID,
+                    HomeStayID = conversation.HomeStayID.Value // Gán HomeStayID
+                };
+
+                // Lấy thông tin homestay
+                var homeStay = await _homeStayRepository.GetByIdAsync(conversation.HomeStayID.Value);
+                if (homeStay == null)
+                {
+                    continue; // Bỏ qua nếu không tìm thấy homestay
+                }
+
+                response.HomeStayName = homeStay.Name; // Gán tên homestay
+                response.OwnerID = homeStay.AccountID; // Gán OwnerID (AccountID)
+
+                // Lấy thông tin chủ homestay
+                var ownerId = homeStay.AccountID; // ownerId là string
+                var owner = await _accountRepository.GetByAccountIdAsync(ownerId); // Sử dụng phương thức mới
+                if (owner != null)
+                {
+                    response.Owner = _mapper.Map<SimplifiedAccountResponse>(owner);
+                }
+
+                // Lấy tin nhắn cuối cùng
+                var messages = await _chatService.GetMessagesByConversationAsync(conversation.ConversationID);
+                var lastMessage = messages.OrderByDescending(m => m.SentAt).FirstOrDefault();
+                if (lastMessage != null)
+                {
+                    response.LastMessage = _mapper.Map<SimplifiedMessageResponse>(lastMessage);
+                }
+
+                conversationResponses.Add(response);
+            }
+
+            return Ok(conversationResponses);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
 
     // API 1: Lấy danh sách cuộc trò chuyện dựa trên homeStayId
     [HttpGet("conversations/by-homestay/{homeStayId}")]
@@ -360,64 +439,7 @@ public class ChatController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
-    [HttpGet("conversations/by-customer/{customerId}")]
-    public async Task<IActionResult> GetAllChatByCustomerId(string customerId)
-    {
-        try
-        {
-            // Kiểm tra CustomerId
-            if (string.IsNullOrEmpty(customerId))
-            {
-                return BadRequest(new { message = "CustomerId is required." });
-            }
-
-            // Lấy danh sách các cuộc trò chuyện của khách hàng
-            var conversations = await _chatService.GetConversationsByCustomerIdAsync(customerId);
-
-            // Nếu không có cuộc trò chuyện nào, trả về danh sách rỗng
-            if (conversations == null || !conversations.Any())
-            {
-                return Ok(new List<SimplifiedConversationResponse>());
-            }
-
-            // Chuyển đổi dữ liệu sang response model
-            var conversationResponses = new List<SimplifiedConversationResponse>();
-
-            foreach (var conversation in conversations)
-            {
-                var response = new SimplifiedConversationResponse
-                {
-                    ConversationID = conversation.ConversationID
-                };
-
-                // Xác định người dùng khác (OtherUser) trong cuộc trò chuyện
-                if (conversation.User1ID == customerId)
-                {
-                    response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User2);
-                }
-                else
-                {
-                    response.OtherUser = _mapper.Map<SimplifiedAccountResponse>(conversation.User1);
-                }
-
-                // Lấy tin nhắn cuối cùng
-                var messages = await _chatService.GetMessagesByConversationAsync(conversation.ConversationID);
-                var lastMessage = messages.OrderByDescending(m => m.SentAt).FirstOrDefault();
-                if (lastMessage != null)
-                {
-                    response.LastMessage = _mapper.Map<SimplifiedMessageResponse>(lastMessage);
-                }
-
-                conversationResponses.Add(response);
-            }
-
-            return Ok(conversationResponses);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-    }
+    
 }
 
 //public class MaxImagesAttribute : ValidationAttribute
@@ -502,4 +524,13 @@ public class CreateConversationRequest
     public int HomeStayId { get; set; }
     public DateTime CreatedAt { get; set; }
 
+}
+public class GetConversationResponse
+{
+    public int ConversationID { get; set; }
+    public int HomeStayID { get; set; } // Thêm HomeStayID
+    public string HomeStayName { get; set; } // Thêm tên homestay
+    public string OwnerID { get; set; }
+    public SimplifiedAccountResponse Owner { get; set; } // Chủ homestay (thay thế OtherUser)
+    public SimplifiedMessageResponse LastMessage { get; set; }
 }

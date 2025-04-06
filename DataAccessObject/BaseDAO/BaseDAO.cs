@@ -29,6 +29,7 @@ namespace DataAccessObject.BaseDAO
             }
             return entity;
         }
+
         public async Task<T> AddAsync(T entity)
         {
             if (entity == null)
