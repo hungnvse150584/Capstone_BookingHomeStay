@@ -11,6 +11,6 @@ namespace Repository.IRepositories
     public interface IAccountRepository : IBaseRepository<Account>
     {
         Task<(int totalAccount, int ownersAccount, int customersAccount)> GetTotalAccount();
-
+        Task<Account> GetByAccountIdAsync(string accountId);
     }
 }

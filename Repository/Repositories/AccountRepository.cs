@@ -53,5 +53,15 @@ namespace Repository.Repositories
         {
             return await _accountDao.GetTotalAccount();
         }
+
+        public async Task<Account> GetByAccountIdAsync(string accountId)
+        {
+      
+            if (int.TryParse(accountId, out int id))
+            {
+                return await GetByIdAsync(id);
+            }
+            return null;
+        }
     }
 }

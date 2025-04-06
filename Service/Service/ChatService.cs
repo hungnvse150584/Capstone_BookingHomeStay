@@ -196,8 +196,14 @@ using Repository;
         }
         public async Task<List<Conversation>> GetConversationsByCustomerIdAsync(string customerId)
         {
-            
-            return await _conversationRepository.GetConversationsByUserAsync(customerId);
+           
+            var conversations = await _conversationRepository.GetConversationsByUserAsync(customerId);
+
+            var filteredConversations = conversations
+                .Where(c => c.HomeStayID.HasValue)
+                .ToList();
+
+            return filteredConversations;
         }
     }
 }
