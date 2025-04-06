@@ -56,14 +56,70 @@ namespace Service.Service
 
         public async Task<BaseResponse<string>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod)
         {
-            var UnpaidBooking = await _bookingRepository.GetBookingStatusByAccountId(createBookingRequest.AccountID);
-            if (UnpaidBooking != null)
+            var unpaidBooking = await _bookingRepository.GetBookingStatusByAccountId(createBookingRequest.AccountID);
+            if (unpaidBooking != null)
+                return new BaseResponse<string>("There is an unpaid booking. Please complete it before creating a new one.", StatusCodeEnum.Conflict_409, null);
+
+            if (createBookingRequest.BookingDetails == null || !createBookingRequest.BookingDetails.Any())
+                return new BaseResponse<string>("BookingDetails is required.", StatusCodeEnum.BadRequest_400, null);
+
+            if (createBookingRequest.HomeStayID == null || createBookingRequest.HomeStayID <= 0)
+                return new BaseResponse<string>("Invalid HomeStayID, please try again!", StatusCodeEnum.Conflict_409, null);
+
+            var commissionRate = await _commissionRateRepository.GetCommissionRateByHomeStay(createBookingRequest.HomeStayID);
+            if (commissionRate == null || commissionRate.PlatformShare <= 0 || commissionRate.PlatformShare > 1)
+                return new BaseResponse<string>("Invalid commission settings, please check!", StatusCodeEnum.Conflict_409, null);
+
+            var homeStayTypes = await _homeStayTypeRepository.GetHomeStayTypesByIdsAsync(createBookingRequest.BookingDetails.Select(d => d.homeStayTypeID).ToList());
+            var roomTypes = await _roomTypeRepository.GetRoomTypesByIdsAsync(createBookingRequest.BookingDetails.Select(d => d.roomTypeID).ToList());
+            /*var availableRooms = await _roomRepository.GetAvailableRoomFilter(
+                createBookingRequest.BookingDetails.CheckInDate,
+                createBookingRequest.BookingDetails.CheckOutDate
+            );*/
+
+            var bookingDetails = new List<BookingDetail>();
+            foreach (var detail in createBookingRequest.BookingDetails)
             {
-                return new BaseResponse<string>("There still have a booking need to pay, complete before start a new Booking",
-                    StatusCodeEnum.Conflict_409, null);
+                var homeStayType = homeStayTypes.FirstOrDefault(h => h.HomeStayRentalID == detail.homeStayTypeID);
+                if (homeStayType == null)
+                    return new BaseResponse<string>("Invalid HomeStayRental selection, please try again!", StatusCodeEnum.Conflict_409, null);
+
+                if (detail.CheckOutDate.Date <= detail.CheckInDate.Date)
+                    return new BaseResponse<string>("Check-out date must be after check-in date.", StatusCodeEnum.Conflict_409, null);
+
+                var total = await _pricingRepository.GetTotalPrice(detail.CheckInDate, detail.CheckOutDate, homeStayType.HomeStayRentalID, detail.roomTypeID);
+
+                if (homeStayType.RentWhole)
+                {
+                    if (detail.roomTypeID > 0 || detail.roomID > 0)
+                        return new BaseResponse<string>("RoomTypeID and RoomID should not be selected when renting the whole homestay.", StatusCodeEnum.Conflict_409, null);
+                }
+                else
+                {
+                    var roomType = roomTypes.FirstOrDefault(rt => rt.RoomTypesID == detail.roomTypeID);
+                    if (roomType == null || roomType.HomeStayRentalID != homeStayType.HomeStayRentalID)
+                        return new BaseResponse<string>("Invalid RoomType for the selected HomeStayRental.", StatusCodeEnum.Conflict_409, null);
+
+                    var availableRooms = await _roomRepository.GetAvailableRoomFilter(detail.CheckInDate, detail.CheckOutDate);
+
+                    var selectedRoom = availableRooms.FirstOrDefault(r => r.RoomID == detail.roomID);
+                    if (selectedRoom == null)
+                        return new BaseResponse<string>("Selected room is not available.", StatusCodeEnum.Conflict_409, null);
+                }
+
+                bookingDetails.Add(new BookingDetail
+                {
+                    CheckInDate = detail.CheckInDate,
+                    CheckOutDate = detail.CheckOutDate,
+                    HomeStayRentalID = homeStayType.HomeStayRentalID,
+                    RoomID = detail.roomID,
+                    UnitPrice = total.totalUnitPrice,
+                    rentPrice = total.totalRentPrice,
+                    TotalAmount = total.totalRentPrice
+                });
             }
 
-            Booking booking = new Booking
+            var booking = new Booking
             {
                 BookingDate = DateTime.Now,
                 ExpiredTime = DateTime.Now.AddHours(1),
@@ -71,114 +127,26 @@ namespace Service.Service
                 numberOfChildren = createBookingRequest.numberOfChildren,
                 Status = BookingStatus.Pending,
                 paymentStatus = PaymentStatus.Pending,
-                PaymentMethod = paymentMethod == PaymentMethod.Cod ? PaymentMethod.Cod : PaymentMethod.VnPay,
+                PaymentMethod = paymentMethod,
                 AccountID = createBookingRequest.AccountID,
                 HomeStayID = createBookingRequest.HomeStayID,
-                BookingDetails = new List<BookingDetail>()
+                BookingDetails = bookingDetails
             };
 
-            foreach (var bookingDetail in createBookingRequest.BookingDetails)
+
+            var totalPriceBooking = bookingDetails.Sum(d => d.TotalAmount);
+            if (createBookingRequest.BookingOfServices?.BookingServicesDetails?.Any() == true)
             {
-                var homeStayType = await _homeStayTypeRepository.GetHomeStayTypesByIdAsync(bookingDetail.homeStayTypeID);
-                if (homeStayType == null)
-                {
-                    return new BaseResponse<string>("Cannot find your HomeStayRental, please try again!",
-                        StatusCodeEnum.Conflict_409, null);
-                }
-                if (bookingDetail.CheckOutDate.Date <= bookingDetail.CheckInDate.Date)
-                {
-                    return new BaseResponse<string>("Check-out date must be after check-in date.",
-                        StatusCodeEnum.Conflict_409, null);
-                }
+                var serviceIds = createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s => s.ServicesID).ToList();
 
-                if (homeStayType.RentWhole == true)
-                {
-                    if (bookingDetail.roomTypeID > 0 || bookingDetail.roomID > 0)
-                    {
-                        return new BaseResponse<string>("You cannot select RoomTypeID or RoomID when renting the whole homestay.",
-                            StatusCodeEnum.Conflict_409, null);
-                    }
+                // Kiểm tra dịch vụ bị trùng
+                if (serviceIds.Count != serviceIds.Distinct().Count())
+                    return new BaseResponse<string>("Duplicate services are not allowed.", StatusCodeEnum.Conflict_409, null);
 
-                    var total = await _pricingRepository.GetTotalPrice
-                        (bookingDetail.CheckInDate, bookingDetail.CheckOutDate,
-                         homeStayType.HomeStayRentalID);
+                var services = await _serviceRepository.GetServicesByIdsAsync(createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s => s.ServicesID).ToList());
+                if (services.Count() != createBookingRequest.BookingOfServices.BookingServicesDetails.Count)
+                    return new BaseResponse<string>("Some selected services are invalid.", StatusCodeEnum.NotFound_404, null);
 
-                    var bookingRentWholeDetail = new BookingDetail
-                    {
-                        CheckInDate = bookingDetail.CheckInDate,
-                        CheckOutDate = bookingDetail.CheckOutDate,
-                        HomeStayRentalID = homeStayType.HomeStayRentalID,
-                        UnitPrice = total.totalUnitPrice,
-                        rentPrice = total.totalRentPrice,
-                        TotalAmount = total.totalRentPrice
-                    };
-                    booking.BookingDetails.Add(bookingRentWholeDetail);
-                }
-                else
-                {
-                    var roomType = await _roomTypeRepository.GetRoomTypesByIdAsync(bookingDetail.roomTypeID);
-                    if (roomType == null)
-                    {
-                        return new BaseResponse<string>("Cannot find your Type, please try again!",
-                            StatusCodeEnum.Conflict_409, null);
-                    }
-                    if (homeStayType.HomeStayRentalID != roomType.HomeStayRentalID)
-                    {
-                        return new BaseResponse<string>("This roomType is not belong to this HomeStayRental, please try again!",
-                            StatusCodeEnum.Conflict_409, null);
-                    }
-
-                    // ✅ Lấy danh sách phòng trống thuộc RoomType đó
-                    var availableRooms = await _roomRepository.GetAvailableRoomFilter(
-                        bookingDetail.CheckInDate, bookingDetail.CheckOutDate);
-
-                    // ✅ Lọc danh sách chỉ lấy phòng thuộc RoomType
-                    // Kiểm tra phòng khách đã chọn có trống không
-                    var selectedRoom = availableRooms.FirstOrDefault(r => r.RoomID == bookingDetail.roomID);
-
-
-
-                    var total = await _pricingRepository.GetTotalPrice
-                        (bookingDetail.CheckInDate, bookingDetail.CheckOutDate,
-                        homeStayType.HomeStayRentalID, roomType.RoomTypesID);
-
-                    var bookingDetails = new BookingDetail
-                    {
-                        CheckInDate = bookingDetail.CheckInDate,
-                        CheckOutDate = bookingDetail.CheckOutDate,
-                        HomeStayRentalID = homeStayType.HomeStayRentalID,
-                        RoomID = bookingDetail.roomID,
-                        UnitPrice = total.totalUnitPrice,
-                        rentPrice = total.totalRentPrice,
-                        TotalAmount = total.totalRentPrice
-                    };
-                    booking.BookingDetails.Add(bookingDetails);
-                }
-            }
-
-            var totalPriceBooking = booking.BookingDetails.Sum(detail => detail.TotalAmount);
-
-            if (createBookingRequest.HomeStayID == null || createBookingRequest.HomeStayID <= 0)
-            {
-                return new BaseResponse<string>("Invalid HomeStayID, please try again!",
-                            StatusCodeEnum.Conflict_409, null);
-            }
-
-            var commissionrate = await _commissionRateRepository.GetCommissionRateByHomeStay(createBookingRequest.HomeStayID);
-            if (commissionrate == null)
-            {
-                return new BaseResponse<string>("Cannot find the HomeStay Commission, please try again!",
-                            StatusCodeEnum.Conflict_409, null);
-            }
-            if (commissionrate.PlatformShare <= 0 || commissionrate.PlatformShare > 1)
-            {
-                return new BaseResponse<string>("Invalid PlatformShare value, please check commission settings!",
-                            StatusCodeEnum.Conflict_409, null);
-            }
-
-            //For Add BookingServices, it can be null if user don't want to add Services
-            if (createBookingRequest.BookingOfServices != null && createBookingRequest.BookingOfServices.BookingServicesDetails?.Any() == true)
-            {
                 var bookingServices = new BookingServices
                 {
                     BookingServicesDate = DateTime.Now,
@@ -186,59 +154,28 @@ namespace Service.Service
                     PaymentServicesMethod = PaymentServicesMethod.VnPay,
                     PaymentServiceStatus = PaymentServicesStatus.Pending,
                     AccountID = createBookingRequest.AccountID,
-                    BookingServicesDetails = new List<BookingServicesDetail>()
+                    BookingServicesDetails = createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s => new BookingServicesDetail
+                    {
+                        Quantity = s.Quantity,
+                        unitPrice = services.FirstOrDefault(x => x.ServicesID == s.ServicesID).servicesPrice,
+                        TotalAmount = s.Quantity * services.First(x => x.ServicesID == s.ServicesID).servicesPrice,
+                        ServicesID = s.ServicesID
+                    }).ToList()
                 };
-
-                var duplicateService = createBookingRequest.BookingOfServices.BookingServicesDetails
-                                        .GroupBy(d => d.ServicesID)
-                                        .Where(g => g.Count() > 1)
-                                        .Select(g => g.Key)
-                                        .FirstOrDefault();
-
-                if (duplicateService != 0) // Nếu có service trùng nhau
-                {
-                    return new BaseResponse<string>(
-                        $"Service with ID {duplicateService} is duplicated. Please choose different services or adjust the quantity.",
-                        StatusCodeEnum.Conflict_409, null);
-                }
-
-                foreach (var serviceDetailRequest in createBookingRequest.BookingOfServices.BookingServicesDetails)
-                {
-                    var service = await _serviceRepository.GetByIdAsync(serviceDetailRequest.ServicesID);
-                    if (service == null)
-                    {
-                        return new BaseResponse<string>("Service not found, please check the service ID.",
-                            StatusCodeEnum.NotFound_404, null);
-                    }
-
-                    var bookingServiceDetail = new BookingServicesDetail
-                    {
-                        Quantity = serviceDetailRequest.Quantity,
-                        unitPrice = service.servicesPrice,
-                        TotalAmount = serviceDetailRequest.Quantity * service.servicesPrice,
-                        ServicesID = serviceDetailRequest.ServicesID
-                    };
-                    bookingServices.BookingServicesDetails.Add(bookingServiceDetail);
-                }
-                bookingServices.Total = bookingServices.BookingServicesDetails.Sum(detail => detail.TotalAmount);
-
-                if (bookingServices.BookingServicesDetails.Any())
-                {
-                    booking.BookingServices ??= new List<BookingServices>();
-                    booking.BookingServices.Add(bookingServices);
-                }
+                bookingServices.Total = bookingServices.BookingServicesDetails.Sum(d => d.TotalAmount);
+                /*bookingServices.bookingServiceDeposit = commissionRate.PlatformShare * bookingServices.Total;
+                bookingServices.remainingBalance = bookingServices.Total - bookingServices.bookingServiceDeposit;*/
+                booking.BookingServices = new List<BookingServices> { bookingServices };
             }
             double totalPriceServices = (booking.BookingServices?.Sum(bs => bs.Total) ?? 0);
-            var totalAmount = totalPriceBooking + totalPriceServices;
-            var deposit = commissionrate.PlatformShare * totalAmount;
-            var remaining = totalAmount - deposit;
+            double totalAmount = totalPriceBooking + totalPriceServices;
             booking.TotalRentPrice = totalPriceBooking;
             booking.Total = totalAmount;
-            booking.bookingDeposit = deposit;
-            booking.remainingBalance = remaining;
+            booking.bookingDeposit = commissionRate.PlatformShare * totalAmount;
+            booking.remainingBalance = totalAmount - booking.bookingDeposit;
 
             await _bookingRepository.AddBookingAsync(booking);
-            return new BaseResponse<string>("Create Booking Successfully!!!", StatusCodeEnum.Created_201, null);
+            return new BaseResponse<string>("Booking created successfully!", StatusCodeEnum.Created_201, null);
         }
 
         public async Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)

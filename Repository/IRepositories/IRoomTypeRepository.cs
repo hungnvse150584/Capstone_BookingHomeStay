@@ -11,7 +11,7 @@ namespace Repository.IRepositories
     public interface IRoomTypeRepository : IBaseRepository<RoomTypes>
     {
         Task<RoomTypes> GetRoomTypesByIdAsync(int? id);
-
+        Task<IEnumerable<RoomTypes>> GetRoomTypesByIdsAsync(List<int> roomTypeIds);
         Task SaveChangesAsync();
         Task<IEnumerable<RoomTypes>> GetAllRoomTypeByHomeStayRentalID(int homeStayRentalId);
     }

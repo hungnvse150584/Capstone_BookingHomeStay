@@ -52,5 +52,10 @@ namespace Repository.Repositories
         {
             return await _roomTypeDao.GetAllRoomTypeByHomeStayRentalID(homeStayRentalId);
         }
+
+        public async Task<IEnumerable<RoomTypes>> GetRoomTypesByIdsAsync(List<int> roomTypeIds)
+        {
+            return await _roomTypeDao.GetRoomTypesByIdsAsync(roomTypeIds);
+        }
     }
 }

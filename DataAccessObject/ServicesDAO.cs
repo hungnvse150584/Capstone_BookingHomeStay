@@ -46,6 +46,12 @@ namespace DataAccessObject
                     .ToListAsync();
             }
         }
+
+        public async Task<IEnumerable<Services>> GetServicesByIdsAsync(List<int> servicesIds)
+        {
+            return await _context.Services.Where(h => servicesIds.Contains(h.ServicesID)).ToListAsync();
+        }
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

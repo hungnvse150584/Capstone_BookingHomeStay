@@ -34,7 +34,7 @@ namespace DataAccessObject
 
         public async Task<IEnumerable<Room>> GetAvailableRoomFilter(DateTime checkInDate, DateTime checkOutDate)
         {
-            if(checkInDate >= checkOutDate)
+            if (checkInDate >= checkOutDate)
             {
                 throw new ArgumentException($"{checkOutDate} must be after {checkInDate}.");
             }
@@ -43,7 +43,9 @@ namespace DataAccessObject
              .Where(r => r.isActive == true && r.isUsed == false) // Phòng chưa bị chủ khóa và chưa có khách
              .Where(r => !_context.BookingDetails
              .Any(bd => bd.RoomID == r.RoomID &&
-                  bd.Booking.paymentStatus == PaymentStatus.Deposited &&
+                  (bd.Booking.paymentStatus == PaymentStatus.Deposited ||
+                   bd.Booking.paymentStatus == PaymentStatus.FullyPaid
+                  ) &&
                   (checkInDate < bd.CheckOutDate && checkOutDate > bd.CheckInDate)))
            .ToListAsync();
             return availableRooms;

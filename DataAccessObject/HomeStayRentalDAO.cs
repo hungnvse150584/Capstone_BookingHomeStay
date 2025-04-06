@@ -31,6 +31,11 @@ namespace DataAccessObject
 
         }
 
+        public async Task<IEnumerable<HomeStayRentals>> GetHomeStayTypesByIdsAsync(List<int> homeStayTypeIds)
+        {
+            return await _context.HomeStayRentals.Where(h => homeStayTypeIds.Contains(h.HomeStayRentalID)).ToListAsync();
+        }
+
         public async Task<IEnumerable<HomeStayRentals>> GetAllHomeStayTypesAsyncFilter(int? homestayId, bool? rentWhole = null)
         {
             var query = _context.HomeStayRentals.AsQueryable();
