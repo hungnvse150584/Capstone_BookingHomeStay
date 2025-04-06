@@ -491,107 +491,107 @@ namespace Service.Service
                         StatusCodeEnum.BadRequest_400,
                 null);
             }
-            if (request.Pricing != null && request.Pricing?.Any() == true)
-            {
-                var existingPricing = existingRental.Prices.ToList();
+            //if (request.Pricing != null && request.Pricing?.Any() == true)
+            //{
+            //    var existingPricing = existingRental.Prices.ToList();
 
-                var updatedPricingIds = request.Pricing
-                                        .Select(d => d.PricingID)
-                                        .Where(id => id.HasValue)
-                                        .Select(id => id.Value)
-                                        .ToList();
-                var detailsToRemove = await _pricingRepository.GetPricingDetailsToRemoveAsync(homeStayRentalID, updatedPricingIds);
+            //    //var updatedPricingIds = request.Pricing
+            //    //                        .Select(d => d.PricingID)
+            //    //                        .Where(id => id.HasValue)
+            //    //                        .Select(id => id.Value)
+            //    //                        .ToList();
+            //    var detailsToRemove = await _pricingRepository.GetPricingDetailsToRemoveAsync(homeStayRentalID, updatedPricingIds);
 
-                if (detailsToRemove.Any())
-                {
-                    await _pricingRepository.DeleteRange(detailsToRemove);
-                }
+            //    if (detailsToRemove.Any())
+            //    {
+            //        await _pricingRepository.DeleteRange(detailsToRemove);
+            //    }
 
-                foreach (var updatePricicing in request.Pricing)
-                {
-                    if (updatePricicing.PricingID.HasValue)
-                    {
-                        var existedPricing = existingRental.Prices
-                        .FirstOrDefault(d => d.PricingID == updatePricicing.PricingID.Value);
+            //    foreach (var updatePricicing in request.Pricing)
+            //    {
+            //        if (updatePricicing.PricingID.HasValue)
+            //        {
+            //            var existedPricing = existingRental.Prices
+            //            .FirstOrDefault(d => d.PricingID == updatePricicing.PricingID.Value);
 
-                        if (existedPricing == null)
-                        {
-                            return new BaseResponse<HomeStayRentals>($"Cannot find existing pricing detail with ID {updatePricicing.PricingID}", StatusCodeEnum.BadRequest_400, null);
-                        }
+            //            if (existedPricing == null)
+            //            {
+            //                return new BaseResponse<HomeStayRentals>($"Cannot find existing pricing detail with ID {updatePricicing.PricingID}", StatusCodeEnum.BadRequest_400, null);
+            //            }
 
-                        var existingDetail = existingPricing
-                            .FirstOrDefault(d => d.PricingID == updatePricicing.PricingID.Value);
-                        if (existingDetail != null)
-                        {
-                            if (existingRental.RentWhole == true)
-                            {
-                                if (existingRental.Prices == null || !existingRental.Prices.Any())
-                                {
-                                    return new BaseResponse<HomeStayRentals>(
-                                        "No pricing found for this HomeStayRental!",
-                                        StatusCodeEnum.BadRequest_400,
-                                        null);
-                                }
+            //            var existingDetail = existingPricing
+            //                .FirstOrDefault(d => d.PricingID == updatePricicing.PricingID.Value);
+            //            if (existingDetail != null)
+            //            {
+            //                if (existingRental.RentWhole == true)
+            //                {
+            //                    if (existingRental.Prices == null || !existingRental.Prices.Any())
+            //                    {
+            //                        return new BaseResponse<HomeStayRentals>(
+            //                            "No pricing found for this HomeStayRental!",
+            //                            StatusCodeEnum.BadRequest_400,
+            //                            null);
+            //                    }
 
-                                if (updatePricicing.RoomTypesID > 0)
-                                {
-                                    return new BaseResponse<HomeStayRentals>("You cannot select RoomTypeID when update pricing for the whole homestay.",
-                                        StatusCodeEnum.Conflict_409, null);
-                                }
+            //                    if (updatePricicing.RoomTypesID > 0)
+            //                    {
+            //                        return new BaseResponse<HomeStayRentals>("You cannot select RoomTypeID when update pricing for the whole homestay.",
+            //                            StatusCodeEnum.Conflict_409, null);
+            //                    }
 
-                                if (updatePricicing.StartDate >= updatePricicing.EndDate)
-                                {
-                                    return new BaseResponse<HomeStayRentals>("StartDate must < EndDate",
-                                        StatusCodeEnum.Conflict_409, null);
-                                }
+            //                    if (updatePricicing.StartDate >= updatePricicing.EndDate)
+            //                    {
+            //                        return new BaseResponse<HomeStayRentals>("StartDate must < EndDate",
+            //                            StatusCodeEnum.Conflict_409, null);
+            //                    }
 
-                                existingDetail.Description = updatePricicing.Description;
-                                existingDetail.UnitPrice = updatePricicing.UnitPrice;
-                                existingDetail.RentPrice = updatePricicing.RentPrice;
-                                existingDetail.IsActive = updatePricicing.IsActive;
-                                existingDetail.IsDefault = updatePricicing.IsDefault;
-                                existingDetail.DayType = updatePricicing.DayType;
-                                existingDetail.HomeStayRentalID = homeStayRentalID;
-                                existingDetail.RoomTypesID = null;
-                                existingDetail.StartDate = updatePricicing.IsDefault ? null : updatePricicing.StartDate;
-                                existingDetail.EndDate = updatePricicing.IsDefault ? null : updatePricicing.EndDate;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //Tạo 1 pricing mới
-                        if (existingRental.RentWhole == true)
-                        {
-                            if (updatePricicing.RoomTypesID > 0)
-                            {
-                                return new BaseResponse<HomeStayRentals>("You cannot select RoomTypeID when update pricing for the whole homestay.",
-                                    StatusCodeEnum.Conflict_409, null);
-                            }
+            //                    existingDetail.Description = updatePricicing.Description;
+            //                    existingDetail.UnitPrice = updatePricicing.UnitPrice;
+            //                    existingDetail.RentPrice = updatePricicing.RentPrice;
+            //                    existingDetail.IsActive = updatePricicing.IsActive;
+            //                    existingDetail.IsDefault = updatePricicing.IsDefault;
+            //                    existingDetail.DayType = updatePricicing.DayType;
+            //                    existingDetail.HomeStayRentalID = homeStayRentalID;
+            //                    existingDetail.RoomTypesID = null;
+            //                    existingDetail.StartDate = updatePricicing.IsDefault ? null : updatePricicing.StartDate;
+            //                    existingDetail.EndDate = updatePricicing.IsDefault ? null : updatePricicing.EndDate;
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            //Tạo 1 pricing mới
+            //            if (existingRental.RentWhole == true)
+            //            {
+            //                if (updatePricicing.RoomTypesID > 0)
+            //                {
+            //                    return new BaseResponse<HomeStayRentals>("You cannot select RoomTypeID when update pricing for the whole homestay.",
+            //                        StatusCodeEnum.Conflict_409, null);
+            //                }
 
-                            if (updatePricicing.StartDate >= updatePricicing.EndDate)
-                            {
-                                return new BaseResponse<HomeStayRentals>("StartDate must < EndDate",
-                                    StatusCodeEnum.Conflict_409, null);
-                            }
+            //                if (updatePricicing.StartDate >= updatePricicing.EndDate)
+            //                {
+            //                    return new BaseResponse<HomeStayRentals>("StartDate must < EndDate",
+            //                        StatusCodeEnum.Conflict_409, null);
+            //                }
 
-                            existingRental.Prices.Add(new Pricing
-                            {
-                                Description = updatePricicing.Description,
-                                UnitPrice = updatePricicing.UnitPrice,
-                                RentPrice = updatePricicing.RentPrice,
-                                IsActive = updatePricicing.IsActive,
-                                IsDefault = updatePricicing.IsDefault,
-                                DayType = updatePricicing.DayType,
-                                HomeStayRentalID = homeStayRentalID,
-                                RoomTypesID = null,
-                                StartDate = updatePricicing.IsDefault ? null : updatePricicing.StartDate,
-                                EndDate = updatePricicing.IsDefault ? null : updatePricicing.EndDate
-                            });
-                        }
-                    }
-                }
-            }
+            //                existingRental.Prices.Add(new Pricing
+            //                {
+            //                    Description = updatePricicing.Description,
+            //                    UnitPrice = updatePricicing.UnitPrice,
+            //                    RentPrice = updatePricicing.RentPrice,
+            //                    IsActive = updatePricicing.IsActive,
+            //                    IsDefault = updatePricicing.IsDefault,
+            //                    DayType = updatePricicing.DayType,
+            //                    HomeStayRentalID = homeStayRentalID,
+            //                    RoomTypesID = null,
+            //                    StartDate = updatePricicing.IsDefault ? null : updatePricicing.StartDate,
+            //                    EndDate = updatePricicing.IsDefault ? null : updatePricicing.EndDate
+            //                });
+            //            }
+            //        }
+            //    }
+            //}
             
             existingRental.Name = request.Name;
             existingRental.Description = request.Description;

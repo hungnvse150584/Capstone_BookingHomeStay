@@ -2,6 +2,7 @@
 using AutoMapper;
 using BusinessObject.Model;
 using GreenRoam.Hubs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Service.IService;
@@ -317,6 +318,48 @@ public class ChatController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
+ 
+    [HttpPost("create-conversation")]
+    public async Task<IActionResult> CreateConversation([FromBody] CreateConversationRequest request)
+    {
+        try
+        {
+            // Kiểm tra dữ liệu đầu vào
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Kiểm tra dữ liệu đầu vào
+            if (string.IsNullOrEmpty(request.SenderID) || string.IsNullOrEmpty(request.ReceiverID) || request.HomeStayId <= 0)
+            {
+                return BadRequest(new { message = "SenderID, ReceiverID, and HomeStayId are required." });
+            }
+
+            // Kiểm tra HomeStay tồn tại và lấy OwnerId (nếu cần)
+            var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(request.HomeStayId);
+            if (ownerId == null)
+            {
+                return BadRequest(new { message = "Owner not found for this HomeStay." });
+            }
+
+            // Tạo hoặc lấy cuộc hội thoại
+            var conversation = await _chatService.GetOrCreateConversationAsync(
+                request.SenderID,
+                request.ReceiverID,
+                request.HomeStayId
+            );
+
+            // Ánh xạ sang response model
+            var response = _mapper.Map<ConversationResponse>(conversation);
+
+            return Ok(new { message = "Conversation created successfully.", data = response });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
     [HttpGet("conversations/by-customer/{customerId}")]
     public async Task<IActionResult> GetAllChatByCustomerId(string customerId)
     {
@@ -447,4 +490,16 @@ public class SendMessageRequest
     public List<IFormFile>? Images { get; set; }
     //[AtLeastOneContent]
     //public bool ValidateAtLeastOneContent => true;
+}
+public class CreateConversationRequest
+{
+    [Required(ErrorMessage = "ReceiverID is required.")]
+    public string ReceiverID { get; set; }
+
+    [Required(ErrorMessage = "SenderID is required.")]
+    public string SenderID { get; set; }
+    [Range(1, int.MaxValue, ErrorMessage = "HomeStayId must be greater than 0.")]
+    public int HomeStayId { get; set; }
+    public DateTime CreatedAt { get; set; }
+
 }

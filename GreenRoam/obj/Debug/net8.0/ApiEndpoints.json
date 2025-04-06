@@ -871,6 +871,22 @@
   },
   {
     "ContainingType": "ChatController",
+    "Method": "CreateConversation",
+    "RelativePath": "api/Chat/create-conversation",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CreateConversationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ChatController",
     "Method": "MarkAllMessagesAsRead",
     "RelativePath": "api/Chat/mark-as-read",
     "HttpMethod": "PUT",
