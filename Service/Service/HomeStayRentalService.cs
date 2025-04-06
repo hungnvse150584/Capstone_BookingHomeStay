@@ -323,6 +323,7 @@ namespace Service.Service
         {
             try
             {
+                // Kiểm tra dữ liệu đầu vào
                 if (!request.CheckInDate.HasValue)
                 {
                     return new BaseResponse<IEnumerable<GetAllHomeStayTypeFilter>>(
@@ -366,14 +367,10 @@ namespace Service.Service
                 var checkInDate = request.CheckInDate.Value.Date;
                 var checkOutDate = request.CheckOutDate.Value.Date;
 
-                // Kiểm tra lại NumberOfAdults trước khi truy cập .Value
-                if (!request.NumberOfAdults.HasValue)
-                {
-                    throw new InvalidOperationException("NumberOfAdults is unexpectedly null after validation.");
-                }
                 int numberOfAdults = request.NumberOfAdults.Value;
                 int numberOfChildren = request.NumberOfChildren ?? 0;
 
+                // Lấy danh sách HomeStayRentals từ repository
                 var finalFilteredRentals = await _homeStayTypeRepository.FilterHomeStayRentalsAsync(
                     request.HomeStayID,
                     request.RentWhole,
@@ -382,10 +379,18 @@ namespace Service.Service
                     numberOfAdults,
                     numberOfChildren);
 
+                // Log số lượng HomeStayRentals trả về từ repository
+                Console.WriteLine($"Number of HomeStayRentals from repository: {finalFilteredRentals.Count()}");
+                foreach (var rental in finalFilteredRentals)
+                {
+                    Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID}, RentWhole: {rental.RentWhole}, MaxAdults: {rental.MaxAdults}, MaxChildren: {rental.MaxChildren}, MaxPeople: {rental.MaxPeople}, Status: {rental.Status}");
+                }
+
                 var response = _mapper.Map<IEnumerable<GetAllHomeStayTypeFilter>>(finalFilteredRentals);
 
                 foreach (var rental in response)
                 {
+                    // Kiểm tra xem có booking nào trùng với khoảng thời gian yêu cầu không
                     var hasBooking = rental.BookingDetails
                         .Any(bd => bd.Booking != null &&
                                    bd.HomeStayTypesID == rental.HomeStayRentalID &&
@@ -395,33 +400,34 @@ namespace Service.Service
                                    bd.CheckInDate.Date <= checkOutDate &&
                                    bd.CheckOutDate.Date >= checkInDate);
 
+                    // Lấy danh sách các phòng khả dụng
                     var roomIds = rental.RoomTypes
                         .SelectMany(rt => rt.Rooms)
                         .Where(r => r.IsActive)
                         .Select(r => r.RoomID)
                         .ToList();
 
+                    // Log số lượng phòng khả dụng và trạng thái booking
+                    Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID}, RentWhole: {rental.RentWhole}, Number of available rooms: {roomIds.Count}, HasBooking: {hasBooking}");
+
+                    // Nếu không có phòng nào khả dụng
                     if (!roomIds.Any())
                     {
-                        if (hasBooking)
-                        {
-                            rental.TotalAvailableRooms = 0;
-                        }
-                        else
-                        {
-                            rental.TotalAvailableRooms = 0;
-                        }
+                        rental.TotalAvailableRooms = 0;
                         continue;
                     }
 
+                    // Nếu có booking trùng, không có phòng nào khả dụng
                     if (hasBooking)
                     {
                         rental.TotalAvailableRooms = 0;
                     }
                     else
                     {
+                        // Nếu không có booking trùng, tính số phòng khả dụng
                         rental.TotalAvailableRooms = roomIds.Count;
 
+                        // Cập nhật số phòng khả dụng cho từng RoomType
                         foreach (var roomType in rental.RoomTypes)
                         {
                             var roomTypeRoomIds = roomType.Rooms
@@ -432,33 +438,42 @@ namespace Service.Service
                         }
                     }
 
-                    if (request.RentWhole.HasValue && request.RentWhole.Value)
+                    // Xử lý logic RentWhole
+                    if (request.RentWhole.HasValue)
                     {
-                        if (rental.TotalAvailableRooms != roomIds.Count)
+                        if (request.RentWhole.Value) // RentWhole = true
                         {
-                            rental.TotalAvailableRooms = 0;
+                            // Nếu thuê nguyên căn, cần tất cả các phòng đều khả dụng
+                            if (rental.TotalAvailableRooms != roomIds.Count)
+                            {
+                                rental.TotalAvailableRooms = 0;
+                            }
+                        }
+                        else // RentWhole = false
+                        {
+                            // Nếu không thuê nguyên căn, chỉ cần có ít nhất 1 phòng khả dụng
+                            // Không cần đặt lại TotalAvailableRooms, vì đã tính ở trên
                         }
                     }
-                    else
+                    else // RentWhole = null
                     {
-                        if (rental.TotalAvailableRooms == 0)
-                        {
-                            rental.TotalAvailableRooms = 0;
-                        }
+                        // Nếu RentWhole là null, không áp dụng thêm điều kiện
+                        // Chỉ cần có phòng khả dụng là được
                     }
+
+                    // Log TotalAvailableRooms sau khi xử lý
+                    Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID}, TotalAvailableRooms: {rental.TotalAvailableRooms}");
                 }
 
+                // Lọc lại danh sách: chỉ giữ các rental có phòng khả dụng
                 var filteredResponse = response
-                    .Where(r => r.TotalAvailableRooms > 0 ||
-                                (!r.BookingDetails.Any(bd => bd.Booking != null &&
-                                                             bd.HomeStayTypesID == r.HomeStayRentalID &&
-                                                             (bd.Booking.Status == BookingStatus.Pending ||
-                                                              bd.Booking.Status == BookingStatus.Confirmed ||
-                                                              bd.Booking.Status == BookingStatus.InProgress) &&
-                                                             bd.CheckInDate.Date <= checkOutDate &&
-                                                             bd.CheckOutDate.Date >= checkInDate)))
+                    .Where(r => r.TotalAvailableRooms > 0)
                     .ToList();
 
+                // Log số lượng HomeStayRentals sau khi lọc
+                Console.WriteLine($"Number of HomeStayRentals after filtering: {filteredResponse.Count}");
+
+                // Cập nhật lại Name từ finalFilteredRentals
                 foreach (var item in filteredResponse)
                 {
                     var rental = finalFilteredRentals.FirstOrDefault(r => r.HomeStayRentalID == item.HomeStayRentalID);
