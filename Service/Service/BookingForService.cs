@@ -103,6 +103,18 @@ namespace Service.Service
                 PaymentServicesMethod = paymentServicesMethod == PaymentServicesMethod.Cod ? PaymentServicesMethod.Cod : PaymentServicesMethod.VnPay,
                 BookingServicesDetails = new List<BookingServicesDetail>()
             };
+
+            var duplicateService = bookingServiceRequest.BookingServicesDetails
+                                                        .GroupBy(x => x.ServicesID)
+                                                        .FirstOrDefault(g => g.Count() > 1);
+
+            if (duplicateService != null)
+            {
+                return new BaseResponse<BookingServices>(
+                    $"Duplicate service detected with ServiceID: {duplicateService.Key}. Please ensure each service is only added once.",
+                    StatusCodeEnum.Conflict_409,null);
+            }
+
             foreach (var serviceDetailRequest in bookingServiceRequest.BookingServicesDetails)
             {
                 var service = await _serviceRepository.GetByIdAsync(serviceDetailRequest.ServicesID);
@@ -121,7 +133,7 @@ namespace Service.Service
                 var bookingServiceDetail = new BookingServicesDetail
                 {
                     Quantity = serviceDetailRequest.Quantity,
-                    unitPrice = service.servicesPrice,
+                    unitPrice = serviceDetailRequest.Quantity * service.UnitPrice,
                     TotalAmount = serviceDetailRequest.Quantity * service.servicesPrice,
                     ServicesID = serviceDetailRequest.ServicesID
                 };
@@ -265,8 +277,8 @@ namespace Service.Service
                     if (existingDetail != null)
                     {
                         existingDetail.Quantity = updatedServiceDetails.Quantity;
-                        existingDetail.unitPrice = service.servicesPrice;
-                        existingDetail.TotalAmount = updatedServiceDetails.Quantity * service.UnitPrice;
+                        existingDetail.unitPrice = updatedServiceDetails.Quantity * service.UnitPrice;
+                        existingDetail.TotalAmount = updatedServiceDetails.Quantity * service.servicesPrice;
                         existingDetail.ServicesID = updatedServiceDetails.ServicesID;
                     }
                 }
@@ -285,9 +297,9 @@ namespace Service.Service
                     existingBookingService.BookingServicesDetails.Add(new BookingServicesDetail
                     {
                         ServicesID = updatedServiceDetails.ServicesID,
-                        unitPrice = service.servicesPrice,
+                        unitPrice = updatedServiceDetails.Quantity * service.UnitPrice,
                         Quantity = updatedServiceDetails.Quantity,
-                        TotalAmount = updatedServiceDetails.Quantity * service.UnitPrice,
+                        TotalAmount = updatedServiceDetails.Quantity * service.servicesPrice,
                     });
                 }
             }
