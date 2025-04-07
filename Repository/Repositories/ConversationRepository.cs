@@ -24,9 +24,9 @@ namespace Repository.Repositories
             return await _converDao.CreateConversationAsync(conversation);
         }
 
-        public async Task<Conversation> GetConversationByUsersAsync(string user1Id, string user2Id)
+        public async Task<Conversation> GetConversationByUsersAsync(string user1Id, string user2Id, int homeStayId)
         {
-            return await _converDao.GetConversationByUsersAsync(user1Id, user2Id);
+            return await _converDao.GetConversationByUsersAsync(user1Id, user2Id, homeStayId);
         }
 
         public async Task<List<Conversation>> GetConversationsByUserAsync(string userId)

@@ -39,7 +39,7 @@ using Repository;
             string orderedUser1Id = orderedUserIds[0];
             string orderedUser2Id = orderedUserIds[1];
 
-            var conversation = await _conversationRepository.GetConversationByUsersAsync(user1Id, user2Id);
+            var conversation = await _conversationRepository.GetConversationByUsersAsync(user1Id, user2Id, homeStayId);
             if (conversation == null)
             {
                 conversation = new Conversation
@@ -47,7 +47,7 @@ using Repository;
                     User1ID = user1Id,
                     User2ID = user2Id,
                     CreatedAt = DateTime.UtcNow,
-                    HomeStayID = homeStayId // Gán HomeStayID
+                    HomeStayID = homeStayId
                 };
                 await _conversationRepository.CreateConversationAsync(conversation);
             }
@@ -138,7 +138,7 @@ using Repository;
         public async Task<Conversation> GetOrCreateConversationWithHomeStayOwnerAsync(string customerId, int homeStayId)
         {
             var ownerId = await GetOwnerIdByHomeStayIdAsync(homeStayId);
-            var conversation = await _conversationRepository.GetConversationByUsersAsync(customerId, ownerId);
+            var conversation = await _conversationRepository.GetConversationByUsersAsync(customerId, ownerId, homeStayId);
             if (conversation == null)
             {
                 conversation = new Conversation
@@ -146,7 +146,7 @@ using Repository;
                     User1ID = customerId,
                     User2ID = ownerId,
                     CreatedAt = DateTime.UtcNow,
-                    HomeStayID = homeStayId // Gán HomeStayId
+                    HomeStayID = homeStayId
                 };
                 await _conversationRepository.CreateConversationAsync(conversation);
             }

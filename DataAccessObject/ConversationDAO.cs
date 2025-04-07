@@ -18,12 +18,13 @@ namespace DataAccessObject
             _context = context;
         }
 
-        public async Task<Conversation> GetConversationByUsersAsync(string user1Id, string user2Id)
+        public async Task<Conversation> GetConversationByUsersAsync(string user1Id, string user2Id, int homeStayId)
         {
             return await _context.Conversations
-             .FirstOrDefaultAsync(c =>
-                 (c.User1ID == user1Id && c.User2ID == user2Id) ||
-                 (c.User1ID == user2Id && c.User2ID == user1Id));
+                .FirstOrDefaultAsync(c =>
+                    ((c.User1ID == user1Id && c.User2ID == user2Id) ||
+                     (c.User1ID == user2Id && c.User2ID == user1Id)) &&
+                    c.HomeStayID == homeStayId);
         }
 
         public async Task<List<Conversation>> GetConversationsByUserAsync(string userId)
