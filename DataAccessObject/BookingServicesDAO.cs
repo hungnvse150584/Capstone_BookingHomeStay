@@ -75,6 +75,28 @@ namespace DataAccessObject
             return await _context.BookingServices.FindAsync(bookingId);
         }
 
+        public async Task<IEnumerable<BookingServices>> GetBookingServiceByAccountId(string accountId)
+        {
+            return await _context.BookingServices
+                .Include(b => b.BookingServicesDetails)
+                .ThenInclude(bd => bd.Services)
+                .Include(b => b.Booking)
+                .Include(b => b.Account)
+                .Where(b => b.AccountID == accountId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<BookingServices>> GetBookingServicesByHomeStayId(int homeStayID)
+        {
+            return await _context.BookingServices
+                .Include(b => b.BookingServicesDetails)
+                .ThenInclude(bd => bd.Services)
+                .Include(b => b.Booking)
+                .Include(b => b.Account)
+                .Where(b => b.Booking != null && b.Booking.HomeStayID == homeStayID)
+                .ToListAsync();
+        }
+
         public async Task AddBookingServicesAsync(BookingServices order)
         {
             await _context.BookingServices.AddAsync(order);

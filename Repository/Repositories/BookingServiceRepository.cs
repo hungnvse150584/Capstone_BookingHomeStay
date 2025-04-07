@@ -77,5 +77,15 @@ namespace Repository.Repositories
         {
             return await _bookingservicesDao.GetBookingServiceByIdAsync(bookingId);
         }
+
+        public async Task<IEnumerable<BookingServices>> GetBookingServiceByAccountId(string accountId)
+        {
+            return await _bookingservicesDao.GetBookingServiceByAccountId(accountId);
+        }
+
+        public async Task<IEnumerable<BookingServices>> GetBookingServicesByHomeStayId(int homeStayID)
+        {
+            return await _bookingservicesDao.GetBookingServicesByHomeStayId(homeStayID);
+        }
     }
 }

@@ -157,7 +157,7 @@ namespace Service.Service
                     BookingServicesDetails = createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s => new BookingServicesDetail
                     {
                         Quantity = s.Quantity,
-                        unitPrice = services.FirstOrDefault(x => x.ServicesID == s.ServicesID).servicesPrice,
+                        unitPrice = s.Quantity * services.FirstOrDefault(x => x.ServicesID == s.ServicesID).UnitPrice,
                         TotalAmount = s.Quantity * services.First(x => x.ServicesID == s.ServicesID).servicesPrice,
                         ServicesID = s.ServicesID
                     }).ToList()
@@ -418,6 +418,9 @@ namespace Service.Service
                             // ✅ Lọc danh sách chỉ lấy phòng thuộc RoomType
                             // Kiểm tra phòng khách đã chọn có trống không
                             var selectedRoom = availableRooms.FirstOrDefault(r => r.RoomID == updatedBookingDetails.roomID);
+
+                            if (selectedRoom == null)
+                                return new BaseResponse<UpdateBookingRequest>("Selected room is not available.", StatusCodeEnum.Conflict_409, null);
 
                             var total = await _pricingRepository.GetTotalPrice
                                        (updatedBookingDetails.CheckInDate, updatedBookingDetails.CheckOutDate,

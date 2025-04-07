@@ -17,5 +17,7 @@ namespace Service.IService
         Task<BaseResponse<IEnumerable<GetAllBookingServices>>> GetAllBookingService(string? search, DateTime? date = null, BookingServicesStatus? status = null, PaymentServicesStatus? paymentStatus = null);
         Task<BaseResponse<BookingServices>> GetBookingServicesById(int bookingID);
         Task<BaseResponse<BookingServices>> GetBookingServiceById(int? bookingID);
+        Task<BaseResponse<IEnumerable<GetBookingServiceByAccount>>> GetBookingServiceByAccountId(string accountId);
+        Task<BaseResponse<IEnumerable<GetBookingServiceByHomeStay>>> GetBookingServicesByHomeStayId(int homeStayID);
     }
 }

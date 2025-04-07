@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service.RequestAndResponse.Response.ImageService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,5 +21,6 @@ namespace Service.RequestAndResponse.Response.Services
         public double servicesPrice { get; set; }
 
         public bool Status { get; set; }
+        public IEnumerable<GetAllImageService> ImageServices { get; set; }
     }
 }

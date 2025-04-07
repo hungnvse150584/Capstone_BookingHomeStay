@@ -28,6 +28,6 @@ namespace Service.RequestAndResponse.Response.BookingOfServices
 
         public PaymentServicesMethod PaymentServicesMethod { get; set; }
 
-        public ICollection<GetSimpleDetailOfService> BookingServicesDetails { get; set; }
+        public ICollection<GetSingleDetailOfService> BookingServicesDetails { get; set; }
     }
 }

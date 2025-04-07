@@ -19,7 +19,7 @@ namespace Service.RequestAndResponse.Response.BookingOfServicesDetails
         public double TotalAmount { get; set; }
 
         public int? ServicesID { get; set; }
-        public GetAllServices? Services { get; set; }
+        public GetServiceForAccount? Services { get; set; }
 
         public int? BookingServicesID { get; set; }
     }

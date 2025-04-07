@@ -6,6 +6,7 @@ using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.RoomType;
 using Service.RequestAndResponse.Response.RoomType;
+using Service.Service;
 
 namespace GreenRoam.Controllers
 {
@@ -37,6 +38,7 @@ namespace GreenRoam.Controllers
             var result = await _roomTypeService.GetAllRoomTypeByHomeStayRentalID(homeStayRentalId);
             return StatusCode((int)result.StatusCode, result);
         }
+
         [HttpPost("CreateRoomType")]
         public async Task<IActionResult> CreateRoomType([FromForm] CreateRoomTypeRequest request, [FromQuery] int homeStayRentalId)
         {
@@ -54,5 +56,26 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
+        [HttpPut("UpdateRoomType")]
+        public async Task<ActionResult<BaseResponse<UpdateRoomTypeRequest>>> UpdateRoom(int roomID, UpdateRoomTypeRequest request)
+        {
+            if (roomID <= 0)
+            {
+                return BadRequest(new BaseResponse<UpdateRoomTypeRequest>("Invalid HomeStay ID.", StatusCodeEnum.BadRequest_400, null));
+            }
+
+            if (request == null)
+            {
+                return BadRequest(new BaseResponse<UpdateRoomTypeRequest>("Request body cannot be null.", StatusCodeEnum.BadRequest_400, null));
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new BaseResponse<UpdateRoomTypeRequest>("Invalid request data.", StatusCodeEnum.BadRequest_400, null));
+            }
+
+            var result = await _roomTypeService.UpdateRoomType(roomID, request);
+            return StatusCode((int)result.StatusCode, result);
+        }
     }
 }
