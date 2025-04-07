@@ -172,6 +172,7 @@ namespace Service.Mapping
             CreateMap<RoomTypes, CreateRoomTypeResponse>()
                 .ForMember(dest => dest.ImageRoomTypes, opt => opt.MapFrom(src => src.ImageRoomTypes))
                 .ForMember(dest => dest.Pricings, opt => opt.MapFrom(src => src.Prices));
+            CreateMap<UpdateRoomTypeRequest, RoomTypes>().ReverseMap();
 
             CreateMap<PricingForHomeStayRental, Pricing>()
                 .ForMember(dest => dest.PricingID, opt => opt.Ignore())

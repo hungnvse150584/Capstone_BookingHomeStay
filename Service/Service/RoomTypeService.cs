@@ -454,5 +454,37 @@ namespace Service.Service
                     null);
             }
         }
+
+        public async Task<BaseResponse<UpdateRoomTypeRequest>> UpdateRoomType(int roomID, UpdateRoomTypeRequest request)
+        {
+            var roomTypeExist = await _roomTypeRepository.GetByIdAsync(roomID);
+
+            if (roomTypeExist == null)
+            {
+                return new BaseResponse<UpdateRoomTypeRequest>("Cannot find Room", StatusCodeEnum.BadGateway_502, null);
+            }
+            var homeStayMatch = await _homeStayRentalRepository.GetHomeStayTypesByIdAsync(roomTypeExist.HomeStayRentalID);
+            if (homeStayMatch == null)
+            {
+                return new BaseResponse<UpdateRoomTypeRequest>("Cannot find HomeStayRental match with your Roomtype", StatusCodeEnum.BadGateway_502, null);
+            }
+
+            var updatedRoomType = _mapper.Map(request, roomTypeExist);
+
+            updatedRoomType.Name = roomTypeExist.Name;
+            updatedRoomType.Description = roomTypeExist.Description;
+            updatedRoomType.numberBedRoom = roomTypeExist.numberBedRoom;
+            updatedRoomType.numberBathRoom = roomTypeExist.numberBathRoom;
+            updatedRoomType.numberWifi = roomTypeExist.numberWifi;
+            updatedRoomType.Status = roomTypeExist.Status;
+            updatedRoomType.MaxAdults = roomTypeExist.MaxAdults;
+            updatedRoomType.MaxChildren = roomTypeExist.MaxChildren;
+            updatedRoomType.MaxPeople = updatedRoomType.MaxAdults + updatedRoomType.MaxChildren;
+
+            await _roomTypeRepository.UpdateAsync(updatedRoomType);
+            var updatedRoomTypeResponse = _mapper.Map<UpdateRoomTypeRequest>(roomTypeExist);
+
+            return new BaseResponse<UpdateRoomTypeRequest>("Update Room successfully", StatusCodeEnum.OK_200, updatedRoomTypeResponse);
+        }
     }
 }
