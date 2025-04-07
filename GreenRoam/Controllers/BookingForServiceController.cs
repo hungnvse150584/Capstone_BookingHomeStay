@@ -1,8 +1,10 @@
 ﻿using BusinessObject.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.BookingServices;
+using Service.RequestAndResponse.Response.BookingOfServices;
 using Service.RequestAndResponse.Response.Bookings;
 
 namespace GreenRoam.Controllers
@@ -24,6 +26,23 @@ namespace GreenRoam.Controllers
             var bookings = await _bookingService.GetAllBookingService(search, date, status, paymentStatus);
             return Ok(bookings);
         }
+
+        [HttpGet]
+        [Route("GetBookingServicesByAccountID/{accountId}")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetBookingServiceByAccount>>>> GetBookingServiceByAccountId(string accountId)
+        {
+            var bookings = await _bookingService.GetBookingServiceByAccountId(accountId);
+            return Ok(bookings);
+        }
+
+        [HttpGet]
+        [Route("GetBookingServicesByHomeStayID/{homeStayID}")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetBookingServiceByHomeStay>>>> GetBookingServicesByHomeStayId(int homeStayID)
+        {
+            var bookings = await _bookingService.GetBookingServicesByHomeStayId(homeStayID);
+            return Ok(bookings);
+        }
+
 
         [HttpPost]
         [Route("CreateBookingServices")]

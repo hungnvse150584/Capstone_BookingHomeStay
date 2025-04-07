@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using BusinessObject.Model;
+using CloudinaryDotNet;
+using Microsoft.Identity.Client;
 using Repository.IRepositories;
 using Repository.Repositories;
 using Service.IService;
@@ -12,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Service.Service
 {
@@ -353,5 +356,40 @@ namespace Service.Service
                 StatusCodeEnum.OK_200, booking);
         }
 
+        public async Task<BaseResponse<IEnumerable<GetBookingServiceByAccount>>> GetBookingServiceByAccountId(string accountId)
+        {
+            IEnumerable<BookingServices> booking = await _bookingServiceRepository.GetBookingServiceByAccountId(accountId);
+            if (booking == null || !booking.Any())
+            {
+                return new BaseResponse<IEnumerable<GetBookingServiceByAccount>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            var bookings = _mapper.Map<IEnumerable<GetBookingServiceByAccount>>(booking);
+            if (bookings == null || !bookings.Any())
+            {
+                return new BaseResponse<IEnumerable<GetBookingServiceByAccount>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            return new BaseResponse<IEnumerable<GetBookingServiceByAccount>>("Get all bookings as base success",
+                StatusCodeEnum.OK_200, bookings);
+        }
+
+        public async Task<BaseResponse<IEnumerable<GetBookingServiceByHomeStay>>> GetBookingServicesByHomeStayId(int homeStayID)
+        {
+            IEnumerable<BookingServices> booking = await _bookingServiceRepository.GetBookingServicesByHomeStayId(homeStayID);
+            if (booking == null || !booking.Any())
+            {
+                return new BaseResponse<IEnumerable<GetBookingServiceByHomeStay>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            var bookings = _mapper.Map<IEnumerable<GetBookingServiceByHomeStay>>(booking);
+            if (bookings == null || !bookings.Any())
+            {
+                return new BaseResponse<IEnumerable<GetBookingServiceByHomeStay>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            return new BaseResponse<IEnumerable<GetBookingServiceByHomeStay>>("Get all bookings as base success",
+                StatusCodeEnum.OK_200, bookings);
+        }
     }
 }

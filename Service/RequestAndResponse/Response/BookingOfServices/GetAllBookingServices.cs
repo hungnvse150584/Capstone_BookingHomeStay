@@ -18,7 +18,7 @@ namespace Service.RequestAndResponse.Response.BookingOfServices
         public int BookingServicesID { get; set; }
 
         public int? BookingID { get; set; }
-        public Booking? Booking { get; set; }
+        public GetSimpleBooking? Booking { get; set; }
 
         public DateTime BookingServicesDate { get; set; }
 

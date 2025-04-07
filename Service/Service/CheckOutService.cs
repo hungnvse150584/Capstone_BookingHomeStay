@@ -157,7 +157,7 @@ namespace Service.Service
                     BookingServicesDetails = createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s => new BookingServicesDetail
                     {
                         Quantity = s.Quantity,
-                        unitPrice = services.FirstOrDefault(x => x.ServicesID == s.ServicesID).UnitPrice,
+                        unitPrice = s.Quantity * services.FirstOrDefault(x => x.ServicesID == s.ServicesID).UnitPrice,
                         TotalAmount = s.Quantity * services.First(x => x.ServicesID == s.ServicesID).servicesPrice,
                         ServicesID = s.ServicesID
                     }).ToList()

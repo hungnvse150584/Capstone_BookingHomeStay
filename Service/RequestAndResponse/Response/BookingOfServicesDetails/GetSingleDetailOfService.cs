@@ -1,5 +1,4 @@
-﻿using Service.RequestAndResponse.Response.BookingOfServices;
-using Service.RequestAndResponse.Response.Services;
+﻿using Service.RequestAndResponse.Response.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service.RequestAndResponse.Response.BookingOfServicesDetails
 {
-    public class GetSimpleDetailOfService
+    public class GetSingleDetailOfService
     {
         public int BookingServicesDetailID { get; set; }
 
@@ -19,7 +18,7 @@ namespace Service.RequestAndResponse.Response.BookingOfServicesDetails
         public double TotalAmount { get; set; }
 
         public int? ServicesID { get; set; }
-        public GetServiceForAccount? Services { get; set; }
+        public GetServiceForHomeStay? Services { get; set; }
 
         public int? BookingServicesID { get; set; }
     }

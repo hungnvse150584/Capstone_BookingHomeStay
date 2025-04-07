@@ -21,6 +21,8 @@ namespace Repository.IRepositories
         Task<BookingServices?> GetBookingServicesByBookingIdAsync(int bookingId);
         Task<BookingServices?> FindBookingServicesByIdAsync(int? bookingId);
         Task<BookingServices?> GetUnpaidServicesByAccountId(string accountId);
+        Task<IEnumerable<BookingServices>> GetBookingServiceByAccountId(string accountId);
+        Task<IEnumerable<BookingServices>> GetBookingServicesByHomeStayId(int homeStayID);
 
     }
 }
