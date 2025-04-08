@@ -7,6 +7,7 @@ using Service.RequestAndResponse.Request.HomeStayType;
 using Service.RequestAndResponse.Request.ImageHomeStay;
 using Service.RequestAndResponse.Request.ImageHomeStayTypes;
 using Service.RequestAndResponse.Request.ImageService;
+using Service.RequestAndResponse.Request.Notifications;
 using Service.RequestAndResponse.Request.Pricing;
 using Service.RequestAndResponse.Request.Room;
 using Service.RequestAndResponse.Request.RoomType;
@@ -26,6 +27,7 @@ using Service.RequestAndResponse.Response.ImageHomeStay;
 using Service.RequestAndResponse.Response.ImageHomeStayTypes;
 using Service.RequestAndResponse.Response.ImageService;
 using Service.RequestAndResponse.Response.Messages;
+using Service.RequestAndResponse.Response.Notifications;
 using Service.RequestAndResponse.Response.Pricing;
 using Service.RequestAndResponse.Response.Ratings;
 using Service.RequestAndResponse.Response.Reports;
@@ -58,7 +60,7 @@ namespace Service.Mapping
             CreateMap<UpdateHomeStayImagesBodyRequest, ImageHomeStay>().ReverseMap();
 
             CreateMap<Account, GetAccountUser>().ReverseMap();
-
+            
             CreateMap<RoomTypes, GetAllRoomType>().ReverseMap();
             CreateMap<ImageHomeStayRentals, GetAllImageHomeStayType>().ReverseMap();
             CreateMap<Conversation, ConversationResponse>();
@@ -282,6 +284,24 @@ namespace Service.Mapping
                 .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
                 .ForMember(dest => dest.SentAt, opt => opt.MapFrom(src => src.SentAt))
                 .ForMember(dest => dest.IsRead, opt => opt.MapFrom(src => src.IsRead));
+            CreateMap<Notification, NotificationResponse>()
+            .ForMember(dest => dest.NotificationID, opt => opt.MapFrom(src => src.NotificationID))
+            .ForMember(dest => dest.AccountID, opt => opt.MapFrom(src => src.AccountID))
+            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
+            .ForMember(dest => dest.Message, opt => opt.MapFrom(src => src.Message))
+            .ForMember(dest => dest.CreateAt, opt => opt.MapFrom(src => src.CreateAt))
+            .ForMember(dest => dest.BookingID, opt => opt.MapFrom(src => src.BookingID))
+            .ForMember(dest => dest.BookingServicesID, opt => opt.MapFrom(src => src.BookingServicesID))
+            .ForMember(dest => dest.IsRead, opt => opt.MapFrom(src => src.IsRead))
+            .ForMember(dest => dest.TypeNotify, opt => opt.MapFrom(src => src.TypeNotify));
+
+            CreateMap<CreateNotificationRequest, Notification>()
+                .ForMember(dest => dest.AccountID, opt => opt.MapFrom(src => src.AccountID))
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
+                .ForMember(dest => dest.Message, opt => opt.MapFrom(src => src.Message))
+                .ForMember(dest => dest.BookingID, opt => opt.MapFrom(src => src.BookingID))
+                .ForMember(dest => dest.BookingServicesID, opt => opt.MapFrom(src => src.BookingServicesID))
+                .ForMember(dest => dest.TypeNotify, opt => opt.MapFrom(src => src.TypeNotify));
         }
     }
 }

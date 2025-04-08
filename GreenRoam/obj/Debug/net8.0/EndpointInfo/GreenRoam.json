@@ -782,6 +782,85 @@
         }
       }
     },
+    "/api/bookingservices/GetBookingServicesByAccountID/{accountId}": {
+      "get": {
+        "tags": [
+          "BookingForService"
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBookingServiceByAccountIEnumerableBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBookingServiceByAccountIEnumerableBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBookingServiceByAccountIEnumerableBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookingservices/GetBookingServicesByHomeStayID/{homeStayID}": {
+      "get": {
+        "tags": [
+          "BookingForService"
+        ],
+        "parameters": [
+          {
+            "name": "homeStayID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBookingServiceByHomeStayIEnumerableBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBookingServiceByHomeStayIEnumerableBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBookingServiceByHomeStayIEnumerableBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/bookingservices/CreateBookingServices": {
       "post": {
         "tags": [
@@ -3581,6 +3660,136 @@
         }
       }
     },
+    "/api/Notification/create-notification": {
+      "post": {
+        "tags": [
+          "Notification"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotificationRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotificationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotificationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotificationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Notification/by-account/{accountId}": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Notification/mark-as-read": {
+      "put": {
+        "tags": [
+          "Notification"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkNotificationAsReadRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkNotificationAsReadRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkNotificationAsReadRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkNotificationAsReadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Notification/mark-all-as-read": {
+      "put": {
+        "tags": [
+          "Notification"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkAllNotificationsAsReadRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkAllNotificationsAsReadRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkAllNotificationsAsReadRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkAllNotificationsAsReadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/homestay/GetAllPricing/{homestayID}": {
       "get": {
         "tags": [
@@ -4417,6 +4626,69 @@
         "responses": {
           "200": {
             "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/RoomType/UpdateRoomType": {
+      "put": {
+        "tags": [
+          "RoomType"
+        ],
+        "parameters": [
+          {
+            "name": "roomID",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomTypeRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomTypeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomTypeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomTypeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateRoomTypeRequestBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateRoomTypeRequestBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateRoomTypeRequestBaseResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -5667,6 +5939,37 @@
         },
         "additionalProperties": false
       },
+      "CreateNotificationRequest": {
+        "type": "object",
+        "properties": {
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "bookingID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bookingServicesID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "typeNotify": {
+            "$ref": "#/components/schemas/NotificationType"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreatePricingRequest": {
         "required": [
           "description",
@@ -5930,7 +6233,7 @@
             "nullable": true
           },
           "booking": {
-            "$ref": "#/components/schemas/Booking"
+            "$ref": "#/components/schemas/GetSimpleBooking"
           },
           "bookingServicesDate": {
             "type": "string",
@@ -7286,6 +7589,96 @@
         },
         "additionalProperties": false
       },
+      "GetBookingServiceByAccountIEnumerableBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetBookingServiceByAccount"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBookingServiceByHomeStay": {
+        "type": "object",
+        "properties": {
+          "bookingServicesID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bookingServicesDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "total": {
+            "type": "number",
+            "format": "double"
+          },
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          },
+          "account": {
+            "$ref": "#/components/schemas/GetAccountUser"
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            },
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/BookingServicesStatus"
+          },
+          "paymentServicesMethod": {
+            "$ref": "#/components/schemas/PaymentServicesMethod"
+          },
+          "bookingServicesDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetSingleDetailOfService"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBookingServiceByHomeStayIEnumerableBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetBookingServiceByHomeStay"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "GetCancellationBooking": {
         "type": "object",
         "properties": {
@@ -7517,6 +7910,31 @@
         },
         "additionalProperties": false
       },
+      "GetServiceForAccount": {
+        "type": "object",
+        "properties": {
+          "servicesName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "servicesPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "GetServiceForHomeStay": {
         "type": "object",
         "properties": {
@@ -7546,6 +7964,100 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "imageServices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAllImageService"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSimpleBooking": {
+        "type": "object",
+        "properties": {
+          "bookingID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "numberOfChildren": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfAdults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BookingStatus"
+          },
+          "totalRentPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "total": {
+            "type": "number",
+            "format": "double"
+          },
+          "bookingDeposit": {
+            "type": "number",
+            "format": "double"
+          },
+          "remainingBalance": {
+            "type": "number",
+            "format": "double"
+          },
+          "reportID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "report": {
+            "$ref": "#/components/schemas/GetReportResponse"
+          },
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          },
+          "account": {
+            "$ref": "#/components/schemas/GetAccountUser"
+          },
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "homeStay": {
+            "$ref": "#/components/schemas/HomeStayResponse"
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/PaymentMethod"
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            },
+            "nullable": true
+          },
+          "bookingServices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetSimpleBookingService"
+            },
+            "nullable": true
+          },
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -7670,7 +8182,7 @@
             "nullable": true
           },
           "services": {
-            "$ref": "#/components/schemas/GetAllServices"
+            "$ref": "#/components/schemas/GetServiceForAccount"
           },
           "bookingServicesID": {
             "type": "integer",
@@ -7728,6 +8240,41 @@
           "maxPeople": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSingleDetailOfService": {
+        "type": "object",
+        "properties": {
+          "bookingServicesDetailID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "servicesID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "services": {
+            "$ref": "#/components/schemas/GetServiceForHomeStay"
+          },
+          "bookingServicesID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -8529,6 +9076,16 @@
         },
         "additionalProperties": false
       },
+      "MarkAllNotificationsAsReadRequest": {
+        "type": "object",
+        "properties": {
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "MarkAsReadRequest": {
         "type": "object",
         "properties": {
@@ -8537,6 +9094,16 @@
             "nullable": true
           },
           "homeStayId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MarkNotificationAsReadRequest": {
+        "type": "object",
+        "properties": {
+          "notificationID": {
             "type": "integer",
             "format": "int32"
           }
@@ -10211,6 +10778,59 @@
           },
           "data": {
             "$ref": "#/components/schemas/UpdateRoomRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateRoomTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberBedRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberBathRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberWifi": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "maxAdults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxChildren": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateRoomTypeRequestBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/UpdateRoomTypeRequest"
           }
         },
         "additionalProperties": false

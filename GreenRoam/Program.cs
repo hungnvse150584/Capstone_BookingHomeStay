@@ -177,6 +177,7 @@ app.UseAuthorization();
 app.MapControllers();
 app.UseCors("AllowAll");
 app.MapHub<ChatHub>("/chatHub");
+app.MapHub<NotificationHub>("/notificationHub");
 app.MapFallbackToFile("/index.html");
 
 app.Run();
