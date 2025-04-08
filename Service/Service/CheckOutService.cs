@@ -70,39 +70,59 @@ namespace Service.Service
             if (commissionRate == null || commissionRate.PlatformShare <= 0 || commissionRate.PlatformShare > 1)
                 return new BaseResponse<int>("Invalid commission settings, please check!", StatusCodeEnum.Conflict_409, 0);
 
-            var homeStayTypes = await _homeStayTypeRepository.GetHomeStayTypesByIdsAsync(createBookingRequest.BookingDetails.Select(d => d.homeStayTypeID).ToList());
-            var roomTypes = await _roomTypeRepository.GetRoomTypesByIdsAsync(createBookingRequest.BookingDetails.Select(d => d.roomTypeID).ToList());
-            /*var availableRooms = await _roomRepository.GetAvailableRoomFilter(
-                createBookingRequest.BookingDetails.CheckInDate,
-                createBookingRequest.BookingDetails.CheckOutDate
-            );*/
+            // Lấy danh sách ID hợp lệ
+            var homeStayTypeIds = createBookingRequest.BookingDetails
+                .Where(d => d.homeStayTypeID.HasValue && d.homeStayTypeID > 0)
+                .Select(d => d.homeStayTypeID.Value)
+                .ToList();
+
+            var roomTypeIds = createBookingRequest.BookingDetails
+                .Where(d => d.roomTypeID.HasValue && d.roomTypeID > 0)
+                .Select(d => d.roomTypeID.Value)
+                .ToList();
+
+            // Chỉ gọi khi có ID hợp lệ
+            var homeStayTypes = homeStayTypeIds.Any()
+                ? (await _homeStayTypeRepository.GetHomeStayTypesByIdsAsync(homeStayTypeIds.Cast<int?>().ToList())).ToList()
+                : new List<HomeStayRentals>();
+
+            var roomTypes = roomTypeIds.Any()
+                ? (await _roomTypeRepository.GetRoomTypesByIdsAsync(roomTypeIds.Cast<int?>().ToList())).ToList()
+                : new List<RoomTypes>();
 
             var bookingDetails = new List<BookingDetail>();
+
             foreach (var detail in createBookingRequest.BookingDetails)
             {
-                var homeStayType = homeStayTypes.FirstOrDefault(h => h.HomeStayRentalID == detail.homeStayTypeID);
-                if (homeStayType == null)
-                    return new BaseResponse<int>("Invalid HomeStayRental selection, please try again!", StatusCodeEnum.Conflict_409, 0);
-
                 if (detail.CheckOutDate.Date <= detail.CheckInDate.Date)
                     return new BaseResponse<int>("Check-out date must be after check-in date.", StatusCodeEnum.Conflict_409, 0);
 
-                var total = await _pricingRepository.GetTotalPrice(detail.CheckInDate, detail.CheckOutDate, homeStayType.HomeStayRentalID, detail.roomTypeID);
+                HomeStayRentals? homeStayType = null;
 
-                if (homeStayType.RentWhole)
+                if (detail.homeStayTypeID.HasValue && detail.homeStayTypeID > 0)
+                {
+                    homeStayType = homeStayTypes.FirstOrDefault(h => h.HomeStayRentalID == detail.homeStayTypeID);
+                    if (homeStayType == null)
+                        return new BaseResponse<int>("Invalid HomeStayRental selection, please try again!", StatusCodeEnum.Conflict_409, 0);
+                }
+
+                var total = await _pricingRepository.GetTotalPrice(detail.CheckInDate, detail.CheckOutDate, detail.homeStayTypeID, detail.roomTypeID);
+
+                if (homeStayType?.RentWhole == true)
                 {
                     if (detail.roomTypeID > 0 || detail.roomID > 0)
                         return new BaseResponse<int>("RoomTypeID and RoomID should not be selected when renting the whole homestay.", StatusCodeEnum.Conflict_409, 0);
                 }
                 else
                 {
-                    var roomType = roomTypes.FirstOrDefault(rt => rt.RoomTypesID == detail.roomTypeID);
-                    if (roomType == null || roomType.HomeStayRentalID != homeStayType.HomeStayRentalID)
-                        return new BaseResponse<int>("Invalid RoomType for the selected HomeStayRental.", StatusCodeEnum.Conflict_409, 0);
+                    if (detail.roomTypeID.HasValue && detail.roomTypeID > 0)
+                    {
+                        var roomType = roomTypes.FirstOrDefault(rt => rt.RoomTypesID == detail.roomTypeID);
+                    }
 
                     var availableRooms = await _roomRepository.GetAvailableRoomFilter(detail.CheckInDate, detail.CheckOutDate);
-
                     var selectedRoom = availableRooms.FirstOrDefault(r => r.RoomID == detail.roomID);
+
                     if (selectedRoom == null)
                         return new BaseResponse<int>("Selected room is not available.", StatusCodeEnum.Conflict_409, 0);
                 }
@@ -111,7 +131,7 @@ namespace Service.Service
                 {
                     CheckInDate = detail.CheckInDate,
                     CheckOutDate = detail.CheckOutDate,
-                    HomeStayRentalID = homeStayType.HomeStayRentalID,
+                    HomeStayRentalID = detail.homeStayTypeID,
                     RoomID = detail.roomID,
                     UnitPrice = total.totalUnitPrice,
                     rentPrice = total.totalRentPrice,
@@ -133,17 +153,16 @@ namespace Service.Service
                 BookingDetails = bookingDetails
             };
 
-
-            var totalPriceBooking = bookingDetails.Sum(d => d.TotalAmount);
+            // Xử lý dịch vụ nếu có
+            double totalPriceServices = 0;
             if (createBookingRequest.BookingOfServices?.BookingServicesDetails?.Any() == true)
             {
                 var serviceIds = createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s => s.ServicesID).ToList();
 
-                // Kiểm tra dịch vụ bị trùng
                 if (serviceIds.Count != serviceIds.Distinct().Count())
                     return new BaseResponse<int>("Duplicate services are not allowed.", StatusCodeEnum.Conflict_409, 0);
 
-                var services = await _serviceRepository.GetServicesByIdsAsync(createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s => s.ServicesID).ToList());
+                var services = await _serviceRepository.GetServicesByIdsAsync(serviceIds);
                 if (services.Count() != createBookingRequest.BookingOfServices.BookingServicesDetails.Count)
                     return new BaseResponse<int>("Some selected services are invalid.", StatusCodeEnum.NotFound_404, 0);
 
@@ -162,19 +181,22 @@ namespace Service.Service
                         ServicesID = s.ServicesID
                     }).ToList()
                 };
+
                 bookingServices.Total = bookingServices.BookingServicesDetails.Sum(d => d.TotalAmount);
-                /*bookingServices.bookingServiceDeposit = commissionRate.PlatformShare * bookingServices.Total;
-                bookingServices.remainingBalance = bookingServices.Total - bookingServices.bookingServiceDeposit;*/
                 booking.BookingServices = new List<BookingServices> { bookingServices };
+                totalPriceServices = bookingServices.Total;
             }
-            double totalPriceServices = (booking.BookingServices?.Sum(bs => bs.Total) ?? 0);
+
+            double totalPriceBooking = bookingDetails.Sum(d => d.TotalAmount);
             double totalAmount = totalPriceBooking + totalPriceServices;
+
             booking.TotalRentPrice = totalPriceBooking;
             booking.Total = totalAmount;
             booking.bookingDeposit = commissionRate.PlatformShare * totalAmount;
             booking.remainingBalance = totalAmount - booking.bookingDeposit;
 
             await _bookingRepository.AddBookingAsync(booking);
+
             return new BaseResponse<int>("Booking created successfully!", StatusCodeEnum.Created_201, booking.BookingID);
         }
 

@@ -105,52 +105,72 @@ namespace DataAccessObject
         }
 
         public async Task<(double totalRentPrice, double totalUnitPrice)> GetTotalPrice(
-        DateTime checkInDate, DateTime checkOutDate, int homeStayRentalId, int? roomTypeId = null)
+    DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId = null)
         {
             double totalRentPrice = 0;
             double totalUnitPrice = 0;
 
-            // Kiểm tra xem HomeStayRental có RentWhole = true không
-            bool isRentWhole = await _context.HomeStayRentals
-                .Where(h => h.HomeStayRentalID == homeStayRentalId)
-                .Select(h => h.RentWhole)
-                .FirstOrDefaultAsync();
+            // Nếu cả hai đều null thì không đủ dữ liệu
+            if (!homeStayRentalId.HasValue && !roomTypeId.HasValue)
+                throw new ArgumentException("Cần cung cấp HomeStayRentalID hoặc RoomTypeID!");
 
-            if (roomTypeId.HasValue)
+            bool isRentWhole = false;
+
+            if (homeStayRentalId.HasValue)
             {
-                bool isValidRoomType = await _context.RoomTypes
-                    .AnyAsync(r => r.RoomTypesID == roomTypeId.Value && r.HomeStayRentalID == homeStayRentalId);
+                isRentWhole = await _context.HomeStayRentals
+                    .Where(h => h.HomeStayRentalID == homeStayRentalId.Value)
+                    .Select(h => h.RentWhole)
+                    .FirstOrDefaultAsync();
+            }
+            else if (roomTypeId.HasValue)
+            {
+                // Lấy HomeStayRentalID từ RoomType nếu chỉ có RoomTypeID
+                homeStayRentalId = await _context.RoomTypes
+                    .Where(r => r.RoomTypesID == roomTypeId.Value)
+                    .Select(r => r.HomeStayRentalID)
+                    .FirstOrDefaultAsync();
 
-                if (!isValidRoomType)
-                {
-                    throw new ArgumentException("RoomType không thuộc HomeStayRental!");
-                }
+                if (homeStayRentalId == 0)
+                    throw new ArgumentException("Không tìm thấy HomeStayRental từ RoomTypeID!");
 
-                if (isRentWhole)
-                {
-                    throw new ArgumentException("HomeStayRental này cho thuê nguyên căn, không hỗ trợ RoomType!");
-                }
+                isRentWhole = await _context.HomeStayRentals
+                    .Where(h => h.HomeStayRentalID == homeStayRentalId.Value)
+                    .Select(h => h.RentWhole)
+                    .FirstOrDefaultAsync();
             }
 
-            // Lấy tất cả giá theo HomeStayRental hoặc RoomType
-            var priceList = await _context.Prices
-                .Where(p => p.HomeStayRentalID == homeStayRentalId &&
-                            (isRentWhole ? p.RoomTypesID == null : p.RoomTypesID == roomTypeId.Value))
-                .ToListAsync();
+            // Nếu là thuê nguyên căn mà lại truyền RoomTypeID thì sai
+            if (isRentWhole && roomTypeId.HasValue)
+                throw new ArgumentException("HomeStayRental này cho thuê nguyên căn, không hỗ trợ RoomType!");
 
+            // Nếu là thuê theo phòng mà thiếu RoomTypeID thì cũng sai
+            if (!isRentWhole && !roomTypeId.HasValue)
+                throw new ArgumentException("HomeStayRental không cho thuê nguyên căn, cần cung cấp RoomTypeID!");
+
+            // Lấy danh sách giá phù hợp
+            List<Pricing> priceList;
+
+            if (isRentWhole)
+            {
+                priceList = await _context.Prices
+                    .Where(p => p.HomeStayRentalID == homeStayRentalId && p.RoomTypesID == null)
+                    .ToListAsync();
+            }
+            else
+            {
+                priceList = await _context.Prices
+                    .Where(p => p.RoomTypesID == roomTypeId.Value)
+                    .ToListAsync();
+            }
+
+            // Duyệt từng ngày để tính tổng giá
             for (DateTime date = checkInDate.Date; date <= checkOutDate.Date; date = date.AddDays(1))
             {
-                // Xác định loại ngày (Holiday, Weekend, Weekday)
-                DayType dayType = await GetDayType(date.Date);
+                DayType dayType = await GetDayType(date);
 
-                // Tìm giá theo loại ngày
-                var pricing = priceList.FirstOrDefault(p => p.DayType == dayType);
-
-                // Nếu không có giá cho ngày này, fallback về RegularDay (Weekday)
-                if (pricing == null)
-                {
-                    pricing = priceList.FirstOrDefault(p => p.DayType == DayType.Weekday);
-                }
+                var pricing = priceList.FirstOrDefault(p => p.DayType == dayType)
+                           ?? priceList.FirstOrDefault(p => p.DayType == DayType.Weekday); // fallback
 
                 if (pricing != null)
                 {

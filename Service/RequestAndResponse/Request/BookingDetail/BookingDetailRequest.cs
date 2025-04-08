@@ -8,11 +8,11 @@ namespace Service.RequestAndResponse.Request.BookingDetail
 {
     public class BookingDetailRequest
     {
-        public int homeStayTypeID { get; set; }
+        public int? homeStayTypeID { get; set; }
 
-        public int roomTypeID { get; set; }
+        public int? roomTypeID { get; set; }
 
-        public int roomID { get; set; }
+        public int? roomID { get; set; }
 
         public DateTime CheckInDate { get; set; }
 

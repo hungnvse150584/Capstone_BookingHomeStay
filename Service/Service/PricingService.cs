@@ -201,7 +201,7 @@ namespace Service.Service
             return new BaseResponse<Pricing>("Pricing updated successfully!", StatusCodeEnum.OK_200, pricingExist);
         }
 
-        public async Task<BaseResponse<GetTotalPrice>> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int homeStayRentalId, int? roomTypeId)
+        public async Task<BaseResponse<GetTotalPrice>> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId)
         {
             var prices = await _priceRepository.GetTotalPrice(checkInDate, checkOutDate, homeStayRentalId, roomTypeId);
             var response = new GetTotalPrice

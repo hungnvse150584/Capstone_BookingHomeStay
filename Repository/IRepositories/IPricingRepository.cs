@@ -18,6 +18,6 @@ namespace Repository.IRepositories
         Task<DayType> GetDayType(DateTime date);
         Task SaveChangesAsync();
         Task<(double totalRentPrice, double totalUnitPrice)> GetTotalPrice(
-        DateTime checkInDate, DateTime checkOutDate, int homeStayRentalId, int? roomTypeId = null);
+        DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId = null);
     }
 }

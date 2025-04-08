@@ -59,7 +59,7 @@ namespace Repository.Repositories
             return await _pricingDao.GetDayType(date);
         }
 
-        public async Task<(double totalRentPrice, double totalUnitPrice)> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int homeStayRentalId, int? roomTypeId)
+        public async Task<(double totalRentPrice, double totalUnitPrice)> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId)
         {
             return await _pricingDao.GetTotalPrice(checkInDate, checkOutDate, homeStayRentalId, roomTypeId);
         }

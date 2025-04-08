@@ -12,7 +12,7 @@ namespace Repository.IRepositories
     {
         Task<RoomTypes> GetRoomTypesByIdAsync(int? id);
         Task<RoomTypes?> GetRoomTypeByID(int roomTypeId);
-        Task<IEnumerable<RoomTypes>> GetRoomTypesByIdsAsync(List<int> roomTypeIds);
+        Task<IEnumerable<RoomTypes>> GetRoomTypesByIdsAsync(List<int?> roomTypeIds);
         Task SaveChangesAsync();
         Task<IEnumerable<RoomTypes>> GetAllRoomTypeByHomeStayRentalID(int homeStayRentalId);
     }
