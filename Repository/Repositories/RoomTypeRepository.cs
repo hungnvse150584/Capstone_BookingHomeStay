@@ -57,5 +57,10 @@ namespace Repository.Repositories
         {
             return await _roomTypeDao.GetRoomTypesByIdsAsync(roomTypeIds);
         }
+
+        public async Task<RoomTypes?> GetRoomTypeByID(int roomTypeId)
+        {
+            return await _roomTypeDao.GetRoomTypeByID(roomTypeId);
+        }
     }
 }

@@ -1,8 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\FPT\\SEP490_Capstone\\",
+  "WorkspaceRootPath": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\",
   "Documents": [
     {
+<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -237,6 +238,86 @@
     {
       "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\conversation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\conversation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\service\\requestandresponse\\response\\roomtype\\getallroomtypebyrental.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\roomtype\\getallroomtypebyrental.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\service\\service\\roomtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\roomtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\greenroam\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\greenroam\\controllers\\homestaycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\homestaycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\service\\iservice\\iroomtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\iroomtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\service\\service\\homestayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\homestayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\service\\service\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\service\\requestandresponse\\response\\roomtype\\imageroomtyperesponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\roomtype\\imageroomtyperesponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\service\\requestandresponse\\response\\roomtype\\getallroomtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\roomtype\\getallroomtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\repository\\repositories\\roomtyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\roomtyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\repository\\irepositories\\iroomtyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\irepositories\\iroomtyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\repository\\repositories\\roomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\roomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\dataaccessobject\\roomtypesdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\roomtypesdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\greenroam\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\greenroam\\controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\service\\service\\checkoutservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\checkoutservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\service\\iservice\\icheckoutservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\icheckoutservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\greenroam\\controllers\\cancellationpolicycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\cancellationpolicycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\service\\service\\cancellationpolicyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\cancellationpolicyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|c:\\users\\admin\\desktop\\greenroamhomestay\\capstone_bookinghomestay\\service\\iservice\\icancellationpolicyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\icancellationpolicyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> main
     }
   ],
   "DocumentGroupContainers": [
@@ -250,10 +331,6 @@
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
@@ -265,6 +342,7 @@
               "Name": "ST:0:0:{f5cd1b51-c771-5648-966f-646d419b1e7c}"
             },
             {
+<<<<<<< HEAD
               "$type": "Bookmark",
               "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
             },
@@ -618,11 +696,131 @@
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\AccountRepository.cs",
               "RelativeToolTip": "Repository\\Repositories\\AccountRepository.cs",
               "ViewState": "AgIAACIAAAAAAAAAAAAkwD8AAAAYAAAAAAAAAA==",
+=======
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HomeStayController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\Controllers\\HomeStayController.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\HomeStayController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\Controllers\\HomeStayController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\HomeStayController.cs",
+              "ViewState": "AQIAABgAAAAAAAAAAAA1wCMAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-06T17:02:54.259Z"
+              "WhenOpened": "2025-04-08T14:11:57.994Z"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RoomTypeController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\Controllers\\RoomTypeController.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\RoomTypeController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\Controllers\\RoomTypeController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\RoomTypeController.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAA1wC4AAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T14:11:29.409Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "HomeStayService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\Service\\HomeStayService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\HomeStayService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\Service\\HomeStayService.cs",
+              "RelativeToolTip": "Service\\Service\\HomeStayService.cs",
+              "ViewState": "AQIAAGwAAAAAAAAAAAAowHwAAAB7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T14:09:08.213Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BookingService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\Service\\BookingService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\BookingService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\Service\\BookingService.cs",
+              "RelativeToolTip": "Service\\Service\\BookingService.cs",
+              "ViewState": "AQIAAMkAAAAAAAAAAAAIwNoAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T14:07:26.298Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GetAllRoomTypeByRental.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomTypeByRental.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomTypeByRental.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomTypeByRental.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomTypeByRental.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAkAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T14:06:06.561Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ImageRoomTypeResponse.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\RequestAndResponse\\Response\\RoomType\\ImageRoomTypeResponse.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\RoomType\\ImageRoomTypeResponse.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\RequestAndResponse\\Response\\RoomType\\ImageRoomTypeResponse.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\RoomType\\ImageRoomTypeResponse.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T14:05:59.648Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "GetAllRoomType.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAAowCQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T14:04:33.168Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IRoomTypeService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\IService\\IRoomTypeService.cs",
+              "RelativeDocumentMoniker": "Service\\IService\\IRoomTypeService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\IService\\IRoomTypeService.cs",
+              "RelativeToolTip": "Service\\IService\\IRoomTypeService.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABcAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T14:04:06.574Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "RoomTypeRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Repository\\Repositories\\RoomTypeRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Repositories\\RoomTypeRepository.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Repository\\Repositories\\RoomTypeRepository.cs",
+              "RelativeToolTip": "Repository\\Repositories\\RoomTypeRepository.cs",
+              "ViewState": "AQIAADEAAAAAAAAAAAAwwDwAAABFAAAA",
+>>>>>>> main
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T14:02:35.004Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "RoomRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Repository\\Repositories\\RoomRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Repositories\\RoomRepository.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Repository\\Repositories\\RoomRepository.cs",
+              "RelativeToolTip": "Repository\\Repositories\\RoomRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T14:02:33.965Z"
+            },
+            {
+              "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 29,
               "Title": "ConversationRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\ConversationRepository.cs",
@@ -714,11 +912,33 @@
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IAccountRepository.cs",
               "RelativeToolTip": "Repository\\IRepositories\\IAccountRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA8AAAAAAAAAA==",
+=======
+              "DocumentIndex": 10,
+              "Title": "IRoomTypeRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Repository\\IRepositories\\IRoomTypeRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\IRepositories\\IRoomTypeRepository.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Repository\\IRepositories\\IRoomTypeRepository.cs",
+              "RelativeToolTip": "Repository\\IRepositories\\IRoomTypeRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAA5AAAA",
+>>>>>>> main
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-06T17:02:56.731Z"
+              "WhenOpened": "2025-04-08T14:02:13.677Z"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "RoomTypesDAO.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\DataAccessObject\\RoomTypesDAO.cs",
+              "RelativeDocumentMoniker": "DataAccessObject\\RoomTypesDAO.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\DataAccessObject\\RoomTypesDAO.cs",
+              "RelativeToolTip": "DataAccessObject\\RoomTypesDAO.cs",
+              "ViewState": "AQIAADQAAAAAAAAAAAAkwEMAAABFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T13:59:22.576Z"
+            },
+            {
+              "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 37,
               "Title": "Account.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Account.cs",
@@ -798,11 +1018,69 @@
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\HomeStayController.cs",
               "RelativeToolTip": "GreenRoam\\Controllers\\HomeStayController.cs",
               "ViewState": "AgIAAGYAAAAAAAAAAAAuwIAAAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T09:11:16.382Z"
+=======
+              "DocumentIndex": 13,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\appsettings.json",
+              "RelativeDocumentMoniker": "GreenRoam\\appsettings.json",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\appsettings.json",
+              "RelativeToolTip": "GreenRoam\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAABeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-08T08:08:40.252Z"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CheckOutController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\Controllers\\CheckOutController.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\CheckOutController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\Controllers\\CheckOutController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\CheckOutController.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAIAwwDYAAABlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T04:01:18.012Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "CancellationPolicyController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\Controllers\\CancellationPolicyController.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\CancellationPolicyController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\Controllers\\CancellationPolicyController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\CancellationPolicyController.cs",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAiwDkAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T04:00:34.276Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ICheckOutService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\IService\\ICheckOutService.cs",
+              "RelativeDocumentMoniker": "Service\\IService\\ICheckOutService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\IService\\ICheckOutService.cs",
+              "RelativeToolTip": "Service\\IService\\ICheckOutService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T03:59:01.48Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "CancellationPolicyService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\Service\\CancellationPolicyService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\CancellationPolicyService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\Service\\CancellationPolicyService.cs",
+              "RelativeToolTip": "Service\\Service\\CancellationPolicyService.cs",
+              "ViewState": "AQIAAEMAAAAAAAAAAAAuwFUAAAAJAAAA",
+>>>>>>> main
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T03:58:26.711Z"
+            },
+            {
+              "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 44,
               "Title": "IHomeStayTypeService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IHomeStayTypeService.cs",
@@ -810,11 +1088,21 @@
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IHomeStayTypeService.cs",
               "RelativeToolTip": "Service\\IService\\IHomeStayTypeService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+=======
+              "DocumentIndex": 19,
+              "Title": "ICancellationPolicyService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\IService\\ICancellationPolicyService.cs",
+              "RelativeDocumentMoniker": "Service\\IService\\ICancellationPolicyService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\IService\\ICancellationPolicyService.cs",
+              "RelativeToolTip": "Service\\IService\\ICancellationPolicyService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAABjAAAA",
+>>>>>>> main
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-06T16:09:47.349Z"
+              "WhenOpened": "2025-04-08T03:58:16.967Z"
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 45,
               "Title": "IImageHomeStayTypesService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IImageHomeStayTypesService.cs",
@@ -900,17 +1188,21 @@
             {
               "$type": "Document",
               "DocumentIndex": 51,
+=======
+              "DocumentIndex": 15,
+>>>>>>> main
               "Title": "CheckOutService.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\CheckOutService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\Service\\CheckOutService.cs",
               "RelativeDocumentMoniker": "Service\\Service\\CheckOutService.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\CheckOutService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\Service\\CheckOutService.cs",
               "RelativeToolTip": "Service\\Service\\CheckOutService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AQIAAEQAAAAAAAAAAAAAwDwAAACYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T06:52:28.027Z"
+              "WhenOpened": "2025-04-08T03:56:39.603Z"
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 52,
               "Title": "HomeStayRentals.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\HomeStayRentals.cs",
@@ -980,6 +1272,17 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-03T07:29:19.33Z"
+=======
+              "DocumentIndex": 1,
+              "Title": "RoomTypeService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\Service\\RoomTypeService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\RoomTypeService.cs",
+              "ToolTip": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Service\\Service\\RoomTypeService.cs",
+              "RelativeToolTip": "Service\\Service\\RoomTypeService.cs",
+              "ViewState": "AQIAAN4BAAAAAAAAAAAuwOoBAAA9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T03:56:24.804Z"
+>>>>>>> main
             }
           ]
         },

@@ -14,7 +14,8 @@ namespace Service.IService
     public interface ICancellationPolicyService
     {
         Task<BaseResponse<IEnumerable<GetAllCancellationPolicy>>> GetAllCancellationPolicy();
-        Task<BaseResponse<GetAllCancellationPolicy>> GeCancellationPolicyByHomeStay(int homeStayID);
+        Task<BaseResponse<GetAllCancellationPolicy>> GetCancellationPolicyByHomeStay(int? homeStayID);
+        Task<BaseResponse<GetAllCancellationPolicy>> GetCancellationPolicyByID(int cancellationID);
         Task<BaseResponse<CreateCancellationPolicyRequest>> CreateCancellationPolicyRequest(CreateCancellationPolicyRequest typeRequest);
         Task<BaseResponse<UpdateCancellationPolicyRequest>> UpdateCancellationPolicyRequest(UpdateCancellationPolicyRequest typeRequest);
         Task<BaseResponse<string>> DeleteCancellationPolicy(int id);

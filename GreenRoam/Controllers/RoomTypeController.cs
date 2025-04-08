@@ -39,6 +39,14 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
+        [HttpGet]
+        [Route("GetRoomTypeDetail/{roomTypeId}")]
+        public async Task<ActionResult<BaseResponse<GetAllRoomTypeByRental>>> GetRoomTypeByID(int roomTypeId)
+        {
+            var roomType = await _roomTypeService.GetRoomTypeByID(roomTypeId);
+            return Ok(roomType);
+        }
+
         [HttpPost("CreateRoomType")]
         public async Task<IActionResult> CreateRoomType([FromForm] CreateRoomTypeRequest request, [FromQuery] int homeStayRentalId)
         {

@@ -54,21 +54,21 @@ namespace Service.Service
             _cancelltaionRepository = cancelltaionRepository;
         }
 
-        public async Task<BaseResponse<string>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod)
+        public async Task<BaseResponse<int>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod)
         {
             var unpaidBooking = await _bookingRepository.GetBookingStatusByAccountId(createBookingRequest.AccountID);
             if (unpaidBooking != null)
-                return new BaseResponse<string>("There is an unpaid booking. Please complete it before creating a new one.", StatusCodeEnum.Conflict_409, null);
+                return new BaseResponse<int>("There is an unpaid booking. Please complete it before creating a new one.", StatusCodeEnum.Conflict_409, 0);
 
             if (createBookingRequest.BookingDetails == null || !createBookingRequest.BookingDetails.Any())
-                return new BaseResponse<string>("BookingDetails is required.", StatusCodeEnum.BadRequest_400, null);
+                return new BaseResponse<int>("BookingDetails is required.", StatusCodeEnum.BadRequest_400, 0);
 
             if (createBookingRequest.HomeStayID == null || createBookingRequest.HomeStayID <= 0)
-                return new BaseResponse<string>("Invalid HomeStayID, please try again!", StatusCodeEnum.Conflict_409, null);
+                return new BaseResponse<int>("Invalid HomeStayID, please try again!", StatusCodeEnum.Conflict_409, 0);
 
             var commissionRate = await _commissionRateRepository.GetCommissionRateByHomeStay(createBookingRequest.HomeStayID);
             if (commissionRate == null || commissionRate.PlatformShare <= 0 || commissionRate.PlatformShare > 1)
-                return new BaseResponse<string>("Invalid commission settings, please check!", StatusCodeEnum.Conflict_409, null);
+                return new BaseResponse<int>("Invalid commission settings, please check!", StatusCodeEnum.Conflict_409, 0);
 
             var homeStayTypes = await _homeStayTypeRepository.GetHomeStayTypesByIdsAsync(createBookingRequest.BookingDetails.Select(d => d.homeStayTypeID).ToList());
             var roomTypes = await _roomTypeRepository.GetRoomTypesByIdsAsync(createBookingRequest.BookingDetails.Select(d => d.roomTypeID).ToList());
@@ -82,29 +82,29 @@ namespace Service.Service
             {
                 var homeStayType = homeStayTypes.FirstOrDefault(h => h.HomeStayRentalID == detail.homeStayTypeID);
                 if (homeStayType == null)
-                    return new BaseResponse<string>("Invalid HomeStayRental selection, please try again!", StatusCodeEnum.Conflict_409, null);
+                    return new BaseResponse<int>("Invalid HomeStayRental selection, please try again!", StatusCodeEnum.Conflict_409, 0);
 
                 if (detail.CheckOutDate.Date <= detail.CheckInDate.Date)
-                    return new BaseResponse<string>("Check-out date must be after check-in date.", StatusCodeEnum.Conflict_409, null);
+                    return new BaseResponse<int>("Check-out date must be after check-in date.", StatusCodeEnum.Conflict_409, 0);
 
                 var total = await _pricingRepository.GetTotalPrice(detail.CheckInDate, detail.CheckOutDate, homeStayType.HomeStayRentalID, detail.roomTypeID);
 
                 if (homeStayType.RentWhole)
                 {
                     if (detail.roomTypeID > 0 || detail.roomID > 0)
-                        return new BaseResponse<string>("RoomTypeID and RoomID should not be selected when renting the whole homestay.", StatusCodeEnum.Conflict_409, null);
+                        return new BaseResponse<int>("RoomTypeID and RoomID should not be selected when renting the whole homestay.", StatusCodeEnum.Conflict_409, 0);
                 }
                 else
                 {
                     var roomType = roomTypes.FirstOrDefault(rt => rt.RoomTypesID == detail.roomTypeID);
                     if (roomType == null || roomType.HomeStayRentalID != homeStayType.HomeStayRentalID)
-                        return new BaseResponse<string>("Invalid RoomType for the selected HomeStayRental.", StatusCodeEnum.Conflict_409, null);
+                        return new BaseResponse<int>("Invalid RoomType for the selected HomeStayRental.", StatusCodeEnum.Conflict_409, 0);
 
                     var availableRooms = await _roomRepository.GetAvailableRoomFilter(detail.CheckInDate, detail.CheckOutDate);
 
                     var selectedRoom = availableRooms.FirstOrDefault(r => r.RoomID == detail.roomID);
                     if (selectedRoom == null)
-                        return new BaseResponse<string>("Selected room is not available.", StatusCodeEnum.Conflict_409, null);
+                        return new BaseResponse<int>("Selected room is not available.", StatusCodeEnum.Conflict_409, 0);
                 }
 
                 bookingDetails.Add(new BookingDetail
@@ -141,11 +141,11 @@ namespace Service.Service
 
                 // Kiểm tra dịch vụ bị trùng
                 if (serviceIds.Count != serviceIds.Distinct().Count())
-                    return new BaseResponse<string>("Duplicate services are not allowed.", StatusCodeEnum.Conflict_409, null);
+                    return new BaseResponse<int>("Duplicate services are not allowed.", StatusCodeEnum.Conflict_409, 0);
 
                 var services = await _serviceRepository.GetServicesByIdsAsync(createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s => s.ServicesID).ToList());
                 if (services.Count() != createBookingRequest.BookingOfServices.BookingServicesDetails.Count)
-                    return new BaseResponse<string>("Some selected services are invalid.", StatusCodeEnum.NotFound_404, null);
+                    return new BaseResponse<int>("Some selected services are invalid.", StatusCodeEnum.NotFound_404, 0);
 
                 var bookingServices = new BookingServices
                 {
@@ -175,7 +175,7 @@ namespace Service.Service
             booking.remainingBalance = totalAmount - booking.bookingDeposit;
 
             await _bookingRepository.AddBookingAsync(booking);
-            return new BaseResponse<string>("Booking created successfully!", StatusCodeEnum.Created_201, null);
+            return new BaseResponse<int>("Booking created successfully!", StatusCodeEnum.Created_201, booking.BookingID);
         }
 
         public async Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)
@@ -477,6 +477,11 @@ namespace Service.Service
             {
                 throw new Exception("Booking not found");
             }
+            booking.Transactions ??= new List<Transaction>();
+
+            // Thêm transaction vào trong danh sách Transactions
+            booking.Transactions.Add(transaction);
+
             double totalAmount = booking.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
             double amountPaid = booking.Transactions.Sum(t => t.Amount); // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
 
@@ -516,10 +521,41 @@ namespace Service.Service
             }
             booking.Status = BookingStatus.Confirmed;
 
-            booking.Transactions ??= new List<Transaction>();
+            // Lưu booking vào cơ sở dữ liệu nếu cần
+            await _bookingRepository.UpdateBookingAsync(booking);
+            return booking;
+        }
 
+        public async Task<Booking> CreateBookingRefundPayment(int? bookingID, int? bookingServiceID, Transaction transaction)
+        {
+            var booking = await _bookingRepository.GetBookingsByIdAsync(bookingID);
+            if (booking == null)
+            {
+                throw new Exception("Booking not found");
+            }
+
+            booking.Transactions ??= new List<Transaction>();
             // Thêm transaction vào trong danh sách Transactions
             booking.Transactions.Add(transaction);
+
+            if (bookingServiceID.HasValue && bookingServiceID.Value > 0)
+            {
+                var bookingService = await _bookingServiceRepository.GetBookingServiceByIdAsync(bookingServiceID);
+                if (bookingService == null)
+                {
+                    throw new Exception("BookingService not found");
+                }
+
+                bookingService.PaymentServiceStatus = PaymentServicesStatus.Refunded;
+                bookingService.Status = BookingServicesStatus.Cancelled;
+                bookingService.Transactions ??= new List<Transaction>();
+
+                bookingService.Transactions.Add(transaction);
+                await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
+            }
+
+            booking.paymentStatus = PaymentStatus.Refunded;
+            booking.Status = BookingStatus.Cancelled;
 
             // Lưu booking vào cơ sở dữ liệu nếu cần
             await _bookingRepository.UpdateBookingAsync(booking);

@@ -11,9 +11,10 @@ namespace Service.IService
 {
     public interface ICheckOutService
     {
-        Task<BaseResponse<string>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod);
+        Task<BaseResponse<int>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod);
         Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment);
         Task<BaseResponse<UpdateBookingRequest>> UpdateBooking(int bookingID, UpdateBookingRequest request);
         Task<Booking> CreateBookingPayment(int? bookingID, int? bookingServiceID, Transaction transaction);
+        Task<Booking> CreateBookingRefundPayment(int? bookingID, int? bookingServiceID, Transaction transaction);
     }
 }

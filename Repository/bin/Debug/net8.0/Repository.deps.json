@@ -664,10 +664,14 @@
           "Swashbuckle.AspNetCore.Swagger": "6.8.1"
         },
         "runtime": {
+<<<<<<< HEAD
           "BusinessObject.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
+=======
+          "BusinessObject.dll": {}
+>>>>>>> main
         }
       },
       "DataAccessObject/1.0.0": {
@@ -679,10 +683,14 @@
           "Microsoft.Extensions.Configuration.Json": "8.0.1"
         },
         "runtime": {
+<<<<<<< HEAD
           "DataAccessObject.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
+=======
+          "DataAccessObject.dll": {}
+>>>>>>> main
         }
       }
     }
