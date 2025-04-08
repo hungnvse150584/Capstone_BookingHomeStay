@@ -86,11 +86,18 @@ namespace GreenRoam.Controllers
 
             if (daysUntilCheckIn >= cancellation.Data.DayBeforeCancel)
             {
-                amount = booking.Data.Total * cancellation.Data.RefundPercentage;
+                if(booking.Data.paymentStatus == PaymentStatus.Deposited)
+                {
+                    amount = booking.Data.bookingDeposit;
+                }
+                if (booking.Data.paymentStatus == PaymentStatus.FullyPaid)
+                {
+                    amount = booking.Data.Total * cancellation.Data.RefundPercentage;
+                }
             }
             else
             {
-                return BadRequest("Cannot Refunded Due To Our HomeStayPolicy");
+                return BadRequest("Booking cannot be refunded because it does not meet the homestay's cancellation policy.");
             }
 
             var bookingServiceID = booking.Data.BookingServices.SingleOrDefault()?.BookingServicesID;
