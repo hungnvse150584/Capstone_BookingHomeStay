@@ -35,7 +35,7 @@ namespace GreenRoam.Controllers
         }
         [HttpPost]
         [Route("CreateBooking")]
-        public async Task<ActionResult<BaseResponse<string>>> CreateBooking([FromBody] CreateBookingRequest bookingRequest, PaymentMethod paymentMethod)
+        public async Task<ActionResult<BaseResponse<int>>> CreateBooking([FromBody] CreateBookingRequest bookingRequest, PaymentMethod paymentMethod)
         {
             if (bookingRequest == null)
             {
