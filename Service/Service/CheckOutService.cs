@@ -175,7 +175,7 @@ namespace Service.Service
             booking.remainingBalance = totalAmount - booking.bookingDeposit;
 
             await _bookingRepository.AddBookingAsync(booking);
-            return new BaseResponse<string>("Booking created successfully!", StatusCodeEnum.Created_201, null);
+            return new BaseResponse<string>("Booking created successfully!", StatusCodeEnum.Created_201, booking.BookingID.ToString());
         }
 
         public async Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)
