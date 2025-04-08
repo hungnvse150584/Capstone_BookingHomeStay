@@ -77,7 +77,24 @@ namespace DataAccessObject
 
             modelBuilder.Entity<Conversation>()
                 .HasIndex(c => c.User2ID);
+            modelBuilder.Entity<Notification>()
+        .HasOne(n => n.Account)
+        .WithMany(a => a.Notifications) // Thêm mối quan hệ ngược
+        .HasForeignKey(n => n.AccountID)
+        .IsRequired(true);
+            modelBuilder.Entity<Notification>()
+        .ToTable("Notification");
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.Booking)
+                .WithMany(b => b.Notifications) // Thêm mối quan hệ ngược
+                .HasForeignKey(n => n.BookingID)
+                .IsRequired(false); // BookingID không bắt buộc
 
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.BookingService)
+                .WithMany(bs => bs.Notifications) // Thêm mối quan hệ ngược
+                .HasForeignKey(n => n.BookingServicesID)
+                .IsRequired(false);
             /* List<IdentityRole> roles = new List<IdentityRole>
                {
                    new IdentityRole
@@ -118,7 +135,7 @@ namespace DataAccessObject
         public DbSet<ImageServices> ImageServices { get; set; }
         public DbSet<ImageRoomTypes> ImageRoomTypes { get; set; }
         public DbSet<ImageCultureExperience> ImageCultureExperiences { get; set; }
-
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<Rating> Rating { set; get; }
         public DbSet<Report> Reports { set; get; }
         public DbSet<Review> Reviews { set; get; }

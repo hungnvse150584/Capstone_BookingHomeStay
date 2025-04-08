@@ -1,11 +1,9 @@
 ﻿using BusinessObject.Model;
 using DataAccessObject;
+using Microsoft.EntityFrameworkCore;
 using Repository.BaseRepository;
 using Repository.IRepositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Repository.Repositories
@@ -19,24 +17,28 @@ namespace Repository.Repositories
             _notificationDao = notificationDao;
         }
 
-        public Task<Notification> AddAsync(Notification entity)
+        public async Task<Notification> CreateNotificationAsync(Notification notification)
         {
-            return _notificationDao.AddAsync(entity);
+            return await _notificationDao.AddAsync(notification);
         }
 
-        public Task<Notification> UpdateAsync(Notification entity)
+        public async Task<List<Notification>> GetNotificationsByAccountIdAsync(string accountId)
         {
-            return _notificationDao.UpdateAsync(entity);
+            return await _notificationDao.GetNotificationsByAccountIdAsync(accountId);
         }
 
-        public Task<Notification> DeleteAsync(Notification entity)
+        public async Task<Notification> MarkNotificationAsReadAsync(int notificationId)
         {
-            return _notificationDao.DeleteAsync(entity);
+            return await _notificationDao.MarkNotificationAsReadAsync(notificationId);
         }
 
-        public Task<IEnumerable<Notification>> GetAllAsync()
+        public async Task MarkAllNotificationsAsReadAsync(string accountId)
         {
-            return _notificationDao.GetAllAsync();
+            await _notificationDao.MarkAllNotificationsAsReadAsync(accountId);
+        }
+        public async Task<Notification> GetNotificationByDetailsAsync(string accountId, int? bookingId, string title, string message)
+        {
+            return await _notificationDao.GetNotificationByDetailsAsync(accountId, bookingId, title, message);
         }
     }
 }

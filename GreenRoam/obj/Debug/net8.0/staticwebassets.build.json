@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< HEAD
+  "Hash": "0QWSxGT7oqsNkBXF1IBXTZNGNpmn5JaiBZkU+FnKXIg=",
+=======
   "Hash": "2z0sEPvs8h+FINE2umfJ3zI7ztWgY+J3RqANdhkgUuQ=",
+>>>>>>> main
   "Source": "GreenRoam",
   "BasePath": "_content/GreenRoam",
   "Mode": "Default",
@@ -10,13 +14,29 @@
     {
       "Name": "GreenRoam\\wwwroot",
       "Source": "GreenRoam",
+<<<<<<< HEAD
+      "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
+=======
       "ContentRoot": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\",
+>>>>>>> main
       "BasePath": "_content/GreenRoam",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
+<<<<<<< HEAD
+      "Identity": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\index.html",
+      "SourceId": "GreenRoam",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
+      "BasePath": "_content/GreenRoam",
+      "RelativePath": "index#[.{fingerprint}]?.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+=======
       "Identity": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\index.html",
       "SourceId": "GreenRoam",
       "SourceType": "Discovered",
@@ -27,13 +47,106 @@
       "AssetMode": "All",
       "AssetRole": "Primary",
       "AssetMergeBehavior": "PreferTarget",
+>>>>>>> main
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+<<<<<<< HEAD
+      "Fingerprint": "5ijz3bjxqq",
+      "Integrity": "fazRUfReDDFaba8tzvveKlxNsYPjxOseD4MgCy1qA38=",
+=======
+>>>>>>> main
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
     }
+<<<<<<< HEAD
+  ],
+  "Endpoints": [
+    {
+      "Route": "index.5ijz3bjxqq.html",
+      "AssetFile": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1799"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fazRUfReDDFaba8tzvveKlxNsYPjxOseD4MgCy1qA38=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 09:13:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ijz3bjxqq"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fazRUfReDDFaba8tzvveKlxNsYPjxOseD4MgCy1qA38="
+        }
+      ]
+    },
+    {
+      "Route": "index.html",
+      "AssetFile": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1799"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fazRUfReDDFaba8tzvveKlxNsYPjxOseD4MgCy1qA38=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 09:13:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fazRUfReDDFaba8tzvveKlxNsYPjxOseD4MgCy1qA38="
+        }
+      ]
+    }
+=======
+>>>>>>> main
   ]
 }
