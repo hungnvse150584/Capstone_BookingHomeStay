@@ -21,6 +21,6 @@ namespace Service.IService
 
         Task<BaseResponse<IEnumerable<GetAllRoomTypeByRental>>> GetAllRoomTypeByHomeStayRentalID(int homeStayRentalId);
 
-        Task<BaseResponse<GetAllRoomTypeByRental>> GetRoomTypeByID(int roomTypeId);
+        Task<BaseResponse<GetSingleRoomType>> GetRoomTypeByID(int roomTypeId);
     }
 }

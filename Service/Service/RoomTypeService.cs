@@ -488,11 +488,11 @@ namespace Service.Service
             return new BaseResponse<UpdateRoomTypeRequest>("Update Room successfully", StatusCodeEnum.OK_200, updatedRoomTypeResponse);
         }
 
-        public async Task<BaseResponse<GetAllRoomTypeByRental>> GetRoomTypeByID(int roomTypeId)
+        public async Task<BaseResponse<GetSingleRoomType>> GetRoomTypeByID(int roomTypeId)
         {
             RoomTypes roomType = await _roomTypeRepository.GetRoomTypeByID(roomTypeId);
-            var result = _mapper.Map<GetAllRoomTypeByRental>(roomType);
-            return new BaseResponse<GetAllRoomTypeByRental>("Get RoomType as base success", StatusCodeEnum.OK_200, result);
+            var result = _mapper.Map<GetSingleRoomType>(roomType);
+            return new BaseResponse<GetSingleRoomType>("Get RoomType as base success", StatusCodeEnum.OK_200, result);
         }
     }
 }

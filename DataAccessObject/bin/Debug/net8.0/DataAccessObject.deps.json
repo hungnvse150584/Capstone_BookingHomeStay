@@ -1017,14 +1017,7 @@
           "Swashbuckle.AspNetCore.Swagger": "6.8.1"
         },
         "runtime": {
-<<<<<<< HEAD
-          "BusinessObject.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-=======
           "BusinessObject.dll": {}
->>>>>>> main
         }
       }
     }
