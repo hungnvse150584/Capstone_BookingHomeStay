@@ -477,6 +477,11 @@ namespace Service.Service
             {
                 throw new Exception("Booking not found");
             }
+            booking.Transactions ??= new List<Transaction>();
+
+            // Thêm transaction vào trong danh sách Transactions
+            booking.Transactions.Add(transaction);
+
             double totalAmount = booking.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
             double amountPaid = booking.Transactions.Sum(t => t.Amount); // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
 
@@ -516,10 +521,41 @@ namespace Service.Service
             }
             booking.Status = BookingStatus.Confirmed;
 
-            booking.Transactions ??= new List<Transaction>();
+            // Lưu booking vào cơ sở dữ liệu nếu cần
+            await _bookingRepository.UpdateBookingAsync(booking);
+            return booking;
+        }
 
+        public async Task<Booking> CreateBookingRefundPayment(int? bookingID, int? bookingServiceID, Transaction transaction)
+        {
+            var booking = await _bookingRepository.GetBookingsByIdAsync(bookingID);
+            if (booking == null)
+            {
+                throw new Exception("Booking not found");
+            }
+
+            booking.Transactions ??= new List<Transaction>();
             // Thêm transaction vào trong danh sách Transactions
             booking.Transactions.Add(transaction);
+
+            if (bookingServiceID.HasValue && bookingServiceID.Value > 0)
+            {
+                var bookingService = await _bookingServiceRepository.GetBookingServiceByIdAsync(bookingServiceID);
+                if (bookingService == null)
+                {
+                    throw new Exception("BookingService not found");
+                }
+
+                bookingService.PaymentServiceStatus = PaymentServicesStatus.Refunded;
+                bookingService.Status = BookingServicesStatus.Cancelled;
+                bookingService.Transactions ??= new List<Transaction>();
+
+                bookingService.Transactions.Add(transaction);
+                await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
+            }
+
+            booking.paymentStatus = PaymentStatus.Refunded;
+            booking.Status = BookingStatus.Cancelled;
 
             // Lưu booking vào cơ sở dữ liệu nếu cần
             await _bookingRepository.UpdateBookingAsync(booking);

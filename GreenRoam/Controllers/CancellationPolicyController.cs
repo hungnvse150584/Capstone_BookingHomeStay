@@ -51,9 +51,22 @@ namespace GreenRoam.Controllers
                 return BadRequest("Please provide a valid ID.");
             }
 
-            var response = await _cancellationPolicyService.GeCancellationPolicyByHomeStay(id);
+            var response = await _cancellationPolicyService.GetCancellationPolicyByID(id);
             return StatusCode((int)response.StatusCode, response);
         }
+
+        [HttpGet("GetById/{homeStayID}")]
+        public async Task<ActionResult<BaseResponse<GetAllCancellationPolicy>>> GetCancellationPolicyByHomeStay(int? homeStayID)
+        {
+            if (homeStayID <= 0)
+            {
+                return BadRequest("Please provide a valid ID.");
+            }
+
+            var response = await _cancellationPolicyService.GetCancellationPolicyByHomeStay(homeStayID);
+            return StatusCode((int)response.StatusCode, response);
+        }
+
         [HttpPut("Update")]
         public async Task<ActionResult<BaseResponse<UpdateCancellationPolicyRequest>>> UpdateCancellationPolicy([FromBody] UpdateCancellationPolicyRequest request)
         {

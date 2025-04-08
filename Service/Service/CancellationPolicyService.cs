@@ -61,9 +61,21 @@ namespace Service.Service
             return new BaseResponse<string>("Delete Cancellation Policy success", StatusCodeEnum.OK_200, "Deleted successfully");
         }
 
-        public async Task<BaseResponse<GetAllCancellationPolicy>> GeCancellationPolicyByHomeStay(int homeStayID)
+        public async Task<BaseResponse<GetAllCancellationPolicy>> GetCancellationPolicyByHomeStay(int? homeStayID)
         {
-            var cp = await _cancellationPolicyRepository.GetByIdAsync(homeStayID);
+            var cp = await _cancellationPolicyRepository.GetCancellationPolicyByHomeStayAsync(homeStayID);
+            if (cp == null)
+            {
+                return new BaseResponse<GetAllCancellationPolicy>("Cancellation Policy not found", StatusCodeEnum.NotFound_404, null);
+            }
+
+            var response = _mapper.Map<GetAllCancellationPolicy>(cp);
+            return new BaseResponse<GetAllCancellationPolicy>("Successfully retrieved Cancellation Policy for HomeStay", StatusCodeEnum.OK_200, response);
+        }
+
+        public async Task<BaseResponse<GetAllCancellationPolicy>> GetCancellationPolicyByID(int cancellationID)
+        {
+            var cp = await _cancellationPolicyRepository.GetByIdAsync(cancellationID);
             if (cp == null)
             {
                 return new BaseResponse<GetAllCancellationPolicy>("Cancellation Policy not found", StatusCodeEnum.NotFound_404, null);

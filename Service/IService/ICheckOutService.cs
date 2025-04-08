@@ -15,5 +15,6 @@ namespace Service.IService
         Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment);
         Task<BaseResponse<UpdateBookingRequest>> UpdateBooking(int bookingID, UpdateBookingRequest request);
         Task<Booking> CreateBookingPayment(int? bookingID, int? bookingServiceID, Transaction transaction);
+        Task<Booking> CreateBookingRefundPayment(int? bookingID, int? bookingServiceID, Transaction transaction);
     }
 }
