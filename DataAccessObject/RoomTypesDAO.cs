@@ -64,5 +64,14 @@ namespace DataAccessObject
                 .Include(rt => rt.Rooms)
                 .ToListAsync();
         }
+
+        public async Task<RoomTypes?> GetRoomTypeByID(int roomTypeId)
+        {
+            return await _context.RoomTypes
+                .Include(rt => rt.ImageRoomTypes)
+                .Include(rt => rt.Prices)
+                .Include(rt => rt.Rooms)
+                .FirstOrDefaultAsync(r => r.RoomTypesID == roomTypeId);
+        }
     }
 }

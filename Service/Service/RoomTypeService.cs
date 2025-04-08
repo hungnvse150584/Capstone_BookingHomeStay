@@ -12,6 +12,7 @@ using Service.RequestAndResponse.Request.HomeStayType;
 using Service.RequestAndResponse.Request.Pricing;
 using Service.RequestAndResponse.Request.Room;
 using Service.RequestAndResponse.Request.RoomType;
+using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.HomeStayType;
 using Service.RequestAndResponse.Response.RoomType;
 using System;
@@ -485,6 +486,13 @@ namespace Service.Service
             var updatedRoomTypeResponse = _mapper.Map<UpdateRoomTypeRequest>(roomTypeExist);
 
             return new BaseResponse<UpdateRoomTypeRequest>("Update Room successfully", StatusCodeEnum.OK_200, updatedRoomTypeResponse);
+        }
+
+        public async Task<BaseResponse<GetAllRoomTypeByRental>> GetRoomTypeByID(int roomTypeId)
+        {
+            RoomTypes roomType = await _roomTypeRepository.GetRoomTypeByID(roomTypeId);
+            var result = _mapper.Map<GetAllRoomTypeByRental>(roomType);
+            return new BaseResponse<GetAllRoomTypeByRental>("Get RoomType as base success", StatusCodeEnum.OK_200, result);
         }
     }
 }

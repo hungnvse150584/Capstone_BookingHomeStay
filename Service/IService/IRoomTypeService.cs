@@ -20,5 +20,7 @@ namespace Service.IService
         Task<BaseResponse<UpdateRoomTypeRequest>> UpdateRoomType(int roomID, UpdateRoomTypeRequest request);
 
         Task<BaseResponse<IEnumerable<GetAllRoomTypeByRental>>> GetAllRoomTypeByHomeStayRentalID(int homeStayRentalId);
+
+        Task<BaseResponse<GetAllRoomTypeByRental>> GetRoomTypeByID(int roomTypeId);
     }
 }
