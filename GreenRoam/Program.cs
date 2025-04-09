@@ -74,7 +74,7 @@ builder.Services.AddSwaggerGen(option =>
     //});
     option.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
     {
-        Url = "https://localhost:7221"
+        Url = "https://hungnv.iselab.cloud:7221"
     });
 });
 
