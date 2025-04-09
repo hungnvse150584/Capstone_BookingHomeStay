@@ -189,7 +189,7 @@ app.UseSwaggerUI(options =>
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "GreenRoam");
         options.RoutePrefix = "swagger";
     });
-}
+
 
 app.UseHttpsRedirection();
 //app.UseHangfireDashboard();
