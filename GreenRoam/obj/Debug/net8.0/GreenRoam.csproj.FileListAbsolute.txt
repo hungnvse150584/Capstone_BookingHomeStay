@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+=======
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.AssemblyInfoInputs.cache
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.AssemblyInfo.cs
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.sourcelink.json
+>>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\appsettings.json
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\GreenRoam.exe
@@ -10,6 +21,27 @@ C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Azure.Identity.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\CloudinaryDotNet.dll
+<<<<<<< HEAD
+=======
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.Api.CommonProtos.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.Api.Gax.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.Api.Gax.Grpc.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.Apis.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.Apis.Auth.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.Apis.Core.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.Cloud.Dialogflow.V2.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.Cloud.Location.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.LongRunning.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.Protobuf.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Grpc.Auth.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Grpc.Core.Api.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Grpc.Net.Client.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Grpc.Net.Common.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Hangfire.AspNetCore.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Hangfire.Core.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Hangfire.NetCore.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Hangfire.SqlServer.dll
+>>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\MailKit.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
@@ -50,10 +82,18 @@ C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+<<<<<<< HEAD
+=======
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\System.CodeDom.dll
+>>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\System.Drawing.Common.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\System.Formats.Asn1.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+<<<<<<< HEAD
+=======
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\System.Management.dll
+>>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\System.Memory.Data.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\System.Runtime.Caching.dll
@@ -61,6 +101,23 @@ C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\System.Security.Permissions.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\System.Windows.Extensions.dll
+<<<<<<< HEAD
+=======
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\ca\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\de\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\es\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\fa\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\fr\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\nb\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\nl\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\pt-BR\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\pt-PT\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\pt\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\sv\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\tr-TR\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\zh-TW\Hangfire.Core.resources.dll
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\zh\Hangfire.Core.resources.dll
+>>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
@@ -70,6 +127,10 @@ C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+<<<<<<< HEAD
+=======
+C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Management.dll
+>>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
@@ -82,6 +143,7 @@ C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Repository.pdb
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Service.pdb
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\BusinessObject.pdb
+<<<<<<< HEAD
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.csproj.AssemblyReference.cache
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.AssemblyInfoInputs.cache
@@ -90,6 +152,8 @@ C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.sourcelink.json
+=======
+>>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\staticwebassets\msbuild.GreenRoam.Microsoft.AspNetCore.StaticWebAssets.props
@@ -104,6 +168,7 @@ C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.pdb
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.genruntimeconfig.cache
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\ref\GreenRoam.dll
+<<<<<<< HEAD
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.Api.CommonProtos.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.Api.Gax.dll
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\Google.Api.Gax.Grpc.dll
@@ -283,3 +348,5 @@ D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\refint\GreenRoam.dll
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.pdb
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\GreenRoam.genruntimeconfig.cache
 D:\FPT\SEP490_Capstone\GreenRoam\obj\Debug\net8.0\ref\GreenRoam.dll
+=======
+>>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
