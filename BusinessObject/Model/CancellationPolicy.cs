@@ -27,5 +27,10 @@ namespace BusinessObject.Model
         public int HomeStayID { get; set; }
         [ForeignKey("HomeStayID")]
         public HomeStay? HomeStay { get; set; }
+
+        public static implicit operator CancellationPolicy(List<CancellationPolicy> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

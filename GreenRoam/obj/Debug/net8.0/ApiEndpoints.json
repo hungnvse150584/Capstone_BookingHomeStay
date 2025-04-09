@@ -937,7 +937,7 @@
   {
     "ContainingType": "GreenRoam.Controllers.CancellationPolicyController",
     "Method": "GetCancellationPolicyByHomeStay",
-    "RelativePath": "api/CancellationPolicy/GetById/{homeStayID}",
+    "RelativePath": "api/CancellationPolicy/GetByHomeStayId/{homeStayID}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1055,38 +1055,6 @@
       {
         "Name": "request",
         "Type": "CreateConversationRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ChatController",
-    "Method": "GetDetailedSuggestions",
-    "RelativePath": "api/Chat/detailed-suggestions",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "GetDetailedSuggestionsRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ChatController",
-    "Method": "GetInitialSuggestions",
-    "RelativePath": "api/Chat/initial-suggestions/{homeStayId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "homeStayId",
-        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

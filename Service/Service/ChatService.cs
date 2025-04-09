@@ -19,31 +19,20 @@ using Repository;
             private readonly IConversationRepository _conversationRepository;
             private readonly IMessageRepository _messageRepository;
             private readonly IHomeStayRepository _homeStayRepository;
-            private readonly IAISuggestionService _aiSuggestionService;
             private readonly Cloudinary _cloudinary;
 
         public ChatService(
          IConversationRepository conversationRepository,
          IMessageRepository messageRepository,
-         IHomeStayRepository homeStayRepository,
-         IAISuggestionService aiSuggestionService, 
+         IHomeStayRepository homeStayRepository,   
          Cloudinary cloudinary)
         {
             _conversationRepository = conversationRepository;
             _messageRepository = messageRepository;
             _homeStayRepository = homeStayRepository;
-            _aiSuggestionService = aiSuggestionService; 
             _cloudinary = cloudinary;
         }
-        public async Task<List<string>> GetInitialSuggestionsAsync(int homeStayId)
-        {
-            return await _aiSuggestionService.GetInitialSuggestionsAsync(homeStayId);
-        }
-
-        public async Task<List<string>> GetDetailedSuggestionsAsync(string customerMessage, int homeStayId)
-        {
-            return await _aiSuggestionService.GetDetailedSuggestionsAsync(customerMessage, homeStayId);
-        }
+        
         public async Task<Conversation> GetOrCreateConversationAsync(string user1Id, string user2Id, int homeStayId)
         {
             var orderedUserIds = new[] { user1Id, user2Id }.OrderBy(id => id).ToArray();

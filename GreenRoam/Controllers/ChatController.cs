@@ -58,39 +58,7 @@ public class ChatController : ControllerBase
 
     //    return Ok(conversationResponses);
     //}
-    [HttpGet("initial-suggestions/{homeStayId}")]
-    public async Task<IActionResult> GetInitialSuggestions(int homeStayId)
-    {
-        try
-        {
-            // Kiểm tra HomeStayId
-            if (homeStayId <= 0)
-            {
-                return BadRequest(new { message = "HomeStayId must be greater than 0." });
-            }
-
-            // Lấy gợi ý ban đầu từ ChatService
-            var suggestions = await _chatService.GetInitialSuggestionsAsync(homeStayId);
-            if (suggestions == null || !suggestions.Any())
-            {
-                return Ok(new List<string>()); // Trả về danh sách rỗng nếu không có gợi ý
-            }
-
-            // Gửi gợi ý real-time đến chủ homestay qua SignalR
-            var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(homeStayId);
-            if (ownerId != null)
-            {
-                await _chatHubContext.Clients.User(ownerId).SendAsync("ReceiveSuggestions", suggestions);
-            }
-
-            return Ok(suggestions);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-    }
-
+   
     [HttpGet("messages/{conversationId}")]
     public async Task<IActionResult> GetMessages(int conversationId)
     {
@@ -530,38 +498,7 @@ public class ChatController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
-    [HttpPost("detailed-suggestions")]
-    public async Task<IActionResult> GetDetailedSuggestions([FromBody] GetDetailedSuggestionsRequest request)
-    {
-        try
-        {
-            // Kiểm tra dữ liệu đầu vào
-            if (string.IsNullOrEmpty(request.CustomerMessage) || request.HomeStayId <= 0)
-            {
-                return BadRequest(new { message = "CustomerMessage and HomeStayId are required." });
-            }
-
-            // Lấy gợi ý chi tiết từ ChatService
-            var suggestions = await _chatService.GetDetailedSuggestionsAsync(request.CustomerMessage, request.HomeStayId);
-            if (suggestions == null || !suggestions.Any())
-            {
-                return Ok(new List<string>()); // Trả về danh sách rỗng nếu không có gợi ý
-            }
-
-            // Gửi gợi ý real-time đến chủ homestay qua SignalR
-            var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(request.HomeStayId);
-            if (ownerId != null)
-            {
-                await _chatHubContext.Clients.User(ownerId).SendAsync("ReceiveSuggestions", suggestions);
-            }
-
-            return Ok(suggestions);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-    }
+    
 
 }
 
