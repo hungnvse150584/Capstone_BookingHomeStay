@@ -1,6 +1,5 @@
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\appsettings.json
-C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\GreenRoam.staticwebassets.runtime.json
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\GreenRoam.exe
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\GreenRoam.deps.json
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\bin\Debug\net8.0\GreenRoam.runtimeconfig.json
