@@ -180,7 +180,11 @@ app.UseRouting();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "GreenRoam");
+        options.RoutePrefix = "swagger";
+    });
 }
 
 app.UseHttpsRedirection();
