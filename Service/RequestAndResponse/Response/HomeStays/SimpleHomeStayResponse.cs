@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Model;
+using Service.RequestAndResponse.Response.CancellationPolicyRequest;
 using Service.RequestAndResponse.Response.CultureExperiences;
 using Service.RequestAndResponse.Response.ImageHomeStay;
 using Service.RequestAndResponse.Response.Ratings;
@@ -23,12 +24,14 @@ namespace Service.RequestAndResponse.Response.HomeStays
         public string AccountID { get; set; }
         public int? CommissionRateID { get; set; }
         public object CommissionRate { get; set; }
-        public int? CancellationID { get; set; }
+        //public int? CancellationID { get; set; }
         public object CancelPolicy { get; set; }
         public int TypeOfRental { get; set; }
         public IEnumerable<GetReportResponse> Reports { get; set; }
         public IEnumerable<ImageHomeStayResponse> ImageHomeStays { get; set; }
         public IEnumerable<GetAllCultureExperiencesResponse> CultureExperiences { get; set; }
+        public IEnumerable<GetAllCancellationPolicy> CancellationPolicies { get; set; }
+
         public IEnumerable<GetServiceForHomeStay> Services { get; set; }
         public IEnumerable<GetAllRatingResponse> Ratings { get; set; }
     }
