@@ -10413,11 +10413,6 @@
           "commissionRate": {
             "nullable": true
           },
-          "cancellationID": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
           "cancelPolicy": {
             "nullable": true
           },
@@ -10443,6 +10438,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GetAllCultureExperiencesResponse"
+            },
+            "nullable": true
+          },
+          "cancellationPolicies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAllCancellationPolicy"
             },
             "nullable": true
           },
