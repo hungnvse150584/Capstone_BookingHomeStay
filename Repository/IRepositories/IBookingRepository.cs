@@ -21,6 +21,7 @@ namespace Repository.IRepositories
         Task<Booking?> GetBookingByIdAsync(int bookingId);
         Task<Booking?> GetBookingsByIdAsync(int? bookingId);
         Task<Booking?> UpdateBookingWithReportAsync(int bookingId, Booking booking);
+        Task<IEnumerable<Booking>> GetBookingsForCheckInReminderAsync();
 
 
         //For AdminDashBoard

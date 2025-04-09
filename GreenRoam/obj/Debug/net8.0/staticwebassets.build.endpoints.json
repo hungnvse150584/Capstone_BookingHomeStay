@@ -3,6 +3,170 @@
   "ManifestType": "Build",
   "Endpoints": [
     {
+      "Route": "chat-customer.html",
+      "AssetFile": "chat-customer.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3641"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"GA7lbV+BVeINGN6BqUfdn7gVOo9dAUDDmqa13yk7oYI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 17:11:50 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-GA7lbV+BVeINGN6BqUfdn7gVOo9dAUDDmqa13yk7oYI="
+        }
+      ]
+    },
+    {
+      "Route": "chat-customer.oknj4z245s.html",
+      "AssetFile": "chat-customer.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3641"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"GA7lbV+BVeINGN6BqUfdn7gVOo9dAUDDmqa13yk7oYI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 17:11:50 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "oknj4z245s"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-GA7lbV+BVeINGN6BqUfdn7gVOo9dAUDDmqa13yk7oYI="
+        },
+        {
+          "Name": "label",
+          "Value": "chat-customer.html"
+        }
+      ]
+    },
+    {
+      "Route": "chat.html",
+      "AssetFile": "chat.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4955"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mqmDfaQHf2cYr8Aq3cS4ycU8CwctJ7xQnjgL/OGgHIs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 17:17:18 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-mqmDfaQHf2cYr8Aq3cS4ycU8CwctJ7xQnjgL/OGgHIs="
+        }
+      ]
+    },
+    {
+      "Route": "chat.q0kxeqpf24.html",
+      "AssetFile": "chat.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4955"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mqmDfaQHf2cYr8Aq3cS4ycU8CwctJ7xQnjgL/OGgHIs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 17:17:18 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "q0kxeqpf24"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-mqmDfaQHf2cYr8Aq3cS4ycU8CwctJ7xQnjgL/OGgHIs="
+        },
+        {
+          "Name": "label",
+          "Value": "chat.html"
+        }
+      ]
+    },
+    {
       "Route": "index.5ijz3bjxqq.html",
       "AssetFile": "index.html",
       "Selectors": [],
@@ -29,7 +193,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 09:13:21 GMT"
+          "Value": "Tue, 08 Apr 2025 15:07:21 GMT"
         }
       ],
       "EndpointProperties": [
@@ -74,7 +238,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 09:13:21 GMT"
+          "Value": "Tue, 08 Apr 2025 15:07:21 GMT"
         }
       ],
       "EndpointProperties": [

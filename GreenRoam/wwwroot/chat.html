@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Owner Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+    <style>
+        #messages, #suggestions {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            min-height: 100px;
+        }
+
+            #suggestions button {
+                margin: 5px;
+                padding: 5px 10px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+
+                #suggestions button:hover {
+                    background-color: #0056b3;
+                }
+    </style>
+</head>
+<body>
+    <h2>Owner Chat</h2>
+    <div id="messages"></div>
+    <div id="suggestions">
+        <h3>Suggestions:</h3>
+    </div>
+    <input id="messageInput" type="text" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub?userId=" + senderId)
+            .build();
+
+        connection.on("ReceiveMessage", (senderId, content, sentAt, messageId, conversationId, senderName, receiverId) => {
+            const messagesDiv = document.getElementById("messages");
+            const messageElement = document.createElement("p");
+            messageElement.textContent = `${senderName} (${senderId}): ${content} (${new Date(sentAt).toLocaleString()})`;
+            messagesDiv.appendChild(messageElement);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight; // Cuộn xuống tin nhắn mới nhất
+            console.log(`Received message: ${senderName} (${senderId}): ${content}`);
+        });
+
+        connection.on("ReceiveSuggestions", (suggestions) => {
+            const suggestionsDiv = document.getElementById("suggestions");
+            suggestionsDiv.innerHTML = "<h3>Suggestions:</h3>"; // Reset suggestions
+            suggestions.forEach(suggestion => {
+                const button = document.createElement("button");
+                button.textContent = suggestion;
+                button.onclick = () => sendSuggestion(suggestion);
+                suggestionsDiv.appendChild(button);
+            });
+            console.log("Received suggestions:", suggestions);
+        });
+
+        connection.start().then(() => {
+            console.log("SignalR connected for owner with userId:", senderId);
+            // Gọi ChatHub để lấy gợi ý ban đầu
+            connection.invoke("GetInitialSuggestions", homeStayId).then(() => {
+                console.log("Requested initial suggestions");
+            }).catch(error => console.error("Error requesting initial suggestions:", error));
+        }).catch(error => console.error("SignalR connection error:", error));
+
+        function sendMessage() {
+            const content = document.getElementById("messageInput").value;
+            if (!content) return; // Không gửi nếu nội dung rỗng
+
+            fetch('/api/chat/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    senderID: senderId,
+                    receiverID: receiverId,
+                    content: content,
+                    senderName: senderName,
+                    homeStayId: homeStayId
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Message sent:", data);
+                    document.getElementById("messageInput").value = ""; // Xóa input sau khi gửi
+                })
+                .catch(error => console.error("Error sending message:", error));
+        }
+
+        function sendSuggestion(suggestion) {
+            fetch('/api/chat/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    senderID: senderId,
+                    receiverID: receiverId,
+                    content: suggestion,
+                    senderName: senderName,
+                    homeStayId: homeStayId
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Suggestion sent:", data);
+                })
+                .catch(error => console.error("Error sending suggestion:", error));
+        }
+
+        // Giả lập các biến
+        const senderId = "owner123";
+        const receiverId = "customer456";
+        const senderName = "Owner";
+        const homeStayId = 1;
+    </script>
+</body>
+</html>

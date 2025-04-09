@@ -428,6 +428,32 @@
   },
   {
     "ContainingType": "GreenRoam.Controllers.CheckOutController",
+    "Method": "CheckOutRefundBooking",
+    "RelativePath": "api/booking-checkout/BookingPayment-Refund",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.CheckOutController",
     "Method": "ChangeTheBookingStatus",
     "RelativePath": "api/booking-checkout/ChangeBookingStatus",
     "HttpMethod": "PUT",
@@ -498,7 +524,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -543,6 +569,77 @@
     "ContainingType": "GreenRoam.Controllers.CheckOutController",
     "Method": "HandleVnPayReturn",
     "RelativePath": "api/booking-checkout/vnpay-return",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Vnp_Amount",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "Vnp_BankCode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Vnp_BankTranNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Vnp_CardType",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Vnp_OrderInfo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Vnp_PayDate",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Vnp_ResponseCode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Vnp_TmnCode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Vnp_TransactionNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Vnp_TransactionStatus",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Vnp_TxnRef",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Vnp_SecureHash",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.CheckOutController",
+    "Method": "HandleVnPayReturnRefund",
+    "RelativePath": "api/booking-checkout/vnpay-return-refunded",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -839,6 +936,32 @@
   },
   {
     "ContainingType": "GreenRoam.Controllers.CancellationPolicyController",
+    "Method": "GetCancellationPolicyByHomeStay",
+    "RelativePath": "api/CancellationPolicy/GetById/{homeStayID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "homeStayID",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.CancellationPolicyRequest.GetAllCancellationPolicy, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.CancellationPolicyController",
     "Method": "GetCancellationPolicyById",
     "RelativePath": "api/CancellationPolicy/GetById/{id}",
     "HttpMethod": "GET",
@@ -932,6 +1055,38 @@
       {
         "Name": "request",
         "Type": "CreateConversationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ChatController",
+    "Method": "GetDetailedSuggestions",
+    "RelativePath": "api/Chat/detailed-suggestions",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "GetDetailedSuggestionsRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ChatController",
+    "Method": "GetInitialSuggestions",
+    "RelativePath": "api/Chat/initial-suggestions/{homeStayId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "homeStayId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -2720,6 +2875,32 @@
           "text/json"
         ],
         "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.RoomTypeController",
+    "Method": "GetRoomTypeByID",
+    "RelativePath": "api/RoomType/GetRoomTypeDetail/{roomTypeId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roomTypeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.RoomType.GetAllRoomTypeByRental, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
       }
     ]
   },

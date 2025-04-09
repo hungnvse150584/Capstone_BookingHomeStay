@@ -1,1 +1,3 @@
+wwwroot\chat.html
+wwwroot\chat-customer.html
 wwwroot\index.html

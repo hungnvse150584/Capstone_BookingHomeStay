@@ -92,5 +92,9 @@ namespace Repository.Repositories
         {
             return await _bookingDao.GetBookingsByIdAsync(bookingId);
         }
+        public async Task<IEnumerable<Booking>> GetBookingsForCheckInReminderAsync()
+        {
+            return await _bookingDao.GetBookingsForCheckInReminderAsync();
+        }
     }
 }
