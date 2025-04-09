@@ -165,7 +165,7 @@ namespace DataAccessObject
             }
 
             // Duyệt từng ngày để tính tổng giá
-            for (DateTime date = checkInDate.Date; date <= checkOutDate.Date; date = date.AddDays(1))
+            for (DateTime date = checkInDate.Date; date < checkOutDate.Date; date = date.AddDays(1))
             {
                 DayType dayType = await GetDayType(date);
 
