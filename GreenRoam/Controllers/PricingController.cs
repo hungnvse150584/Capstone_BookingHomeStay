@@ -52,7 +52,7 @@ namespace GreenRoam.Controllers
 
         [HttpGet]
         [Route("GetTotalPrice")]
-        public async Task<ActionResult<BaseResponse<GetTotalPrice>>> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int homeStayRentalId, int? roomTypeId)
+        public async Task<ActionResult<BaseResponse<GetTotalPrice>>> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId)
         {
             var pricing = await _pricingService.GetTotalPrice(checkInDate, checkOutDate, homeStayRentalId, roomTypeId);
             return Ok(pricing);
