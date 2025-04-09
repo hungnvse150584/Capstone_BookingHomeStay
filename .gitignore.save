@@ -1,0 +1,1 @@
+git add .gitignore# .NET build artifacts bin/ obj/ build/ publish/ git commit -m "Cập nhật .gitignore"git push origin main# NuGet packages*.nuget.*# Other temporary files*.cache

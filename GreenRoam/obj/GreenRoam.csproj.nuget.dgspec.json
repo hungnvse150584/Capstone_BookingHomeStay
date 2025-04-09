@@ -1,0 +1,468 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/hungnv/Capstone_BookingHomeStay/GreenRoam/GreenRoam.csproj": {}
+  },
+  "projects": {
+    "/home/hungnv/Capstone_BookingHomeStay/BusinessObject/BusinessObject.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/hungnv/Capstone_BookingHomeStay/BusinessObject/BusinessObject.csproj",
+        "projectName": "BusinessObject",
+        "projectPath": "/home/hungnv/Capstone_BookingHomeStay/BusinessObject/BusinessObject.csproj",
+        "packagesPath": "/home/hungnv/.nuget/packages/",
+        "outputPath": "/home/hungnv/Capstone_BookingHomeStay/BusinessObject/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/hungnv/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Google.Cloud.Dialogflow.V2": {
+              "target": "Package",
+              "version": "[4.26.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Swashbuckle.AspNetCore.Swagger": {
+              "target": "Package",
+              "version": "[6.8.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/hungnv/Capstone_BookingHomeStay/DataAccessObject/DataAccessObject.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/hungnv/Capstone_BookingHomeStay/DataAccessObject/DataAccessObject.csproj",
+        "projectName": "DataAccessObject",
+        "projectPath": "/home/hungnv/Capstone_BookingHomeStay/DataAccessObject/DataAccessObject.csproj",
+        "packagesPath": "/home/hungnv/.nuget/packages/",
+        "outputPath": "/home/hungnv/Capstone_BookingHomeStay/DataAccessObject/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/hungnv/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/hungnv/Capstone_BookingHomeStay/BusinessObject/BusinessObject.csproj": {
+                "projectPath": "/home/hungnv/Capstone_BookingHomeStay/BusinessObject/BusinessObject.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Google.Cloud.Dialogflow.V2": {
+              "target": "Package",
+              "version": "[4.26.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.Extensions.Configuration.FileExtensions": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/hungnv/Capstone_BookingHomeStay/GreenRoam/GreenRoam.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/hungnv/Capstone_BookingHomeStay/GreenRoam/GreenRoam.csproj",
+        "projectName": "GreenRoam",
+        "projectPath": "/home/hungnv/Capstone_BookingHomeStay/GreenRoam/GreenRoam.csproj",
+        "packagesPath": "/home/hungnv/.nuget/packages/",
+        "outputPath": "/home/hungnv/Capstone_BookingHomeStay/GreenRoam/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/hungnv/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/hungnv/Capstone_BookingHomeStay/DataAccessObject/DataAccessObject.csproj": {
+                "projectPath": "/home/hungnv/Capstone_BookingHomeStay/DataAccessObject/DataAccessObject.csproj"
+              },
+              "/home/hungnv/Capstone_BookingHomeStay/Repository/Repository.csproj": {
+                "projectPath": "/home/hungnv/Capstone_BookingHomeStay/Repository/Repository.csproj"
+              },
+              "/home/hungnv/Capstone_BookingHomeStay/Service/Service.csproj": {
+                "projectPath": "/home/hungnv/Capstone_BookingHomeStay/Service/Service.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.27.4, )"
+            },
+            "Google.Cloud.Dialogflow.V2": {
+              "target": "Package",
+              "version": "[4.26.0, )"
+            },
+            "Hangfire.AspNetCore": {
+              "target": "Package",
+              "version": "[1.8.18, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.18, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.11.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.AspNetCore.SignalR": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.11.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/hungnv/Capstone_BookingHomeStay/Repository/Repository.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/hungnv/Capstone_BookingHomeStay/Repository/Repository.csproj",
+        "projectName": "Repository",
+        "projectPath": "/home/hungnv/Capstone_BookingHomeStay/Repository/Repository.csproj",
+        "packagesPath": "/home/hungnv/.nuget/packages/",
+        "outputPath": "/home/hungnv/Capstone_BookingHomeStay/Repository/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/hungnv/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/hungnv/Capstone_BookingHomeStay/BusinessObject/BusinessObject.csproj": {
+                "projectPath": "/home/hungnv/Capstone_BookingHomeStay/BusinessObject/BusinessObject.csproj"
+              },
+              "/home/hungnv/Capstone_BookingHomeStay/DataAccessObject/DataAccessObject.csproj": {
+                "projectPath": "/home/hungnv/Capstone_BookingHomeStay/DataAccessObject/DataAccessObject.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Google.Cloud.Dialogflow.V2": {
+              "target": "Package",
+              "version": "[4.26.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/hungnv/Capstone_BookingHomeStay/Service/Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/hungnv/Capstone_BookingHomeStay/Service/Service.csproj",
+        "projectName": "Service",
+        "projectPath": "/home/hungnv/Capstone_BookingHomeStay/Service/Service.csproj",
+        "packagesPath": "/home/hungnv/.nuget/packages/",
+        "outputPath": "/home/hungnv/Capstone_BookingHomeStay/Service/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/hungnv/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/hungnv/Capstone_BookingHomeStay/Repository/Repository.csproj": {
+                "projectPath": "/home/hungnv/Capstone_BookingHomeStay/Repository/Repository.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.27.4, )"
+            },
+            "Google.Cloud.Dialogflow.V2": {
+              "target": "Package",
+              "version": "[4.26.0, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.8.0, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.9.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
