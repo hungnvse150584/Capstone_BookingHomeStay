@@ -21,16 +21,13 @@ namespace GreenRoam.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            // Lấy userId từ query string
-            var userId = Context.GetHttpContext().Request.Query["userId"].ToString();
+            // Lấy userId từ token hoặc query string
+            var userId = Context.User?.Identity?.Name; // Nếu dùng JWT
+                                                       // Hoặc từ query string: var userId = Context.GetHttpContext().Request.Query["userId"];
+
             if (!string.IsNullOrEmpty(userId))
             {
                 _userConnections[userId] = Context.ConnectionId;
-                Console.WriteLine($"User {userId} connected with ConnectionId {Context.ConnectionId}");
-            }
-            else
-            {
-                Console.WriteLine("User connected without userId");
             }
 
             await base.OnConnectedAsync();
@@ -42,7 +39,6 @@ namespace GreenRoam.Hubs
             if (userId != null)
             {
                 _userConnections.TryRemove(userId, out _);
-                Console.WriteLine($"User {userId} disconnected");
             }
             await base.OnDisconnectedAsync(exception);
         }
@@ -50,23 +46,20 @@ namespace GreenRoam.Hubs
         public async Task RegisterUser(string userId)
         {
             _userConnections[userId] = Context.ConnectionId;
-            Console.WriteLine($"User {userId} registered with ConnectionId {Context.ConnectionId}");
         }
 
         public async Task SendMessage(string senderId, string receiverId, string content, string senderName, int homeStayId, List<IFormFile> images = null)
         {
             var message = await _chatService.SendMessageAsync(senderId, receiverId, content, senderName, homeStayId, images);
 
-            // Gửi tin nhắn cho cả sender và receiver
             if (_userConnections.TryGetValue(receiverId, out var receiverConnectionId))
             {
-                await Clients.Client(receiverConnectionId).SendAsync("ReceiveMessage", senderId, content, message.SentAt, message.MessageID, message.ConversationID, senderName, receiverId);
-                Console.WriteLine($"Sent message to receiver {receiverId}");
+                await Clients.Client(receiverConnectionId).SendAsync("ReceiveMessage", senderId, content, message.SentAt, message.MessageID, message.ConversationID);
             }
+
             if (_userConnections.TryGetValue(senderId, out var senderConnectionId))
             {
-                await Clients.Client(senderConnectionId).SendAsync("ReceiveMessage", senderId, content, message.SentAt, message.MessageID, message.ConversationID, senderName, receiverId);
-                Console.WriteLine($"Sent message to sender {senderId}");
+                await Clients.Client(senderConnectionId).SendAsync("ReceiveMessage", senderId, content, message.SentAt, message.MessageID, message.ConversationID);
             }
         }
 
@@ -97,11 +90,6 @@ namespace GreenRoam.Hubs
                     await Clients.Client(senderConnectionId).SendAsync("MessageRead", message.MessageID);
                 }
             }
-        }
-        public string GetConnectionId(string userId)
-        {
-            _userConnections.TryGetValue(userId, out var connectionId);
-            return connectionId;
         }
     }
 }

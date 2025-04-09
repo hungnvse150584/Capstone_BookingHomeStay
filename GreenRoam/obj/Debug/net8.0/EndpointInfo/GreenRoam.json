@@ -10363,13 +10363,6 @@
             },
             "nullable": true
           },
-          "cancellationPolicies": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetAllCancellationPolicy"
-            },
-            "nullable": true
-          },
           "services": {
             "type": "array",
             "items": {
