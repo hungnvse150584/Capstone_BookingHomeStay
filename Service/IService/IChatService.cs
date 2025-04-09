@@ -20,7 +20,6 @@ namespace Service.IService
         Task<Conversation> GetOrCreateConversationWithHomeStayOwnerAsync(string customerId, int homeStayId);
         Task<List<Conversation>> GetConversationsByHomeStayIdAsync(int homeStayId);
         Task<List<Conversation>> GetConversationsByCustomerIdAsync(string customerId);
-        Task<List<string>> GetInitialSuggestionsAsync(int homeStayId);
-        Task<List<string>> GetDetailedSuggestionsAsync(string customerMessage, int homeStayId);
+       
     }
 }

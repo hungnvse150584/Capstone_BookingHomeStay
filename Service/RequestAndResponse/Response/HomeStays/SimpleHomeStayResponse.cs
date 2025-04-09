@@ -25,12 +25,12 @@ namespace Service.RequestAndResponse.Response.HomeStays
         public int? CommissionRateID { get; set; }
         public object CommissionRate { get; set; }
         //public int? CancellationID { get; set; }
-        public object CancelPolicy { get; set; }
+        public GetAllCancellationPolicy CancelPolicy { get; set; }
         public int TypeOfRental { get; set; }
         public IEnumerable<GetReportResponse> Reports { get; set; }
         public IEnumerable<ImageHomeStayResponse> ImageHomeStays { get; set; }
         public IEnumerable<GetAllCultureExperiencesResponse> CultureExperiences { get; set; }
-        public IEnumerable<GetAllCancellationPolicy> CancellationPolicies { get; set; }
+        //public IEnumerable<GetAllCancellationPolicy> CancellationPolicies { get; set; }
 
         public IEnumerable<GetServiceForHomeStay> Services { get; set; }
         public IEnumerable<GetAllRatingResponse> Ratings { get; set; }
