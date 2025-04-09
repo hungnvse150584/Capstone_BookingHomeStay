@@ -39,6 +39,7 @@ namespace Service
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IAISuggestionService, AISuggestionService>();
             return services;
         }
     }

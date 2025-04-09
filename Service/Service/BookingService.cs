@@ -26,6 +26,8 @@ namespace Service.Service
         private readonly IMapper _mapper;
         private readonly IBookingRepository _bookingRepository;
         private readonly ICancellationPolicyRepository _cancelltaionRepository;
+        private readonly IHomeStayRepository _homeStayRepository;
+        private readonly INotificationService _notificationService;
 
         public BookingService(IMapper mapper, IBookingRepository bookingRepository,
                               IHomeStayRentalRepository homeStayTypeRepository,

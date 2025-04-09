@@ -58,3 +58,4 @@ secrets.json
 *.iml
 *.ipr
 *.iws
+homestaychatbot-jmhc-e3c3740297d6.json

@@ -398,5 +398,25 @@ namespace DataAccessObject
 
             return result;
         }
+        // DataAccessObject/BookingDAO.cs
+        public async Task<IEnumerable<Booking>> GetBookingsForCheckInReminderAsync()
+        {
+            var today = DateTime.Today;
+            var startDate = today.AddDays(1); // 1 ngày tới
+            var endDate = today.AddDays(2);  // 2 ngày tới
+
+            return await _context.Bookings
+                .Include(b => b.Account)
+                .Include(b => b.HomeStay)
+                .Include(b => b.BookingDetails)
+                .ThenInclude(bd => bd.HomeStayRentals)
+                .Include(b => b.BookingDetails)
+                .ThenInclude(bd => bd.Rooms)
+                .ThenInclude(r => r.RoomTypes)
+                .ThenInclude(rt => rt.HomeStayRentals)
+                .Where(b => b.BookingDetails.Any(bd => bd.CheckInDate.Date >= startDate && bd.CheckInDate.Date <= endDate))
+                .Where(b => b.Status == BookingStatus.Pending || b.Status == BookingStatus.Completed) // Chỉ gửi email cho booking chưa bị hủy
+                .ToListAsync();
+        }
     }
 }

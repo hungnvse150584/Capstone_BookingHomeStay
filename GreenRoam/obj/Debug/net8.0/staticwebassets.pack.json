@@ -1,10 +1,29 @@
 {
   "Files": [
     {
+<<<<<<< HEAD
+      "Id": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\chat-customer.html",
+      "PackagePath": "staticwebassets\\chat-customer.html"
+    },
+    {
+      "Id": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\chat.html",
+      "PackagePath": "staticwebassets\\chat.html"
+    },
+    {
+      "Id": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.GreenRoam.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+=======
       "Id": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },
     {
+>>>>>>> main
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.GreenRoam.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
