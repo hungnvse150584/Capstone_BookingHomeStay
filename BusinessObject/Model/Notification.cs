@@ -40,7 +40,9 @@ namespace BusinessObject.Model;
     public enum NotificationType
     {
         BookingSuccessfully = 0,
-        Reminder = 1,
-        AdminAnnouncement = 2
+        BookingCancellation = 1,
+        BookingRefunded = 2,
+        Reminder = 3,
+        AdminAnnouncement = 4
     }
 
