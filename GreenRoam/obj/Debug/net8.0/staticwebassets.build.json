@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< HEAD
+  "Hash": "Uz/YqrDYGNd9AxiOXuK53wLA+Ja6pgcfGTK5FsOpg/U=",
+=======
   "Hash": "AHWH+Fza7F+yo9p6UyG2wY9BwnU+tfUEKXK8EUbxQ68=",
+>>>>>>> main
   "Source": "GreenRoam",
   "BasePath": "_content/GreenRoam",
   "Mode": "Default",
@@ -15,6 +19,10 @@
       "Pattern": "**"
     }
   ],
+<<<<<<< HEAD
+  "Assets": [],
+  "Endpoints": []
+=======
   "Assets": [
     {
       "Identity": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\chat.html",
@@ -74,4 +82,5 @@
       "OriginalItemSpec": "wwwroot\\index.html"
     }
   ]
+>>>>>>> main
 }
