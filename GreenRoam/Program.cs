@@ -74,7 +74,7 @@ builder.Services.AddSwaggerGen(option =>
     //});
     option.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
     {
-        Url = "https://localhost:7221"
+        Url = "https://hungnv.iselab.cloud:7221"
     });
 });
 
@@ -175,13 +175,14 @@ var app = builder.Build();
 
 
 app.UseRouting();
-
+app.UseCors("AllowAll");
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "GreenRoam");
+    options.RoutePrefix = "swagger";
+});
 
 app.UseHttpsRedirection();
 //app.UseHangfireDashboard();
@@ -190,7 +191,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.UseCors("AllowAll");
+
 app.MapHub<ChatHub>("/chatHub");
 app.MapHub<NotificationHub>("/notificationHub");
 app.MapFallbackToFile("/index.html");
