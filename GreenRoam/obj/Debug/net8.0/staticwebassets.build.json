@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "Hash": "ojHWrB6FPq3zSQObXMzKSZmgVr69KQXnvgJSlpR0fGs=",
+=======
+  "Hash": "AHWH+Fza7F+yo9p6UyG2wY9BwnU+tfUEKXK8EUbxQ68=",
+>>>>>>> main
   "Source": "GreenRoam",
   "BasePath": "_content/GreenRoam",
   "Mode": "Default",
@@ -10,75 +14,70 @@
     {
       "Name": "GreenRoam\\wwwroot",
       "Source": "GreenRoam",
-      "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\",
       "BasePath": "_content/GreenRoam",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\chat.html",
+      "Identity": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\chat.html",
       "SourceId": "GreenRoam",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\",
       "BasePath": "_content/GreenRoam",
-      "RelativePath": "chat#[.{fingerprint}]?.html",
+      "RelativePath": "chat.html",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
+      "AssetMergeBehavior": "PreferTarget",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "q0kxeqpf24",
-      "Integrity": "mqmDfaQHf2cYr8Aq3cS4ycU8CwctJ7xQnjgL/OGgHIs=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\chat.html"
     },
     {
-      "Identity": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\chat-customer.html",
+      "Identity": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\chat-customer.html",
       "SourceId": "GreenRoam",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\",
       "BasePath": "_content/GreenRoam",
-      "RelativePath": "chat-customer#[.{fingerprint}]?.html",
+      "RelativePath": "chat-customer.html",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
+      "AssetMergeBehavior": "PreferTarget",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "oknj4z245s",
-      "Integrity": "GA7lbV+BVeINGN6BqUfdn7gVOo9dAUDDmqa13yk7oYI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\chat-customer.html"
     },
     {
-      "Identity": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\index.html",
+      "Identity": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\index.html",
       "SourceId": "GreenRoam",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\",
       "BasePath": "_content/GreenRoam",
-      "RelativePath": "index#[.{fingerprint}]?.html",
+      "RelativePath": "index.html",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
+      "AssetMergeBehavior": "PreferTarget",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "5ijz3bjxqq",
-      "Integrity": "fazRUfReDDFaba8tzvveKlxNsYPjxOseD4MgCy1qA38=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
     }
+<<<<<<< HEAD
   ],
   "Endpoints": [
     {
@@ -327,5 +326,7 @@
         }
       ]
     }
+=======
+>>>>>>> main
   ]
 }

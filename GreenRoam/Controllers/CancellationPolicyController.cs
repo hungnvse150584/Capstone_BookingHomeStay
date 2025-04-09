@@ -55,7 +55,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)response.StatusCode, response);
         }
 
-        [HttpGet("GetById/{homeStayID}")]
+        [HttpGet("GetByHomeStayId/{homeStayID}")]
         public async Task<ActionResult<BaseResponse<GetAllCancellationPolicy>>> GetCancellationPolicyByHomeStay(int? homeStayID)
         {
             if (homeStayID <= 0)
@@ -64,6 +64,12 @@ namespace GreenRoam.Controllers
             }
 
             var response = await _cancellationPolicyService.GetCancellationPolicyByHomeStay(homeStayID);
+
+            if (response == null)
+            {
+                return BadRequest("Cannot Find CancellationPolicy!");
+            }
+
             return StatusCode((int)response.StatusCode, response);
         }
 
