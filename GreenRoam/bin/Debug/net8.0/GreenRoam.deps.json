@@ -11,8 +11,12 @@
           "CloudinaryDotNet": "1.27.4",
           "DataAccessObject": "1.0.0",
           "Google.Cloud.Dialogflow.V2": "4.26.0",
+          "Hangfire.AspNetCore": "1.8.18",
+          "Hangfire.SqlServer": "1.8.18",
+          "MailKit": "4.11.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "8.0.10",
           "Microsoft.AspNetCore.SignalR": "1.1.0",
+          "MimeKit": "4.11.0",
           "Repository": "1.0.0",
           "Service": "1.0.0",
           "Swashbuckle.AspNetCore": "6.4.0"
@@ -66,11 +70,11 @@
           }
         }
       },
-      "BouncyCastle.Cryptography/2.5.0": {
+      "BouncyCastle.Cryptography/2.5.1": {
         "runtime": {
           "lib/net6.0/BouncyCastle.Cryptography.dll": {
             "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.5.0.6119"
+            "fileVersion": "2.5.1.28965"
           }
         }
       },
@@ -249,15 +253,106 @@
           }
         }
       },
-      "MailKit/4.8.0": {
+      "Hangfire.AspNetCore/1.8.18": {
         "dependencies": {
-          "MimeKit": "4.9.0",
+          "Hangfire.NetCore": "1.8.18"
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Hangfire.AspNetCore.dll": {
+            "assemblyVersion": "1.8.18.0",
+            "fileVersion": "1.8.18.0"
+          }
+        }
+      },
+      "Hangfire.Core/1.8.18": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Hangfire.Core.dll": {
+            "assemblyVersion": "1.8.18.0",
+            "fileVersion": "1.8.18.0"
+          }
+        },
+        "resources": {
+          "lib/netstandard2.0/ca/Hangfire.Core.resources.dll": {
+            "locale": "ca"
+          },
+          "lib/netstandard2.0/de/Hangfire.Core.resources.dll": {
+            "locale": "de"
+          },
+          "lib/netstandard2.0/es/Hangfire.Core.resources.dll": {
+            "locale": "es"
+          },
+          "lib/netstandard2.0/fa/Hangfire.Core.resources.dll": {
+            "locale": "fa"
+          },
+          "lib/netstandard2.0/fr/Hangfire.Core.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/netstandard2.0/nb/Hangfire.Core.resources.dll": {
+            "locale": "nb"
+          },
+          "lib/netstandard2.0/nl/Hangfire.Core.resources.dll": {
+            "locale": "nl"
+          },
+          "lib/netstandard2.0/pt-BR/Hangfire.Core.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/netstandard2.0/pt-PT/Hangfire.Core.resources.dll": {
+            "locale": "pt-PT"
+          },
+          "lib/netstandard2.0/pt/Hangfire.Core.resources.dll": {
+            "locale": "pt"
+          },
+          "lib/netstandard2.0/sv/Hangfire.Core.resources.dll": {
+            "locale": "sv"
+          },
+          "lib/netstandard2.0/tr-TR/Hangfire.Core.resources.dll": {
+            "locale": "tr-TR"
+          },
+          "lib/netstandard2.0/zh-TW/Hangfire.Core.resources.dll": {
+            "locale": "zh-TW"
+          },
+          "lib/netstandard2.0/zh/Hangfire.Core.resources.dll": {
+            "locale": "zh"
+          }
+        }
+      },
+      "Hangfire.NetCore/1.8.18": {
+        "dependencies": {
+          "Hangfire.Core": "1.8.18",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
+          "Microsoft.Extensions.Hosting.Abstractions": "3.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Hangfire.NetCore.dll": {
+            "assemblyVersion": "1.8.18.0",
+            "fileVersion": "1.8.18.0"
+          }
+        }
+      },
+      "Hangfire.SqlServer/1.8.18": {
+        "dependencies": {
+          "Hangfire.Core": "1.8.18"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Hangfire.SqlServer.dll": {
+            "assemblyVersion": "1.8.18.0",
+            "fileVersion": "1.8.18.0"
+          }
+        }
+      },
+      "MailKit/4.11.0": {
+        "dependencies": {
+          "MimeKit": "4.11.0",
           "System.Formats.Asn1": "8.0.1"
         },
         "runtime": {
           "lib/net8.0/MailKit.dll": {
-            "assemblyVersion": "4.8.0.0",
-            "fileVersion": "4.8.0.0"
+            "assemblyVersion": "4.11.0.0",
+            "fileVersion": "4.11.0.0"
           }
         }
       },
@@ -320,7 +415,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Hosting.Server.Abstractions": "2.2.0",
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
-          "Microsoft.Extensions.Hosting.Abstractions": "2.2.0"
+          "Microsoft.Extensions.Hosting.Abstractions": "3.0.0"
         }
       },
       "Microsoft.AspNetCore.Hosting.Server.Abstractions/2.2.0": {
@@ -682,7 +777,7 @@
         }
       },
       "Microsoft.Extensions.FileSystemGlobbing/8.0.0": {},
-      "Microsoft.Extensions.Hosting.Abstractions/2.2.0": {
+      "Microsoft.Extensions.Hosting.Abstractions/3.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2",
@@ -883,16 +978,15 @@
           }
         }
       },
-      "MimeKit/4.9.0": {
+      "MimeKit/4.11.0": {
         "dependencies": {
-          "BouncyCastle.Cryptography": "2.5.0",
-          "System.Formats.Asn1": "8.0.1",
+          "BouncyCastle.Cryptography": "2.5.1",
           "System.Security.Cryptography.Pkcs": "8.0.1"
         },
         "runtime": {
           "lib/net8.0/MimeKit.dll": {
-            "assemblyVersion": "4.9.0.0",
-            "fileVersion": "4.9.0.0"
+            "assemblyVersion": "4.11.0.0",
+            "fileVersion": "4.11.0.0"
           }
         }
       },
@@ -1081,18 +1175,7 @@
           }
         }
       },
-<<<<<<< HEAD
       "System.Formats.Asn1/8.0.1": {},
-=======
-      "System.Formats.Asn1/8.0.1": {
-        "runtime": {
-          "lib/net8.0/System.Formats.Asn1.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.724.31311"
-          }
-        }
-      },
->>>>>>> main
       "System.Globalization/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.1",
@@ -1576,14 +1659,10 @@
           "Swashbuckle.AspNetCore.Swagger": "6.8.1"
         },
         "runtime": {
-<<<<<<< HEAD
           "BusinessObject.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
-=======
-          "BusinessObject.dll": {}
->>>>>>> main
         }
       },
       "DataAccessObject/1.0.0": {
@@ -1596,14 +1675,10 @@
           "Microsoft.Extensions.Configuration.Json": "8.0.1"
         },
         "runtime": {
-<<<<<<< HEAD
           "DataAccessObject.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
-=======
-          "DataAccessObject.dll": {}
->>>>>>> main
         }
       },
       "Repository/1.0.0": {
@@ -1613,14 +1688,10 @@
           "Google.Cloud.Dialogflow.V2": "4.26.0"
         },
         "runtime": {
-<<<<<<< HEAD
           "Repository.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
-=======
-          "Repository.dll": {}
->>>>>>> main
         }
       },
       "Service/1.0.0": {
@@ -1628,20 +1699,16 @@
           "AutoMapper": "13.0.1",
           "CloudinaryDotNet": "1.27.4",
           "Google.Cloud.Dialogflow.V2": "4.26.0",
-          "MailKit": "4.8.0",
-          "MimeKit": "4.9.0",
+          "MailKit": "4.11.0",
+          "MimeKit": "4.11.0",
           "Newtonsoft.Json": "13.0.3",
           "Repository": "1.0.0"
         },
         "runtime": {
-<<<<<<< HEAD
           "Service.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
-=======
-          "Service.dll": {}
->>>>>>> main
         }
       }
     }
@@ -1673,12 +1740,12 @@
       "path": "azure.identity/1.10.3",
       "hashPath": "azure.identity.1.10.3.nupkg.sha512"
     },
-    "BouncyCastle.Cryptography/2.5.0": {
+    "BouncyCastle.Cryptography/2.5.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-rc7vRCq/KD3GtIwSgRtjanGaBwTb9nLenFDZnEcauWlssuuEoxcbMfWA3QWWho6QDMSOSkWjs657McdHzEtEcw==",
-      "path": "bouncycastle.cryptography/2.5.0",
-      "hashPath": "bouncycastle.cryptography.2.5.0.nupkg.sha512"
+      "sha512": "sha512-zy8TMeTP+1FH2NrLaNZtdRbBdq7u5MI+NFZQOBSM69u5RFkciinwzV2eveY6Kjf5MzgsYvvl6kTStsj3JrXqkg==",
+      "path": "bouncycastle.cryptography/2.5.1",
+      "hashPath": "bouncycastle.cryptography.2.5.1.nupkg.sha512"
     },
     "CloudinaryDotNet/1.27.4": {
       "type": "package",
@@ -1785,12 +1852,40 @@
       "path": "grpc.net.common/2.66.0",
       "hashPath": "grpc.net.common.2.66.0.nupkg.sha512"
     },
-    "MailKit/4.8.0": {
+    "Hangfire.AspNetCore/1.8.18": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-zZ1UoM4FUnSFUJ9fTl5CEEaejR0DNP6+FDt1OfXnjg4igZntcir1tg/8Ufd6WY5vrpmvToAjluYqjVM24A+5lA==",
-      "path": "mailkit/4.8.0",
-      "hashPath": "mailkit.4.8.0.nupkg.sha512"
+      "sha512": "sha512-5D6Do0qgoAnakvh4KnKwhIoUzFU84Z0sCYMB+Sit+ygkpL1P6JGYDcd/9vDBcfr5K3JqBxD4Zh2IK2LOXuuiaw==",
+      "path": "hangfire.aspnetcore/1.8.18",
+      "hashPath": "hangfire.aspnetcore.1.8.18.nupkg.sha512"
+    },
+    "Hangfire.Core/1.8.18": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oNAkV8QQoYg5+vM2M024NBk49EhTO2BmKDLuQaKNew23RpH9OUGtKDl1KldBdDJrD8TMFzjhWCArol3igd2i2w==",
+      "path": "hangfire.core/1.8.18",
+      "hashPath": "hangfire.core.1.8.18.nupkg.sha512"
+    },
+    "Hangfire.NetCore/1.8.18": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3KAV9AZ1nqQHC54qR4buNEEKRmQJfq+lODtZxUk5cdi68lV8+9K2f4H1/mIfDlPpgjPFjEfCobNoi2+TIpKySw==",
+      "path": "hangfire.netcore/1.8.18",
+      "hashPath": "hangfire.netcore.1.8.18.nupkg.sha512"
+    },
+    "Hangfire.SqlServer/1.8.18": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yBfI2ygYfN/31rOrahfOFHee1mwTrG0ppsmK9awCS0mAr2GEaB9eyYqg/lURgZy8AA8UVJVs5nLHa2hc1pDAVQ==",
+      "path": "hangfire.sqlserver/1.8.18",
+      "hashPath": "hangfire.sqlserver.1.8.18.nupkg.sha512"
+    },
+    "MailKit/4.11.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JVoRxJ+QRqFMRtEM4veStj3pMLBPRulQGV+iZm6Tq1pnr66Dy6dFYOW9Uw02nxAVzdZAN8G+y3BsUPtgZcKXhA==",
+      "path": "mailkit/4.11.0",
+      "hashPath": "mailkit.4.11.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Authentication.Abstractions/2.2.0": {
       "type": "package",
@@ -2121,12 +2216,12 @@
       "path": "microsoft.extensions.filesystemglobbing/8.0.0",
       "hashPath": "microsoft.extensions.filesystemglobbing.8.0.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.Hosting.Abstractions/2.2.0": {
+    "Microsoft.Extensions.Hosting.Abstractions/3.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-+k4AEn68HOJat5gj1TWa6X28WlirNQO9sPIIeQbia+91n03esEtMSSoekSTpMjUzjqtJWQN3McVx0GvSPFHF/Q==",
-      "path": "microsoft.extensions.hosting.abstractions/2.2.0",
-      "hashPath": "microsoft.extensions.hosting.abstractions.2.2.0.nupkg.sha512"
+      "sha512": "sha512-qeDWS5ErmkUN96BdQqpmeCmLk5HJWQ/SPw3ux5v5/Qb0hKZS5wojBMulnBC7JUEiBwg7Ir71Yjf1lFiRT5MdtQ==",
+      "path": "microsoft.extensions.hosting.abstractions/3.0.0",
+      "hashPath": "microsoft.extensions.hosting.abstractions.3.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Identity.Core/8.0.10": {
       "type": "package",
@@ -2275,12 +2370,12 @@
       "path": "microsoft.win32.systemevents/6.0.0",
       "hashPath": "microsoft.win32.systemevents.6.0.0.nupkg.sha512"
     },
-    "MimeKit/4.9.0": {
+    "MimeKit/4.11.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-DZXXMZzmAABDxFhOSMb6SE8KKxcRd/sk1E6aJTUE5ys2FWOQhznYV2Gl3klaaSfqKn27hQ32haqquH1J8Z6kJw==",
-      "path": "mimekit/4.9.0",
-      "hashPath": "mimekit.4.9.0.nupkg.sha512"
+      "sha512": "sha512-6p0RC1qwBGBHxf7hvzuR1GngzigF+Q6HQUTbD2RbmDrnS2m1qO2rgqOhYtn8n8JH7WGZ+7RthS8lfMuMzeg8AA==",
+      "path": "mimekit/4.11.0",
+      "hashPath": "mimekit.4.11.0.nupkg.sha512"
     },
     "Newtonsoft.Json/13.0.3": {
       "type": "package",

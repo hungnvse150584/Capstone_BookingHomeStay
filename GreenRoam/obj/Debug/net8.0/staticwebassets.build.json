@@ -1,10 +1,6 @@
 {
   "Version": 1,
-<<<<<<< HEAD
-  "Hash": "PzfC3MjQAURVwiU7ju3BwmOfrrMA50cIv2dc1rmruz4=",
-=======
-  "Hash": "2z0sEPvs8h+FINE2umfJ3zI7ztWgY+J3RqANdhkgUuQ=",
->>>>>>> main
+  "Hash": "oZURr1e1i9+jlLB4vQvyvxWSPJPmdzeEDt7uVHE36IM=",
   "Source": "GreenRoam",
   "BasePath": "_content/GreenRoam",
   "Mode": "Default",
@@ -14,18 +10,13 @@
     {
       "Name": "GreenRoam\\wwwroot",
       "Source": "GreenRoam",
-<<<<<<< HEAD
       "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
-=======
-      "ContentRoot": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\",
->>>>>>> main
       "BasePath": "_content/GreenRoam",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-<<<<<<< HEAD
       "Identity": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\chat.html",
       "SourceId": "GreenRoam",
       "SourceType": "Discovered",
@@ -78,32 +69,16 @@
       "AssetMode": "All",
       "AssetRole": "Primary",
       "AssetMergeBehavior": "",
-=======
-      "Identity": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\index.html",
-      "SourceId": "GreenRoam",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\",
-      "BasePath": "_content/GreenRoam",
-      "RelativePath": "index.html",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
->>>>>>> main
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-<<<<<<< HEAD
       "Fingerprint": "5ijz3bjxqq",
       "Integrity": "fazRUfReDDFaba8tzvveKlxNsYPjxOseD4MgCy1qA38=",
-=======
->>>>>>> main
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
     }
-<<<<<<< HEAD
   ],
   "Endpoints": [
     {
@@ -129,7 +104,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 17:17:18 GMT"
+          "Value": "Wed, 09 Apr 2025 07:43:19 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -166,7 +141,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 17:17:18 GMT"
+          "Value": "Wed, 09 Apr 2025 07:43:19 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -211,7 +186,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 17:11:50 GMT"
+          "Value": "Wed, 09 Apr 2025 07:43:19 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -248,7 +223,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 17:11:50 GMT"
+          "Value": "Wed, 09 Apr 2025 07:43:19 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -293,7 +268,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 15:07:21 GMT"
+          "Value": "Wed, 09 Apr 2025 07:43:16 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -338,7 +313,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 15:07:21 GMT"
+          "Value": "Wed, 09 Apr 2025 07:43:16 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -352,7 +327,5 @@
         }
       ]
     }
-=======
->>>>>>> main
   ]
 }
