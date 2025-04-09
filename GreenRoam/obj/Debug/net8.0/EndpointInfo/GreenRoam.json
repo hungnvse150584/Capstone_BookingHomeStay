@@ -5662,15 +5662,18 @@
         "properties": {
           "homeStayTypeID": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "roomTypeID": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "roomID": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "checkInDate": {
             "type": "string",
@@ -5852,7 +5855,8 @@
           2,
           3,
           4,
-          5
+          5,
+          6
         ],
         "type": "integer",
         "format": "int32"
@@ -9602,7 +9606,9 @@
         "enum": [
           0,
           1,
-          2
+          2,
+          3,
+          4
         ],
         "type": "integer",
         "format": "int32"
@@ -10716,7 +10722,8 @@
           },
           "homeStayTypeID": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "roomTypeID": {
             "type": "integer",
@@ -10725,7 +10732,8 @@
           },
           "roomID": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "checkInDate": {
             "type": "string",
