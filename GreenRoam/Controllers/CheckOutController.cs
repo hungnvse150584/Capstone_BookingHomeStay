@@ -76,6 +76,11 @@ namespace GreenRoam.Controllers
 
             var cancellation = await _cancellationService.GetCancellationPolicyByHomeStay(booking.Data.HomeStayID);
 
+            if(cancellation == null)
+            {
+                return BadRequest("Cannot Find the Cancellation Policy Of the HomeStay");
+            }
+
             var checkInDate = booking.Data.BookingDetails.FirstOrDefault()?.CheckInDate;
 
             double amount = 0;
