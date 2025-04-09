@@ -180,11 +180,9 @@ app.UseCors("AllowAll");
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
-<<<<<<< HEAD
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "GreenRoam");
     options.RoutePrefix = "swagger";
 });
-=======
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
@@ -192,7 +190,6 @@ app.UseSwaggerUI(options =>
         options.RoutePrefix = "swagger";
     });
 }
->>>>>>> f7dcbb389e29101970e2352756604af43305147d
 
 app.UseHttpsRedirection();
 //app.UseHangfireDashboard();
