@@ -1,1 +1,1 @@
-# .NET build artifactsbin/obj/build/publish/# NuGet packages*.nuget.*# Other temporary files*.cache
+# .NET build artifactsbin/obj/build/publish/# NuGet packages*.nuget.*# Other temporary files*.cache# Ignore temporary files*.swp
