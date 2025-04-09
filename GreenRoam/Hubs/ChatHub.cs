@@ -21,16 +21,13 @@ namespace GreenRoam.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            // Lấy userId từ query string
-            var userId = Context.GetHttpContext().Request.Query["userId"].ToString();
+            // Lấy userId từ token hoặc query string
+            var userId = Context.User?.Identity?.Name; // Nếu dùng JWT
+                                                       // Hoặc từ query string: var userId = Context.GetHttpContext().Request.Query["userId"];
+
             if (!string.IsNullOrEmpty(userId))
             {
                 _userConnections[userId] = Context.ConnectionId;
-                Console.WriteLine($"User {userId} connected with ConnectionId {Context.ConnectionId}");
-            }
-            else
-            {
-                Console.WriteLine("User connected without userId");
             }
 
             await base.OnConnectedAsync();
@@ -42,7 +39,6 @@ namespace GreenRoam.Hubs
             if (userId != null)
             {
                 _userConnections.TryRemove(userId, out _);
-                Console.WriteLine($"User {userId} disconnected");
             }
             await base.OnDisconnectedAsync(exception);
         }
@@ -50,47 +46,23 @@ namespace GreenRoam.Hubs
         public async Task RegisterUser(string userId)
         {
             _userConnections[userId] = Context.ConnectionId;
-            Console.WriteLine($"User {userId} registered with ConnectionId {Context.ConnectionId}");
         }
 
         public async Task SendMessage(string senderId, string receiverId, string content, string senderName, int homeStayId, List<IFormFile> images = null)
         {
             var message = await _chatService.SendMessageAsync(senderId, receiverId, content, senderName, homeStayId, images);
 
-            // Gửi tin nhắn cho cả sender và receiver
             if (_userConnections.TryGetValue(receiverId, out var receiverConnectionId))
             {
-                await Clients.Client(receiverConnectionId).SendAsync("ReceiveMessage", senderId, content, message.SentAt, message.MessageID, message.ConversationID, senderName, receiverId);
-                Console.WriteLine($"Sent message to receiver {receiverId}");
-            }
-            if (_userConnections.TryGetValue(senderId, out var senderConnectionId))
-            {
-                await Clients.Client(senderConnectionId).SendAsync("ReceiveMessage", senderId, content, message.SentAt, message.MessageID, message.ConversationID, senderName, receiverId);
-                Console.WriteLine($"Sent message to sender {senderId}");
+                await Clients.Client(receiverConnectionId).SendAsync("ReceiveMessage", senderId, content, message.SentAt, message.MessageID, message.ConversationID);
             }
 
-            var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(homeStayId);
-            if (senderId != ownerId && _userConnections.TryGetValue(ownerId, out var ownerConnectionId))
+            if (_userConnections.TryGetValue(senderId, out var senderConnectionId))
             {
-                var suggestions = await _chatService.GetDetailedSuggestionsAsync(content, homeStayId);
-                await Clients.Client(ownerConnectionId).SendAsync("ReceiveSuggestions", suggestions);
-                Console.WriteLine($"Sent suggestions to owner {ownerId} with ConnectionId {ownerConnectionId}: {string.Join(", ", suggestions)}");
-            }
-            else if (senderId != ownerId)
-            {
-                Console.WriteLine($"Owner {ownerId} not found in connections");
+                await Clients.Client(senderConnectionId).SendAsync("ReceiveMessage", senderId, content, message.SentAt, message.MessageID, message.ConversationID);
             }
         }
-        public async Task GetInitialSuggestions(int homeStayId)
-        {
-            var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(homeStayId);
-            if (_userConnections.TryGetValue(ownerId, out var ownerConnectionId))
-            {
-                var suggestions = await _chatService.GetInitialSuggestionsAsync(homeStayId);
-                await Clients.Client(ownerConnectionId).SendAsync("ReceiveSuggestions", suggestions);
-                Console.WriteLine($"Sent initial suggestions to owner {ownerId}: {string.Join(", ", suggestions)}");
-            }
-        }
+
         public async Task MarkAsRead(int messageId)
         {
             await _chatService.MarkMessageAsReadAsync(messageId);
@@ -118,11 +90,6 @@ namespace GreenRoam.Hubs
                     await Clients.Client(senderConnectionId).SendAsync("MessageRead", message.MessageID);
                 }
             }
-        }
-        public string GetConnectionId(string userId)
-        {
-            _userConnections.TryGetValue(userId, out var connectionId);
-            return connectionId;
         }
     }
 }

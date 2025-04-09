@@ -1108,7 +1108,7 @@
         }
       }
     },
-    "/api/CancellationPolicy/GetById/{homeStayID}": {
+    "/api/CancellationPolicy/GetByHomeStayId/{homeStayID}": {
       "get": {
         "tags": [
           "CancellationPolicy"
@@ -1237,29 +1237,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/api/Chat/initial-suggestions/{homeStayId}": {
-      "get": {
-        "tags": [
-          "Chat"
-        ],
-        "parameters": [
-          {
-            "name": "homeStayId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
           }
         }
       }
@@ -1495,42 +1472,6 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateConversationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/api/Chat/detailed-suggestions": {
-      "post": {
-        "tags": [
-          "Chat"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetDetailedSuggestionsRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetDetailedSuggestionsRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetDetailedSuggestionsRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetDetailedSuggestionsRequest"
               }
             }
           }
@@ -8124,25 +8065,6 @@
         },
         "additionalProperties": false
       },
-      "GetDetailedSuggestionsRequest": {
-        "required": [
-          "customerMessage"
-        ],
-        "type": "object",
-        "properties": {
-          "customerMessage": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "homeStayId": {
-            "maximum": 2147483647,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
       "GetHomeStayRentalDetailResponse": {
         "type": "object",
         "properties": {
@@ -10414,7 +10336,7 @@
             "nullable": true
           },
           "cancelPolicy": {
-            "nullable": true
+            "$ref": "#/components/schemas/GetAllCancellationPolicy"
           },
           "typeOfRental": {
             "type": "integer",
@@ -10438,13 +10360,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GetAllCultureExperiencesResponse"
-            },
-            "nullable": true
-          },
-          "cancellationPolicies": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetAllCancellationPolicy"
             },
             "nullable": true
           },

@@ -1,49 +1,38 @@
-﻿    // Service/ChatService.cs
-    using BusinessObject.Model;
+﻿// Service/ChatService.cs
+using BusinessObject.Model;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using DataAccessObject;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Repository;
-    using Repository.IRepositories;
-    using Service.IService;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
+using Repository.IRepositories;
+using Service.IService;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-    namespace Service
+namespace Service
+{
+    public class ChatService : IChatService
     {
-        public class ChatService : IChatService
-        {
-            private readonly IConversationRepository _conversationRepository;
-            private readonly IMessageRepository _messageRepository;
-            private readonly IHomeStayRepository _homeStayRepository;
-            private readonly IAISuggestionService _aiSuggestionService;
-            private readonly Cloudinary _cloudinary;
+        private readonly IConversationRepository _conversationRepository;
+        private readonly IMessageRepository _messageRepository;
+        private readonly IHomeStayRepository _homeStayRepository;
+        private readonly Cloudinary _cloudinary;
 
         public ChatService(
-         IConversationRepository conversationRepository,
-         IMessageRepository messageRepository,
-         IHomeStayRepository homeStayRepository,
-         IAISuggestionService aiSuggestionService, 
-         Cloudinary cloudinary)
+                IConversationRepository conversationRepository,
+                IMessageRepository messageRepository,
+                IHomeStayRepository homeStayRepository,
+                Cloudinary cloudinary)
         {
             _conversationRepository = conversationRepository;
             _messageRepository = messageRepository;
             _homeStayRepository = homeStayRepository;
-            _aiSuggestionService = aiSuggestionService; 
             _cloudinary = cloudinary;
         }
-        public async Task<List<string>> GetInitialSuggestionsAsync(int homeStayId)
-        {
-            return await _aiSuggestionService.GetInitialSuggestionsAsync(homeStayId);
-        }
 
-        public async Task<List<string>> GetDetailedSuggestionsAsync(string customerMessage, int homeStayId)
-        {
-            return await _aiSuggestionService.GetDetailedSuggestionsAsync(customerMessage, homeStayId);
-        }
         public async Task<Conversation> GetOrCreateConversationAsync(string user1Id, string user2Id, int homeStayId)
         {
             var orderedUserIds = new[] { user1Id, user2Id }.OrderBy(id => id).ToArray();
@@ -65,14 +54,14 @@ using Repository;
             return conversation;
         }
         public async Task<List<Conversation>> GetConversationsByUserAsync(string userId)
-            {
-                return await _conversationRepository.GetConversationsByUserAsync(userId);
-            }
+        {
+            return await _conversationRepository.GetConversationsByUserAsync(userId);
+        }
 
         public async Task<List<Message>> GetMessagesByConversationAsync(int conversationId)
-            {
-                return await _messageRepository.GetMessagesByConversationAsync(conversationId);
-            }
+        {
+            return await _messageRepository.GetMessagesByConversationAsync(conversationId);
+        }
 
         public async Task<Message> SendMessageAsync(string senderId, string receiverId, string content, string senderName, int homeStayId, List<IFormFile> images = null)
         {
@@ -102,49 +91,49 @@ using Repository;
         }
 
         public async Task MarkMessageAsReadAsync(int messageId)
+        {
+            var message = await _messageRepository.GetMessageByIdAsync(messageId);
+            if (message != null)
             {
-                var message = await _messageRepository.GetMessageByIdAsync(messageId);
-                if (message != null)
-                {
-                    message.IsRead = true;
-                    await _messageRepository.UpdateMessageAsync(message);
-                }
+                message.IsRead = true;
+                await _messageRepository.UpdateMessageAsync(message);
             }
+        }
 
         public async Task MarkAllMessagesAsReadAsync(int conversationId, string userId)
-            {
-                var messages = await _messageRepository.GetMessagesByConversationAsync(conversationId);
-                var unreadMessages = messages.Where(m => !m.IsRead).ToList(); 
+        {
+            var messages = await _messageRepository.GetMessagesByConversationAsync(conversationId);
+            var unreadMessages = messages.Where(m => !m.IsRead).ToList();
 
-                foreach (var message in unreadMessages)
-                {
-                    message.IsRead = true;
-                    await _messageRepository.UpdateMessageAsync(message);
-                }
+            foreach (var message in unreadMessages)
+            {
+                message.IsRead = true;
+                await _messageRepository.UpdateMessageAsync(message);
             }
+        }
 
         public async Task<string> GetOwnerIdByHomeStayIdAsync(int homeStayId)
+        {
+            var homeStay = await _homeStayRepository.GetByIdAsync(homeStayId);
+            if (homeStay == null)
             {
-                var homeStay = await _homeStayRepository.GetByIdAsync(homeStayId);
-                if (homeStay == null)
-                {
-                    throw new Exception("HomeStay not found.");
-                }
-
-                return homeStay.AccountID; // Trả về AccountID mà không kiểm tra vai trò OWNER
+                throw new Exception("HomeStay not found.");
             }
+
+            return homeStay.AccountID; // Trả về AccountID mà không kiểm tra vai trò OWNER
+        }
 
         public async Task<List<Conversation>> GetConversationsForOwnerAsync(string ownerId)
-            {
-                var conversations = await _conversationRepository.GetConversationsByUserAsync(ownerId);
-                return conversations;
-            }
+        {
+            var conversations = await _conversationRepository.GetConversationsByUserAsync(ownerId);
+            return conversations;
+        }
 
         public async Task<int> GetUnreadMessageCountAsync(int conversationId, string userId)
-            {
-                var messages = await _messageRepository.GetMessagesByConversationAsync(conversationId);
-                return messages.Count(m => !m.IsRead && m.SenderID != userId);
-            }
+        {
+            var messages = await _messageRepository.GetMessagesByConversationAsync(conversationId);
+            return messages.Count(m => !m.IsRead && m.SenderID != userId);
+        }
 
         public async Task<Conversation> GetOrCreateConversationWithHomeStayOwnerAsync(string customerId, int homeStayId)
         {
@@ -207,7 +196,7 @@ using Repository;
         }
         public async Task<List<Conversation>> GetConversationsByCustomerIdAsync(string customerId)
         {
-           
+
             var conversations = await _conversationRepository.GetConversationsByUserAsync(customerId);
 
             var filteredConversations = conversations

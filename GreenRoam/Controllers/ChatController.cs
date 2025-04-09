@@ -18,20 +18,13 @@ public class ChatController : ControllerBase
     private readonly IMapper _mapper;
     private readonly IHomeStayRepository _homeStayRepository;
     private readonly IAccountRepository _accountRepository;
-    private readonly IHubContext<ChatHub> _chatHubContext; // Thêm IHubContext<ChatHub>
 
-    public ChatController(
-        IChatService chatService,
-        IMapper mapper,
-        IHomeStayRepository homeStayRepository,
-        IAccountRepository accountRepository,
-        IHubContext<ChatHub> chatHubContext) // Thêm tham số
+    public ChatController(IChatService chatService, IMapper mapper, IHomeStayRepository homeStayRepository, IAccountRepository accountRepository)
     {
         _chatService = chatService;
         _mapper = mapper;
         _homeStayRepository = homeStayRepository;
         _accountRepository = accountRepository;
-        _chatHubContext = chatHubContext; // Gán giá trị
     }
 
     //[HttpGet("conversations/{userId}")]
@@ -58,38 +51,6 @@ public class ChatController : ControllerBase
 
     //    return Ok(conversationResponses);
     //}
-    [HttpGet("initial-suggestions/{homeStayId}")]
-    public async Task<IActionResult> GetInitialSuggestions(int homeStayId)
-    {
-        try
-        {
-            // Kiểm tra HomeStayId
-            if (homeStayId <= 0)
-            {
-                return BadRequest(new { message = "HomeStayId must be greater than 0." });
-            }
-
-            // Lấy gợi ý ban đầu từ ChatService
-            var suggestions = await _chatService.GetInitialSuggestionsAsync(homeStayId);
-            if (suggestions == null || !suggestions.Any())
-            {
-                return Ok(new List<string>()); // Trả về danh sách rỗng nếu không có gợi ý
-            }
-
-            // Gửi gợi ý real-time đến chủ homestay qua SignalR
-            var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(homeStayId);
-            if (ownerId != null)
-            {
-                await _chatHubContext.Clients.User(ownerId).SendAsync("ReceiveSuggestions", suggestions);
-            }
-
-            return Ok(suggestions);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-    }
 
     [HttpGet("messages/{conversationId}")]
     public async Task<IActionResult> GetMessages(int conversationId)
@@ -386,100 +347,47 @@ public class ChatController : ControllerBase
     }
 
     // API 4: Gửi tin nhắn
-    //[HttpPost("send-message")]
-    //public async Task<IActionResult> SendMessage([FromForm] SendMessageRequest request)
-    //{
-    //    try
-    //    {
-    //        // Kiểm tra dữ liệu đầu vào
-    //        if (string.IsNullOrEmpty(request.ReceiverID) || string.IsNullOrEmpty(request.SenderName) || request.HomeStayId <= 0)
-    //        {
-    //            return BadRequest(new { message = "ReceiverID, SenderName, and HomeStayId are required." });
-    //        }
-
-    //        // Lấy ownerId từ homeStayId
-    //        var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(request.HomeStayId);
-    //        if (ownerId == null)
-    //        {
-    //            return BadRequest(new { message = "Owner not found for this HomeStay." });
-    //        }
-
-    //        // Gửi tin nhắn với thông tin đầy đủ
-    //        var receiverId = request.ReceiverID ?? ownerId;
-    //        var message = await _chatService.SendMessageAsync(
-    //            request.SenderID,
-    //            receiverId,
-    //            request.Content,
-    //            request.SenderName,
-    //            request.HomeStayId,
-    //            request.Images // Truyền danh sách hình ảnh (có thể null)
-    //        );
-
-    //        // Gọi ChatHub để gửi tin nhắn qua SignalR
-    //        await _chatHubContext.Clients.Client(receiverId).SendAsync(
-    //            "ReceiveMessage",
-    //            request.SenderID,
-    //            message.Content,
-    //            message.SentAt,
-    //            message.MessageID,
-    //            message.ConversationID,
-    //            message.senderName,
-    //            message.receiverID
-    //        );
-    //        await _chatHubContext.Clients.Client(request.SenderID).SendAsync(
-    //            "ReceiveMessage",
-    //            request.SenderID,
-    //            message.Content,
-    //            message.SentAt,
-    //            message.MessageID,
-    //            message.ConversationID,
-    //            message.senderName,
-    //            message.receiverID
-    //        );
-
-    //        return Ok(new { message = "Message sent successfully.", data = _mapper.Map<SimplifiedMessageResponse>(message) });
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        return BadRequest(new { message = ex.Message });
-    //    }
-    //}
     [HttpPost("send-message")]
     public async Task<IActionResult> SendMessage([FromForm] SendMessageRequest request)
     {
         try
         {
+            // Kiểm tra dữ liệu đầu vào
             if (string.IsNullOrEmpty(request.ReceiverID) || string.IsNullOrEmpty(request.SenderName) || request.HomeStayId <= 0)
             {
                 return BadRequest(new { message = "ReceiverID, SenderName, and HomeStayId are required." });
             }
 
+            // Lấy ownerId từ homeStayId
             var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(request.HomeStayId);
             if (ownerId == null)
             {
                 return BadRequest(new { message = "Owner not found for this HomeStay." });
             }
 
+            // Gửi tin nhắn với thông tin đầy đủ
             var receiverId = request.ReceiverID ?? ownerId;
-
-            // Gọi ChatHub để gửi tin nhắn
-            await _chatHubContext.Clients.All.SendAsync(
-                "SendMessage",
-                request.SenderID,
-                receiverId,
-                request.Content,
-                request.SenderName,
-                request.HomeStayId,
-                request.Images
-            );
-
             var message = await _chatService.SendMessageAsync(
                 request.SenderID,
                 receiverId,
                 request.Content,
                 request.SenderName,
                 request.HomeStayId,
-                request.Images
+                //request.ConversationID,
+                request.Images // Truyền danh sách hình ảnh (có thể null)
+            );
+
+            // Thông báo qua SignalR
+            var hubContext = (IHubContext<ChatHub>)HttpContext.RequestServices.GetService(typeof(IHubContext<ChatHub>));
+            await hubContext.Clients.All.SendAsync(
+                "ReceiveMessage",
+                request.SenderID,
+                message.Content, // Sử dụng message.Content để bao gồm cả URL hình ảnh nếu có
+                message.SentAt,
+                message.MessageID,
+                message.ConversationID,
+                message.senderName,
+                message.receiverID
             );
 
             return Ok(new { message = "Message sent successfully.", data = _mapper.Map<SimplifiedMessageResponse>(message) });
@@ -489,6 +397,7 @@ public class ChatController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
+
     [HttpPost("create-conversation")]
     public async Task<IActionResult> CreateConversation([FromBody] CreateConversationRequest request)
     {
@@ -524,38 +433,6 @@ public class ChatController : ControllerBase
             var response = _mapper.Map<ConversationResponse>(conversation);
 
             return Ok(new { message = "Conversation created successfully.", data = response });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-    }
-    [HttpPost("detailed-suggestions")]
-    public async Task<IActionResult> GetDetailedSuggestions([FromBody] GetDetailedSuggestionsRequest request)
-    {
-        try
-        {
-            // Kiểm tra dữ liệu đầu vào
-            if (string.IsNullOrEmpty(request.CustomerMessage) || request.HomeStayId <= 0)
-            {
-                return BadRequest(new { message = "CustomerMessage and HomeStayId are required." });
-            }
-
-            // Lấy gợi ý chi tiết từ ChatService
-            var suggestions = await _chatService.GetDetailedSuggestionsAsync(request.CustomerMessage, request.HomeStayId);
-            if (suggestions == null || !suggestions.Any())
-            {
-                return Ok(new List<string>()); // Trả về danh sách rỗng nếu không có gợi ý
-            }
-
-            // Gửi gợi ý real-time đến chủ homestay qua SignalR
-            var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(request.HomeStayId);
-            if (ownerId != null)
-            {
-                await _chatHubContext.Clients.User(ownerId).SendAsync("ReceiveSuggestions", suggestions);
-            }
-
-            return Ok(suggestions);
         }
         catch (Exception ex)
         {
@@ -602,14 +479,6 @@ public class ChatController : ControllerBase
 //        return ValidationResult.Success;
 //    }
 //}
-public class GetDetailedSuggestionsRequest
-{
-    [Required(ErrorMessage = "CustomerMessage is required.")]
-    public string CustomerMessage { get; set; }
-
-    [Range(1, int.MaxValue, ErrorMessage = "HomeStayId must be greater than 0.")]
-    public int HomeStayId { get; set; }
-}
 
 public class ConversationWithMessagesResponse
 {
@@ -629,7 +498,7 @@ public class SendMessageRequest
 {
     [Required(ErrorMessage = "ReceiverID is required.")]
     public string ReceiverID { get; set; }
-   
+
     public string SenderName { get; set; }
     [Required(ErrorMessage = "SenderID is required.")]
     public string SenderID { get; set; }

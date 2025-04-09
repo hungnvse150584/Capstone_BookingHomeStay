@@ -61,7 +61,6 @@
                             .Include(h => h.Reports)
                              .Include(h => h.ImageHomeStays)
                               .Include(h => h.CultureExperiences)
-                              .Include(h => h.CancelPolicy)
                               .Include(h => h.Services)
                               
                    .Include(h => h.Ratings)
@@ -70,10 +69,18 @@
                 {
                     throw new ArgumentNullException($"Entity with id {id} not found");
                 }
-                return entity;
+            entity.CancelPolicy = await GetCancellationPolicyByHomeStayIdAsync(id);
+            return entity;
             }
-
-            public async Task<IEnumerable<HomeStay>> GetAllHomeStayAsync()
+        private async Task<CancellationPolicy> GetCancellationPolicyByHomeStayIdAsync(int homeStayId)
+        {
+            // Lấy CancellationPolicy mới nhất dựa trên CreateAt hoặc UpdateAt
+            return await _context.CancelPolicy
+                .Where(cp => cp.HomeStayID == homeStayId)
+                .OrderByDescending(cp => cp.UpdateAt) // Sắp xếp theo UpdateAt giảm dần
+                .FirstOrDefaultAsync(); // Lấy cái đầu tiên (mới nhất)
+        }
+        public async Task<IEnumerable<HomeStay>> GetAllHomeStayAsync()
             {
                 return await _context.HomeStays
                             .Include(h => h.Account)

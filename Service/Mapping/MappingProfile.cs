@@ -292,7 +292,15 @@ namespace Service.Mapping
             CreateMap<Account, SimplifiedAccountResponse>()
                 .ForMember(dest => dest.AccountID, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
-
+            CreateMap<CancellationPolicy, GetAllCancellationPolicy>()
+                .ForMember(dest => dest.CancellationID, opt => opt.MapFrom(src => src.CancellationID))
+                .ForMember(dest => dest.DayBeforeCancel, opt => opt.MapFrom(src => src.DayBeforeCancel))
+                .ForMember(dest => dest.RefundPercentage, opt => opt.MapFrom(src => src.RefundPercentage))
+                .ForMember(dest => dest.CreateAt, opt => opt.MapFrom(src => src.CreateAt))
+                .ForMember(dest => dest.UpdateAt, opt => opt.MapFrom(src => src.UpdateAt))
+                .ForMember(dest => dest.HomeStayID, opt => opt.MapFrom(src => src.HomeStayID));
+            CreateMap<HomeStay, SimpleHomeStayResponse>()
+                .ForMember(dest => dest.CancelPolicy, opt => opt.MapFrom(src => src.CancelPolicy));
             // Ánh xạ từ Message sang SimplifiedMessageResponse
             CreateMap<Message, SimplifiedMessageResponse>()
                 .ForMember(dest => dest.MessageID, opt => opt.MapFrom(src => src.MessageID))
