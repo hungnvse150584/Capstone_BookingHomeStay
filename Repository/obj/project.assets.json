@@ -3797,26 +3797,12 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
-    "/home/hungnv/.nuget/packages/": {}
-=======
     "C:\\Users\\Admin\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
->>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "/home/hungnv/Capstone_BookingHomeStay/Repository/Repository.csproj",
-      "projectName": "Repository",
-      "projectPath": "/home/hungnv/Capstone_BookingHomeStay/Repository/Repository.csproj",
-      "packagesPath": "/home/hungnv/.nuget/packages/",
-      "outputPath": "/home/hungnv/Capstone_BookingHomeStay/Repository/obj/",
-      "projectStyle": "PackageReference",
-      "configFilePaths": [
-        "/home/hungnv/.nuget/NuGet/NuGet.Config"
-=======
       "projectUniqueName": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Repository\\Repository.csproj",
       "projectName": "Repository",
       "projectPath": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\Repository\\Repository.csproj",
@@ -3830,37 +3816,25 @@
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
->>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-<<<<<<< HEAD
-=======
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
         "C:\\Users\\Admin\\.nuget\\packages": {},
->>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-<<<<<<< HEAD
-            "/home/hungnv/Capstone_BookingHomeStay/BusinessObject/BusinessObject.csproj": {
-              "projectPath": "/home/hungnv/Capstone_BookingHomeStay/BusinessObject/BusinessObject.csproj"
-            },
-            "/home/hungnv/Capstone_BookingHomeStay/DataAccessObject/DataAccessObject.csproj": {
-              "projectPath": "/home/hungnv/Capstone_BookingHomeStay/DataAccessObject/DataAccessObject.csproj"
-=======
             "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\BusinessObject\\BusinessObject.csproj": {
               "projectPath": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\BusinessObject\\BusinessObject.csproj"
             },
             "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\DataAccessObject\\DataAccessObject.csproj": {
               "projectPath": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\DataAccessObject\\DataAccessObject.csproj"
->>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
             }
           }
         }
@@ -3901,11 +3875,7 @@
             "privateAssets": "all"
           }
         },
-<<<<<<< HEAD
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
-=======
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
->>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa
       }
     }
   }

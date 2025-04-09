@@ -16,24 +16,3 @@ C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\DataAccessObje
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\DataAccessObject\obj\Debug\net8.0\DataAccessObject.pdb
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\DataAccessObject\obj\Debug\net8.0\DataAccessObject.genruntimeconfig.cache
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\DataAccessObject\obj\Debug\net8.0\ref\DataAccessObject.dll
-<<<<<<< HEAD
-D:\FPT\SEP490_Capstone\DataAccessObject\bin\Debug\net8.0\DataAccessObject.deps.json
-D:\FPT\SEP490_Capstone\DataAccessObject\bin\Debug\net8.0\DataAccessObject.runtimeconfig.json
-D:\FPT\SEP490_Capstone\DataAccessObject\bin\Debug\net8.0\DataAccessObject.dll
-D:\FPT\SEP490_Capstone\DataAccessObject\bin\Debug\net8.0\DataAccessObject.pdb
-D:\FPT\SEP490_Capstone\DataAccessObject\bin\Debug\net8.0\BusinessObject.dll
-D:\FPT\SEP490_Capstone\DataAccessObject\bin\Debug\net8.0\BusinessObject.pdb
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\DataAccessObject.csproj.AssemblyReference.cache
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\DataAccessObject.GeneratedMSBuildEditorConfig.editorconfig
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\DataAccessObject.AssemblyInfoInputs.cache
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\DataAccessObject.AssemblyInfo.cs
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\DataAccessObject.csproj.CoreCompileInputs.cache
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\DataAccessObject.sourcelink.json
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\DataAcce.FCD2CC32.Up2Date
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\DataAccessObject.dll
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\refint\DataAccessObject.dll
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\DataAccessObject.pdb
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\DataAccessObject.genruntimeconfig.cache
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\ref\DataAccessObject.dll
-=======
->>>>>>> 07774785a27f469182eef0f4f7273b989f77eaaa

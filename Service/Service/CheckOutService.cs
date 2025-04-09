@@ -412,7 +412,7 @@ namespace Service.Service
             booking.Transactions.Add(transaction);
 
             double totalAmount = booking.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
-            double amountPaid = booking.Transactions.Sum(t => t.Amount); // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
+            double amountPaid = booking.Transactions.Sum(t => t.Amount)/100; // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
 
             // Kiểm tra trạng thái thanh toán
             if (amountPaid >= totalAmount)
