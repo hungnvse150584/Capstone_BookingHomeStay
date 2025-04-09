@@ -116,7 +116,7 @@ namespace GreenRoam.Controllers
                 Description = $"{booking.Data.Account.Name} {booking.Data.Account.Phone}",
                 CreatedDate = DateTime.UtcNow,
             };
-            return _vpnPayService.CreatePaymentUrl(HttpContext, vnPayModel);
+            return _vpnPayService.CreatePaymentUrlWeb(HttpContext, vnPayModel);
         }
 
         [HttpGet("vnpay-return")]
@@ -202,7 +202,7 @@ namespace GreenRoam.Controllers
             };
 
             await _checkoutService.CreateBookingRefundPayment(bookingId, bookingserviceId, transaction);
-            return Redirect($"{_configuration["VnPay:UrlReturnPayment"]}/{bookingId}");
+            return Redirect($"{_configuration["VnPay:UrlReturnPayment2"]}/{bookingId}");
         }
 
         [HttpPut]

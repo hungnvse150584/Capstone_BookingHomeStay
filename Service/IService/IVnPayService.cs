@@ -12,6 +12,7 @@ namespace Service.IService
     public interface IVnPayService
     {
         public string CreatePaymentUrl(HttpContext context, VnPayRequestModel requestModel);
+        public string CreatePaymentUrlWeb(HttpContext context, VnPayRequestModel requestModel);
         public VnPaymentResponseModel PaymentExecute(IQueryCollection collection);
     }
 }
