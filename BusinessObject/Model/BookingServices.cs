@@ -29,6 +29,10 @@
             public string AccountID { get; set; }
             public Account Account { get; set; }
 
+            public int? HomeStayID { get; set; }
+            [ForeignKey("HomeStayID")]
+            public HomeStay? HomeStay { get; set; }
+
 
             [EnumDataType(typeof(BookingServicesStatus))]
             public BookingServicesStatus Status { get; set; }

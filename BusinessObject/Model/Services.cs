@@ -40,3 +40,4 @@ namespace BusinessObject.Model;
         public ICollection<BookingServicesDetail> BookingServicesDetails { get; set; }
     }
 
+

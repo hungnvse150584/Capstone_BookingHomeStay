@@ -18,6 +18,10 @@ namespace BusinessObject.Model
 
         public BookingServices? BookingService { get; set; } = null!;
 
+        public HomeStay? HomeStay { get; set; } = null!;
+
+        public Account? Account { get; set; } = null!;
+
         public string TmnCode { get; set; }
 
         public string TxnRef { get; set; }

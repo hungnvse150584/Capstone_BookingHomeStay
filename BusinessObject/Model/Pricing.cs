@@ -22,6 +22,8 @@ namespace BusinessObject.Model
         [Required]
         public double RentPrice { get; set; }
 
+        public double Percentage { get; set; }
+
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }

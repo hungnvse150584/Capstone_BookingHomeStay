@@ -72,10 +72,10 @@ builder.Services.AddSwaggerGen(option =>
     //    Type = "string",
     //    Format = "binary"
     //});
-    option.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
-    {
-        Url = "https://hungnv.iselab.cloud:7221"
-    });
+    //option.AddServer(new Microsoft.OpenApi.Models.OpenApiServer
+    //{
+    //    Url = "https://hungnv.iselab.cloud:7221"
+    //});
 });
 
 // SetUp Specification for password
