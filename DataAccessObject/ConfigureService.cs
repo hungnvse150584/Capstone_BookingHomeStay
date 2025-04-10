@@ -32,6 +32,7 @@ namespace DataAccessObject
             services.AddScoped<Review>();
             services.AddScoped<RefreshToken>();
             services.AddScoped<Message>();
+            services.AddScoped<Transaction>();
             services.AddScoped<Conversation>();
             services.AddScoped(typeof(IBaseDAO<>), typeof(BaseDAO<>));
             return services;

@@ -52,8 +52,10 @@ namespace Repository
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IConversationRepository, ConversationRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             services.AddScoped<MessageDAO>();
+            services.AddScoped<TransactionDAO>();
             services.AddScoped<ConversationDAO>();
             services.AddScoped<AccountDAO>();
             services.AddScoped<ImageRoomTypeDAO>();

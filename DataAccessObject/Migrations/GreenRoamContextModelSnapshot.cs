@@ -1188,25 +1188,25 @@ namespace DataAccessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a7d27115-e9a8-4136-b28f-5a1dcc35220a",
+                            Id = "9210b164-db13-4d65-980c-c8f9e981c87c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ba66768a-3a13-43d1-956b-a55b4aa36fc8",
+                            Id = "64c6a59d-b417-44d2-9c16-c9f5d13221dc",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "354615ec-da93-4217-9147-be8ca6b5d766",
+                            Id = "abf37e81-7e3f-4b1c-aa57-b0264662fa63",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "ce80d188-0f20-4be6-8828-8353a7c815a3",
+                            Id = "2a38c557-7105-4fcf-94be-af84039161bc",
                             Name = "Staff",
                             NormalizedName = "STAFF"
                         });

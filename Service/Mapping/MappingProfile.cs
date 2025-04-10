@@ -34,6 +34,7 @@ using Service.RequestAndResponse.Response.Reports;
 using Service.RequestAndResponse.Response.Room;
 using Service.RequestAndResponse.Response.RoomType;
 using Service.RequestAndResponse.Response.Services;
+using Service.RequestAndResponse.Response.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -326,6 +327,23 @@ namespace Service.Mapping
                 .ForMember(dest => dest.BookingID, opt => opt.MapFrom(src => src.BookingID))
                 .ForMember(dest => dest.BookingServicesID, opt => opt.MapFrom(src => src.BookingServicesID))
                 .ForMember(dest => dest.TypeNotify, opt => opt.MapFrom(src => src.TypeNotify));
+
+            CreateMap<Transaction, TransactionResponse>()
+                .ForMember(dest => dest.TmnCode, opt => opt.MapFrom(src => src.TmnCode))
+                .ForMember(dest => dest.TxnRef, opt => opt.MapFrom(src => src.TxnRef))
+                .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Amount))
+                .ForMember(dest => dest.OrderInfo, opt => opt.MapFrom(src => src.OrderInfo))
+                .ForMember(dest => dest.Message, opt => opt.MapFrom(src => src.Message))
+                .ForMember(dest => dest.BankTranNo, opt => opt.MapFrom(src => src.BankTranNo))
+                .ForMember(dest => dest.PayDate, opt => opt.MapFrom(src => src.PayDate))
+                .ForMember(dest => dest.BankCode, opt => opt.MapFrom(src => src.BankCode))
+                .ForMember(dest => dest.TransactionNo, opt => opt.MapFrom(src => src.TransactionNo))
+                .ForMember(dest => dest.TransactionType, opt => opt.MapFrom(src => src.TransactionType))
+                .ForMember(dest => dest.TransactionStatus, opt => opt.MapFrom(src => src.TransactionStatus))
+                .ForMember(dest => dest.Account, opt => opt.MapFrom(src => src.Account)) // assuming you have CreateMap<Account, GetAccountUser>()
+                .ForMember(dest => dest.HomeStay, opt => opt.MapFrom(src => src.HomeStay)) // assuming you have CreateMap<HomeStay, HomeStayResponse>()
+                .ForMember(dest => dest.BookingID, opt => opt.MapFrom(src => src.Booking != null ? src.Booking.BookingID : 0))
+                .ForMember(dest => dest.BookingServicesID, opt => opt.MapFrom(src => src.BookingService != null ? src.BookingService.BookingServicesID : 0));
         }
     }
 }
