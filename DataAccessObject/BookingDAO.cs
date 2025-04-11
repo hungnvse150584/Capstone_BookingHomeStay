@@ -131,6 +131,7 @@ namespace DataAccessObject
                 .ThenInclude(bd => bd.Rooms)
                 .Include(o => o.BookingServices)
                 .ThenInclude( o => o.BookingServicesDetails)
+                .Include(o => o.HomeStay)
                 .FirstOrDefaultAsync(o => o.BookingID == bookingId);
         }
 
@@ -138,6 +139,7 @@ namespace DataAccessObject
         {
             return await _context.Bookings
                 .Include(o => o.Account)
+                .Include(o => o.HomeStay)
                 .Include(o => o.BookingDetails)
                 .Include(o => o.BookingServices)
                 .FirstOrDefaultAsync(o => o.BookingID == bookingId);

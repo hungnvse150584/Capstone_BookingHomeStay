@@ -102,6 +102,7 @@ namespace Service.Service
                 AccountID = bookingServiceRequest.AccountID,
                 BookingID = bookingServiceRequest.BookingID,
                 Status = BookingServicesStatus.Pending,
+                HomeStayID = bookingServiceRequest.HomeStayID,
                 PaymentServiceStatus = PaymentServicesStatus.Pending,
                 PaymentServicesMethod = paymentServicesMethod == PaymentServicesMethod.Cod ? PaymentServicesMethod.Cod : PaymentServicesMethod.VnPay,
                 BookingServicesDetails = new List<BookingServicesDetail>()

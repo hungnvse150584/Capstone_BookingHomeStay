@@ -58,6 +58,8 @@ namespace GreenRoam.Controllers
             {
                 BookingID = booking.Data.BookingID,
                 BookingServiceID = bookingServiceID.HasValue ? bookingServiceID : null,
+                HomeStayID = booking.Data.HomeStayID,
+                AccountID = booking.Data.AccountID,
                 Amount = amount,
                 FullName = booking.Data.Account.Name,
                 Description = $"{booking.Data.Account.Name} {booking.Data.Account.Phone}",
@@ -111,6 +113,8 @@ namespace GreenRoam.Controllers
             {
                 BookingID = booking.Data.BookingID,
                 BookingServiceID = bookingServiceID.HasValue ? bookingServiceID : null,
+                HomeStayID = booking.Data.HomeStayID,
+                AccountID = booking.Data.AccountID,
                 Amount = amount,
                 FullName = booking.Data.Account.Name,
                 Description = $"{booking.Data.Account.Name} {booking.Data.Account.Phone}",
