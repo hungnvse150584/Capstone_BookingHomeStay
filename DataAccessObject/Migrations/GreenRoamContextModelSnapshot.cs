@@ -483,6 +483,9 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("StaffID")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -495,6 +498,10 @@ namespace DataAccessObject.Migrations
                     b.HasKey("HomeStayID");
 
                     b.HasIndex("AccountID");
+
+                    b.HasIndex("StaffID")
+                        .IsUnique()
+                        .HasFilter("[StaffID] IS NOT NULL");
 
                     b.ToTable("HomeStays");
                 });
@@ -1084,6 +1091,36 @@ namespace DataAccessObject.Migrations
                     b.ToTable("Services");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.Staff", b =>
+                {
+                    b.Property<int>("StaffID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StaffID"));
+
+                    b.Property<string>("AccountID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("HomeStayID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StaffIdAccount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StaffName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StaffID");
+
+                    b.HasIndex("AccountID");
+
+                    b.ToTable("Staffs");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.Transaction", b =>
                 {
                     b.Property<string>("ResponseId")
@@ -1193,25 +1230,25 @@ namespace DataAccessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bbc55c7b-8b4e-44b2-9747-8c8e7b2e855f",
+                            Id = "eeda5de7-eb57-432b-a2d8-c05dcb8ac48d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "42444d5d-5dfc-405d-871e-843a4ff53638",
+                            Id = "e0409c6d-bf66-4cee-9918-af735527a43d",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "e68fb067-6983-44dc-8263-11f7fdbe4d42",
+                            Id = "81f07517-365d-45c6-83d5-728249a1c537",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "d119f0be-d9ab-46ff-888e-6020223539e5",
+                            Id = "7c601211-9e4c-4a83-8b11-f9deb2570b34",
                             Name = "Staff",
                             NormalizedName = "STAFF"
                         });
@@ -1475,7 +1512,13 @@ namespace DataAccessObject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BusinessObject.Model.Staff", "Staff")
+                        .WithOne("HomeStay")
+                        .HasForeignKey("BusinessObject.Model.HomeStay", "StaffID");
+
                     b.Navigation("Account");
+
+                    b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.HomeStayRentals", b =>
@@ -1682,6 +1725,17 @@ namespace DataAccessObject.Migrations
                     b.Navigation("HomeStay");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.Staff", b =>
+                {
+                    b.HasOne("BusinessObject.Model.Account", "Owner")
+                        .WithMany("Staffs")
+                        .HasForeignKey("AccountID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.Transaction", b =>
                 {
                     b.HasOne("BusinessObject.Model.Account", "Account")
@@ -1782,6 +1836,8 @@ namespace DataAccessObject.Migrations
 
                     b.Navigation("Reviews");
 
+                    b.Navigation("Staffs");
+
                     b.Navigation("Transactions");
                 });
 
@@ -1877,6 +1933,11 @@ namespace DataAccessObject.Migrations
                     b.Navigation("BookingServicesDetails");
 
                     b.Navigation("ImageServices");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.Staff", b =>
+                {
+                    b.Navigation("HomeStay");
                 });
 #pragma warning restore 612, 618
         }

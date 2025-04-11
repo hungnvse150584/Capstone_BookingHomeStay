@@ -38,6 +38,11 @@ namespace DataAccessObject
                 .WithOne(e => e.Report)
                 .HasForeignKey<Booking>(e => e.ReportID);
 
+            modelBuilder.Entity<Staff>()
+                .HasOne(e => e.HomeStay)
+                .WithOne(e => e.Staff)
+                .HasForeignKey<HomeStay>(e => e.StaffID);
+
             modelBuilder.Entity<CommissionRate>()
                 .HasOne(cr => cr.HomeStay)
                 .WithOne(hs => hs.CommissionRate)
@@ -126,6 +131,7 @@ namespace DataAccessObject
             modelBuilder.Entity<IdentityRole>().HasData(roles);
         }
         public DbSet<HomeStay> HomeStays { get; set; }
+        public DbSet<Staff> Staffs { get; set; }
         public DbSet<Pricing> Prices { get; set; }
         public DbSet<CancellationPolicy> CancelPolicy { get; set; }
         public DbSet<CommissionRate> CommissionRates { get; set; }

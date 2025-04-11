@@ -31,6 +31,8 @@ namespace BusinessObject.Model;
 
         public ICollection<Booking> Bookings { get; set; }
 
+        public ICollection<Staff> Staffs { get; set; }
+
         public ICollection<BookingServices> BookingServices { get; set; }
 
         public ICollection<Transaction> Transactions { get; set; }
