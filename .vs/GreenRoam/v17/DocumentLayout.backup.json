@@ -3,28 +3,84 @@
   "WorkspaceRootPath": "D:\\FPT\\SEP490_Capstone\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\pricing\\pricingresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\pricing\\pricingresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\pricing\\getallpricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\pricing\\getallpricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\pricingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\pricingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\iservice\\ipricingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\ipricingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\iservice\\ivnpayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\ivnpayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\controllers\\pricingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\pricingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\vnpayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\vnpayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\pricing\\getpricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\pricing\\getpricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\pricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\pricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\pricing\\createpricingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\pricing\\createpricingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\pricing\\pricingforhomestayrental.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\pricing\\pricingforhomestayrental.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\roomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\roomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\pricing\\updatepricingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\pricing\\updatepricingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\pricing\\gettotalprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\pricing\\gettotalprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\pricing\\getallupdatepricicing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\pricing\\getallupdatepricicing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\repositories\\pricingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\pricingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490_capstone\\dataaccessobject\\pricingdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\pricingdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\controllers\\transactioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\transactioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\transactionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\transactionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +90,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,76 +114,261 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Program.cs",
-              "RelativeDocumentMoniker": "GreenRoam\\Program.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Program.cs",
-              "RelativeToolTip": "GreenRoam\\Program.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAAAEwAAAAwAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "IPricingService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IPricingService.cs",
+              "RelativeDocumentMoniker": "Service\\IService\\IPricingService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IPricingService.cs",
+              "RelativeToolTip": "Service\\IService\\IPricingService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T14:12:19.39Z",
+              "WhenOpened": "2025-04-11T07:22:30.161Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Mapping\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "Service\\Mapping\\MappingProfile.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Mapping\\MappingProfile.cs",
+              "RelativeToolTip": "Service\\Mapping\\MappingProfile.cs",
+              "ViewState": "AgIAAIgAAAAAAAAAAAAQwLIAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:46:23.474Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Pricing.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Pricing.cs",
+              "RelativeDocumentMoniker": "BusinessObject\\Model\\Pricing.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Pricing.cs",
+              "RelativeToolTip": "BusinessObject\\Model\\Pricing.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAoAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:36:02.215Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PricingService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\PricingService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\PricingService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\PricingService.cs",
+              "RelativeToolTip": "Service\\Service\\PricingService.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAgwE0AAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:35:40.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PricingController.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\PricingController.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\PricingController.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\PricingController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\PricingController.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAYwEYAAABhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:35:50.094Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "GreenRoam\\Properties\\launchSettings.json",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Properties\\launchSettings.json",
-              "RelativeToolTip": "GreenRoam\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABoAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-09T11:54:32.14Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CheckOutController.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\CheckOutController.cs",
-              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\CheckOutController.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\CheckOutController.cs",
-              "RelativeToolTip": "GreenRoam\\Controllers\\CheckOutController.cs",
-              "ViewState": "AQIAAJkAAAAAAAAAAAAowMwAAABGAAAA",
+              "Title": "GetAllPricing.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\GetAllPricing.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Pricing\\GetAllPricing.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\GetAllPricing.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Pricing\\GetAllPricing.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwCEAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T11:53:43.971Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IVnPayService.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IVnPayService.cs",
-              "RelativeDocumentMoniker": "Service\\IService\\IVnPayService.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IVnPayService.cs",
-              "RelativeToolTip": "Service\\IService\\IVnPayService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAABfAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T11:53:26.963Z"
+              "WhenOpened": "2025-04-11T06:36:59.124Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "VnPayService.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\VnPayService.cs",
-              "RelativeDocumentMoniker": "Service\\Service\\VnPayService.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\VnPayService.cs",
-              "RelativeToolTip": "Service\\Service\\VnPayService.cs",
-              "ViewState": "AQIAADgAAAAAAAAAAAAkwEgAAABeAAAA",
+              "Title": "GetPricing.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\GetPricing.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Pricing\\GetPricing.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\GetPricing.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Pricing\\GetPricing.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T11:52:48.211Z"
+              "WhenOpened": "2025-04-11T06:37:04.294Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\appsettings.json",
-              "RelativeDocumentMoniker": "GreenRoam\\appsettings.json",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\appsettings.json",
-              "RelativeToolTip": "GreenRoam\\appsettings.json",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAAAC4AAAA/AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-09T11:52:00.767Z"
+              "DocumentIndex": 0,
+              "Title": "PricingResponse.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\PricingResponse.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Pricing\\PricingResponse.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\PricingResponse.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Pricing\\PricingResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:37:12.881Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CreatePricingRequest.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\CreatePricingRequest.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Pricing\\CreatePricingRequest.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\CreatePricingRequest.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Pricing\\CreatePricingRequest.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwAoAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:36:23.592Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PricingForHomeStayRental.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\PricingForHomeStayRental.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Pricing\\PricingForHomeStayRental.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\PricingForHomeStayRental.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Pricing\\PricingForHomeStayRental.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:36:38.11Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RoomService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RoomService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\RoomService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RoomService.cs",
+              "RelativeToolTip": "Service\\Service\\RoomService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:40:40.567Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "UpdatePricingRequest.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\UpdatePricingRequest.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Pricing\\UpdatePricingRequest.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\UpdatePricingRequest.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Pricing\\UpdatePricingRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:36:44.765Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "GetTotalPrice.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\GetTotalPrice.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Pricing\\GetTotalPrice.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Pricing\\GetTotalPrice.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Pricing\\GetTotalPrice.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:37:07.929Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Notification.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Notification.cs",
+              "RelativeDocumentMoniker": "BusinessObject\\Model\\Notification.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Notification.cs",
+              "RelativeToolTip": "BusinessObject\\Model\\Notification.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:37:39.946Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "GetAllUpdatePricicing.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\GetAllUpdatePricicing.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Pricing\\GetAllUpdatePricicing.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Pricing\\GetAllUpdatePricicing.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Pricing\\GetAllUpdatePricicing.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:36:33.751Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "PricingRepository.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\PricingRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Repositories\\PricingRepository.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\PricingRepository.cs",
+              "RelativeToolTip": "Repository\\Repositories\\PricingRepository.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAqwE0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:35:30.936Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "PricingDAO.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\PricingDAO.cs",
+              "RelativeDocumentMoniker": "DataAccessObject\\PricingDAO.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\PricingDAO.cs",
+              "RelativeToolTip": "DataAccessObject\\PricingDAO.cs",
+              "ViewState": "AgIAAIIAAAAAAAAAAAAswLkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T06:34:40.972Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "BookingController.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\BookingController.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\BookingController.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\BookingController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\BookingController.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAAAgwDAAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T18:33:55.699Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "TransactionController.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\TransactionController.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\TransactionController.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\TransactionController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\TransactionController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAABeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T18:32:17.693Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "TransactionService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\TransactionService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\TransactionService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\TransactionService.cs",
+              "RelativeToolTip": "Service\\Service\\TransactionService.cs",
+              "ViewState": "AQIAACcAAAAAAAAAAAAYwCoAAAB2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T18:30:00.46Z"
             }
           ]
         },

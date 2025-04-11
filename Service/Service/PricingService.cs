@@ -93,37 +93,61 @@ namespace Service.Service
                 StatusCodeEnum.OK_200, prices);
         }
 
-        public async Task<BaseResponse<Pricing>> CreatePricing(CreatePricingRequest typeRequest)
+        public async Task<BaseResponse<PricingResponse>> CreatePricing(CreatePricingRequest typeRequest)
         {
             var homeStayRental = await _homeStayRentalRepository.GetHomeStayTypesByIdAsync(typeRequest.HomeStayRentalID);
             if (homeStayRental == null)
             {
-                return new BaseResponse<Pricing>("Cannot Find HomeStayRental!",
+                return new BaseResponse<PricingResponse>("Cannot Find HomeStayRental!",
                 StatusCodeEnum.BadGateway_502, null);
             }
 
             if (homeStayRental.RentWhole == true && typeRequest.RoomTypesID.HasValue)
             {
-                return new BaseResponse<Pricing>("Cannot add RoomTypeID because HomeStayRental is RentWhole!", StatusCodeEnum.BadGateway_502, null);
+                return new BaseResponse<PricingResponse>("Cannot add RoomTypeID because HomeStayRental is RentWhole!", StatusCodeEnum.BadGateway_502, null);
             }
 
             if (homeStayRental.RentWhole == false)
             {
                 if (!typeRequest.RoomTypesID.HasValue)
                 {
-                    return new BaseResponse<Pricing>("RoomTypesID is required when RentWhole is false!", StatusCodeEnum.BadGateway_502, null);
+                    return new BaseResponse<PricingResponse>("RoomTypesID is required when RentWhole is false!", StatusCodeEnum.BadGateway_502, null);
                 }
 
                 var roomType = await _roomTypeRepository.GetRoomTypesByIdAsync(typeRequest.RoomTypesID);
                 if (roomType == null || roomType.HomeStayRentalID != typeRequest.HomeStayRentalID)
                 {
-                    return new BaseResponse<Pricing>("Invalid RoomTypeID for this HomeStayRental!", StatusCodeEnum.BadGateway_502, null);
+                    return new BaseResponse<PricingResponse>("Invalid RoomTypeID for this HomeStayRental!", StatusCodeEnum.BadGateway_502, null);
                 }
             }
 
             if (typeRequest.IsDefault && (typeRequest.StartDate.HasValue || typeRequest.EndDate.HasValue))
             {
-                return new BaseResponse<Pricing>("StartDate and EndDate should not be provided when IsDefault is true!", StatusCodeEnum.BadGateway_502, null);
+                return new BaseResponse<PricingResponse>("StartDate and EndDate should not be provided when IsDefault is true!", StatusCodeEnum.BadGateway_502, null);
+            }
+
+            // Kiểm tra nếu DayType là Weekend hoặc Holiday, phải có Pricing của Weekday trước
+            if (typeRequest.DayType == DayType.Weekend || typeRequest.DayType == DayType.Holiday)
+            {
+                var existingWeekdayPricing = homeStayRental.RentWhole
+                    ? await _priceRepository.GetPricingByHomeStayRentalAsync(typeRequest.HomeStayRentalID.Value)
+                    : await _priceRepository.GetPricingByRoomTypeAsync(typeRequest.RoomTypesID.Value);
+
+                var weekdayPricing = existingWeekdayPricing.FirstOrDefault(p => p.DayType == DayType.Weekday);
+                if (weekdayPricing == null)
+                {
+                    return new BaseResponse<PricingResponse>("Cannot create Pricing for Weekend or Holiday because no Weekday Pricing exists!", StatusCodeEnum.BadGateway_502, null);
+                }
+
+                // Kiểm tra Percentage
+                if (typeRequest.Percentage <= 0)
+                {
+                    return new BaseResponse<PricingResponse>("Percentage must be greater than 0 for Weekend or Holiday pricing!", StatusCodeEnum.BadGateway_502, null);
+                }
+
+                // Tính giá dựa trên phần trăm tăng so với giá của Weekday
+                typeRequest.UnitPrice = weekdayPricing.UnitPrice * (1 + typeRequest.Percentage / 100);
+                typeRequest.RentPrice = weekdayPricing.RentPrice * (1 + typeRequest.Percentage / 100);
             }
 
             var pricing = new Pricing
@@ -131,6 +155,7 @@ namespace Service.Service
                 Description = typeRequest.Description,
                 UnitPrice = typeRequest.UnitPrice,
                 RentPrice = typeRequest.RentPrice,
+                Percentage = typeRequest.Percentage,
                 IsDefault = typeRequest.IsDefault,
                 IsActive = typeRequest.IsActive,
                 DayType = typeRequest.DayType,
@@ -141,7 +166,11 @@ namespace Service.Service
             };
 
             await _priceRepository.AddAsync(pricing);
-            return new BaseResponse<Pricing>("Pricing created successfully!", StatusCodeEnum.OK_200, pricing);
+
+            // Ánh xạ từ Pricing sang PricingResponse
+            var pricingResponse = _mapper.Map<PricingResponse>(pricing);
+
+            return new BaseResponse<PricingResponse>("Pricing created successfully!", StatusCodeEnum.OK_200, pricingResponse);
         }
 
         public async Task<BaseResponse<Pricing>> UpdatePricing(int pricingID, UpdatePricingRequest request)
@@ -159,13 +188,11 @@ namespace Service.Service
                 return new BaseResponse<Pricing>("Cannot find HomeStayRental!", StatusCodeEnum.BadGateway_502, null);
             }
 
-            // Nếu HomeStayRental là thuê toàn bộ (RentWhole = true), không cho nhập RoomTypesID
             if (homeStayRental.RentWhole == true && request.RoomTypesID.HasValue)
             {
                 return new BaseResponse<Pricing>("Cannot add RoomTypeID because HomeStayRental is RentWhole!", StatusCodeEnum.BadGateway_502, null);
             }
 
-            // Nếu HomeStayRental không phải thuê toàn bộ, kiểm tra RoomType có hợp lệ không
             if (homeStayRental.RentWhole == false)
             {
                 if (!request.RoomTypesID.HasValue)
@@ -185,9 +212,28 @@ namespace Service.Service
                 return new BaseResponse<Pricing>("StartDate and EndDate should not be provided when IsDefault is true!", StatusCodeEnum.BadGateway_502, null);
             }
 
+            // Kiểm tra nếu DayType là Weekend hoặc Holiday, phải có Pricing của Weekday trước
+            if (request.DayType == DayType.Weekend || request.DayType == DayType.Holiday)
+            {
+                var existingWeekdayPricing = homeStayRental.RentWhole
+                    ? await _priceRepository.GetPricingByHomeStayRentalAsync(request.HomeStayRentalID.Value)
+                    : await _priceRepository.GetPricingByRoomTypeAsync(request.RoomTypesID.Value);
+
+                var weekdayPricing = existingWeekdayPricing.FirstOrDefault(p => p.DayType == DayType.Weekday);
+                if (weekdayPricing == null)
+                {
+                    return new BaseResponse<Pricing>("Cannot update Pricing to Weekend or Holiday because no Weekday Pricing exists!", StatusCodeEnum.BadGateway_502, null);
+                }
+
+                // Tính giá dựa trên phần trăm tăng so với giá của Weekday
+                request.UnitPrice = weekdayPricing.UnitPrice * (1 + request.Percentage / 100);
+                request.RentPrice = weekdayPricing.RentPrice * (1 + request.Percentage / 100);
+            }
+
             pricingExist.Description = request.Description;
             pricingExist.UnitPrice = request.UnitPrice;
             pricingExist.RentPrice = request.RentPrice;
+            pricingExist.Percentage = request.Percentage; // Lưu phần trăm tăng
             pricingExist.IsDefault = request.IsDefault;
             pricingExist.IsActive = request.IsActive;
             pricingExist.DayType = request.DayType;

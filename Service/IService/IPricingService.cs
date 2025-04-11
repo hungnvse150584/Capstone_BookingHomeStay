@@ -18,7 +18,7 @@ namespace Service.IService
         Task<BaseResponse<IEnumerable<GetAllPricing>>> GetPricingByHomeStayRentalAsync(int rentalID);
         Task<BaseResponse<IEnumerable<GetAllPricing>>> GetPricingByRoomTypeAsync(int roomTypeID);
         Task<BaseResponse<GetAllPricing>> GetPricingByIdAsync(int id);
-        Task<BaseResponse<Pricing>> CreatePricing(CreatePricingRequest typeRequest);
+        Task<BaseResponse<PricingResponse>> CreatePricing(CreatePricingRequest typeRequest);
         Task<BaseResponse<Pricing>> UpdatePricing(int pricingID, UpdatePricingRequest request);
         Task<BaseResponse<GetTotalPrice>> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId);
         Task<DayType> GetDayType(DateTime date);
