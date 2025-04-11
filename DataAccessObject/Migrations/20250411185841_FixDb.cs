@@ -197,6 +197,11 @@ namespace DataAccessObject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StaffIdAccount = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StaffName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AccountID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     HomeStayID = table.Column<int>(type: "int", nullable: true)
                 },
@@ -947,10 +952,10 @@ namespace DataAccessObject.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "7c601211-9e4c-4a83-8b11-f9deb2570b34", null, "Staff", "STAFF" },
-                    { "81f07517-365d-45c6-83d5-728249a1c537", null, "Owner", "OWNER" },
-                    { "e0409c6d-bf66-4cee-9918-af735527a43d", null, "Customer", "CUSTOMER" },
-                    { "eeda5de7-eb57-432b-a2d8-c05dcb8ac48d", null, "Admin", "ADMIN" }
+                    { "269ed675-f6be-4e6a-be52-9622998dabd3", null, "Staff", "STAFF" },
+                    { "aba3ace7-0caa-4d5d-a384-fd35eb2dba4a", null, "Customer", "CUSTOMER" },
+                    { "c14d5067-3c55-40d4-97a0-ee999ca1e9c0", null, "Admin", "ADMIN" },
+                    { "c39df32b-df21-4266-bd0d-37ecc5c077f6", null, "Owner", "OWNER" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -17,6 +17,15 @@ namespace BusinessObject.Model
 
         public string StaffName { get; set;}
 
+        public string? Username { get; set; }
+
+        public string? Email { get; set; }
+        public string? Password { get; set; }
+
+        public string Address { get; set; }
+
+        public string Phone { get; set; }
+
         [ForeignKey("AccountID")]
         public string AccountID { get; set; }
         public Account? Owner { get; set; }

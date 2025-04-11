@@ -88,12 +88,12 @@ namespace DataAccessObject
             modelBuilder.Entity<Conversation>()
                 .HasIndex(c => c.User2ID);
             modelBuilder.Entity<Notification>()
-        .HasOne(n => n.Account)
-        .WithMany(a => a.Notifications) // Thêm mối quan hệ ngược
-        .HasForeignKey(n => n.AccountID)
-        .IsRequired(true);
+                .HasOne(n => n.Account)
+                .WithMany(a => a.Notifications) // Thêm mối quan hệ ngược
+                .HasForeignKey(n => n.AccountID)
+                .IsRequired(true);
             modelBuilder.Entity<Notification>()
-        .ToTable("Notification");
+                .ToTable("Notification");
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.Booking)
                 .WithMany(b => b.Notifications) // Thêm mối quan hệ ngược

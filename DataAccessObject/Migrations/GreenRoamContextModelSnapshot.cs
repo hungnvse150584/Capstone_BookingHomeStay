@@ -1103,8 +1103,22 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("HomeStayID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StaffIdAccount")
                         .IsRequired()
@@ -1112,6 +1126,9 @@ namespace DataAccessObject.Migrations
 
                     b.Property<string>("StaffName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("StaffID");
@@ -1230,25 +1247,25 @@ namespace DataAccessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "eeda5de7-eb57-432b-a2d8-c05dcb8ac48d",
+                            Id = "c14d5067-3c55-40d4-97a0-ee999ca1e9c0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "e0409c6d-bf66-4cee-9918-af735527a43d",
+                            Id = "aba3ace7-0caa-4d5d-a384-fd35eb2dba4a",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "81f07517-365d-45c6-83d5-728249a1c537",
+                            Id = "c39df32b-df21-4266-bd0d-37ecc5c077f6",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "7c601211-9e4c-4a83-8b11-f9deb2570b34",
+                            Id = "269ed675-f6be-4e6a-be52-9622998dabd3",
                             Name = "Staff",
                             NormalizedName = "STAFF"
                         });

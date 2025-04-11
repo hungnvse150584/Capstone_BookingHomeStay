@@ -20,6 +20,7 @@ namespace Repository
         {
             //
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IStaffRepository, StaffRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
 
             services.AddScoped<IHomeStayRepository, HomeStayRepository>();
@@ -58,6 +59,7 @@ namespace Repository
             services.AddScoped<TransactionDAO>();
             services.AddScoped<ConversationDAO>();
             services.AddScoped<AccountDAO>();
+            services.AddScoped<StaffDAO>();
             services.AddScoped<ImageRoomTypeDAO>();
             services.AddScoped<HomeStayDAO>();
             services.AddScoped<CommissionRateDAO>();
