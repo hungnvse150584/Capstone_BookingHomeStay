@@ -335,13 +335,13 @@ namespace DataAccessObject.Migrations
             modelBuilder.Entity("BusinessObject.Model.CommissionRate", b =>
                 {
                     b.Property<int>("CommissionRateID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommissionRateID"));
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("HomeStayID")
+                        .HasColumnType("int");
 
                     b.Property<double>("HostShare")
                         .HasColumnType("float");
@@ -488,8 +488,6 @@ namespace DataAccessObject.Migrations
                     b.HasKey("HomeStayID");
 
                     b.HasIndex("AccountID");
-
-                    b.HasIndex("CommissionRateID");
 
                     b.ToTable("HomeStays");
                 });
@@ -1188,25 +1186,25 @@ namespace DataAccessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9210b164-db13-4d65-980c-c8f9e981c87c",
+                            Id = "636aa3b7-24ac-4074-b6da-825acbc33e6d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "64c6a59d-b417-44d2-9c16-c9f5d13221dc",
+                            Id = "1bbab153-db57-46d9-bfc6-40b7427601cd",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "abf37e81-7e3f-4b1c-aa57-b0264662fa63",
+                            Id = "f3cf1125-cce4-41fe-99e7-0b46efc045c0",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "2a38c557-7105-4fcf-94be-af84039161bc",
+                            Id = "c3dbe6bc-392c-4ee8-ac87-558f65a6182c",
                             Name = "Staff",
                             NormalizedName = "STAFF"
                         });
@@ -1411,6 +1409,17 @@ namespace DataAccessObject.Migrations
                     b.Navigation("HomeStay");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.CommissionRate", b =>
+                {
+                    b.HasOne("BusinessObject.Model.HomeStay", "HomeStay")
+                        .WithOne("CommissionRate")
+                        .HasForeignKey("BusinessObject.Model.CommissionRate", "CommissionRateID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HomeStay");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.Conversation", b =>
                 {
                     b.HasOne("BusinessObject.Model.HomeStay", "HomeStay")
@@ -1461,13 +1470,7 @@ namespace DataAccessObject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BusinessObject.Model.CommissionRate", "CommissionRate")
-                        .WithMany("HomeStays")
-                        .HasForeignKey("CommissionRateID");
-
                     b.Navigation("Account");
-
-                    b.Navigation("CommissionRate");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.HomeStayRentals", b =>
@@ -1797,11 +1800,6 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.CommissionRate", b =>
-                {
-                    b.Navigation("HomeStays");
-                });
-
             modelBuilder.Entity("BusinessObject.Model.Conversation", b =>
                 {
                     b.Navigation("Messages");
@@ -1819,6 +1817,8 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Bookings");
 
                     b.Navigation("CancelPolicy");
+
+                    b.Navigation("CommissionRate");
 
                     b.Navigation("Conversations");
 

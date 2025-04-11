@@ -38,6 +38,11 @@ namespace DataAccessObject
                 .WithOne(e => e.Report)
                 .HasForeignKey<Booking>(e => e.ReportID);
 
+            modelBuilder.Entity<CommissionRate>()
+                .HasOne(cr => cr.HomeStay)
+                .WithOne(hs => hs.CommissionRate)
+                .HasForeignKey<CommissionRate>(cr => cr.CommissionRateID);
+
             modelBuilder.Entity<CancellationPolicy>()
                 .HasOne(e => e.HomeStay)
                 .WithOne(e => e.CancelPolicy)

@@ -20,6 +20,8 @@ namespace BusinessObject.Model;
 
         public DateTime UpdateAt { get; set; }
 
-        public ICollection<HomeStay> HomeStays { get; set; }
+        public int? HomeStayID { get; set; }
+        [ForeignKey("HomeStayID")]
+        public HomeStay? HomeStay { get; set; }
     }
 
