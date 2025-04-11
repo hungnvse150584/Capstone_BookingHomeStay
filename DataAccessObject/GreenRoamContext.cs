@@ -41,7 +41,7 @@ namespace DataAccessObject
             modelBuilder.Entity<CommissionRate>()
                 .HasOne(cr => cr.HomeStay)
                 .WithOne(hs => hs.CommissionRate)
-                .HasForeignKey<CommissionRate>(cr => cr.CommissionRateID);
+                .HasForeignKey<CommissionRate>(cr => cr.HomeStayID);
 
             modelBuilder.Entity<CancellationPolicy>()
                 .HasOne(e => e.HomeStay)

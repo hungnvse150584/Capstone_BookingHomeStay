@@ -335,7 +335,10 @@ namespace DataAccessObject.Migrations
             modelBuilder.Entity("BusinessObject.Model.CommissionRate", b =>
                 {
                     b.Property<int>("CommissionRateID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommissionRateID"));
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
@@ -353,6 +356,10 @@ namespace DataAccessObject.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("CommissionRateID");
+
+                    b.HasIndex("HomeStayID")
+                        .IsUnique()
+                        .HasFilter("[HomeStayID] IS NOT NULL");
 
                     b.ToTable("CommissionRates");
                 });
@@ -1186,25 +1193,25 @@ namespace DataAccessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "636aa3b7-24ac-4074-b6da-825acbc33e6d",
+                            Id = "bbc55c7b-8b4e-44b2-9747-8c8e7b2e855f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "1bbab153-db57-46d9-bfc6-40b7427601cd",
+                            Id = "42444d5d-5dfc-405d-871e-843a4ff53638",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "f3cf1125-cce4-41fe-99e7-0b46efc045c0",
+                            Id = "e68fb067-6983-44dc-8263-11f7fdbe4d42",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "c3dbe6bc-392c-4ee8-ac87-558f65a6182c",
+                            Id = "d119f0be-d9ab-46ff-888e-6020223539e5",
                             Name = "Staff",
                             NormalizedName = "STAFF"
                         });
@@ -1413,9 +1420,7 @@ namespace DataAccessObject.Migrations
                 {
                     b.HasOne("BusinessObject.Model.HomeStay", "HomeStay")
                         .WithOne("CommissionRate")
-                        .HasForeignKey("BusinessObject.Model.CommissionRate", "CommissionRateID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BusinessObject.Model.CommissionRate", "HomeStayID");
 
                     b.Navigation("HomeStay");
                 });
