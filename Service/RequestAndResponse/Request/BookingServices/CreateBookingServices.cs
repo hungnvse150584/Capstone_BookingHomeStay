@@ -12,6 +12,7 @@ namespace Service.RequestAndResponse.Request.BookingServices
         public int BookingID { get; set; }
         public DateTime BookingServicesDate { get; set; }
         public string AccountID { get; set; }
+        public int HomeStayID { get; set; }
 
         public ICollection<BookingServiceDetailRequest> BookingServicesDetails { get; set; }
     }

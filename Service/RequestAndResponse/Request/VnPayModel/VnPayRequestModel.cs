@@ -10,6 +10,8 @@ namespace Service.RequestAndResponse.Request.VnPayModel
     {
         public int? BookingID { get; set; }
         public int? BookingServiceID { get; set; }
+        public string? AccountID { get; set; }
+        public int? HomeStayID { get; set; }
         public string FullName { get; set; }
         public string Description { get; set; }
         public double Amount { get; set; }

@@ -408,6 +408,9 @@ namespace Service.Service
             }
             booking.Transactions ??= new List<Transaction>();
 
+            transaction.HomeStay = booking.HomeStay;
+            transaction.Account = booking.Account;
+
             // Thêm transaction vào trong danh sách Transactions
             booking.Transactions.Add(transaction);
 
@@ -443,13 +446,16 @@ namespace Service.Service
 
                 bookingService.Status = BookingServicesStatus.Confirmed;
 
+                transaction.HomeStay = bookingService.HomeStay;
+                transaction.Account = bookingService.Account;
+
                 bookingService.Transactions ??= new List<Transaction>();
 
                 bookingService.Transactions.Add(transaction);
                 await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
             }
             booking.Status = BookingStatus.Confirmed;
-
+            
             // Lưu booking vào cơ sở dữ liệu nếu cần
             await _bookingRepository.UpdateBookingAsync(booking);
             return booking;
@@ -464,6 +470,10 @@ namespace Service.Service
             }
 
             booking.Transactions ??= new List<Transaction>();
+
+            transaction.HomeStay = booking.HomeStay;
+            transaction.Account = booking.HomeStay.Account;
+
             // Thêm transaction vào trong danh sách Transactions
             booking.Transactions.Add(transaction);
 
@@ -478,7 +488,8 @@ namespace Service.Service
                 bookingService.PaymentServiceStatus = PaymentServicesStatus.Refunded;
                 bookingService.Status = BookingServicesStatus.Cancelled;
                 bookingService.Transactions ??= new List<Transaction>();
-
+                transaction.HomeStay = bookingService.HomeStay;
+                transaction.Account = bookingService.HomeStay.Account;
                 bookingService.Transactions.Add(transaction);
                 await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
             }
