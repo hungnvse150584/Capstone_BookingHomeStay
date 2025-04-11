@@ -123,26 +123,57 @@ namespace GreenRoam.Controllers
             return _vpnPayService.CreatePaymentUrlWeb(HttpContext, vnPayModel);
         }
 
+        [HttpPost]
+        [Route("BookingServicePayment")]
+        public async Task<string> CheckOutBookingService(int bookingServiceId, bool isFullPayment)
+        {
+            var bookingService = await _bookingForService.GetBookingServiceById(bookingServiceId);
+            double amount = isFullPayment ? bookingService.Data.Total : bookingService.Data.bookingServiceDeposit;
+
+            var vnPayModel = new VnPayRequestModel
+            {
+                BookingServiceID = bookingService.Data.BookingServicesID,
+                HomeStayID = bookingService.Data.HomeStayID,
+                AccountID = bookingService.Data.AccountID,
+                Amount = amount,
+                FullName = bookingService.Data.Account.Name,
+                Description = $"{bookingService.Data.Account.Name} {bookingService.Data.Account.Phone}",
+                CreatedDate = DateTime.UtcNow,
+            };
+            return _vpnPayService.CreatePaymentUrl(HttpContext, vnPayModel);
+        }
+
+        [HttpPost]
+        [Route("BookingPaymentService-Refund")]
+        public async Task<ActionResult<string>> CheckOutRefundBookingService(int bookingServiceID)
+        {
+            var bookingService = await _bookingForService.GetBookingServiceById(bookingServiceID);
+
+            if (bookingService == null || bookingService.Data == null)
+            {
+                return NotFound("Booking service not found.");
+            }
+            double amount = bookingService.Data.Total;
+
+            var vnPayModel = new VnPayRequestModel
+            {
+                BookingServiceID = bookingService.Data.BookingServicesID,
+                HomeStayID = bookingService.Data.HomeStayID,
+                AccountID = bookingService.Data.AccountID,
+                Amount = amount,
+                FullName = bookingService.Data.Account.Name,
+                Description = $"{bookingService.Data.Account.Name} {bookingService.Data.Account.Phone}",
+                CreatedDate = DateTime.UtcNow,
+            };
+            return _vpnPayService.CreatePaymentUrlWeb(HttpContext, vnPayModel);
+        }
+
         [HttpGet("vnpay-return")]
         public async Task<IActionResult> HandleVnPayReturn([FromQuery] VnPayReturnModel model)
         {
             if (model.Vnp_TransactionStatus != "00") return BadRequest();
 
             var (bookingId, bookingserviceId) = _bookingService.ParseOrderInfo(model.Vnp_OrderInfo);
-
-            if (bookingId.HasValue)
-            {
-                var booking = await _bookingService.GetBookingsById(bookingId.Value);
-                if (booking == null)
-                    return BadRequest($"Booking with ID {bookingId} not found.");
-            }
-
-            if (bookingserviceId.HasValue)
-            {
-                var bookingService = await _bookingForService.GetBookingServicesById(bookingserviceId.Value);
-                if (bookingService == null)
-                    return BadRequest($"Booking with ID {bookingserviceId} not found.");
-            }
 
             var transaction = new Transaction
             {
@@ -161,9 +192,26 @@ namespace GreenRoam.Controllers
                 ResponseId = model.Vnp_TransactionNo,
                 Message = model.Vnp_ResponseCode
             };
+            
+            if (bookingId.HasValue)
+            {
+                var booking = await _bookingService.GetBookingsById(bookingId.Value);
+                if (booking == null)
+                    return BadRequest($"Booking with ID {bookingId} not found.");
 
-            await _checkoutService.CreateBookingPayment(bookingId, bookingserviceId, transaction);
-            return Redirect($"{_configuration["VnPay:UrlReturnPayment"]}/{bookingId}");
+                await _checkoutService.CreateBookingPayment(bookingId, bookingserviceId, transaction);
+                return Redirect($"{_configuration["VnPay:UrlReturnPayment"]}/{bookingId}");
+            }
+
+            if (bookingserviceId.HasValue)
+            {
+                var bookingService = await _bookingForService.GetBookingServicesById(bookingserviceId.Value);
+                if (bookingService == null)
+                    return BadRequest($"Booking with ID {bookingserviceId} not found.");
+                await _checkoutService.CreateBookingServiceRefundPayment(bookingserviceId, transaction);
+                return Redirect($"{_configuration["VnPay:UrlReturnPayment"]}/{bookingserviceId}");
+            }
+            return BadRequest("Cannot find Booking or Booking Service");
         }
 
         [HttpGet("vnpay-return-refunded")]
@@ -173,20 +221,6 @@ namespace GreenRoam.Controllers
 
             var (bookingId, bookingserviceId) = _bookingService.ParseOrderInfo(model.Vnp_OrderInfo);
 
-            if (bookingId.HasValue)
-            {
-                var booking = await _bookingService.GetBookingsById(bookingId.Value);
-                if (booking == null)
-                    return BadRequest($"Booking with ID {bookingId} not found.");
-            }
-
-            if (bookingserviceId.HasValue)
-            {
-                var bookingService = await _bookingForService.GetBookingServicesById(bookingserviceId.Value);
-                if (bookingService == null)
-                    return BadRequest($"Booking with ID {bookingserviceId} not found.");
-            }
-
             var transaction = new Transaction
             {
                 Amount = model.Vnp_Amount,
@@ -205,8 +239,26 @@ namespace GreenRoam.Controllers
                 Message = model.Vnp_ResponseCode
             };
 
-            await _checkoutService.CreateBookingRefundPayment(bookingId, bookingserviceId, transaction);
-            return Redirect($"{_configuration["VnPay:UrlReturnPayment2"]}/{bookingId}");
+            if (bookingId.HasValue)
+            {
+                var booking = await _bookingService.GetBookingsById(bookingId.Value);
+                if (booking == null)
+                    return BadRequest($"Booking with ID {bookingId} not found.");
+
+                await _checkoutService.CreateBookingRefundPayment(bookingId, bookingserviceId, transaction);
+                return Redirect($"{_configuration["VnPay:UrlReturnPayment2"]}/{bookingId}");
+            }
+
+            if (bookingserviceId.HasValue)
+            {
+                var bookingService = await _bookingForService.GetBookingServicesById(bookingserviceId.Value);
+                if (bookingService == null)
+                    return BadRequest($"Booking with ID {bookingserviceId} not found.");
+
+                await _checkoutService.CreateBookingServiceRefundPayment(bookingserviceId, transaction);
+                return Redirect($"{_configuration["VnPay:UrlReturnPayment2"]}/{bookingserviceId}");
+            }
+            return BadRequest("Cannot find Booking or Booking Service");
         }
 
         [HttpPut]

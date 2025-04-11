@@ -415,7 +415,7 @@ namespace Service.Service
             booking.Transactions.Add(transaction);
 
             double totalAmount = booking.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
-            double amountPaid = booking.Transactions.Sum(t => t.Amount)/100; // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
+            double amountPaid = booking.Transactions.Sum(t => t.Amount) / 100; // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
 
             // Kiểm tra trạng thái thanh toán
             if (amountPaid >= totalAmount)
@@ -455,7 +455,7 @@ namespace Service.Service
                 await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
             }
             booking.Status = BookingStatus.Confirmed;
-            
+
             // Lưu booking vào cơ sở dữ liệu nếu cần
             await _bookingRepository.UpdateBookingAsync(booking);
             return booking;
@@ -500,6 +500,64 @@ namespace Service.Service
             // Lưu booking vào cơ sở dữ liệu nếu cần
             await _bookingRepository.UpdateBookingAsync(booking);
             return booking;
+        }
+
+        public async Task<BookingServices> CreateBookingServicePayment(int? bookingServiceID, Transaction transaction)
+        {
+            var bookingService = await _bookingServiceRepository.GetBookingServiceByIdAsync(bookingServiceID);
+            if (bookingService == null)
+            {
+                throw new Exception("BookingService not found");
+            }
+            double totalAmount = bookingService.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
+            double amountPaid = bookingService.Transactions.Sum(t => t.Amount) / 100; // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
+                                                                                      // Kiểm tra trạng thái thanh toán
+            if (amountPaid >= totalAmount)
+            {
+                bookingService.PaymentServiceStatus = PaymentServicesStatus.FullyPaid; // Thanh toán đầy đủ
+            }
+            else if (amountPaid > 0)
+            {
+                bookingService.PaymentServiceStatus = PaymentServicesStatus.Deposited; // Đặt cọc
+            }
+
+            bookingService.Status = BookingServicesStatus.Confirmed;
+
+            transaction.HomeStay = bookingService.HomeStay;
+            transaction.Account = bookingService.Account;
+
+            bookingService.Transactions ??= new List<Transaction>();
+
+            bookingService.Transactions.Add(transaction);
+            await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
+            // Lưu booking vào cơ sở dữ liệu nếu cần
+
+            return bookingService;
+        }
+
+        public async Task<BookingServices> CreateBookingServiceRefundPayment(int? bookingServiceID, Transaction transaction)
+        {
+            var bookingService = await _bookingServiceRepository.GetBookingServiceByIdAsync(bookingServiceID);
+            if (bookingService == null)
+            {
+                throw new Exception("BookingService not found");
+            }
+
+            bookingService.PaymentServiceStatus = PaymentServicesStatus.Refunded;
+
+            bookingService.Status = BookingServicesStatus.Cancelled;
+
+            bookingService.Transactions ??= new List<Transaction>();
+
+            transaction.HomeStay = bookingService.HomeStay;
+
+            transaction.Account = bookingService.HomeStay.Account;
+
+            bookingService.Transactions.Add(transaction);
+
+            await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
+
+            return bookingService;
         }
     }
 }
