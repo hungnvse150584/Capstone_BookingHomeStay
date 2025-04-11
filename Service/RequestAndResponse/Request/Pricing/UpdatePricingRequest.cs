@@ -18,6 +18,7 @@ namespace Service.RequestAndResponse.Request.Pricing
 
         [Required]
         public double RentPrice { get; set; }
+        public double Percentage { get; set; }
 
         public DateTime? StartDate { get; set; }
 
