@@ -1665,6 +1665,91 @@
         }
       }
     },
+    "/api/booking-checkout/BookingServicePayment": {
+      "post": {
+        "tags": [
+          "CheckOut"
+        ],
+        "parameters": [
+          {
+            "name": "bookingServiceId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "isFullPayment",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/booking-checkout/BookingPaymentService-Refund": {
+      "post": {
+        "tags": [
+          "CheckOut"
+        ],
+        "parameters": [
+          {
+            "name": "bookingServiceID",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/booking-checkout/vnpay-return": {
       "get": {
         "tags": [
@@ -5175,6 +5260,240 @@
         }
       }
     },
+    "/api/Manage-Staff/GetAllStaffsByHomeStay/{homeStayID}": {
+      "get": {
+        "tags": [
+          "Staff"
+        ],
+        "parameters": [
+          {
+            "name": "homeStayID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllStaffIEnumerableBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllStaffIEnumerableBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllStaffIEnumerableBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Manage-Staff/GetAllStaffsByOwner/{accountId}": {
+      "get": {
+        "tags": [
+          "Staff"
+        ],
+        "parameters": [
+          {
+            "name": "accountID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllStaffIEnumerableBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllStaffIEnumerableBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllStaffIEnumerableBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Manage-Staff/GetStaffsByID/{accountId}": {
+      "get": {
+        "tags": [
+          "Staff"
+        ],
+        "parameters": [
+          {
+            "name": "accountID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllStaffBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllStaffBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllStaffBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Manage-Staff/CreateStaffAccount": {
+      "post": {
+        "tags": [
+          "Staff"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStaffRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStaffRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStaffRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStaffRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Manage-Staff/UpdateStaffAccount/{userId}": {
+      "put": {
+        "tags": [
+          "Staff"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStaffRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStaffRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStaffRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStaffRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Transaction/GetTransactionByID/{transactionID}": {
       "get": {
         "tags": [
@@ -5447,6 +5766,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Booking"
+            },
+            "nullable": true
+          },
+          "staffs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Staff"
             },
             "nullable": true
           },
@@ -6058,12 +6384,13 @@
             "type": "string",
             "format": "date-time"
           },
-          "homeStays": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HomeStay"
-            },
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
+          },
+          "homeStay": {
+            "$ref": "#/components/schemas/HomeStay"
           }
         },
         "additionalProperties": false
@@ -6211,6 +6538,10 @@
             "type": "string",
             "nullable": true
           },
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32"
+          },
           "bookingServicesDetails": {
             "type": "array",
             "items": {
@@ -6281,6 +6612,10 @@
           "createAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -6449,6 +6784,45 @@
           },
           "data": {
             "$ref": "#/components/schemas/CreateRoomRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateStaffRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          },
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -7737,6 +8111,82 @@
         },
         "additionalProperties": false
       },
+      "GetAllStaff": {
+        "type": "object",
+        "properties": {
+          "staffID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "staffIdAccount": {
+            "type": "string",
+            "nullable": true
+          },
+          "staffName": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "owner": {
+            "$ref": "#/components/schemas/GetAccountUser"
+          },
+          "homeStay": {
+            "$ref": "#/components/schemas/HomeStayResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetAllStaffBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GetAllStaff"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetAllStaffIEnumerableBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAllStaff"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "GetBookingByAccount": {
         "type": "object",
         "properties": {
@@ -8997,6 +9447,14 @@
           "account": {
             "$ref": "#/components/schemas/Account"
           },
+          "staffID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "staff": {
+            "$ref": "#/components/schemas/Staff"
+          },
           "commissionRateID": {
             "type": "integer",
             "format": "int32",
@@ -9913,6 +10371,11 @@
           },
           "dayType": {
             "$ref": "#/components/schemas/DayType"
+          },
+          "homeStayRentalID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -10602,6 +11065,75 @@
               "$ref": "#/components/schemas/SimpleHomeStayResponse"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Staff": {
+        "type": "object",
+        "properties": {
+          "staffID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "staffIdAccount": {
+            "type": "string",
+            "nullable": true
+          },
+          "staffName": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          },
+          "owner": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "homeStay": {
+            "$ref": "#/components/schemas/HomeStay"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StaffBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Staff"
           }
         },
         "additionalProperties": false
@@ -11445,6 +11977,37 @@
           },
           "data": {
             "$ref": "#/components/schemas/UpdateRoomTypeRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStaffRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
