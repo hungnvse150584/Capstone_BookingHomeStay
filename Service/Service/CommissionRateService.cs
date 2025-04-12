@@ -30,21 +30,40 @@ namespace Service.Service
             _homeStayRepository = homeStayRepository;
         }
 
+
         public async Task<BaseResponse<CreateCommissionRateRequest>> CreateCommmisionRate(CreateCommissionRateRequest typeRequest)
         {
             var homeStay = await _homeStayRepository.GetHomeStayDetailByIdAsync(typeRequest.HomeStayID);
-            if(homeStay == null)
+            if (homeStay == null)
             {
                 return new BaseResponse<CreateCommissionRateRequest>("Cannot find HomeStay", StatusCodeEnum.BadGateway_502, null);
             }
 
-            CommissionRate roomTypes = _mapper.Map<CommissionRate>(typeRequest);
-            await _commissionRateRepository.AddAsync(roomTypes);
+            // Kiểm tra xem HomeStay đã có CommissionRate chưa
+            if (homeStay.CommissionRateID.HasValue)
+            {
+                return new BaseResponse<CreateCommissionRateRequest>(
+                    "HomeStay already has a CommissionRate. Use UpdateCommissionRate to modify it.",
+                    StatusCodeEnum.BadRequest_400,
+                    null);
+            }
 
-            var response = _mapper.Map<CreateCommissionRateRequest>(roomTypes);
+            // Ánh xạ và tạo CommissionRate
+            CommissionRate commissionRate = _mapper.Map<CommissionRate>(typeRequest);
+            commissionRate.CreateAt = DateTime.UtcNow; // Đảm bảo CreateAt được thiết lập
+            commissionRate.UpdateAt = DateTime.UtcNow; // Đảm bảo UpdateAt được thiết lập
+            await _commissionRateRepository.AddAsync(commissionRate);
+            await _commissionRateRepository.SaveChangesAsync(); // Lưu để sinh CommissionRateID
+
+            // Cập nhật CommissionRateID cho HomeStay
+            homeStay.CommissionRateID = commissionRate.CommissionRateID;
+            await _homeStayRepository.UpdateAsync(homeStay);
+            await _homeStayRepository.SaveChangesAsync();
+
+            // Ánh xạ response
+            var response = _mapper.Map<CreateCommissionRateRequest>(commissionRate);
             return new BaseResponse<CreateCommissionRateRequest>("Add CommissionRate as base success", StatusCodeEnum.Created_201, response);
         }
-
         public async Task<BaseResponse<IEnumerable<GetAllCommissionRate>>> GetAllCommissionRates()
         {
             IEnumerable<CommissionRate> commissionRate = await _commissionRateRepository.GetAllCommissionRate();
@@ -100,5 +119,7 @@ namespace Service.Service
             await _commissionRateRepository.DeleteAsync(cp);
             return new BaseResponse<string>("Delete Commission Rate success", StatusCodeEnum.OK_200, "Deleted successfully");
         }
+
+       
     }
 }
