@@ -64,7 +64,8 @@ namespace Service.Mapping
 
             CreateMap<Account, GetAccountUser>().ReverseMap();
             CreateMap<CreateStaffRequest, Staff>().ReverseMap();
-            CreateMap<Staff, GetAllStaff>().ReverseMap();
+            CreateMap<Staff, GetAllStaff>()
+                .ForMember(dest => dest.HomeStay, opt => opt.MapFrom(src => src.HomeStay));
 
             CreateMap<RoomTypes, GetAllRoomType>().ReverseMap();
             CreateMap<ImageHomeStayRentals, GetAllImageHomeStayType>().ReverseMap();
