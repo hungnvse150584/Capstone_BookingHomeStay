@@ -208,7 +208,7 @@ namespace GreenRoam.Controllers
                 var bookingService = await _bookingForService.GetBookingServicesById(bookingserviceId.Value);
                 if (bookingService == null)
                     return BadRequest($"Booking with ID {bookingserviceId} not found.");
-                await _checkoutService.CreateBookingServiceRefundPayment(bookingserviceId, transaction);
+                await _checkoutService.CreateBookingServicePayment(bookingserviceId, transaction);
                 return Redirect($"{_configuration["VnPay:UrlReturnPayment"]}/{bookingserviceId}");
             }
             return BadRequest("Cannot find Booking or Booking Service");

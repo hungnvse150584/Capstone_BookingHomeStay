@@ -15,6 +15,6 @@ namespace Service.RequestAndResponse.Request.Staffs
         public string Phone { get; set; }
         public string? Password { get; set; }
         public string AccountID { get; set; }
-        public int? HomeStayID { get; set; }
+        public int HomeStayID { get; set; }
     }
 }
