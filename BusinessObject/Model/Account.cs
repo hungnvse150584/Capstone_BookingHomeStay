@@ -17,7 +17,7 @@ namespace BusinessObject.Model;
 
         public string? TaxCode { get; set; }
 
-        public string BankAccountNumber { get; set; }
+        public string? BankAccountNumber { get; set; }
         
         public bool Status { get; set; }
 

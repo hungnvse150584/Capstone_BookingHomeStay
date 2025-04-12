@@ -105,7 +105,7 @@ namespace DataAccessObject
                 .WithMany(bs => bs.Notifications) // Thêm mối quan hệ ngược
                 .HasForeignKey(n => n.BookingServicesID)
                 .IsRequired(false);
-            List<IdentityRole> roles = new List<IdentityRole>
+            /*List<IdentityRole> roles = new List<IdentityRole>
                {
                    new IdentityRole
                    {
@@ -128,7 +128,7 @@ namespace DataAccessObject
                        NormalizedName = "STAFF"
                    }
               };
-            modelBuilder.Entity<IdentityRole>().HasData(roles);
+            modelBuilder.Entity<IdentityRole>().HasData(roles);*/
         }
         public DbSet<HomeStay> HomeStays { get; set; }
         public DbSet<Staff> Staffs { get; set; }
