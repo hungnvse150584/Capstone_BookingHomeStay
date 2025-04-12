@@ -432,6 +432,9 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+              "D:\\FPT\\SEP490_Capstone\\BusinessObject\\BusinessObject.csproj": {
+                "projectPath": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\BusinessObject.csproj"
+              },
               "D:\\FPT\\SEP490_Capstone\\Repository\\Repository.csproj": {
                 "projectPath": "D:\\FPT\\SEP490_Capstone\\Repository\\Repository.csproj"
               }

@@ -6963,6 +6963,7 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "AutoMapper >= 13.0.1",
+      "BusinessObject >= 1.0.0",
       "CloudinaryDotNet >= 1.27.4",
       "Google.Cloud.Dialogflow.V2 >= 4.26.0",
       "MailKit >= 4.8.0",
@@ -7003,6 +7004,9 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+            "D:\\FPT\\SEP490_Capstone\\BusinessObject\\BusinessObject.csproj": {
+              "projectPath": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\BusinessObject.csproj"
+            },
             "D:\\FPT\\SEP490_Capstone\\Repository\\Repository.csproj": {
               "projectPath": "D:\\FPT\\SEP490_Capstone\\Repository\\Repository.csproj"
             }
