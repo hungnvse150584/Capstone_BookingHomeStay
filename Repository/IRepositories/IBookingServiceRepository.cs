@@ -23,6 +23,7 @@ namespace Repository.IRepositories
         Task<BookingServices?> GetUnpaidServicesByAccountId(string accountId);
         Task<IEnumerable<BookingServices>> GetBookingServiceByAccountId(string accountId);
         Task<IEnumerable<BookingServices>> GetBookingServicesByHomeStayId(int homeStayID);
+        Task<IEnumerable<BookingServices>> GetConfirmedBookingServiceByBookingId(int? bookingID);
 
     }
 }

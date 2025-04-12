@@ -173,6 +173,7 @@ namespace Service.Service
                     PaymentServicesMethod = PaymentServicesMethod.VnPay,
                     PaymentServiceStatus = PaymentServicesStatus.Pending,
                     AccountID = createBookingRequest.AccountID,
+                    HomeStayID = createBookingRequest.HomeStayID,
                     BookingServicesDetails = createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s => new BookingServicesDetail
                     {
                         Quantity = s.Quantity,
@@ -493,6 +494,25 @@ namespace Service.Service
                 bookingService.Transactions.Add(transaction);
                 await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
             }
+            else
+            {
+                var bookingServices = await _bookingServiceRepository.GetConfirmedBookingServiceByBookingId(bookingID);
+                if (bookingServices != null)
+                {
+                    foreach (var service in bookingServices)
+                    {
+                        service.Status = BookingServicesStatus.Cancelled;
+                        service.PaymentServiceStatus = PaymentServicesStatus.Refunded;
+                        service.Status = BookingServicesStatus.Cancelled;
+                        service.Transactions ??= new List<Transaction>();
+                        transaction.HomeStay = service.HomeStay;
+                        transaction.Account = service.HomeStay.Account;
+                        service.Transactions.Add(transaction);
+                        await _bookingServiceRepository.UpdateBookingServicesAsync(service);
+
+                    }
+                }
+            }
 
             booking.paymentStatus = PaymentStatus.Refunded;
             booking.Status = BookingStatus.Cancelled;
@@ -509,6 +529,11 @@ namespace Service.Service
             {
                 throw new Exception("BookingService not found");
             }
+
+            bookingService.Transactions ??= new List<Transaction>();
+
+            bookingService.Transactions.Add(transaction);
+
             double totalAmount = bookingService.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
             double amountPaid = bookingService.Transactions.Sum(t => t.Amount) / 100; // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
                                                                                       // Kiểm tra trạng thái thanh toán
@@ -516,19 +541,23 @@ namespace Service.Service
             {
                 bookingService.PaymentServiceStatus = PaymentServicesStatus.FullyPaid; // Thanh toán đầy đủ
             }
-            else if (amountPaid > 0)
-            {
-                bookingService.PaymentServiceStatus = PaymentServicesStatus.Deposited; // Đặt cọc
-            }
 
             bookingService.Status = BookingServicesStatus.Confirmed;
+
+            if (bookingService.BookingID.HasValue)
+            {
+                var booking = bookingService.Booking;
+                if (booking != null)
+                {
+                    // Cập nhật tổng tiền thanh toán cho Booking
+                    booking.Total += transaction.Amount / 100;
+                    await _bookingRepository.UpdateBookingAsync(booking);  // Cập nhật lại Booking
+                }
+            }
 
             transaction.HomeStay = bookingService.HomeStay;
             transaction.Account = bookingService.Account;
 
-            bookingService.Transactions ??= new List<Transaction>();
-
-            bookingService.Transactions.Add(transaction);
             await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
             // Lưu booking vào cơ sở dữ liệu nếu cần
 
@@ -549,11 +578,22 @@ namespace Service.Service
 
             bookingService.Transactions ??= new List<Transaction>();
 
+            bookingService.Transactions.Add(transaction);
+
+            if (bookingService.BookingID.HasValue)
+            {
+                var booking = bookingService.Booking;
+                if (booking != null)
+                {
+                    // Cập nhật tổng tiền thanh toán cho Booking
+                    booking.Total -= transaction.Amount / 100;
+                    await _bookingRepository.UpdateBookingAsync(booking);  // Cập nhật lại Booking
+                }
+            }
+
             transaction.HomeStay = bookingService.HomeStay;
 
             transaction.Account = bookingService.HomeStay.Account;
-
-            bookingService.Transactions.Add(transaction);
 
             await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
 

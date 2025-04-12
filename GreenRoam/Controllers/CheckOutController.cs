@@ -47,10 +47,28 @@ namespace GreenRoam.Controllers
 
         [HttpPost]
         [Route("BookingPayment")]
-        public async Task<string> CheckOutBooking(int bookingID, bool isFullPayment)
+        public async Task<ActionResult<string>> CheckOutBooking(int bookingID, bool isFullPayment)
         {
             var booking = await _bookingService.GetBookingsById(bookingID);
-            var bookingId = booking.Data.BookingID;
+            if (booking.Data.Status == BookingStatus.Completed)
+            {
+                return BadRequest("This booking already completed, cannot have a payment");
+            }
+
+            if (booking.Data.Status == BookingStatus.Cancelled)
+            {
+                return BadRequest("This booking already cancelled, cannot have a payment");
+            }
+
+            if (booking.Data.Status == BookingStatus.InProgress)
+            {
+                return BadRequest("This booking already paid, cannot have a payment");
+            }
+
+            if (booking.Data.Status == BookingStatus.RequestRefund)
+            {
+                return BadRequest("This booking already paid, cannot have a payment");
+            }
             double amount = isFullPayment ? booking.Data.Total : booking.Data.bookingDeposit;
             var bookingServiceID = booking.Data.BookingServices.SingleOrDefault()?.BookingServicesID;
 
@@ -74,60 +92,76 @@ namespace GreenRoam.Controllers
         {
             var booking = await _bookingService.GetBookingsById(bookingID);
 
-            var bookingId = booking.Data.BookingID;
-
-            var cancellation = await _cancellationService.GetCancellationPolicyByHomeStay(booking.Data.HomeStayID);
-
-            if(cancellation == null)
+            if (booking.Data.Status == BookingStatus.RequestRefund)
             {
-                return BadRequest("Cannot Find the Cancellation Policy Of the HomeStay");
-            }
+                var cancellation = await _cancellationService.GetCancellationPolicyByHomeStay(booking.Data.HomeStayID);
 
-            var checkInDate = booking.Data.BookingDetails.FirstOrDefault()?.CheckInDate;
-
-            double amount = 0;
-
-            DateTime today = DateTime.UtcNow.Date;
-
-            int daysUntilCheckIn = (checkInDate.Value.Date - today).Days;
-
-            if (daysUntilCheckIn >= cancellation.Data.DayBeforeCancel)
-            {
-                if(booking.Data.paymentStatus == PaymentStatus.Deposited)
+                if (cancellation == null)
                 {
-                    amount = booking.Data.bookingDeposit;
+                    return BadRequest("Cannot Find the Cancellation Policy Of the HomeStay");
                 }
-                if (booking.Data.paymentStatus == PaymentStatus.FullyPaid)
+
+                var checkInDate = booking.Data.BookingDetails.FirstOrDefault()?.CheckInDate;
+
+                double amount = 0;
+
+                DateTime today = DateTime.UtcNow.Date;
+
+                int daysUntilCheckIn = (checkInDate.Value.Date - today).Days;
+
+                if (daysUntilCheckIn >= cancellation.Data.DayBeforeCancel)
                 {
-                    amount = booking.Data.Total * cancellation.Data.RefundPercentage;
+                    if (booking.Data.paymentStatus == PaymentStatus.Deposited)
+                    {
+                        amount = booking.Data.bookingDeposit;
+                    }
+                    if (booking.Data.paymentStatus == PaymentStatus.FullyPaid)
+                    {
+                        amount = booking.Data.Total * cancellation.Data.RefundPercentage;
+                    }
                 }
+                else
+                {
+                    return BadRequest("Booking cannot be refunded because it does not meet the homestay's cancellation policy.");
+                }
+
+                var bookingServiceID = booking.Data.BookingServices.SingleOrDefault()?.BookingServicesID;
+
+                var vnPayModel = new VnPayRequestModel
+                {
+                    BookingID = booking.Data.BookingID,
+                    BookingServiceID = bookingServiceID.HasValue ? bookingServiceID : null,
+                    HomeStayID = booking.Data.HomeStayID,
+                    AccountID = booking.Data.AccountID,
+                    Amount = amount,
+                    FullName = booking.Data.Account.Name,
+                    Description = $"{booking.Data.Account.Name} {booking.Data.Account.Phone}",
+                    CreatedDate = DateTime.UtcNow,
+                };
+                return _vpnPayService.CreatePaymentUrlWeb(HttpContext, vnPayModel);
             }
             else
             {
-                return BadRequest("Booking cannot be refunded because it does not meet the homestay's cancellation policy.");
+                return BadRequest("Cannot Refunded");
             }
-
-            var bookingServiceID = booking.Data.BookingServices.SingleOrDefault()?.BookingServicesID;
-
-            var vnPayModel = new VnPayRequestModel
-            {
-                BookingID = booking.Data.BookingID,
-                BookingServiceID = bookingServiceID.HasValue ? bookingServiceID : null,
-                HomeStayID = booking.Data.HomeStayID,
-                AccountID = booking.Data.AccountID,
-                Amount = amount,
-                FullName = booking.Data.Account.Name,
-                Description = $"{booking.Data.Account.Name} {booking.Data.Account.Phone}",
-                CreatedDate = DateTime.UtcNow,
-            };
-            return _vpnPayService.CreatePaymentUrlWeb(HttpContext, vnPayModel);
         }
 
         [HttpPost]
         [Route("BookingServicePayment")]
-        public async Task<string> CheckOutBookingService(int bookingServiceId, bool isFullPayment)
+        public async Task<ActionResult<string>> CheckOutBookingService(int bookingServiceId, bool isFullPayment)
         {
             var bookingService = await _bookingForService.GetBookingServiceById(bookingServiceId);
+
+            if (bookingService.Data.Status == BookingServicesStatus.Completed)
+            {
+                return BadRequest("This booking already completed, cannot have a payment");
+            }
+
+            if (bookingService.Data.Status == BookingServicesStatus.Cancelled)
+            {
+                return BadRequest("This booking already cancelled, cannot have a payment");
+            }
+
             double amount = isFullPayment ? bookingService.Data.Total : bookingService.Data.bookingServiceDeposit;
 
             var vnPayModel = new VnPayRequestModel
@@ -192,7 +226,7 @@ namespace GreenRoam.Controllers
                 ResponseId = model.Vnp_TransactionNo,
                 Message = model.Vnp_ResponseCode
             };
-            
+
             if (bookingId.HasValue)
             {
                 var booking = await _bookingService.GetBookingsById(bookingId.Value);
