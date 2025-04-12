@@ -11,6 +11,7 @@ namespace Repository.IRepositories
     public interface IStaffRepository : IBaseRepository<Staff>
     {
         Task<IEnumerable<Staff>> GetAllStaffByOwner(string accountID);
+        Task<Staff?> GetStaffByID(string accountID);
         Task<IEnumerable<Staff>> GetAllStaffByHomeStay(int homeStayID);
     }
 }

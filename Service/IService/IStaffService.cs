@@ -13,7 +13,9 @@ namespace Service.IService
     public interface IStaffService
     {
         Task<BaseResponse<Staff>> CreateStaffAccount(CreateStaffRequest request);
+        Task<BaseResponse<Staff>> UpdateStaffAccount(string userId,UpdateStaffRequest request);
         Task<BaseResponse<IEnumerable<GetAllStaff>>> GetAllStaffByHomeStay(int homeStayID);
         Task<BaseResponse<IEnumerable<GetAllStaff>>> GetAllStaffByOwner(string accountID);
+        Task<BaseResponse<GetAllStaff>> GetStaffByID(string accountID);
     }
 }

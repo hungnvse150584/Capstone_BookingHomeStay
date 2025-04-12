@@ -34,6 +34,11 @@ namespace Repository.Repositories
             return await _staffDao.GetAllStaffByOwner(accountID);
         }
 
+        public async Task<Staff?> GetStaffByID(string accountID)
+        {
+            return await _staffDao.GetStaffByID(accountID);
+        }
+
         public async Task<Staff> UpdateAsync(Staff entity)
         {
             return await _staffDao.UpdateAsync(entity);

@@ -132,5 +132,60 @@ namespace Service.Service
             return new BaseResponse<IEnumerable<GetAllStaff>>("Get all HomeStay as base success",
                 StatusCodeEnum.OK_200, Staffs);
         }
+
+        public async Task<BaseResponse<GetAllStaff>> GetStaffByID(string accountID)
+        {
+            Staff staff = await _staffRepository.GetStaffByID(accountID);
+            var result = _mapper.Map<GetAllStaff>(staff);
+            return new BaseResponse<GetAllStaff>("Get HomeStay as base success", StatusCodeEnum.OK_200, result);
+        }
+
+        public async Task<BaseResponse<Staff>> UpdateStaffAccount(string userId, UpdateStaffRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new BaseResponse<Staff>("Cannot find staff record!", StatusCodeEnum.Conflict_409, null);
+            }
+
+            var staff = await _staffRepository.GetStaffByID(userId);
+            if (staff == null)
+            {
+                return new BaseResponse<Staff>("Cannot find staff record!", StatusCodeEnum.Conflict_409, null);
+            }
+
+            if (!string.IsNullOrEmpty(request.Username))
+            {
+                user.UserName = request.Username;
+                staff.Username = request.Username;
+            }
+            
+            user.Email = request.Email ?? user.Email;
+            user.Name = request.Name ?? user.Name;
+            user.Address = request.Address ?? user.Address;
+            user.Phone = request.Phone ?? user.Phone;
+            
+            staff.Email = request.Email ?? staff.Email;
+            staff.StaffName = request.Name ?? staff.StaffName;
+            staff.Phone = request.Phone ?? staff.Phone;
+            staff.Address = request.Address ?? staff.Address;
+            staff.HomeStayID = request.HomeStayID ?? staff.HomeStayID;
+            
+            var updateResult = await _userManager.UpdateAsync(user);
+
+            if (!updateResult.Succeeded)
+            {
+                return new BaseResponse<Staff>("Cannot update staff account!", StatusCodeEnum.Conflict_409, null);
+            }
+            
+            var updateStaff = await _staffRepository.UpdateAsync(staff);
+
+            if (updateStaff == null)
+            {
+                return new BaseResponse<Staff>("Cannot update staff account!", StatusCodeEnum.Conflict_409, null);
+            }
+
+            return new BaseResponse<Staff>("Update Staff Account Successfully!", StatusCodeEnum.OK_200, null);
+        }
     }
 }
