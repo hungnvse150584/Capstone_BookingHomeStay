@@ -31,7 +31,6 @@ namespace BusinessObject.Model
         public Account? Owner { get; set; }
 
         public int? HomeStayID { get; set; }
-        [ForeignKey("HomeStayID")]
         public HomeStay? HomeStay { get; set; }
     }
 }

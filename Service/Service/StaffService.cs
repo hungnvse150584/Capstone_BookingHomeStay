@@ -22,23 +22,31 @@ namespace Service.Service
     {
         private readonly IMapper _mapper;
         private readonly IStaffRepository _staffRepository;
+        private readonly IHomeStayRepository _homeStayRepository;
         private readonly UserManager<Account> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ITokenService _tokenService;
         public StaffService(IMapper mapper, IStaffRepository staffRepository, 
                             UserManager<Account> userManager,
                             RoleManager<IdentityRole> roleManager,
-                            ITokenService tokenService)
+                            ITokenService tokenService, 
+                            IHomeStayRepository homeStayRepository)
         {
             _mapper = mapper;
             _staffRepository = staffRepository;
             _userManager = userManager;
             _roleManager = roleManager;
             _tokenService = tokenService;
+            _homeStayRepository = homeStayRepository;
         }
 
         public async Task<BaseResponse<Staff>> CreateStaffAccount(CreateStaffRequest request)
         {
+            var existStaffHomeStay = await _staffRepository.GetAllStaffByHomeStay(request.HomeStayID);
+            if (existStaffHomeStay != null)
+            {
+                return new BaseResponse<Staff>("Already have Staff at this homestay!", StatusCodeEnum.Conflict_409, null);
+            }
             // 1. Tạo tài khoản Staff
             var accountApp = new Account
             {
@@ -93,7 +101,12 @@ namespace Service.Service
                 await _userManager.DeleteAsync(accountApp);
                 return new BaseResponse<Staff>("Cannot create staff record!", StatusCodeEnum.Conflict_409, null);
             }
-
+            var homeStay = await _homeStayRepository.GetHomeStayDetailByIdAsync(request.HomeStayID);
+            if (homeStay != null)
+            {
+                homeStay.StaffID = result.StaffID;
+                await _homeStayRepository.UpdateAsync(homeStay);
+            }
             return new BaseResponse<Staff>("Create Staff Account Successfully!", StatusCodeEnum.OK_200, result);
         }
 

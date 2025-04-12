@@ -26,6 +26,6 @@ namespace Service.RequestAndResponse.Response.Staffs
 
         public GetAccountUser? Owner { get; set; }
 
-        public HomeStayResponse HomeStay { get; set; }
+        public HomeStayResponse? HomeStay { get; set; }
     }
 }

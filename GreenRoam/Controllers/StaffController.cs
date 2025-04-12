@@ -28,7 +28,7 @@ namespace GreenRoam.Controllers
             return Ok(staffs);
         }
         [HttpGet]
-        [Route("GetAllStaffsByOwner/{accountId}")]
+        [Route("GetAllStaffsByOwner/{accountID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllStaff>>>> GetAllStaffByOwner(string accountID)
         {
             var staffs = await _staffService.GetAllStaffByOwner(accountID);
@@ -36,7 +36,7 @@ namespace GreenRoam.Controllers
         }
 
         [HttpGet]
-        [Route("GetStaffsByID/{accountId}")]
+        [Route("GetStaffsByID/{accountID}")]
         public async Task<ActionResult<BaseResponse<GetAllStaff>>> GetStaffByID(string accountID)
         {
             if (string.IsNullOrEmpty(accountID))
