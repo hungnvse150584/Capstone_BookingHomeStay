@@ -36,6 +36,7 @@ namespace Service
             services.AddScoped<ICancellationPolicyService, CancellationPolicyService>();
             services.AddScoped<IVnPayService, VnPayService>();
             services.AddScoped<IServiceServices, ServicesService>();
+            services.AddScoped<IStaffService, StaffService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<INotificationService, NotificationService>();

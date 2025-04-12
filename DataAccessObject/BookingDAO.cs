@@ -196,7 +196,7 @@ namespace DataAccessObject
                                 .Where(o => o.BookingDetails
                                 .Any(d => (d.CheckInDate >= startOfWeek && d.CheckInDate <= endOfWeek)
                                         || (d.CheckOutDate >= startOfWeek && d.CheckOutDate <= endOfWeek)))
-                                .Where(o => o.Status == BookingStatus.Cancelled)
+                                .Where(o => o.Status == BookingStatus.Cancelled && o.paymentStatus != PaymentStatus.Refunded)
                                 .CountAsync();
 
             int bookingsReturnRefund = await _context.Bookings
