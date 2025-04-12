@@ -46,6 +46,7 @@
                    .Include(h => h.Bookings)
                    .Include(h => h.CultureExperiences)
                    .Include(h => h.Services)
+                   .Include(h => h.CommissionRate)
                    .Include(h => h.Ratings)
                    .ToListAsync();
             }
