@@ -20,20 +20,29 @@ namespace Service.Service
     {
         private readonly IMapper _mapper;
         private readonly ICommissionRateRepository _commissionRateRepository;
+        private readonly IHomeStayRepository _homeStayRepository;
 
-        public CommissionRateService(IMapper mapper, ICommissionRateRepository commissionRateRepository)
+        public CommissionRateService(IMapper mapper, ICommissionRateRepository commissionRateRepository,
+            IHomeStayRepository homeStayRepository)
         {
             _mapper = mapper;
             _commissionRateRepository = commissionRateRepository;
+            _homeStayRepository = homeStayRepository;
         }
 
         public async Task<BaseResponse<CreateCommissionRateRequest>> CreateCommmisionRate(CreateCommissionRateRequest typeRequest)
         {
+            var homeStay = await _homeStayRepository.GetHomeStayDetailByIdAsync(typeRequest.HomeStayID);
+            if(homeStay == null)
+            {
+                return new BaseResponse<CreateCommissionRateRequest>("Cannot find HomeStay", StatusCodeEnum.BadGateway_502, null);
+            }
+
             CommissionRate roomTypes = _mapper.Map<CommissionRate>(typeRequest);
             await _commissionRateRepository.AddAsync(roomTypes);
 
             var response = _mapper.Map<CreateCommissionRateRequest>(roomTypes);
-            return new BaseResponse<CreateCommissionRateRequest>("Add HomeStayType as base success", StatusCodeEnum.Created_201, response);
+            return new BaseResponse<CreateCommissionRateRequest>("Add CommissionRate as base success", StatusCodeEnum.Created_201, response);
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllCommissionRate>>> GetAllCommissionRates()
@@ -50,7 +59,7 @@ namespace Service.Service
                 return new BaseResponse<IEnumerable<GetAllCommissionRate>>("Something went wrong!",
                 StatusCodeEnum.BadGateway_502, null);
             }
-            return new BaseResponse<IEnumerable<GetAllCommissionRate>>("Get all RoomType as base success",
+            return new BaseResponse<IEnumerable<GetAllCommissionRate>>("Get all CommissionRate as base success",
                 StatusCodeEnum.OK_200, commissionRates);
         }
 

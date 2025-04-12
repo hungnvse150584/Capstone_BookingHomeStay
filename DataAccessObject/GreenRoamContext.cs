@@ -38,6 +38,16 @@ namespace DataAccessObject
                 .WithOne(e => e.Report)
                 .HasForeignKey<Booking>(e => e.ReportID);
 
+            modelBuilder.Entity<Staff>()
+                .HasOne(e => e.HomeStay)
+                .WithOne(e => e.Staff)
+                .HasForeignKey<HomeStay>(e => e.StaffID);
+
+            modelBuilder.Entity<CommissionRate>()
+                .HasOne(cr => cr.HomeStay)
+                .WithOne(hs => hs.CommissionRate)
+                .HasForeignKey<CommissionRate>(cr => cr.HomeStayID);
+
             modelBuilder.Entity<CancellationPolicy>()
                 .HasOne(e => e.HomeStay)
                 .WithOne(e => e.CancelPolicy)
@@ -78,12 +88,12 @@ namespace DataAccessObject
             modelBuilder.Entity<Conversation>()
                 .HasIndex(c => c.User2ID);
             modelBuilder.Entity<Notification>()
-        .HasOne(n => n.Account)
-        .WithMany(a => a.Notifications) // Thêm mối quan hệ ngược
-        .HasForeignKey(n => n.AccountID)
-        .IsRequired(true);
+                .HasOne(n => n.Account)
+                .WithMany(a => a.Notifications) // Thêm mối quan hệ ngược
+                .HasForeignKey(n => n.AccountID)
+                .IsRequired(true);
             modelBuilder.Entity<Notification>()
-        .ToTable("Notification");
+                .ToTable("Notification");
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.Booking)
                 .WithMany(b => b.Notifications) // Thêm mối quan hệ ngược
@@ -95,7 +105,7 @@ namespace DataAccessObject
                 .WithMany(bs => bs.Notifications) // Thêm mối quan hệ ngược
                 .HasForeignKey(n => n.BookingServicesID)
                 .IsRequired(false);
-            List<IdentityRole> roles = new List<IdentityRole>
+            /*List<IdentityRole> roles = new List<IdentityRole>
                {
                    new IdentityRole
                    {
@@ -118,9 +128,10 @@ namespace DataAccessObject
                        NormalizedName = "STAFF"
                    }
               };
-            modelBuilder.Entity<IdentityRole>().HasData(roles);
+            modelBuilder.Entity<IdentityRole>().HasData(roles);*/
         }
         public DbSet<HomeStay> HomeStays { get; set; }
+        public DbSet<Staff> Staffs { get; set; }
         public DbSet<Pricing> Prices { get; set; }
         public DbSet<CancellationPolicy> CancelPolicy { get; set; }
         public DbSet<CommissionRate> CommissionRates { get; set; }

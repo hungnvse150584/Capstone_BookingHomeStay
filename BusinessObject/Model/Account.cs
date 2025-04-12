@@ -17,7 +17,7 @@ namespace BusinessObject.Model;
 
         public string? TaxCode { get; set; }
 
-        public string BankAccountNumber { get; set; }
+        public string? BankAccountNumber { get; set; }
         
         public bool Status { get; set; }
 
@@ -30,6 +30,8 @@ namespace BusinessObject.Model;
         public ICollection<Report> Reports { get; set; }
 
         public ICollection<Booking> Bookings { get; set; }
+
+        public ICollection<Staff> Staffs { get; set; }
 
         public ICollection<BookingServices> BookingServices { get; set; }
 

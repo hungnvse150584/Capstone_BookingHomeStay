@@ -139,9 +139,13 @@ namespace DataAccessObject
         {
             return await _context.Bookings
                 .Include(o => o.Account)
-                .Include(o => o.HomeStay)
                 .Include(o => o.BookingDetails)
+                .ThenInclude(bd => bd.HomeStayRentals)
+                .Include(b => b.BookingDetails)
+                .ThenInclude(bd => bd.Rooms)
                 .Include(o => o.BookingServices)
+                .ThenInclude(o => o.BookingServicesDetails)
+                .Include(o => o.HomeStay)
                 .FirstOrDefaultAsync(o => o.BookingID == bookingId);
         }
 
@@ -196,7 +200,7 @@ namespace DataAccessObject
                                 .Where(o => o.BookingDetails
                                 .Any(d => (d.CheckInDate >= startOfWeek && d.CheckInDate <= endOfWeek)
                                         || (d.CheckOutDate >= startOfWeek && d.CheckOutDate <= endOfWeek)))
-                                .Where(o => o.Status == BookingStatus.Cancelled)
+                                .Where(o => o.Status == BookingStatus.Cancelled && o.paymentStatus != PaymentStatus.Refunded)
                                 .CountAsync();
 
             int bookingsReturnRefund = await _context.Bookings

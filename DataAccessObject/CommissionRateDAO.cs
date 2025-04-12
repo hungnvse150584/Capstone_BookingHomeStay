@@ -20,14 +20,14 @@ namespace DataAccessObject
         public async Task<IEnumerable<CommissionRate>> GetAllCommissionRateAsync()
         {
             return await _context.CommissionRates
-                        .Include(o => o.HomeStays)
+                        .Include(o => o.HomeStay)
                         .ToListAsync();
         }
 
         public async Task<CommissionRate?> GetCommissionRateByIDAsync(int rateID)
         {
             return await _context.CommissionRates
-                .Include(o => o.HomeStays)
+                .Include(o => o.HomeStay)
                 .FirstOrDefaultAsync(o => o.CommissionRateID == rateID);
         }
 

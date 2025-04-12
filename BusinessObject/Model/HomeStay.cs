@@ -40,6 +40,10 @@ namespace BusinessObject.Model;
         public string AccountID { get; set; }
         public Account Account { get; set; }
 
+        public int? StaffID { get; set; }
+        [ForeignKey("StaffID")]
+        public Staff? Staff { get; set; }
+
         [ForeignKey("CommissionRateID")]
         public int? CommissionRateID { get; set; }
         public CommissionRate? CommissionRate { get; set; }

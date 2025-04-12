@@ -35,7 +35,6 @@ namespace DataAccessObject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BankAccountNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -343,6 +342,9 @@ namespace DataAccessObject.Migrations
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("HomeStayID")
+                        .HasColumnType("int");
+
                     b.Property<double>("HostShare")
                         .HasColumnType("float");
 
@@ -353,6 +355,10 @@ namespace DataAccessObject.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("CommissionRateID");
+
+                    b.HasIndex("HomeStayID")
+                        .IsUnique()
+                        .HasFilter("[HomeStayID] IS NOT NULL");
 
                     b.ToTable("CommissionRates");
                 });
@@ -476,6 +482,9 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("StaffID")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -489,7 +498,9 @@ namespace DataAccessObject.Migrations
 
                     b.HasIndex("AccountID");
 
-                    b.HasIndex("CommissionRateID");
+                    b.HasIndex("StaffID")
+                        .IsUnique()
+                        .HasFilter("[StaffID] IS NOT NULL");
 
                     b.ToTable("HomeStays");
                 });
@@ -1079,6 +1090,53 @@ namespace DataAccessObject.Migrations
                     b.ToTable("Services");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.Staff", b =>
+                {
+                    b.Property<int>("StaffID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StaffID"));
+
+                    b.Property<string>("AccountID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("HomeStayID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StaffIdAccount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StaffName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StaffID");
+
+                    b.HasIndex("AccountID");
+
+                    b.ToTable("Staffs");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.Transaction", b =>
                 {
                     b.Property<string>("ResponseId")
@@ -1184,32 +1242,6 @@ namespace DataAccessObject.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "9210b164-db13-4d65-980c-c8f9e981c87c",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "64c6a59d-b417-44d2-9c16-c9f5d13221dc",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
-                        },
-                        new
-                        {
-                            Id = "abf37e81-7e3f-4b1c-aa57-b0264662fa63",
-                            Name = "Owner",
-                            NormalizedName = "OWNER"
-                        },
-                        new
-                        {
-                            Id = "2a38c557-7105-4fcf-94be-af84039161bc",
-                            Name = "Staff",
-                            NormalizedName = "STAFF"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1411,6 +1443,15 @@ namespace DataAccessObject.Migrations
                     b.Navigation("HomeStay");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.CommissionRate", b =>
+                {
+                    b.HasOne("BusinessObject.Model.HomeStay", "HomeStay")
+                        .WithOne("CommissionRate")
+                        .HasForeignKey("BusinessObject.Model.CommissionRate", "HomeStayID");
+
+                    b.Navigation("HomeStay");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.Conversation", b =>
                 {
                     b.HasOne("BusinessObject.Model.HomeStay", "HomeStay")
@@ -1461,13 +1502,13 @@ namespace DataAccessObject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BusinessObject.Model.CommissionRate", "CommissionRate")
-                        .WithMany("HomeStays")
-                        .HasForeignKey("CommissionRateID");
+                    b.HasOne("BusinessObject.Model.Staff", "Staff")
+                        .WithOne("HomeStay")
+                        .HasForeignKey("BusinessObject.Model.HomeStay", "StaffID");
 
                     b.Navigation("Account");
 
-                    b.Navigation("CommissionRate");
+                    b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.HomeStayRentals", b =>
@@ -1674,6 +1715,17 @@ namespace DataAccessObject.Migrations
                     b.Navigation("HomeStay");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.Staff", b =>
+                {
+                    b.HasOne("BusinessObject.Model.Account", "Owner")
+                        .WithMany("Staffs")
+                        .HasForeignKey("AccountID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.Transaction", b =>
                 {
                     b.HasOne("BusinessObject.Model.Account", "Account")
@@ -1774,6 +1826,8 @@ namespace DataAccessObject.Migrations
 
                     b.Navigation("Reviews");
 
+                    b.Navigation("Staffs");
+
                     b.Navigation("Transactions");
                 });
 
@@ -1797,11 +1851,6 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("BusinessObject.Model.CommissionRate", b =>
-                {
-                    b.Navigation("HomeStays");
-                });
-
             modelBuilder.Entity("BusinessObject.Model.Conversation", b =>
                 {
                     b.Navigation("Messages");
@@ -1819,6 +1868,8 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Bookings");
 
                     b.Navigation("CancelPolicy");
+
+                    b.Navigation("CommissionRate");
 
                     b.Navigation("Conversations");
 
@@ -1872,6 +1923,11 @@ namespace DataAccessObject.Migrations
                     b.Navigation("BookingServicesDetails");
 
                     b.Navigation("ImageServices");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.Staff", b =>
+                {
+                    b.Navigation("HomeStay");
                 });
 #pragma warning restore 612, 618
         }
