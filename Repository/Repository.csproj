@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Cloud.Dialogflow.V2" Version="4.26.0" />
+	  <ProjectReference Include="..\BusinessObject\BusinessObject.csproj" />
   </ItemGroup>
 
   <ItemGroup>
