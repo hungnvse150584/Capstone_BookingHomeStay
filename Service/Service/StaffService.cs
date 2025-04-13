@@ -43,7 +43,7 @@ namespace Service.Service
         public async Task<BaseResponse<Staff>> CreateStaffAccount(CreateStaffRequest request)
         {
             var existStaffHomeStay = await _staffRepository.GetAllStaffByHomeStay(request.HomeStayID);
-            if (existStaffHomeStay != null)
+            if (existStaffHomeStay != null && existStaffHomeStay.Any())
             {
                 return new BaseResponse<Staff>("Already have Staff at this homestay!", StatusCodeEnum.Conflict_409, null);
             }
@@ -113,7 +113,7 @@ namespace Service.Service
         public async Task<BaseResponse<IEnumerable<GetAllStaff>>> GetAllStaffByHomeStay(int homeStayID)
         {
             IEnumerable<Staff> Staff = await _staffRepository.GetAllStaffByHomeStay(homeStayID);
-            if (Staff == null)
+            if (Staff == null && Staff.Any())
             {
                 return new BaseResponse<IEnumerable<GetAllStaff>>("Something went wrong!",
                 StatusCodeEnum.BadGateway_502, null);
