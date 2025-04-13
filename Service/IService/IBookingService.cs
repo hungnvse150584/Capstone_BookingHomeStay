@@ -24,7 +24,7 @@ namespace Service.IService
         public (int? bookingId, int? serviceId) ParseOrderInfo(string orderInfo);
         Task<BaseResponse<IEnumerable<GetBookingByHomeStay>>> GetBookingsByHomeStayId(int homeStayID);
         Task<BaseResponse<Booking>> GetBookingsById(int bookingID);
-        Task<BaseResponse<Booking>> GetBookingById(int? bookingID);
+        Task<BaseResponse<GetBookingResponse>> GetBookingById(int? bookingID);
         Task<BaseResponse<IEnumerable<GetBookingByAccount>>> GetBookingsByAccountId(string accountId);
         Task<BaseResponse<GetCancellationBooking>> GetCancellationBooking(int bookingID);
         //For Admin DashBoard

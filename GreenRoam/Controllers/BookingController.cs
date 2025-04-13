@@ -31,7 +31,7 @@ namespace GreenRoam.Controllers
 
         [HttpGet]
         [Route("GetBookingByID/{bookingID}")]
-        public async Task<ActionResult<BaseResponse<Booking>>> GetBookingsById(int bookingID)
+        public async Task<ActionResult<BaseResponse<GetBookingResponse>>> GetBookingsById(int bookingID)
         {
             var booking = await _bookingService.GetBookingById(bookingID);
             return Ok(booking);

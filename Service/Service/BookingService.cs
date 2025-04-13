@@ -12,6 +12,7 @@ using Service.RequestAndResponse.Request.BookingDetail;
 using Service.RequestAndResponse.Request.BookingServices;
 using Service.RequestAndResponse.Response.BookingOfServices;
 using Service.RequestAndResponse.Response.Bookings;
+using Service.RequestAndResponse.Response.HomeStays;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -208,17 +209,21 @@ namespace Service.Service
         }
 
 
-        public async Task<BaseResponse<Booking>> GetBookingById(int? bookingID)
+        public async Task<BaseResponse<GetBookingResponse>> GetBookingById(int? bookingID)
         {
-            var booking = await _bookingRepository.GetBookingsByIdAsync(bookingID);
+            /*var booking = await _bookingRepository.GetBookingsByIdAsync(bookingID);
             if (booking == null)
             {
-                return new BaseResponse<Booking>("Something went wrong!",
+                return new BaseResponse<GetBookingResponse>("Something went wrong!",
                 StatusCodeEnum.BadGateway_502, null);
             }
 
-            return new BaseResponse<Booking>("Get all bookings as base success",
-                StatusCodeEnum.OK_200, booking);
+            return new BaseResponse<GetBookingResponse>("Get all bookings as base success",
+                StatusCodeEnum.OK_200, booking);*/
+
+            Booking booking = await _bookingRepository.GetBookingsByIdAsync(bookingID);
+            var result = _mapper.Map<GetBookingResponse>(booking);
+            return new BaseResponse<GetBookingResponse>("Get HomeStay as base success", StatusCodeEnum.OK_200, result);
         }
 
         public (int? bookingId, int? serviceId) ParseOrderInfo(string orderInfo)
