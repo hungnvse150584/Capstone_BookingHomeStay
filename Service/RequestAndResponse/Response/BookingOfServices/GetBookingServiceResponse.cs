@@ -22,6 +22,8 @@ namespace Service.RequestAndResponse.Response.BookingOfServices
 
         public PaymentServicesMethod PaymentServicesMethod { get; set; }
 
+        public PaymentServicesStatus PaymentServiceStatus { get; set; }
+
         public ICollection<SingleServiceDetail> BookingServicesDetails { get; set; }
     }
 }
