@@ -6,6 +6,7 @@ using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.CancellationPolicy;
+using Service.RequestAndResponse.Request.CommissionRates;
 using Service.RequestAndResponse.Response.CancellationPolicyRequest;
 using Service.RequestAndResponse.Response.CommissionRate;
 using Service.RequestAndResponse.Response.HomeStays;
@@ -21,17 +22,33 @@ namespace Service.Service
     {
         private readonly IMapper _mapper;
         private readonly ICancellationPolicyRepository _cancellationPolicyRepository;
+        private readonly IHomeStayRepository _homeStayRepository;
 
-        public CancellationPolicyService(IMapper mapper, ICancellationPolicyRepository cancellationPolicyRepository)
+        public CancellationPolicyService(IMapper mapper, ICancellationPolicyRepository cancellationPolicyRepository, IHomeStayRepository homestayRepository)
         {
             _mapper = mapper;
             _cancellationPolicyRepository = cancellationPolicyRepository;
+            _homeStayRepository = homestayRepository;
         }
 
         public async Task<BaseResponse<CreateCancellationPolicyRequest>> CreateCancellationPolicyRequest(CreateCancellationPolicyRequest typeRequest)
         {
             try
             {
+                var homeStay = await _homeStayRepository.GetHomeStayDetailByIdAsync(typeRequest.HomeStayID);
+                if (homeStay == null)
+                {
+                    return new BaseResponse<CreateCancellationPolicyRequest>("Cannot find HomeStay", StatusCodeEnum.BadGateway_502, null);
+                }
+
+                // Kiểm tra xem HomeStay đã có CommissionRate chưa
+                if (homeStay.CancellationID.HasValue)
+                {
+                    return new BaseResponse<CreateCancellationPolicyRequest>(
+                        "HomeStay already has a CancellationPolicy. Use UpdateCommissionRate to modify it.",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
                 // Ánh xạ từ request sang entity CancellationPolicy
                 var cancellationPolicy = _mapper.Map<CancellationPolicy>(typeRequest);
 
@@ -41,6 +58,10 @@ namespace Service.Service
 
                 // Thêm vào cơ sở dữ liệu
                 var createdPolicy = await _cancellationPolicyRepository.AddAsync(cancellationPolicy);
+
+                homeStay.CancellationID = cancellationPolicy.CancellationID;
+                await _homeStayRepository.UpdateAsync(homeStay);
+                await _homeStayRepository.SaveChangesAsync();
 
                 // Ánh xạ từ entity sang response
                 var response = _mapper.Map<CreateCancellationPolicyRequest>(createdPolicy);
