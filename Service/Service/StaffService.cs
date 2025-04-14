@@ -70,7 +70,8 @@ namespace Service.Service
             var createdUser = await _userManager.CreateAsync(accountApp, request.Password);
             if (!createdUser.Succeeded)
             {
-                return new BaseResponse<Staff>("Cannot create account!", StatusCodeEnum.Conflict_409, null);
+                var errors = string.Join(", ", createdUser.Errors.Select(e => e.Description));
+                return new BaseResponse<Staff>($"Cannot create account! Reason: {errors}", StatusCodeEnum.Conflict_409, null);
             }
 
             // 4. Thêm role STAFF

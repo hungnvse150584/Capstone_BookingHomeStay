@@ -478,29 +478,11 @@ namespace Service.Service
             // Thêm transaction vào trong danh sách Transactions
             booking.Transactions.Add(transaction);
 
-            if (bookingServiceID.HasValue && bookingServiceID.Value > 0)
+            var bookingServices = await _bookingServiceRepository.GetConfirmedBookingServiceByBookingId(bookingID);
+            if (bookingServices != null)
             {
-                var bookingService = await _bookingServiceRepository.GetBookingServiceByIdAsync(bookingServiceID);
-                if (bookingService == null)
-                {
-                    throw new Exception("BookingService not found");
-                }
-
-                bookingService.PaymentServiceStatus = PaymentServicesStatus.Refunded;
-                bookingService.Status = BookingServicesStatus.Cancelled;
-                bookingService.Transactions ??= new List<Transaction>();
-                transaction.HomeStay = bookingService.HomeStay;
-                transaction.Account = bookingService.HomeStay.Account;
-                bookingService.Transactions.Add(transaction);
-                await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
-            }
-            else
-            {
-                var bookingServices = await _bookingServiceRepository.GetConfirmedBookingServiceByBookingId(bookingID);
-                if (bookingServices != null)
-                {
-                    foreach (var service in bookingServices)
-                    {
+                foreach (var service in bookingServices)
+                {   
                         service.Status = BookingServicesStatus.Cancelled;
                         service.PaymentServiceStatus = PaymentServicesStatus.Refunded;
                         service.Status = BookingServicesStatus.Cancelled;
@@ -509,8 +491,6 @@ namespace Service.Service
                         transaction.Account = service.HomeStay.Account;
                         service.Transactions.Add(transaction);
                         await _bookingServiceRepository.UpdateBookingServicesAsync(service);
-
-                    }
                 }
             }
 
