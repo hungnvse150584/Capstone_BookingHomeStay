@@ -36,18 +36,34 @@ namespace DataAccessObject
         {
             if (checkInDate >= checkOutDate)
             {
-                throw new ArgumentException($"{checkOutDate} must be after {checkInDate}.");
+                throw new ArgumentException("Check-out date must be after check-in date.");
             }
 
             var availableRooms = await _context.Rooms
-             .Where(r => r.isActive == true && r.isUsed == false) // Phòng chưa bị chủ khóa và chưa có khách
-             .Where(r => !_context.BookingDetails
-             .Any(bd => bd.RoomID == r.RoomID &&
-                  (bd.Booking.paymentStatus == PaymentStatus.Deposited ||
-                   bd.Booking.paymentStatus == PaymentStatus.FullyPaid
-                  ) &&
-                  (checkInDate < bd.CheckOutDate && checkOutDate > bd.CheckInDate)))
-           .ToListAsync();
+                .Where(r => r.isActive == true && r.isUsed == false) // Phòng chưa bị chủ khóa và chưa có khách
+                .Where(r => !_context.BookingDetails
+                    .Where(bd => bd.RoomID != null) // Đảm bảo RoomID không null
+                    .Any(bd => bd.RoomID == r.RoomID &&
+                        // Kiểm tra các trạng thái booking hợp lệ
+                        (
+                            // Booking đã xác nhận và đã đặt cọc hoặc thanh toán toàn bộ
+                            (bd.Booking.Status == BookingStatus.Confirmed &&
+                             (bd.Booking.paymentStatus == PaymentStatus.Deposited ||
+                              bd.Booking.paymentStatus == PaymentStatus.FullyPaid)) ||
+                            // Booking đang diễn ra và đã thanh toán toàn bộ
+                            (bd.Booking.Status == BookingStatus.InProgress &&
+                             bd.Booking.paymentStatus == PaymentStatus.FullyPaid) ||
+                            // Booking đang chờ xác nhận và chưa hết thời gian ExpiredTime
+                            (bd.Booking.Status == BookingStatus.Pending &&
+                             bd.Booking.ExpiredTime > DateTime.UtcNow) ||
+                            // Booking đang yêu cầu hoàn tiền và chưa được hoàn tiền
+                            (bd.Booking.Status == BookingStatus.RequestRefund &&
+                             bd.Booking.paymentStatus != PaymentStatus.Refunded)
+                        ) &&
+                        // Kiểm tra trùng ngày
+                        (checkInDate < bd.CheckOutDate && checkOutDate > bd.CheckInDate)))
+                .ToListAsync();
+
             return availableRooms;
         }
         public async Task SaveChangesAsync()
@@ -83,24 +99,45 @@ namespace DataAccessObject
         }
         public async Task<IEnumerable<Room>> FilterRoomsByRoomTypeAndDates(int roomTypeId, DateTime checkInDate, DateTime checkOutDate)
         {
+            // Log thời gian hiện tại
+            Console.WriteLine($"Current DateTime.UtcNow: {DateTime.UtcNow}");
+
             if (checkInDate >= checkOutDate)
             {
-                throw new ArgumentException($"{checkOutDate} must be after {checkInDate}.");
+                throw new ArgumentException("Check-out date must be after check-in date.");
             }
 
+            // Log danh sách phòng trước khi lọc
+            var roomsBeforeFilter = await _context.Rooms
+                .Where(r => r.RoomTypesID == roomTypeId)
+                .Where(r => r.isActive == true && r.isUsed == false)
+                .ToListAsync();
+            Console.WriteLine($"Rooms before filter: {string.Join(", ", roomsBeforeFilter.Select(r => r.RoomID))}");
+
+            // Thực hiện lọc phòng
             var availableRooms = await _context.Rooms
-                .Where(r => r.RoomTypesID == roomTypeId) // Lọc theo RoomTypeId
-                .Where(r => r.isActive == true && r.isUsed == false) // Phòng chưa bị chủ khóa và chưa có khách
+                .Where(r => r.RoomTypesID == roomTypeId)
+                .Where(r => r.isActive == true && r.isUsed == false)
                 .Where(r => !_context.BookingDetails
+                    .Where(bd => bd.RoomID != null)
                     .Any(bd => bd.RoomID == r.RoomID &&
-                        // Kiểm tra các trạng thái booking hợp lệ dựa trên BookingStatus
-                        (bd.Booking.Status == BookingStatus.Pending ||
-                         bd.Booking.Status == BookingStatus.Confirmed ||
-                         bd.Booking.Status == BookingStatus.InProgress) &&
-                        // Sửa điều kiện kiểm tra trùng ngày
-                        (checkInDate <= bd.CheckOutDate && checkOutDate >= bd.CheckInDate))) // Không trùng với BookingDetail đã đặt
+                        (
+                            (bd.Booking.Status == BookingStatus.Confirmed &&
+                             (bd.Booking.paymentStatus == PaymentStatus.Deposited ||
+                              bd.Booking.paymentStatus == PaymentStatus.FullyPaid)) ||
+                            (bd.Booking.Status == BookingStatus.InProgress &&
+                             bd.Booking.paymentStatus == PaymentStatus.FullyPaid) ||
+                            (bd.Booking.Status == BookingStatus.Pending &&
+                             bd.Booking.ExpiredTime > DateTime.UtcNow) ||
+                            (bd.Booking.Status == BookingStatus.RequestRefund &&
+                             bd.Booking.paymentStatus != PaymentStatus.Refunded)
+                        ) &&
+                        (checkInDate < bd.CheckOutDate && checkOutDate > bd.CheckInDate)))
                 .Include(r => r.RoomTypes)
                 .ToListAsync();
+
+            // Log danh sách phòng sau khi lọc
+            Console.WriteLine($"Rooms after filter: {string.Join(", ", availableRooms.Select(r => r.RoomID))}");
 
             return availableRooms;
         }

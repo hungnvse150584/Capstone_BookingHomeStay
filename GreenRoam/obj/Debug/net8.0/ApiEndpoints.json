@@ -385,7 +385,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[BusinessObject.Model.Booking, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Bookings.GetBookingResponse, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -2639,7 +2639,7 @@
   {
     "ContainingType": "GreenRoam.Controllers.StaffController",
     "Method": "GetAllStaffByOwner",
-    "RelativePath": "api/Manage-Staff/GetAllStaffsByOwner/{accountId}",
+    "RelativePath": "api/Manage-Staff/GetAllStaffsByOwner/{accountID}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -2665,7 +2665,7 @@
   {
     "ContainingType": "GreenRoam.Controllers.StaffController",
     "Method": "GetStaffByID",
-    "RelativePath": "api/Manage-Staff/GetStaffsByID/{accountId}",
+    "RelativePath": "api/Manage-Staff/GetStaffsByID/{accountID}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

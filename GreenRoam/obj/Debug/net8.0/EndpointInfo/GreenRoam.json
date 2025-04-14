@@ -508,17 +508,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/BookingBaseResponse"
+                  "$ref": "#/components/schemas/GetBookingResponseBaseResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BookingBaseResponse"
+                  "$ref": "#/components/schemas/GetBookingResponseBaseResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BookingBaseResponse"
+                  "$ref": "#/components/schemas/GetBookingResponseBaseResponse"
                 }
               }
             }
@@ -5300,7 +5300,7 @@
         }
       }
     },
-    "/api/Manage-Staff/GetAllStaffsByOwner/{accountId}": {
+    "/api/Manage-Staff/GetAllStaffsByOwner/{accountID}": {
       "get": {
         "tags": [
           "Staff"
@@ -5339,7 +5339,7 @@
         }
       }
     },
-    "/api/Manage-Staff/GetStaffsByID/{accountId}": {
+    "/api/Manage-Staff/GetStaffsByID/{accountID}": {
       "get": {
         "tags": [
           "Staff"
@@ -6278,7 +6278,8 @@
           0,
           1,
           3,
-          4
+          4,
+          5
         ],
         "type": "integer",
         "format": "int32"
@@ -6821,8 +6822,7 @@
           },
           "homeStayID": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -8370,6 +8370,43 @@
         },
         "additionalProperties": false
       },
+      "GetBookingDetailResponse": {
+        "type": "object",
+        "properties": {
+          "bookingDetailID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rentPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "checkInDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "checkOutDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "homeStayTypesID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "homeStayTypes": {
+            "$ref": "#/components/schemas/GetSimpleHomeStayType"
+          },
+          "rooms": {
+            "$ref": "#/components/schemas/GetRoomsResponse"
+          }
+        },
+        "additionalProperties": false
+      },
       "GetBookingDetails": {
         "type": "object",
         "properties": {
@@ -8405,6 +8442,96 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBookingResponse": {
+        "type": "object",
+        "properties": {
+          "bookingID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiredTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "numberOfChildren": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfAdults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BookingStatus"
+          },
+          "paymentStatus": {
+            "$ref": "#/components/schemas/PaymentStatus"
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/PaymentMethod"
+          },
+          "totalRentPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "total": {
+            "type": "number",
+            "format": "double"
+          },
+          "bookingDeposit": {
+            "type": "number",
+            "format": "double"
+          },
+          "remainingBalance": {
+            "type": "number",
+            "format": "double"
+          },
+          "report": {
+            "$ref": "#/components/schemas/GetReportResponse"
+          },
+          "account": {
+            "$ref": "#/components/schemas/GetAccountUser"
+          },
+          "homeStay": {
+            "$ref": "#/components/schemas/SingleHomeStayResponse"
+          },
+          "bookingDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetBookingDetailResponse"
+            },
+            "nullable": true
+          },
+          "bookingServices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetBookingServiceResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBookingResponseBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GetBookingResponse"
           }
         },
         "additionalProperties": false
@@ -8593,6 +8720,42 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GetBookingServiceByHomeStay"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetBookingServiceResponse": {
+        "type": "object",
+        "properties": {
+          "bookingServicesID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bookingServicesDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "total": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BookingServicesStatus"
+          },
+          "paymentServicesMethod": {
+            "$ref": "#/components/schemas/PaymentServicesMethod"
+          },
+          "bookingServicesDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SingleServiceDetail"
             },
             "nullable": true
           }
@@ -8826,6 +8989,31 @@
           "reportID": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetRoomsResponse": {
+        "type": "object",
+        "properties": {
+          "roomID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "roomNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "isUsed": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "roomTypesID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -11064,6 +11252,73 @@
             "items": {
               "$ref": "#/components/schemas/SimpleHomeStayResponse"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SingleHomeStayResponse": {
+        "type": "object",
+        "properties": {
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "account": {
+            "$ref": "#/components/schemas/GetAccountUser"
+          },
+          "imageHomeStays": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageHomeStayResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SingleServiceDetail": {
+        "type": "object",
+        "properties": {
+          "bookingServicesDetailID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "servicesID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "services": {
+            "$ref": "#/components/schemas/GetSingleService"
+          },
+          "bookingServicesID": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },
