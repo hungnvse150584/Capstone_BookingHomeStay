@@ -95,11 +95,12 @@ namespace Service.Service
 
         public async Task<BaseResponse<PricingResponse>> CreatePricing(CreatePricingRequest typeRequest)
         {
+            // Kiểm tra các trường bắt buộc khác
             var homeStayRental = await _homeStayRentalRepository.GetHomeStayTypesByIdAsync(typeRequest.HomeStayRentalID);
             if (homeStayRental == null)
             {
                 return new BaseResponse<PricingResponse>("Cannot Find HomeStayRental!",
-                StatusCodeEnum.BadGateway_502, null);
+                    StatusCodeEnum.BadGateway_502, null);
             }
 
             if (homeStayRental.RentWhole == true && typeRequest.RoomTypesID.HasValue)
@@ -126,14 +127,28 @@ namespace Service.Service
                 return new BaseResponse<PricingResponse>("StartDate and EndDate should not be provided when IsDefault is true!", StatusCodeEnum.BadGateway_502, null);
             }
 
-            // Kiểm tra nếu DayType là Weekend hoặc Holiday, phải có Pricing của Weekday trước
+            // Kiểm tra UnitPrice và RentPrice cho Weekday
+            if (typeRequest.DayType == DayType.Weekday)
+            {
+                if (typeRequest.UnitPrice <= 0 || typeRequest.RentPrice <= 0)
+                {
+                    return new BaseResponse<PricingResponse>("UnitPrice and RentPrice are required and must be greater than 0 for Weekday pricing!", StatusCodeEnum.BadGateway_502, null);
+                }
+            }
+
+            // Kiểm tra nếu DayType là Weekend hoặc Holiday
             if (typeRequest.DayType == DayType.Weekend || typeRequest.DayType == DayType.Holiday)
             {
                 var existingWeekdayPricing = homeStayRental.RentWhole
                     ? await _priceRepository.GetPricingByHomeStayRentalAsync(typeRequest.HomeStayRentalID.Value)
                     : await _priceRepository.GetPricingByRoomTypeAsync(typeRequest.RoomTypesID.Value);
 
-                var weekdayPricing = existingWeekdayPricing.FirstOrDefault(p => p.DayType == DayType.Weekday);
+                // Lấy Pricing mới nhất có DayType = Weekday
+                var weekdayPricing = existingWeekdayPricing
+                    .Where(p => p.DayType == DayType.Weekday)
+                    .OrderByDescending(p => p.StartDate ?? DateTime.MaxValue) // Sắp xếp theo StartDate (mới nhất trước), nếu null thì ưu tiên
+                    .FirstOrDefault();
+
                 if (weekdayPricing == null)
                 {
                     return new BaseResponse<PricingResponse>("Cannot create Pricing for Weekend or Holiday because no Weekday Pricing exists!", StatusCodeEnum.BadGateway_502, null);
@@ -167,7 +182,6 @@ namespace Service.Service
 
             await _priceRepository.AddAsync(pricing);
 
-            // Ánh xạ từ Pricing sang PricingResponse
             var pricingResponse = _mapper.Map<PricingResponse>(pricing);
 
             return new BaseResponse<PricingResponse>("Pricing created successfully!", StatusCodeEnum.OK_200, pricingResponse);

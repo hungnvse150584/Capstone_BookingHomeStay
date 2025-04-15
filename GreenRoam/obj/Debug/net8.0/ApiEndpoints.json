@@ -278,6 +278,47 @@
   },
   {
     "ContainingType": "GreenRoam.Controllers.BookingController",
+    "Method": "GetTotalBookingsTotalBookingsAmountForHomeStay",
+    "RelativePath": "api/booking-bookingservices/adminDashBoard/GetTotalBookingsTotalBookingsAmountForHomeStay",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "homeStayID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "startDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "endDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "timeSpanType",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.List\u00601[[Service.RequestAndResponse.Response.Bookings.GetTotalBookingsTotalBookingsAmountForHomeStay, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.BookingController",
     "Method": "GetAllBookings",
     "RelativePath": "api/booking-bookingservices/GetAllBooking",
     "HttpMethod": "GET",
