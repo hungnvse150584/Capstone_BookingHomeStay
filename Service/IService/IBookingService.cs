@@ -32,5 +32,7 @@ namespace Service.IService
         Task<BaseResponse<GetTopHomeStayBookingInMonth>> GetTopHomeStayBookingInMonth();
         Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmount>>> GetTotalBookingsTotalBookingsAmount
         (DateTime startDate, DateTime endDate, string? timeSpanType);
+        Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>> GetTotalBookingsTotalBookingsAmountForHomeStay
+        (int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType);
     }
 }

@@ -96,5 +96,10 @@ namespace Repository.Repositories
         {
             return await _bookingDao.GetBookingsForCheckInReminderAsync();
         }
+
+        public async Task<List<(object span, int totalBookings, double totalBookingsAmount)>> GetTotalBookingsTotalBookingsAmountForHomeStay(int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType)
+        {
+            return await _bookingDao.GetTotalBookingsTotalBookingsAmountForHomeStay(homeStayID, startDate, endDate, timeSpanType);
+        }
     }
 }

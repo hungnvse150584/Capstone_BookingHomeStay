@@ -81,5 +81,12 @@ namespace GreenRoam.Controllers
         {
             return await _bookingService.GetTotalBookingsTotalBookingsAmount(startDate, endDate, timeSpanType);
         }
+
+        [HttpGet("adminDashBoard/GetTotalBookingsTotalBookingsAmountForHomeStay")]
+        public async Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>> GetTotalBookingsTotalBookingsAmountForHomeStay
+            (int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType)
+        {
+            return await _bookingService.GetTotalBookingsTotalBookingsAmountForHomeStay(homeStayID, startDate, endDate, timeSpanType);
+        }
     }
 }

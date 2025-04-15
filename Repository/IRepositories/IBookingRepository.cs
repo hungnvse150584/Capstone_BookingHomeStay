@@ -29,5 +29,8 @@ namespace Repository.IRepositories
         Task<List<(string homeStayName, int QuantityOfBooking)>> GetTopHomeStayBookingInMonthAsync();
         Task<List<(object span, int totalBookings, double totalBookingsAmount)>> GetTotalBookingsTotalBookingsAmount
         (DateTime startDate, DateTime endDate, string? timeSpanType);
+        Task<List<(object span, int totalBookings, double totalBookingsAmount)>> GetTotalBookingsTotalBookingsAmountForHomeStay
+        (int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType);
+
     }
 }

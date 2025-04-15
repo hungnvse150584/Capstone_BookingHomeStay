@@ -255,6 +255,37 @@ namespace Service.Service
             return (bookingId, serviceId);
         }
 
+        public async Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>> GetTotalBookingsTotalBookingsAmountForHomeStay(int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType)
+        {
+            if(homeStayID <= 0)
+            {
+                return new BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>("Please input correct ID", StatusCodeEnum.NotImplemented_501, null);
+            }
+
+            if (startDate == default(DateTime).Date || endDate == default(DateTime).Date)
+            {
+                return new BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>("Please input time", StatusCodeEnum.NotImplemented_501, null);
+            }
+
+            if (startDate >= endDate)
+            {
+                return new BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>("Please input endDate > startDate", StatusCodeEnum.NotAcceptable_406, null);
+            }
+
+            var total = await _bookingRepository.GetTotalBookingsTotalBookingsAmountForHomeStay(homeStayID ,startDate, endDate, timeSpanType);
+            var response = total.Select(p => new GetTotalBookingsTotalBookingsAmountForHomeStay
+            {
+                span = p.span,
+                totalBookings = p.totalBookings,
+                totalBookingsAmount = p.totalBookingsAmount
+            }).ToList();
+            if (response == null || !response.Any())
+            {
+                return new BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>("Get Total Fail", StatusCodeEnum.BadRequest_400, null);
+            }
+            return new BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>("Get All Success", StatusCodeEnum.OK_200, response);
+        }
+
 
 
 

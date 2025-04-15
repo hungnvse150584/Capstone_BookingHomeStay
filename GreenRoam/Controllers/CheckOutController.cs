@@ -125,7 +125,7 @@ namespace GreenRoam.Controllers
                     return BadRequest("Booking cannot be refunded because it does not meet the homestay's cancellation policy.");
                 }
 
-                var bookingServiceID = booking.Data.BookingServices.SingleOrDefault()?.BookingServicesID;
+                var bookingServiceID = booking.Data.BookingServices.FirstOrDefault()?.BookingServicesID;
 
                 var vnPayModel = new VnPayRequestModel
                 {
