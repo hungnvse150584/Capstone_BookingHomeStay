@@ -6886,29 +6886,6 @@
         },
         "additionalProperties": false
       },
-      "DataType": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14,
-          15,
-          16
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
       "DateOnly": {
         "type": "object",
         "properties": {
@@ -8752,6 +8729,9 @@
           "paymentServicesMethod": {
             "$ref": "#/components/schemas/PaymentServicesMethod"
           },
+          "paymentServiceStatus": {
+            "$ref": "#/components/schemas/PaymentServicesStatus"
+          },
           "bookingServicesDetails": {
             "type": "array",
             "items": {
@@ -10506,6 +10486,11 @@
             "format": "date-time",
             "nullable": true
           },
+          "percentage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
           "isDefault": {
             "type": "boolean"
           },
@@ -10513,7 +10498,7 @@
             "type": "boolean"
           },
           "dayType": {
-            "$ref": "#/components/schemas/DataType"
+            "$ref": "#/components/schemas/DayType"
           },
           "description": {
             "type": "string",

@@ -15,9 +15,10 @@ namespace Service.RequestAndResponse.Request.Pricing
         public int RentPrice { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public double? Percentage { get; set; } 
         public bool IsDefault { get; set; } = true;
         public bool IsActive { get; set; } = true;
-        public DataType DayType { get; set; }
+        public DayType DayType { get; set; }
         public string Description { get; set; }
        
     }
