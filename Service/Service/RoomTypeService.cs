@@ -56,7 +56,6 @@ namespace Service.Service
         {
             try
             {
-                // Kiểm tra request không phải là null
                 if (request == null)
                 {
                     return new BaseResponse<CreateRoomTypeResponse>(
@@ -92,165 +91,84 @@ namespace Service.Service
                         PropertyNameCaseInsensitive = true
                     };
 
-                    Console.WriteLine("Processing PricingJson...");
-                    Console.WriteLine($"PricingJson: {request.PricingJson}");
-
-                    // Kiểm tra xem PricingJson có phải là danh sách không
                     if (request.PricingJson.TrimStart().StartsWith("["))
                     {
-                        // Nếu là danh sách, deserialize trực tiếp thành List<PricingForRoomType>
                         pricingList = JsonSerializer.Deserialize<List<PricingForHomeStayRental>>(request.PricingJson, options);
                     }
                     else
                     {
-                        // Nếu là đối tượng đơn lẻ, deserialize thành PricingForRoomType rồi đưa vào danh sách
                         var singlePricing = JsonSerializer.Deserialize<PricingForHomeStayRental>(request.PricingJson, options);
                         pricingList = new List<PricingForHomeStayRental> { singlePricing };
                     }
-
-                    if (pricingList != null)
-                    {
-                        Console.WriteLine("Using Pricing from PricingJson.");
-                        foreach (var pricing in pricingList)
-                        {
-                            Console.WriteLine($"Pricing from PricingJson: UnitPrice={pricing.UnitPrice}, RentPrice={pricing.RentPrice}, StartDate={pricing.StartDate}, EndDate={pricing.EndDate}, IsDefault={pricing.IsDefault}, IsActive={pricing.IsActive}, DayType={pricing.DayType}, Description={pricing.Description}");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("pricingList is null after deserialize from PricingJson.");
-                    }
                 }
-                else
+                else if (request.Pricing != null && request.Pricing.Any())
                 {
-                    // Nếu PricingJson rỗng, sử dụng Pricing từ request (nếu có)
-                    if (request.Pricing != null && request.Pricing.Any())
-                    {
-                        Console.WriteLine("Using Pricing directly from request.");
-                        pricingList = request.Pricing;
-                        foreach (var pricing in pricingList)
-                        {
-                            Console.WriteLine($"Pricing from request: UnitPrice={pricing.UnitPrice}, RentPrice={pricing.RentPrice}, StartDate={pricing.StartDate}, EndDate={pricing.EndDate}, IsDefault={pricing.IsDefault}, IsActive={pricing.IsActive}, DayType={pricing.DayType}, Description={pricing.Description}");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Both PricingJson and Pricing are null or empty.");
-                    }
+                    pricingList = request.Pricing;
                 }
 
-                // Xử lý Rooms: Ưu tiên RoomsJson
-                //List<CreateRoomRequest> roomsList = null;
-                //if (!string.IsNullOrEmpty(request.RoomsJson))
-                //{
-                //    var options = new JsonSerializerOptions
-                //    {
-                //        PropertyNameCaseInsensitive = true
-                //    };
-
-                //    Console.WriteLine("Processing RoomsJson...");
-                //    Console.WriteLine($"RoomsJson: {request.RoomsJson}");
-
-                //    if (request.RoomsJson.TrimStart().StartsWith("["))
-                //    {
-                //        roomsList = JsonSerializer.Deserialize<List<CreateRoomRequest>>(request.RoomsJson, options);
-                //    }
-                //    else
-                //    {
-                //        var singleRoom = JsonSerializer.Deserialize<CreateRoomRequest>(request.RoomsJson, options);
-                //        roomsList = new List<CreateRoomRequest> { singleRoom };
-                //    }
-
-                //    if (roomsList != null)
-                //    {
-                //        Console.WriteLine("Using Rooms from RoomsJson.");
-                //        foreach (var room in roomsList)
-                //        {
-                //            Console.WriteLine($"Room from RoomsJson: roomNumber={room.roomNumber}, isUsed={room.isUsed}, isActive={room.isActive}, RoomTypesID={room.RoomTypesID}");
-                //        }
-                //    }
-                //    else
-                //    {
-                //        Console.WriteLine("roomsList is null after deserialize from RoomsJson.");
-                //    }
-                //}
-                //else
-                //{
-                //    if (request.Rooms != null && request.Rooms.Any())
-                //    {
-                //        Console.WriteLine("Using Rooms directly from request.");
-                //        roomsList = request.Rooms;
-                //        foreach (var room in roomsList)
-                //        {
-                //            Console.WriteLine($"Room from request: roomNumber={room.roomNumber}, isUsed={room.isUsed}, isActive={room.isActive}, RoomTypesID={room.RoomTypesID}");
-                //        }
-                //    }
-                //    else
-                //    {
-                //        Console.WriteLine("Both RoomsJson and Rooms are null or empty.");
-                //    }
-                //}
-
+                // Ánh xạ request sang RoomTypes
                 var roomType = _mapper.Map<RoomTypes>(request);
                 roomType.CreateAt = DateTime.UtcNow;
                 roomType.UpdateAt = DateTime.UtcNow;
                 roomType.HomeStayRentalID = homeStayRentalId;
-
-                //Luôn true
                 roomType.Status = true;
 
                 await _roomTypeRepository.AddAsync(roomType);
                 await _roomTypeRepository.SaveChangesAsync();
 
-                // Thêm log để kiểm tra RoomTypesID
-                Console.WriteLine($"RoomTypesID after SaveChanges: {roomType.RoomTypesID}");
-
-                // Kiểm tra RoomTypesID trước khi sử dụng
-                if (roomType.RoomTypesID == 0)
-                {
-                    throw new Exception("RoomTypesID was not generated after saving RoomType.");
-                }
-
                 // Xử lý Pricing nếu có
                 var pricings = new List<Pricing>();
                 if (pricingList != null && pricingList.Any())
                 {
-                    Console.WriteLine("Saving Pricings...");
+                    // Kiểm tra nếu có Pricing cho Weekend hoặc Holiday thì phải có Weekday trước
+                    foreach (var pricingItem in pricingList)
+                    {
+                        if (pricingItem.DayType == DayType.Weekend || pricingItem.DayType == DayType.Holiday)
+                        {
+                            var existingPricing = await _pricingRepository.GetPricingByRoomTypeAsync(roomType.RoomTypesID);
+                            var weekdayPricing = existingPricing.FirstOrDefault(p => p.DayType == DayType.Weekday);
+                            if (weekdayPricing == null)
+                            {
+                                return new BaseResponse<CreateRoomTypeResponse>(
+                                    "Cannot create Pricing for Weekend or Holiday because no Weekday Pricing exists!",
+                                    StatusCodeEnum.BadRequest_400,
+                                    null);
+                            }
+
+                            // Kiểm tra Percentage
+                            if (pricingItem.Percentage <= 0)
+                            {
+                                return new BaseResponse<CreateRoomTypeResponse>(
+                                    "Percentage must be greater than 0 for Weekend or Holiday pricing!",
+                                    StatusCodeEnum.BadRequest_400,
+                                    null);
+                            }
+
+                            // Tính giá dựa trên phần trăm tăng so với Weekday
+                            pricingItem.UnitPrice = (int)(weekdayPricing.UnitPrice * (1 + pricingItem.Percentage / 100));
+                            pricingItem.RentPrice = (int)(weekdayPricing.RentPrice * (1 + pricingItem.Percentage / 100));
+                        }
+                    }
+
+                    // Lưu Pricing
                     foreach (var pricingItem in pricingList)
                     {
                         var pricing = _mapper.Map<Pricing>(pricingItem);
                         pricing.RoomTypesID = roomType.RoomTypesID;
+                        pricing.HomeStayRentalID = null; // Đảm bảo không có HomeStayRentalID khi tạo từ RoomType
+                        pricing.StartDate = pricing.IsDefault ? null : pricing.StartDate;
+                        pricing.EndDate = pricing.IsDefault ? null : pricing.EndDate;
                         pricings.Add(pricing);
                         await _pricingRepository.AddAsync(pricing);
                     }
                     await _pricingRepository.SaveChangesAsync();
-                    Console.WriteLine("Pricings saved successfully.");
                 }
 
-                // Xử lý Rooms nếu có
-                //var rooms = new List<Room>();
-                //if (roomsList != null && roomsList.Any())
-                //{
-                //    Console.WriteLine("Saving Rooms...");
-                //    foreach (var roomItem in roomsList)
-                //    {
-                //        var room = _mapper.Map<Room>(roomItem);
-                //        room.RoomTypesID = roomType.RoomTypesID;
-                //        rooms.Add(room);
-                //        await _roomRepository.AddAsync(room);
-                //    }
-                //    await _roomRepository.SaveChangesAsync();
-                //    Console.WriteLine("Rooms saved successfully.");
-                //}
-
-                // Upload hình ảnh nếu có
+                // Xử lý Images nếu có
                 var imageRoomTypes = new List<ImageRoomTypes>();
                 if (request.Images != null && request.Images.Any())
                 {
-                    Console.WriteLine("Uploading images to Cloudinary...");
                     var imageUrls = await UploadImagesToCloudinary(request.Images);
-                    Console.WriteLine($"Uploaded {imageUrls.Count} images: {string.Join(", ", imageUrls)}");
-
                     foreach (var url in imageUrls)
                     {
                         var imageRoomType = new ImageRoomTypes
@@ -261,16 +179,12 @@ namespace Service.Service
                         imageRoomTypes.Add(imageRoomType);
                         await _imageRoomTypesRepository.AddImageAsync(imageRoomType);
                     }
-
-                    Console.WriteLine("Saving ImageRoomTypes...");
                     await _imageRoomTypesRepository.SaveChangesAsync();
-                    Console.WriteLine("ImageRoomTypes saved successfully.");
                 }
 
                 // Cập nhật các collection cho roomType để ánh xạ vào response
                 roomType.ImageRoomTypes = imageRoomTypes;
                 roomType.Prices = pricings;
-                //roomType.Rooms = rooms;
 
                 // Ánh xạ RoomTypes sang CreateRoomTypeResponse
                 var response = _mapper.Map<CreateRoomTypeResponse>(roomType);
@@ -282,9 +196,6 @@ namespace Service.Service
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception: {ex.Message}");
-                Console.WriteLine($"InnerException: {ex.InnerException?.Message}");
-                Console.WriteLine($"StackTrace: {ex.StackTrace}");
                 return new BaseResponse<CreateRoomTypeResponse>(
                     $"An error occurred while creating RoomType: {ex.Message}. InnerException: {ex.InnerException?.Message}",
                     StatusCodeEnum.InternalServerError_500,

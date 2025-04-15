@@ -111,7 +111,8 @@ namespace Service.Service
         {
             try
             {
-               
+                // Xử lý Pricing: Ưu tiên PricingJson
+                List<PricingForHomeStayRental> pricingList = null;
                 if (!string.IsNullOrEmpty(request.PricingJson))
                 {
                     var options = new JsonSerializerOptions
@@ -119,68 +120,34 @@ namespace Service.Service
                         PropertyNameCaseInsensitive = true
                     };
 
-                    // Kiểm tra xem PricingJson có phải là danh sách không
                     if (request.PricingJson.TrimStart().StartsWith("["))
                     {
-                        // Nếu là danh sách, deserialize trực tiếp thành List<PricingForHomeStayRental>
-                        request.Pricing = JsonSerializer.Deserialize<List<PricingForHomeStayRental>>(request.PricingJson, options);
+                        pricingList = JsonSerializer.Deserialize<List<PricingForHomeStayRental>>(request.PricingJson, options);
                     }
                     else
                     {
-                        // Nếu là đối tượng đơn lẻ, deserialize thành PricingForHomeStayRental rồi đưa vào danh sách
                         var singlePricing = JsonSerializer.Deserialize<PricingForHomeStayRental>(request.PricingJson, options);
-                        request.Pricing = new List<PricingForHomeStayRental> { singlePricing };
-                    }
-
-                    if (request.Pricing != null)
-                    {
-                        Console.WriteLine("Using Pricing from PricingJson.");
-                        foreach (var pricing in request.Pricing)
-                        {
-                            Console.WriteLine($"Pricing from PricingJson: UnitPrice={pricing.UnitPrice}, RentPrice={pricing.RentPrice}, StartDate={pricing.StartDate?.ToString() ?? "null"}, EndDate={pricing.EndDate?.ToString() ?? "null"}, IsDefault={pricing.IsDefault}, IsActive={pricing.IsActive}, DayType={pricing.DayType}, Description={pricing.Description}");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("request.Pricing is null after deserialize from PricingJson.");
+                        pricingList = new List<PricingForHomeStayRental> { singlePricing };
                     }
                 }
-                else
+                else if (request.Pricing != null && request.Pricing.Any())
                 {
-                    // Nếu PricingJson rỗng, sử dụng Pricing từ request (nếu có)
-                    if (request.Pricing != null && request.Pricing.Any())
-                    {
-                        Console.WriteLine("Using Pricing directly from request.");
-                        foreach (var pricing in request.Pricing)
-                        {
-                            Console.WriteLine($"Pricing from request: UnitPrice={pricing.UnitPrice}, RentPrice={pricing.RentPrice}, StartDate={pricing.StartDate?.ToString() ?? "null"}, EndDate={pricing.EndDate?.ToString() ?? "null"}, IsDefault={pricing.IsDefault}, IsActive={pricing.IsActive}, DayType={pricing.DayType}, Description={pricing.Description}");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Both PricingJson and Pricing are null or empty.");
-                    }
+                    pricingList = request.Pricing;
                 }
 
                 // Gán giá trị mặc định cho Status và RentWhole nếu là null
                 request.Status ??= true;
                 request.RentWhole ??= true;
 
-                // Log để kiểm tra
-                Console.WriteLine($"RentWhole: {request.RentWhole.Value}");
-                Console.WriteLine($"Status: {request.Status.Value}");
-                Console.WriteLine($"PricingJson: {request.PricingJson ?? "null"}");
-                Console.WriteLine($"Pricing: {(request.Pricing != null ? $"Count = {request.Pricing.Count}" : "null")}");
-
                 // Kiểm tra RentWhole và Pricing
-                if (request.RentWhole.Value && (request.Pricing == null || !request.Pricing.Any()))
+                if (request.RentWhole.Value && (pricingList == null || !pricingList.Any()))
                 {
                     return new BaseResponse<HomeStayRentals>(
                         "Pricing must be provided when RentWhole is true!",
                         StatusCodeEnum.BadRequest_400,
                         null);
                 }
-                if (!request.RentWhole.Value && request.Pricing != null && request.Pricing.Any())
+                if (!request.RentWhole.Value && pricingList != null && pricingList.Any())
                 {
                     return new BaseResponse<HomeStayRentals>(
                         "Pricing cannot be provided when RentWhole is false!",
@@ -188,19 +155,17 @@ namespace Service.Service
                         null);
                 }
 
+                // Ánh xạ request sang HomeStayRentals
                 var homeStayRental = _mapper.Map<HomeStayRentals>(request);
                 homeStayRental.CreateAt = DateTime.Now;
 
                 await _homeStayTypeRepository.AddAsync(homeStayRental);
-                Console.WriteLine("Saving HomeStayRentals...");
                 await _homeStayTypeRepository.SaveChangesAsync();
-                Console.WriteLine("HomeStayRentals saved successfully.");
 
+                // Xử lý Images nếu có
                 if (request.Images != null && request.Images.Any())
                 {
-                    Console.WriteLine("Uploading images to Cloudinary...");
                     var imageUrls = await UploadImagesToCloudinary(request.Images);
-                    Console.WriteLine($"Uploaded {imageUrls.Count} images: {string.Join(", ", imageUrls)}");
                     foreach (var url in imageUrls)
                     {
                         var imageRental = new ImageHomeStayRentals
@@ -210,28 +175,56 @@ namespace Service.Service
                         };
                         await _imageHomeStayTypesRepository.AddImageAsync(imageRental);
                     }
-                    Console.WriteLine("Saving ImageHomeStayRentals...");
                     await _imageHomeStayTypesRepository.SaveChangesAsync();
-                    Console.WriteLine("ImageHomeStayRentals saved successfully.");
                 }
 
-                // Lưu Pricing sau khi đã lưu HomeStayRental
-                if (request.RentWhole.Value && request.Pricing != null && request.Pricing.Any())
+                // Xử lý Pricing nếu có
+                if (request.RentWhole.Value && pricingList != null && pricingList.Any())
                 {
-                    Console.WriteLine("Saving Prices...");
-                    var prices = _mapper.Map<ICollection<Pricing>>(request.Pricing);
+                    // Kiểm tra nếu có Pricing cho Weekend hoặc Holiday thì phải có Weekday trước
+                    foreach (var pricingItem in pricingList)
+                    {
+                        // Sửa lỗi CS0019: So sánh DayType đúng cách
+                        if (pricingItem.DayType == DayType.Weekend || pricingItem.DayType == DayType.Holiday)
+                        {
+                            var existingPricing = await _pricingRepository.GetPricingByHomeStayRentalAsync(homeStayRental.HomeStayRentalID);
+                            var weekdayPricing = existingPricing.FirstOrDefault(p => p.DayType == DayType.Weekday);
+                            if (weekdayPricing == null)
+                            {
+                                return new BaseResponse<HomeStayRentals>(
+                                    "Cannot create Pricing for Weekend or Holiday because no Weekday Pricing exists!",
+                                    StatusCodeEnum.BadRequest_400,
+                                    null);
+                            }
+
+                            // Sửa lỗi CS0266: So sánh với 0.0 hoặc ép kiểu
+                            if (pricingItem.Percentage <= 0.0) // So sánh với 0.0 thay vì 0 để tránh lỗi chuyển đổi kiểu
+                            {
+                                return new BaseResponse<HomeStayRentals>(
+                                    "Percentage must be greater than 0 for Weekend or Holiday pricing!",
+                                    StatusCodeEnum.BadRequest_400,
+                                    null);
+                            }
+
+                            // Tính giá dựa trên phần trăm tăng so với Weekday
+                            pricingItem.UnitPrice = (int)(weekdayPricing.UnitPrice * (1 + pricingItem.Percentage / 100));
+                            pricingItem.RentPrice = (int)(weekdayPricing.RentPrice * (1 + pricingItem.Percentage / 100));
+                        }
+                    }
+
+                    // Tiếp tục lưu Pricing
+                    var prices = _mapper.Map<ICollection<Pricing>>(pricingList);
                     foreach (var price in prices)
                     {
-                        Console.WriteLine($"Before saving - Pricing: UnitPrice={price.UnitPrice}, RentPrice={price.RentPrice}, StartDate={price.StartDate?.ToString() ?? "null"}, EndDate={price.EndDate?.ToString() ?? "null"}, IsDefault={price.IsDefault}, IsActive={price.IsActive}, DayType={price.DayType}, Description={price.Description}");
-
                         price.PricingID = 0;
                         price.HomeStayRentalID = homeStayRental.HomeStayRentalID;
+                        price.RoomTypesID = null;
+                        price.StartDate = price.IsDefault ? null : price.StartDate;
+                        price.EndDate = price.IsDefault ? null : price.EndDate;
                         await _pricingRepository.AddAsync(price);
                     }
                     await _pricingRepository.SaveChangesAsync();
-                    Console.WriteLine("Prices saved successfully.");
 
-                    // Gán lại Prices vào homeStayRental để trả về trong response
                     homeStayRental.Prices = prices;
                 }
 
@@ -242,9 +235,6 @@ namespace Service.Service
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception: {ex.Message}");
-                Console.WriteLine($"InnerException: {ex.InnerException?.Message}");
-                Console.WriteLine($"StackTrace: {ex.StackTrace}");
                 return new BaseResponse<HomeStayRentals>(
                     $"An error occurred while creating HomeStayType: {ex.Message}. InnerException: {ex.InnerException?.Message}",
                     StatusCodeEnum.InternalServerError_500,
