@@ -10,6 +10,7 @@ using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.Booking;
 using Service.RequestAndResponse.Request.BookingDetail;
 using Service.RequestAndResponse.Request.BookingServices;
+using Service.RequestAndResponse.Response.Accounts;
 using Service.RequestAndResponse.Response.BookingOfServices;
 using Service.RequestAndResponse.Response.Bookings;
 using Service.RequestAndResponse.Response.HomeStays;
@@ -18,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Google.Rpc.Context.AttributeContext.Types;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Service.Service
@@ -304,6 +306,22 @@ namespace Service.Service
                 return new BaseResponse<List<GetTopLoyalCustomers>>("Get Total Fail", StatusCodeEnum.BadRequest_400, null);
             }
             return new BaseResponse<List<GetTopLoyalCustomers>>("Get All Success", StatusCodeEnum.OK_200, response);
+        }
+
+        public async Task<BaseResponse<List<GetAccountUser>>> GetCustomersByHomeStay(int homeStayId)
+        {
+            var accounts = await _bookingRepository.GetCustomersByHomeStay(homeStayId);
+
+            var result = accounts.Select(a => new GetAccountUser
+            {
+                AccountID = a.Id,
+                Email = a.Email,
+                Name = a.Name,
+                Phone = a.Phone,
+                Address = a.Address
+            }).ToList();
+
+            return new BaseResponse<List<GetAccountUser>>("Get All Success", StatusCodeEnum.OK_200, result);
         }
     }
 }

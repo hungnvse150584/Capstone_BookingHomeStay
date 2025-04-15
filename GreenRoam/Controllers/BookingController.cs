@@ -5,6 +5,7 @@ using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.Booking;
 using Service.RequestAndResponse.Request.BookingServices;
+using Service.RequestAndResponse.Response.Accounts;
 using Service.RequestAndResponse.Response.Bookings;
 using Service.Service;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -93,6 +94,12 @@ namespace GreenRoam.Controllers
         public async Task<BaseResponse<List<GetTopLoyalCustomers>>> GetTopLoyalCustomers(int homeStayId, int top = 5)
         {
             return await _bookingService.GetTopLoyalCustomers(homeStayId, top);
+        }
+
+        [HttpGet("adminDashBoard/GetCustomersByHomeStay")]
+        public async Task<BaseResponse<List<GetAccountUser>>> GetCustomersByHomeStay(int homeStayId)
+        {
+            return await _bookingService.GetCustomersByHomeStay(homeStayId);
         }
     }
 }

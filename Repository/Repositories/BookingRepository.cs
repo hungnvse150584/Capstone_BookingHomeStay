@@ -106,5 +106,10 @@ namespace Repository.Repositories
         {
             return await _bookingDao.GetTopLoyalCustomersAsync(homeStayId, top);
         }
+
+        public async Task<List<Account>> GetCustomersByHomeStay(int homeStayId)
+        {
+           return await _bookingDao.GetCustomersByHomeStayAsync(homeStayId);
+        }
     }
 }

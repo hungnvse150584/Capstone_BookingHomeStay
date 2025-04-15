@@ -719,6 +719,16 @@ namespace DataAccessObject
             }
             return result;
         }
+
+        public async Task<List<Account>> GetCustomersByHomeStayAsync(int homeStayId)
+        {
+            return await _context.Bookings
+                .Where(b => b.HomeStayID == homeStayId)
+                .Select(b => b.Account)
+                .Distinct()
+                .ToListAsync();
+        }
+
         // DataAccessObject/BookingDAO.cs
         public async Task<IEnumerable<Booking>> GetBookingsForCheckInReminderAsync()
         {
