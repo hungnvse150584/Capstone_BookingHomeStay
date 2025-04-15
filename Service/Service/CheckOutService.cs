@@ -178,22 +178,25 @@ namespace Service.Service
                     {
                         Quantity = s.Quantity,
                         unitPrice = s.Quantity * services.FirstOrDefault(x => x.ServicesID == s.ServicesID).UnitPrice,
-                        TotalAmount = s.Quantity * services.First(x => x.ServicesID == s.ServicesID).servicesPrice,
+                        TotalAmount = s.Quantity * services.FirstOrDefault(x => x.ServicesID == s.ServicesID).servicesPrice,
                         ServicesID = s.ServicesID
                     }).ToList()
                 };
 
-                bookingServices.Total = bookingServices.BookingServicesDetails.Sum(d => d.TotalAmount);
+                totalPriceServices = bookingServices.BookingServicesDetails.Sum(d => d.TotalAmount);
+                bookingServices.Total = totalPriceServices;
+                bookingServices.bookingServiceDeposit = commissionRate.PlatformShare * totalPriceServices;
+                bookingServices.remainingBalance = totalPriceServices - bookingServices.bookingServiceDeposit;
                 booking.BookingServices = new List<BookingServices> { bookingServices };
-                totalPriceServices = bookingServices.Total;
             }
 
             double totalPriceBooking = bookingDetails.Sum(d => d.TotalAmount);
             double totalAmount = totalPriceBooking + totalPriceServices;
 
             booking.TotalRentPrice = totalPriceBooking;
+            var depositBooking = commissionRate.PlatformShare * totalPriceBooking;
             booking.Total = totalAmount;
-            booking.bookingDeposit = commissionRate.PlatformShare * totalAmount;
+            booking.bookingDeposit = depositBooking + (booking.BookingServices?.FirstOrDefault()?.bookingServiceDeposit ?? 0);
             booking.remainingBalance = totalAmount - booking.bookingDeposit;
 
             await _bookingRepository.AddBookingAsync(booking);
@@ -386,8 +389,10 @@ namespace Service.Service
             var existService = await _bookingServiceRepository.GetBookingServicesByBookingIdAsync(existingBooking.BookingID);
 
             var totalPriceExistService = existService != null ? existService.Total : 0;
+            var depositeExistService = existService != null ? existService.bookingServiceDeposit : 0;
             var totalPriceAmount = totalPriceExistBooking + totalPriceExistService;
-            var deposit = commissionrate.PlatformShare * totalPriceAmount;
+            var depositBooking = commissionrate.PlatformShare * totalPriceExistBooking;
+            var deposit = depositBooking + depositeExistService;
             var remaining = totalPriceAmount - deposit;
             existingBooking.bookingDeposit = deposit;
             existingBooking.remainingBalance = remaining;
@@ -482,15 +487,15 @@ namespace Service.Service
             if (bookingServices != null)
             {
                 foreach (var service in bookingServices)
-                {   
-                        service.Status = BookingServicesStatus.Cancelled;
-                        service.PaymentServiceStatus = PaymentServicesStatus.Refunded;
-                        service.Status = BookingServicesStatus.Cancelled;
-                        service.Transactions ??= new List<Transaction>();
-                        transaction.HomeStay = service.HomeStay;
-                        transaction.Account = service.HomeStay.Account;
-                        service.Transactions.Add(transaction);
-                        await _bookingServiceRepository.UpdateBookingServicesAsync(service);
+                {
+                    service.Status = BookingServicesStatus.Cancelled;
+                    service.PaymentServiceStatus = PaymentServicesStatus.Refunded;
+                    service.Status = BookingServicesStatus.Cancelled;
+                    service.Transactions ??= new List<Transaction>();
+                    transaction.HomeStay = service.HomeStay;
+                    transaction.Account = service.HomeStay.Account;
+                    service.Transactions.Add(transaction);
+                    await _bookingServiceRepository.UpdateBookingServicesAsync(service);
                 }
             }
 
@@ -521,6 +526,10 @@ namespace Service.Service
             {
                 bookingService.PaymentServiceStatus = PaymentServicesStatus.FullyPaid; // Thanh toán đầy đủ
             }
+            else if (amountPaid > 0)
+            {
+                bookingService.PaymentServiceStatus = PaymentServicesStatus.Deposited; // Đặt cọc
+            }
 
             bookingService.Status = BookingServicesStatus.Confirmed;
 
@@ -529,8 +538,9 @@ namespace Service.Service
                 var booking = bookingService.Booking;
                 if (booking != null)
                 {
-                    // Cập nhật tổng tiền thanh toán cho Booking
-                    booking.Total += transaction.Amount / 100;
+                    
+                    booking.Total += bookingService.Total;
+                    booking.bookingDeposit += bookingService.bookingServiceDeposit;
                     await _bookingRepository.UpdateBookingAsync(booking);  // Cập nhật lại Booking
                 }
             }
@@ -566,7 +576,8 @@ namespace Service.Service
                 if (booking != null)
                 {
                     // Cập nhật tổng tiền thanh toán cho Booking
-                    booking.Total -= transaction.Amount / 100;
+                    booking.Total -= bookingService.Total;
+                    booking.bookingDeposit -= bookingService.bookingServiceDeposit;
                     await _bookingRepository.UpdateBookingAsync(booking);  // Cập nhật lại Booking
                 }
             }

@@ -286,21 +286,24 @@ namespace Service.Service
             return new BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>("Get All Success", StatusCodeEnum.OK_200, response);
         }
 
-
-
-
-        /*public async Task<BaseResponse<Booking>> CanncelledBooking(int bookingID, int bookingServiceID)
+        public async Task<BaseResponse<List<GetTopLoyalCustomers>>> GetTopLoyalCustomers(int homeStayId, int top = 5)
         {
-            var booking = await _bookingRepository.GetBookingByIdAsync(bookingID);
-            if (booking == null)
+            if (homeStayId <= 0)
             {
-                return new BaseResponse<Booking>("Cannot find your Booking!",
-                        StatusCodeEnum.NotFound_404, null);
+                return new BaseResponse<List<GetTopLoyalCustomers>>("Please input correct ID", StatusCodeEnum.NotImplemented_501, null);
             }
-
-
-
-
-        }*/
+            var total = await _bookingRepository.GetTopLoyalCustomersAsync(homeStayId, top);
+            var response = total.Select(p => new GetTopLoyalCustomers
+            {
+                accountID = p.accountID,
+                CustomerName = p.CustomerName,
+                totalBookings = p.BookingCount
+            }).ToList();
+            if (response == null || !response.Any())
+            {
+                return new BaseResponse<List<GetTopLoyalCustomers>>("Get Total Fail", StatusCodeEnum.BadRequest_400, null);
+            }
+            return new BaseResponse<List<GetTopLoyalCustomers>>("Get All Success", StatusCodeEnum.OK_200, response);
+        }
     }
 }

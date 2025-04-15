@@ -187,19 +187,56 @@ namespace GreenRoam.Controllers
             {
                 return NotFound("Booking service not found.");
             }
-            double amount = bookingService.Data.Total;
-
-            var vnPayModel = new VnPayRequestModel
+            if (bookingService.Data.Status == BookingServicesStatus.RequestRefund)
             {
-                BookingServiceID = bookingService.Data.BookingServicesID,
-                HomeStayID = bookingService.Data.HomeStayID,
-                AccountID = bookingService.Data.AccountID,
-                Amount = amount,
-                FullName = bookingService.Data.Account.Name,
-                Description = $"{bookingService.Data.Account.Name} {bookingService.Data.Account.Phone}",
-                CreatedDate = DateTime.UtcNow,
-            };
-            return _vpnPayService.CreatePaymentUrlWeb(HttpContext, vnPayModel);
+                var cancellation = await _cancellationService.GetCancellationPolicyByHomeStay(bookingService.Data.HomeStayID);
+
+                if (cancellation == null)
+                {
+                    return BadRequest("Cannot Find the Cancellation Policy Of the HomeStay");
+                }
+
+                var checkInDate = bookingService.Data.Booking.BookingDetails.FirstOrDefault()?.CheckInDate;
+
+                double amount = 0;
+
+                DateTime today = DateTime.UtcNow.Date;
+
+                int daysUntilCheckIn = (checkInDate.Value.Date - today).Days;
+
+                if (daysUntilCheckIn >= cancellation.Data.DayBeforeCancel)
+                {
+                    if (bookingService.Data.PaymentServiceStatus == PaymentServicesStatus.Deposited)
+                    {
+                        amount = bookingService.Data.bookingServiceDeposit;
+                    }
+                    if (bookingService.Data.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
+                    {
+                        amount = bookingService.Data.Total * cancellation.Data.RefundPercentage;
+                    }
+                }
+                else
+                {
+                    return BadRequest("Booking cannot be refunded because it does not meet the homestay's cancellation policy.");
+                }
+
+                var vnPayModel = new VnPayRequestModel
+                {
+                    BookingServiceID = bookingService.Data.BookingServicesID,
+                    HomeStayID = bookingService.Data.HomeStayID,
+                    AccountID = bookingService.Data.AccountID,
+                    Amount = amount,
+                    FullName = bookingService.Data.Account.Name,
+                    Description = $"{bookingService.Data.Account.Name} {bookingService.Data.Account.Phone}",
+                    CreatedDate = DateTime.UtcNow,
+                };
+
+                 return _vpnPayService.CreatePaymentUrlWeb(HttpContext, vnPayModel);
+            }
+            else
+            {
+                return BadRequest("Cannot Refunded");
+            }
         }
 
         [HttpGet("vnpay-return")]
