@@ -1,9 +1,11 @@
 ﻿using BusinessObject.Model;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.HomeStay;
+using Service.RequestAndResponse.Request.Pricing;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.ImageHomeStay;
 using Service.Service;
@@ -98,6 +100,34 @@ namespace GreenRoam.Controllers
                 }
 
                 var homeStays = await _homestayService.RegisterHomeStay(request);
+                return StatusCode((int)homeStays.StatusCode, homeStays);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new BaseResponse<List<HomeStay>>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null));
+            }
+        }
+        [HttpPost]
+        [Route("CreateWithRentalsAndPricing")]
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>>> CreateHomeStayWithRentalsAndPricing([FromForm] CreateHomeStayWithRentalsAndPricingRequest request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    return BadRequest(new BaseResponse<List<HomeStay>>("Request body cannot be null!", StatusCodeEnum.BadRequest_400, null));
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new BaseResponse<List<HomeStay>>("Invalid request data!", StatusCodeEnum.BadRequest_400, null));
+                }
+
+                var homeStays = await _homestayService.CreateHomeStayWithRentalsAndPricingAsync(request);
                 return StatusCode((int)homeStays.StatusCode, homeStays);
             }
             catch (Exception ex)

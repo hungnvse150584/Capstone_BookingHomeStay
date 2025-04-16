@@ -1532,6 +1532,156 @@
   },
   {
     "ContainingType": "GreenRoam.Controllers.HomeStayController",
+    "Method": "CreateHomeStayWithRentalsAndPricing",
+    "RelativePath": "api/homestay/CreateWithRentalsAndPricing",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Address",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Longtitude",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "Latitude",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "RentalType",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Area",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "AccountID",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Images",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "RentalName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "RentalDescription",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "numberBedRoom",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "numberBathRoom",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "numberKitchen",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "numberWifi",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Status",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "RentWhole",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "MaxAdults",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "MaxChildren",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "MaxPeople",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "RentalImages",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "PricingJson",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Pricing",
+        "Type": "System.Collections.Generic.List\u00601[[Service.RequestAndResponse.Request.Pricing.PricingForHomeStayRental, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.HomeStays.CreateHomeStayWithRentalsAndPricingResponse, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 201
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 500
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.HomeStayController",
     "Method": "DeleteHomeStay",
     "RelativePath": "api/homestay/DeleteHomeStay/{id}",
     "HttpMethod": "DELETE",

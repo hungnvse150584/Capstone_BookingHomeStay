@@ -12,12 +12,16 @@ using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.HomeStay;
+using Service.RequestAndResponse.Request.Pricing;
 using Service.RequestAndResponse.Response.HomeStays;
+using Service.RequestAndResponse.Response.HomeStayType;
 using Service.RequestAndResponse.Response.ImageHomeStay;
+using Service.RequestAndResponse.Response.Pricing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -27,22 +31,25 @@ namespace Service.Service
     {
         private readonly IMapper _mapper;
         private readonly IHomeStayRepository _homeStayRepository;
-        private readonly IImageHomeStayRepository _imageHomeStayRepository; 
+        private readonly IImageHomeStayRepository _imageHomeStayRepository;
+        private readonly IHomeStayRentalRepository _homeStayRentalRepository;
+        private readonly IPricingRepository _priceRepository; // Add this
         private readonly Cloudinary _cloudinary;
-
-
-
 
         public HomeStayService(
             IMapper mapper,
             IHomeStayRepository homeStayRepository,
             IImageHomeStayRepository imageHomeStayRepository,
+            IHomeStayRentalRepository homeRentalRepository,
+            IPricingRepository priceRepository, // Add this
             Cloudinary cloudinary)
         {
             _mapper = mapper;
             _homeStayRepository = homeStayRepository;
             _imageHomeStayRepository = imageHomeStayRepository;
             _cloudinary = cloudinary;
+            _homeStayRentalRepository = homeRentalRepository;
+            _priceRepository = priceRepository; // Add this
         }
 
         public async Task<BaseResponse<HomeStayResponse>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status, int? commissionRateId = null)
@@ -141,7 +148,7 @@ namespace Service.Service
 
                 if (!filteredHomeStays.Any())
                 {
-                 
+
                     var emptyList = new List<SimpleHomeStayResponse>();
                     return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>(
                         "Account has not registered any homestay",
@@ -150,7 +157,7 @@ namespace Service.Service
                     );
                 }
 
-           
+
                 var response = _mapper.Map<IEnumerable<SimpleHomeStayResponse>>(filteredHomeStays);
                 return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("Get HomeStays by account success", StatusCodeEnum.OK_200, response);
             }
@@ -251,7 +258,7 @@ namespace Service.Service
                         response);
                 }
 
-               
+
                 var newImages = new List<ImageHomeStay>();
                 if (request.Images != null && request.Images.Any())
                 {
@@ -672,6 +679,241 @@ namespace Service.Service
             }
             return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("Get all HomeStay as base success",
                 StatusCodeEnum.OK_200, homeStays);
+        }
+        public async Task<BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>> CreateHomeStayWithRentalsAndPricingAsync(CreateHomeStayWithRentalsAndPricingRequest request)
+        {
+            try
+            {
+                // Step 1: Kiểm tra dữ liệu bắt buộc
+                if (string.IsNullOrEmpty(request.Name) || string.IsNullOrEmpty(request.Description) ||
+                    string.IsNullOrEmpty(request.Address) || string.IsNullOrEmpty(request.AccountID))
+                {
+                    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                        "Required fields are missing (Name, Description, Address, AccountID)!",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
+
+                if (request.Longtitude == 0 || request.Latitude == 0)
+                {
+                    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                        "Longtitude and Latitude must be valid numbers!",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
+
+                // Step 2: Xử lý Pricing (tương tự CreateHomeStayType)
+                List<PricingForHomeStayRental> pricingList = null;
+                if (!string.IsNullOrEmpty(request.PricingJson))
+                {
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+
+                    if (request.PricingJson.TrimStart().StartsWith("["))
+                    {
+                        pricingList = JsonSerializer.Deserialize<List<PricingForHomeStayRental>>(request.PricingJson, options);
+                    }
+                    else
+                    {
+                        var singlePricing = JsonSerializer.Deserialize<PricingForHomeStayRental>(request.PricingJson, options);
+                        pricingList = new List<PricingForHomeStayRental> { singlePricing };
+                    }
+                }
+                else if (request.Pricing != null && request.Pricing.Any())
+                {
+                    pricingList = request.Pricing;
+                }
+
+                if (pricingList == null || !pricingList.Any())
+                {
+                    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                        "Pricing must contain at least one pricing entry!",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
+
+                request.Pricing = pricingList;
+
+                // Step 3: Tạo HomeStay (tương tự RegisterHomeStay)
+                var homestay = new HomeStay
+                {
+                    Name = request.Name,
+                    Description = request.Description,
+                    CreateAt = DateTime.UtcNow,
+                    UpdateAt = DateTime.UtcNow,
+                    Status = HomeStayStatus.PendingApproval,
+                    TypeOfRental = request.RentalType,
+                    Address = request.Address,
+                    Area = request.Area,
+                    Longitude = request.Longtitude,
+                    Latitude = request.Latitude,
+                    AccountID = request.AccountID
+                };
+
+                await _homeStayRepository.AddAsync(homestay);
+                await _homeStayRepository.SaveChangesAsync();
+
+                if (request.Images != null && request.Images.Any())
+                {
+                    var imageUrls = await UploadImagesToCloudinary(request.Images);
+                    foreach (var url in imageUrls)
+                    {
+                        var imageHomeStay = new ImageHomeStay
+                        {
+                            Image = url,
+                            HomeStayID = homestay.HomeStayID
+                        };
+                        await _imageHomeStayRepository.AddImageAsync(imageHomeStay);
+                    }
+                    await _imageHomeStayRepository.SaveChangesAsync();
+                }
+
+                // Step 4: Tạo HomeStayRental và tự động gán HomeStayID
+                var rental = new HomeStayRentals
+                {
+                    Name = request.RentalName ?? "Whole HomeStay",
+                    Description = request.RentalDescription ?? "Whole HomeStay Rental",
+                    MaxAdults = request.MaxAdults,
+                    MaxChildren = request.MaxChildren,
+                    MaxPeople = request.MaxPeople,
+                    HomeStayID = homestay.HomeStayID, // Tự động gán HomeStayID từ HomeStay vừa tạo
+                    numberBedRoom = request.numberBedRoom,
+                    numberBathRoom = request.numberBathRoom,
+                    numberKitchen = request.numberKitchen,
+                    numberWifi = request.numberWifi,
+                    Status = request.Status ?? true,
+                    RentWhole = request.RentWhole ?? true,
+                    CreateAt = DateTime.UtcNow
+                };
+
+                // Upload ảnh cho HomeStayRental nếu có
+                if (request.RentalImages != null && request.RentalImages.Any())
+                {
+                    var imageUrls = await UploadImagesToCloudinary(request.RentalImages);
+                    rental.ImageHomeStayRentals = imageUrls.Select(url => new ImageHomeStayRentals
+                    {
+                        Image = url,
+                        HomeStayRentalID = rental.HomeStayRentalID
+                    }).ToList();
+                }
+
+                await _homeStayRentalRepository.AddAsync(rental);
+                await _homeStayRentalRepository.SaveChangesAsync();
+
+                // Gán HomeStayRentalID cho ImageHomeStayRentals sau khi lưu
+                if (rental.ImageHomeStayRentals != null && rental.ImageHomeStayRentals.Any())
+                {
+                    foreach (var image in rental.ImageHomeStayRentals)
+                    {
+                        image.HomeStayRentalID = rental.HomeStayRentalID;
+                        await _imageHomeStayRepository.AddImageAsync(new ImageHomeStay
+                        {
+                            Image = image.Image,
+                            HomeStayID = rental.HomeStayID
+                        });
+                    }
+                    await _imageHomeStayRepository.SaveChangesAsync();
+                }
+
+                // Step 5: Kiểm tra RentWhole và Pricing (tương tự CreateHomeStayType)
+                if (rental.RentWhole && (pricingList == null || !pricingList.Any()))
+                {
+                    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                        "Pricing must be provided when RentWhole is true!",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
+                if (!rental.RentWhole && pricingList != null && pricingList.Any())
+                {
+                    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                        "Pricing cannot be provided when RentWhole is false!",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
+
+                // Step 6: Tạo Pricing nếu có
+                var pricings = new List<Pricing>();
+                if (rental.RentWhole && pricingList != null && pricingList.Any())
+                {
+                    foreach (var pricingItem in pricingList)
+                    {
+                        if (pricingItem.DayType == DayType.Weekend || pricingItem.DayType == DayType.Holiday)
+                        {
+                            var existingPricing = await _priceRepository.GetPricingByHomeStayRentalAsync(rental.HomeStayRentalID);
+                            var weekdayPricing = existingPricing.FirstOrDefault(p => p.DayType == DayType.Weekday);
+                            if (weekdayPricing == null)
+                            {
+                                return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                                    "Cannot create Pricing for Weekend or Holiday because no Weekday Pricing exists!",
+                                    StatusCodeEnum.BadRequest_400,
+                                    null);
+                            }
+
+                            if (pricingItem.Percentage <= 0.0)
+                            {
+                                return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                                    "Percentage must be greater than 0 for Weekend or Holiday pricing!",
+                                    StatusCodeEnum.BadRequest_400,
+                                    null);
+                            }
+
+                            pricingItem.UnitPrice = (int)(weekdayPricing.UnitPrice * (1 + pricingItem.Percentage / 100));
+                            pricingItem.RentPrice = (int)(weekdayPricing.RentPrice * (1 + pricingItem.Percentage / 100));
+                        }
+                        else
+                        {
+                            if (pricingItem.UnitPrice <= 0 || pricingItem.RentPrice <= 0)
+                            {
+                                return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                                    "UnitPrice and RentPrice are required and must be greater than 0 for Weekday pricing!",
+                                    StatusCodeEnum.BadRequest_400,
+                                    null);
+                            }
+                        }
+
+                        var pricing = new Pricing
+                        {
+                            Description = pricingItem.Description,
+                            UnitPrice = pricingItem.UnitPrice,
+                            RentPrice = pricingItem.RentPrice,
+                            Percentage = pricingItem.Percentage ?? 0,
+                            StartDate = pricingItem.IsDefault ? null : pricingItem.StartDate,
+                            EndDate = pricingItem.IsDefault ? null : pricingItem.EndDate,
+                            IsDefault = pricingItem.IsDefault,
+                            IsActive = pricingItem.IsActive,
+                            DayType = pricingItem.DayType,
+                            HomeStayRentalID = rental.HomeStayRentalID
+                        };
+                        pricings.Add(pricing);
+                    }
+
+                    await _priceRepository.AddRange(pricings);
+                    await _priceRepository.SaveChangesAsync();
+                }
+
+                var response = new CreateHomeStayWithRentalsAndPricingResponse
+                {
+                    HomeStay = _mapper.Map<HomeStayResponse>(homestay),
+                    Rentals = _mapper.Map<List<GetAllHomeStayType>>(new List<HomeStayRentals> { rental }),
+                    Pricings = _mapper.Map<List<PricingResponse>>(pricings)
+                };
+
+                return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                    "HomeStay, Rental, and Pricings created successfully, Please Wait for Accepting",
+                    StatusCodeEnum.Created_201,
+                    response);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+                return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                    $"Something went wrong! Error: {ex.Message}. Inner Exception: {ex.InnerException?.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
+            }
         }
     }
 }

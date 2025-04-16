@@ -3,6 +3,7 @@ using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Request.Pricing;
 using Service.RequestAndResponse.Request.RoomType;
+using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.Pricing;
 using System;
 using System.Collections.Generic;
