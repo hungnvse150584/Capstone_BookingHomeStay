@@ -150,7 +150,7 @@ namespace Service.Mapping
             CreateMap<GetAllRoomType, RoomTypes>().ReverseMap();
             CreateMap<RoomTypes, GetSingleRoomType>()
                 .ForMember(dest => dest.Pricings, opt => opt.MapFrom(src => src.Prices))
-                .ForMember(dest => dest.ImageRoomTypes, opt => opt.MapFrom(src => src.ImageRoomTypes)); 
+                .ForMember(dest => dest.ImageRoomTypes, opt => opt.MapFrom(src => src.ImageRoomTypes));
 
             CreateMap<RoomTypes, GetAllRoomTypeByRental>()
                 .ForMember(dest => dest.Pricings, opt => opt.MapFrom(src => src.Prices))
@@ -355,6 +355,35 @@ namespace Service.Mapping
                 .ForMember(dest => dest.HomeStay, opt => opt.MapFrom(src => src.HomeStay)) // assuming you have CreateMap<HomeStay, HomeStayResponse>()
                 .ForMember(dest => dest.BookingID, opt => opt.MapFrom(src => src.Booking != null ? src.Booking.BookingID : 0))
                 .ForMember(dest => dest.BookingServicesID, opt => opt.MapFrom(src => src.BookingService != null ? src.BookingService.BookingServicesID : 0));
+            CreateMap<CreateServices, Services>()
+            .ForMember(dest => dest.servicesName, opt => opt.MapFrom(src => src.servicesName))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+            .ForMember(dest => dest.servicesPrice, opt => opt.MapFrom(src => src.servicesPrice))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.HomeStayID, opt => opt.MapFrom(src => src.HomeStayID))
+            .ForMember(dest => dest.ServiceType, opt => opt.MapFrom(src => src.ServiceType));
+
+            // Ánh xạ cho UpdateServices -> Services
+            CreateMap<UpdateServices, Services>()
+               
+                .ForMember(dest => dest.servicesName, opt => opt.MapFrom(src => src.servicesName))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+                .ForMember(dest => dest.servicesPrice, opt => opt.MapFrom(src => src.servicesPrice))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.ServiceType, opt => opt.MapFrom(src => src.ServiceType));
+
+            // Ánh xạ cho Services -> ServiceWithTotalPriceResponse
+            CreateMap<Services, ServiceWithTotalPriceResponse>()
+                .ForMember(dest => dest.servicesName, opt => opt.MapFrom(src => src.servicesName))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+                .ForMember(dest => dest.servicesPrice, opt => opt.MapFrom(src => src.servicesPrice))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.HomeStayID, opt => opt.MapFrom(src => src.HomeStayID))
+                .ForMember(dest => dest.ServiceType, opt => opt.MapFrom(src => src.ServiceType));
         }
+
     }
 }
