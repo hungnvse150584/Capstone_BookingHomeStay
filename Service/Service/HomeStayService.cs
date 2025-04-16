@@ -726,15 +726,25 @@ namespace Service.Service
                     pricingList = request.Pricing;
                 }
 
-                if (pricingList == null || !pricingList.Any())
+                // Gán giá trị mặc định cho Status và RentWhole nếu là null
+                request.Status ??= true;
+                request.RentWhole ??= true;
+
+                // Kiểm tra RentWhole và Pricing
+                if (request.RentWhole.Value && (pricingList == null || !pricingList.Any()))
                 {
                     return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
-                        "Pricing must contain at least one pricing entry!",
+                        "Pricing must be provided when RentWhole is true!",
                         StatusCodeEnum.BadRequest_400,
                         null);
                 }
-
-                request.Pricing = pricingList;
+                if (!request.RentWhole.Value && pricingList != null && pricingList.Any())
+                {
+                    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                        "Pricing cannot be provided when RentWhole is false!",
+                        StatusCodeEnum.BadRequest_400,
+                        null);
+                }
 
                 // Step 3: Tạo HomeStay (tương tự RegisterHomeStay)
                 var homestay = new HomeStay
