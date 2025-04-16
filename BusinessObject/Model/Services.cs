@@ -35,9 +35,18 @@ namespace BusinessObject.Model;
         [ForeignKey("HomeStayID")]
         public HomeStay? HomeStay { get; set; }
 
+        [EnumDataType(typeof(ServiceType))]
+        public ServiceType ServiceType { get; set; }
+
         public ICollection<ImageServices> ImageServices { get; set; }
 
         public ICollection<BookingServicesDetail> BookingServicesDetails { get; set; }
+    }
+    public enum ServiceType
+    {
+        Quantity = 0,
+        Hour = 1,
+        Day = 2
     }
 
 

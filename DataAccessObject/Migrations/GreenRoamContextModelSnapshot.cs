@@ -279,11 +279,20 @@ namespace DataAccessObject.Migrations
                     b.Property<int?>("BookingServicesID")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RentHour")
                         .HasColumnType("int");
 
                     b.Property<int?>("ServicesID")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
@@ -1065,6 +1074,9 @@ namespace DataAccessObject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("HomeStayID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceType")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
