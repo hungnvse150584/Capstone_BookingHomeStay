@@ -819,6 +819,93 @@
         }
       }
     },
+    "/api/booking-bookingservices/adminDashBoard/GetTopLoyalCustomers": {
+      "get": {
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "name": "homeStayId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTopLoyalCustomersListBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTopLoyalCustomersListBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTopLoyalCustomersListBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/booking-bookingservices/adminDashBoard/GetCustomersByHomeStay": {
+      "get": {
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "name": "homeStayId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAccountUserListBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAccountUserListBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAccountUserListBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/bookingservices/GetAllBookingServices": {
       "get": {
         "tags": [
@@ -7295,6 +7382,26 @@
         },
         "additionalProperties": false
       },
+      "GetAccountUserListBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAccountUser"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "GetAllBookingServices": {
         "type": "object",
         "properties": {
@@ -8036,6 +8143,10 @@
             "format": "double"
           },
           "rentPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "percentage": {
             "type": "number",
             "format": "double"
           },
@@ -9818,6 +9929,44 @@
           },
           "data": {
             "$ref": "#/components/schemas/GetTopHomeStayBookingInMonth"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTopLoyalCustomers": {
+        "type": "object",
+        "properties": {
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalBookings": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTopLoyalCustomersListBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetTopLoyalCustomers"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
