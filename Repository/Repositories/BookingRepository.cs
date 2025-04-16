@@ -101,5 +101,15 @@ namespace Repository.Repositories
         {
             return await _bookingDao.GetTotalBookingsTotalBookingsAmountForHomeStay(homeStayID, startDate, endDate, timeSpanType);
         }
+
+        public async Task<List<(string accountID, string CustomerName, int BookingCount)>> GetTopLoyalCustomersAsync(int homeStayId, int top = 5)
+        {
+            return await _bookingDao.GetTopLoyalCustomersAsync(homeStayId, top);
+        }
+
+        public async Task<List<Account>> GetCustomersByHomeStay(int homeStayId)
+        {
+           return await _bookingDao.GetCustomersByHomeStayAsync(homeStayId);
+        }
     }
 }

@@ -362,8 +362,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\HomeStays\\CreateHomeStayWithRentalsAndPricingResponse.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAuwA8AAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T04:41:11.264Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T04:41:11.264Z"
             },
             {
               "$type": "Document",
@@ -375,8 +374,7 @@
               "RelativeToolTip": "Repository\\IRepositories\\IPricingRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T05:08:48.915Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T05:08:48.915Z"
             },
             {
               "$type": "Document",
@@ -388,8 +386,7 @@
               "RelativeToolTip": "Service\\Service\\HomeStayService.cs",
               "ViewState": "AgIAAGcDAAAAAAAAAAAwwIwDAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T09:28:58.966Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-15T09:28:58.966Z"
             },
             {
               "$type": "Document",
@@ -401,8 +398,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\HomeStay\\CreateHomeStayWithRentalsAndPricingRequest.cs",
               "ViewState": "AgIAACIAAAAAAAAAAAAxwD4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T04:36:10.804Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T04:36:10.804Z"
             },
             {
               "$type": "Document",
@@ -412,7 +408,7 @@
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\HomeStayType\\GetAllHomeStayType.cs",
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\HomeStayType\\GetAllHomeStayType.cs",
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\HomeStayType\\GetAllHomeStayType.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAA1wBEAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwBEAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-16T06:16:59.746Z",
               "EditorCaption": ""
@@ -427,8 +423,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\HomeStayType\\GetHomeStayRentalDetail.cs",
               "ViewState": "AgIAADIAAAAAAAAAAAAmwEEAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T06:16:53.322Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T06:16:53.322Z"
             },
             {
               "$type": "Document",
@@ -440,8 +435,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\HomeStays\\GetAllHomeStayWithOwnerName.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwCcAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T06:17:34.249Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T06:17:34.249Z"
             },
             {
               "$type": "Document",
@@ -453,8 +447,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\HomeStays\\GetHomeStayResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAABOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T06:16:13.17Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T06:16:13.17Z"
             },
             {
               "$type": "Document",
@@ -466,8 +459,7 @@
               "RelativeToolTip": "Service\\Service\\PricingService.cs",
               "ViewState": "AgIAAE4AAAAAAAAAAAAEwF8AAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T09:30:58.28Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-15T09:30:58.28Z"
             },
             {
               "$type": "Document",
@@ -479,8 +471,7 @@
               "RelativeToolTip": "Service\\IService\\IPricingService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T05:07:23.937Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T05:07:23.937Z"
             },
             {
               "$type": "Document",
@@ -492,8 +483,7 @@
               "RelativeToolTip": "Service\\IService\\IHomeStayService.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAA8wB0AAAClAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T04:41:35.973Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T04:41:35.973Z"
             },
             {
               "$type": "Document",
@@ -505,8 +495,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Pricing\\PricingResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T05:08:39.326Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T05:08:39.326Z"
             },
             {
               "$type": "Document",
@@ -518,8 +507,7 @@
               "RelativeToolTip": "Service\\Mapping\\MappingProfile.cs",
               "ViewState": "AgIAAJgAAAAAAAAAAAAcwLsAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T10:29:47.294Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T10:29:47.294Z"
             },
             {
               "$type": "Document",

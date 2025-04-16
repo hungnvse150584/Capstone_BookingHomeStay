@@ -31,6 +31,8 @@ namespace Repository.IRepositories
         (DateTime startDate, DateTime endDate, string? timeSpanType);
         Task<List<(object span, int totalBookings, double totalBookingsAmount)>> GetTotalBookingsTotalBookingsAmountForHomeStay
         (int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType);
+        Task<List<(string accountID, string CustomerName, int BookingCount)>> GetTopLoyalCustomersAsync(int homeStayId, int top = 5);
+        Task<List<Account>> GetCustomersByHomeStay(int homeStayId);
 
     }
 }

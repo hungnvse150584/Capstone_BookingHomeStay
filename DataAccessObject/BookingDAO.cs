@@ -482,6 +482,27 @@ namespace DataAccessObject
             }
             return result;
         }
+
+        public async Task<List<(string accountID, string CustomerName, int BookingCount)>> GetTopLoyalCustomersAsync(int homeStayId, int top = 5)
+        {
+            var topCustomers = await _context.Bookings
+            .Where(b => b.HomeStayID == homeStayId && b.Status == BookingStatus.Completed)
+            .GroupBy(b => new { b.AccountID, b.Account.Name })
+            .Select(g => new
+            {
+                AccountId = g.Key.AccountID,
+                CustomerName = g.Key.Name,
+                BookingCount = g.Count()
+            })
+            .OrderByDescending(x => x.BookingCount)
+            .Take(top)
+            .ToListAsync();
+
+            return topCustomers
+                  .Select(x => (x.AccountId, x.CustomerName, x.BookingCount))
+                  .ToList();
+        }
+
         public async Task<List<(object span, int totalBookings, double totalBookingsAmount)>> GetTotalBookingsTotalBookingsAmountAsync
         (DateTime startDate, DateTime endDate, string? timeSpanType)
         {
@@ -698,6 +719,16 @@ namespace DataAccessObject
             }
             return result;
         }
+
+        public async Task<List<Account>> GetCustomersByHomeStayAsync(int homeStayId)
+        {
+            return await _context.Bookings
+                .Where(b => b.HomeStayID == homeStayId)
+                .Select(b => b.Account)
+                .Distinct()
+                .ToListAsync();
+        }
+
         // DataAccessObject/BookingDAO.cs
         public async Task<IEnumerable<Booking>> GetBookingsForCheckInReminderAsync()
         {

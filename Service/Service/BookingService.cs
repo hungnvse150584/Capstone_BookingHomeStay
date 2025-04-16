@@ -10,6 +10,7 @@ using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.Booking;
 using Service.RequestAndResponse.Request.BookingDetail;
 using Service.RequestAndResponse.Request.BookingServices;
+using Service.RequestAndResponse.Response.Accounts;
 using Service.RequestAndResponse.Response.BookingOfServices;
 using Service.RequestAndResponse.Response.Bookings;
 using Service.RequestAndResponse.Response.HomeStays;
@@ -18,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Google.Rpc.Context.AttributeContext.Types;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Service.Service
@@ -286,21 +288,40 @@ namespace Service.Service
             return new BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>("Get All Success", StatusCodeEnum.OK_200, response);
         }
 
-
-
-
-        /*public async Task<BaseResponse<Booking>> CanncelledBooking(int bookingID, int bookingServiceID)
+        public async Task<BaseResponse<List<GetTopLoyalCustomers>>> GetTopLoyalCustomers(int homeStayId, int top = 5)
         {
-            var booking = await _bookingRepository.GetBookingByIdAsync(bookingID);
-            if (booking == null)
+            if (homeStayId <= 0)
             {
-                return new BaseResponse<Booking>("Cannot find your Booking!",
-                        StatusCodeEnum.NotFound_404, null);
+                return new BaseResponse<List<GetTopLoyalCustomers>>("Please input correct ID", StatusCodeEnum.NotImplemented_501, null);
             }
+            var total = await _bookingRepository.GetTopLoyalCustomersAsync(homeStayId, top);
+            var response = total.Select(p => new GetTopLoyalCustomers
+            {
+                accountID = p.accountID,
+                CustomerName = p.CustomerName,
+                totalBookings = p.BookingCount
+            }).ToList();
+            if (response == null || !response.Any())
+            {
+                return new BaseResponse<List<GetTopLoyalCustomers>>("Get Total Fail", StatusCodeEnum.BadRequest_400, null);
+            }
+            return new BaseResponse<List<GetTopLoyalCustomers>>("Get All Success", StatusCodeEnum.OK_200, response);
+        }
 
+        public async Task<BaseResponse<List<GetAccountUser>>> GetCustomersByHomeStay(int homeStayId)
+        {
+            var accounts = await _bookingRepository.GetCustomersByHomeStay(homeStayId);
 
+            var result = accounts.Select(a => new GetAccountUser
+            {
+                AccountID = a.Id,
+                Email = a.Email,
+                Name = a.Name,
+                Phone = a.Phone,
+                Address = a.Address
+            }).ToList();
 
-
-        }*/
+            return new BaseResponse<List<GetAccountUser>>("Get All Success", StatusCodeEnum.OK_200, result);
+        }
     }
 }

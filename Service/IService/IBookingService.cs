@@ -2,6 +2,7 @@
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.Booking;
 using Service.RequestAndResponse.Request.BookingServices;
+using Service.RequestAndResponse.Response.Accounts;
 using Service.RequestAndResponse.Response.BookingOfServices;
 using Service.RequestAndResponse.Response.Bookings;
 using System;
@@ -34,5 +35,7 @@ namespace Service.IService
         (DateTime startDate, DateTime endDate, string? timeSpanType);
         Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>> GetTotalBookingsTotalBookingsAmountForHomeStay
         (int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType);
+        Task<BaseResponse<List<GetTopLoyalCustomers>>> GetTopLoyalCustomers(int homeStayId, int top = 5);
+        Task<BaseResponse<List<GetAccountUser>>> GetCustomersByHomeStay(int homeStayId);
     }
 }
