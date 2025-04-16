@@ -15,5 +15,11 @@ namespace Service.RequestAndResponse.Request.BookingServiceDetails
         public int Quantity { get; set; }
 
         public int ServicesID { get; set; }
+
+        public DateTime? StartDate { get; set; }
+
+        public DateTime? EndDate { get; set; }
+
+        public int? RentHour { get; set; }
     }
 }

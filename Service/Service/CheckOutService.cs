@@ -166,6 +166,60 @@ namespace Service.Service
                 if (services.Count() != createBookingRequest.BookingOfServices.BookingServicesDetails.Count)
                     return new BaseResponse<int>("Some selected services are invalid.", StatusCodeEnum.NotFound_404, 0);
 
+                var bookingServiceDetails = createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s =>
+                {
+                    var service = services.FirstOrDefault(x => x.ServicesID == s.ServicesID);
+                    if (service == null)
+                        throw new Exception($"Service with ID {s.ServicesID} not found.");
+
+                    double unitPrice = service.UnitPrice;
+                    double servicePrice = service.servicesPrice;
+                    double totalAmount = 0;
+
+                    switch (service.ServiceType)
+                    {
+                        case ServiceType.Quantity:
+                            if (s.RentHour.HasValue || s.StartDate.HasValue || s.EndDate.HasValue)
+                                throw new Exception($"Service '{service.servicesName}' is type Quantity, must not have RentHour or Date.");
+
+                            totalAmount = servicePrice * s.Quantity;
+                            break;
+
+                        case ServiceType.Hour:
+                            if (!s.RentHour.HasValue)
+                                throw new Exception($"Service '{service.servicesName}' is type Hour, requires RentHour.");
+                            if (s.StartDate.HasValue || s.EndDate.HasValue)
+                                throw new Exception($"Service '{service.servicesName}' is type Hour, must not have StartDate or EndDate.");
+
+                            totalAmount = servicePrice * s.Quantity * s.RentHour.Value;
+                            break;
+
+                        case ServiceType.Day:
+                            if (!s.StartDate.HasValue || !s.EndDate.HasValue)
+                                throw new Exception($"Service '{service.servicesName}' is type Day, requires StartDate and EndDate.");
+                            if (s.StartDate.Value.Date >= s.EndDate.Value.Date)
+                                throw new Exception($"Service '{service.servicesName}' has invalid date range. EndDate must be after StartDate.");
+                            int rentalDays = (s.EndDate.Value.Date - s.StartDate.Value.Date).Days;
+                            if (rentalDays <= 0)
+                                rentalDays = 1;
+
+                            totalAmount = servicePrice * s.Quantity * rentalDays;
+                            break;
+                    }
+
+                    return new BookingServicesDetail
+                    {
+                        Quantity = s.Quantity,
+                        unitPrice = unitPrice,
+                        TotalAmount = totalAmount,
+                        ServicesID = s.ServicesID,
+                        RentHour = service.ServiceType == ServiceType.Hour ? s.RentHour : null,
+                        StartDate = service.ServiceType == ServiceType.Day ? s.StartDate : null,
+                        EndDate = service.ServiceType == ServiceType.Day ? s.EndDate : null
+                    };
+                }).ToList();
+
+                totalPriceServices = bookingServiceDetails.Sum(d => d.TotalAmount);
                 var bookingServices = new BookingServices
                 {
                     BookingServicesDate = DateTime.Now,
@@ -174,19 +228,11 @@ namespace Service.Service
                     PaymentServiceStatus = PaymentServicesStatus.Pending,
                     AccountID = createBookingRequest.AccountID,
                     HomeStayID = createBookingRequest.HomeStayID,
-                    BookingServicesDetails = createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s => new BookingServicesDetail
-                    {
-                        Quantity = s.Quantity,
-                        unitPrice = s.Quantity * services.FirstOrDefault(x => x.ServicesID == s.ServicesID).UnitPrice,
-                        TotalAmount = s.Quantity * services.FirstOrDefault(x => x.ServicesID == s.ServicesID).servicesPrice,
-                        ServicesID = s.ServicesID
-                    }).ToList()
+                    BookingServicesDetails = bookingServiceDetails,
+                    Total = totalPriceServices,
+                    bookingServiceDeposit = commissionRate.PlatformShare * totalPriceServices,
+                    remainingBalance = totalPriceServices - (commissionRate.PlatformShare * totalPriceServices)
                 };
-
-                totalPriceServices = bookingServices.BookingServicesDetails.Sum(d => d.TotalAmount);
-                bookingServices.Total = totalPriceServices;
-                bookingServices.bookingServiceDeposit = commissionRate.PlatformShare * totalPriceServices;
-                bookingServices.remainingBalance = totalPriceServices - bookingServices.bookingServiceDeposit;
                 booking.BookingServices = new List<BookingServices> { bookingServices };
             }
 
@@ -196,7 +242,8 @@ namespace Service.Service
             booking.TotalRentPrice = totalPriceBooking;
             var depositBooking = commissionRate.PlatformShare * totalPriceBooking;
             booking.Total = totalAmount;
-            booking.bookingDeposit = depositBooking + (booking.BookingServices?.FirstOrDefault()?.bookingServiceDeposit ?? 0);
+            double bookingServiceDeposit = booking.BookingServices?.FirstOrDefault()?.bookingServiceDeposit ?? 0;
+            booking.bookingDeposit = depositBooking + bookingServiceDeposit;
             booking.remainingBalance = totalAmount - booking.bookingDeposit;
 
             await _bookingRepository.AddBookingAsync(booking);
