@@ -58,6 +58,6 @@ namespace Service.RequestAndResponse.Request.HomeStay
 
         public string? PricingJson { get; set; }
 
-        public List<PricingForHomeStayRental> Pricing { get; set; }
+        public List<PricingForHomeStayRental>? Pricing { get; set; }
     }
 }

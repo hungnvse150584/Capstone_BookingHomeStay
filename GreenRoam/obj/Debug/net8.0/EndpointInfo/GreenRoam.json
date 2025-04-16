@@ -6503,6 +6503,21 @@
           "servicesID": {
             "type": "integer",
             "format": "int32"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "rentHour": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -6629,6 +6644,21 @@
           "unitPrice": {
             "type": "number",
             "format": "double"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "rentHour": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "totalAmount": {
             "type": "number",
@@ -11522,6 +11552,15 @@
         },
         "additionalProperties": false
       },
+      "ServiceType": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "Services": {
         "required": [
           "description",
@@ -11569,6 +11608,9 @@
           },
           "homeStay": {
             "$ref": "#/components/schemas/HomeStay"
+          },
+          "serviceType": {
+            "$ref": "#/components/schemas/ServiceType"
           },
           "imageServices": {
             "type": "array",
@@ -12332,6 +12374,21 @@
           "quantity": {
             "type": "integer",
             "format": "int32"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "rentHour": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "servicesID": {
             "type": "integer",
