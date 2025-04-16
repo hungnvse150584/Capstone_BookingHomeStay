@@ -66,5 +66,5 @@ namespace Service.RequestAndResponse.Response.HomeStayType
         public IEnumerable<PricingResponse> Pricings { get; set; }
         //public IEnumerable<RoomResponse> Rooms { get; set; }
     }
-
+        
 }

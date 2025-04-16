@@ -2714,6 +2714,237 @@
         }
       }
     },
+    "/api/homestay/CreateWithRentalsAndPricing": {
+      "post": {
+        "tags": [
+          "HomeStay"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "AccountID",
+                  "Address",
+                  "Description",
+                  "Latitude",
+                  "Longtitude",
+                  "Name"
+                ],
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "Address": {
+                    "type": "string"
+                  },
+                  "Longtitude": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Latitude": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "RentalType": {
+                    "$ref": "#/components/schemas/RentalType"
+                  },
+                  "Area": {
+                    "type": "string"
+                  },
+                  "AccountID": {
+                    "type": "string"
+                  },
+                  "Images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "RentalName": {
+                    "type": "string"
+                  },
+                  "RentalDescription": {
+                    "type": "string"
+                  },
+                  "numberBedRoom": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "numberBathRoom": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "numberKitchen": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "numberWifi": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Status": {
+                    "type": "boolean"
+                  },
+                  "RentWhole": {
+                    "type": "boolean"
+                  },
+                  "MaxAdults": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "MaxChildren": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "MaxPeople": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "RentalImages": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "PricingJson": {
+                    "type": "string"
+                  },
+                  "Pricing": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/PricingForHomeStayRental"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "Address": {
+                  "style": "form"
+                },
+                "Longtitude": {
+                  "style": "form"
+                },
+                "Latitude": {
+                  "style": "form"
+                },
+                "RentalType": {
+                  "style": "form"
+                },
+                "Area": {
+                  "style": "form"
+                },
+                "AccountID": {
+                  "style": "form"
+                },
+                "Images": {
+                  "style": "form"
+                },
+                "RentalName": {
+                  "style": "form"
+                },
+                "RentalDescription": {
+                  "style": "form"
+                },
+                "numberBedRoom": {
+                  "style": "form"
+                },
+                "numberBathRoom": {
+                  "style": "form"
+                },
+                "numberKitchen": {
+                  "style": "form"
+                },
+                "numberWifi": {
+                  "style": "form"
+                },
+                "Status": {
+                  "style": "form"
+                },
+                "RentWhole": {
+                  "style": "form"
+                },
+                "MaxAdults": {
+                  "style": "form"
+                },
+                "MaxChildren": {
+                  "style": "form"
+                },
+                "MaxPeople": {
+                  "style": "form"
+                },
+                "RentalImages": {
+                  "style": "form"
+                },
+                "PricingJson": {
+                  "style": "form"
+                },
+                "Pricing": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateHomeStayWithRentalsAndPricingResponseBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateHomeStayWithRentalsAndPricingResponseBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateHomeStayWithRentalsAndPricingResponseBaseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
     "/api/homestay/UpdateHomeStay/{homestayId}": {
       "put": {
         "tags": [
@@ -6723,6 +6954,45 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateHomeStayWithRentalsAndPricingResponse": {
+        "type": "object",
+        "properties": {
+          "homeStay": {
+            "$ref": "#/components/schemas/HomeStayResponse"
+          },
+          "rentals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetAllHomeStayType"
+            },
+            "nullable": true
+          },
+          "pricings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PricingResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateHomeStayWithRentalsAndPricingResponseBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CreateHomeStayWithRentalsAndPricingResponse"
           }
         },
         "additionalProperties": false
