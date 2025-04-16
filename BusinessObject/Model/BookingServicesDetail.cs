@@ -17,6 +17,12 @@ namespace BusinessObject.Model;
 
         public double unitPrice { get; set; }
 
+        public DateTime? StartDate { get; set; }
+
+        public DateTime? EndDate { get; set; }
+
+        public int? RentHour { get; set; }
+
         public double TotalAmount { get; set; }
 
         public int? ServicesID { get; set; }
