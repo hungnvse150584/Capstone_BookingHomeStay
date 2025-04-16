@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BusinessObject.Model;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,6 +30,13 @@ namespace Service.RequestAndResponse.Request.Services
         public double servicesPrice { get; set; }
 
         public bool Status { get; set; }
+        [Required]
+        public ServiceType ServiceType { get; set; }
+        public int? Quantity { get; set; } // Thêm Quantity (dùng khi ServiceType là Quantity)
+
+        public DateTime? StartDate { get; set; } // Thêm StartDate (dùng khi ServiceType là Day)
+
+        public DateTime? EndDate { get; set; }
 
         //public int? HomeStayID { get; set; }
         //[Required]
