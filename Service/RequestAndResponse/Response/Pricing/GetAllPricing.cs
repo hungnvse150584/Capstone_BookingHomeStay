@@ -20,6 +20,7 @@ namespace Service.RequestAndResponse.Response.Pricing
         public double UnitPrice { get; set; }
 
         public double RentPrice { get; set; }
+        public double Percentage { get; set; }
 
         public DateTime? StartDate { get; set; }
 
