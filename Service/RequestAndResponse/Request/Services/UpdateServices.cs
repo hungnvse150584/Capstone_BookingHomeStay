@@ -27,12 +27,13 @@ namespace Service.RequestAndResponse.Request.Services
         public double servicesPrice { get; set; }
 
         public bool Status { get; set; }
+        public int? Quantity {  get; set; }
 
         public int? HomeStayID { get; set; }
 
         //public List<IFormFile> Images { get; set; }
 
-        [Required]
-        public ServiceType ServiceType { get; set; }
+  
+        public ServiceType? ServiceType { get; set; }
     }
 }

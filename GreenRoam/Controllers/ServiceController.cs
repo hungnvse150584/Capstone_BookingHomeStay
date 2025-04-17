@@ -1,5 +1,4 @@
-﻿using BusinessObject.Model;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
@@ -29,53 +28,53 @@ public class ServiceController : ControllerBase
     [HttpPost]
     [Route("CreateService")]
     [Consumes("multipart/form-data")]
-    public async Task<ActionResult<BaseResponse<Services>>> CreateServices([FromForm] CreateServices request)
+    public async Task<ActionResult<BaseResponse<GetAllServices>>> CreateServices([FromForm] CreateServices request)
     {
         try
         {
             if (request == null)
             {
-                return BadRequest(new BaseResponse<Services>("Request body cannot be null!", StatusCodeEnum.BadRequest_400, null));
+                return BadRequest(new BaseResponse<GetAllServices>("Request body cannot be null!", StatusCodeEnum.BadRequest_400, null));
             }
 
             if (!ModelState.IsValid)
             {
-                return BadRequest(new BaseResponse<Services>("Invalid request data!", StatusCodeEnum.BadRequest_400, null));
+                return BadRequest(new BaseResponse<GetAllServices>("Invalid request data!", StatusCodeEnum.BadRequest_400, null));
             }
 
-            var service = await _servicesService.CreateService(request);
-            return StatusCode((int)service.StatusCode, service);
+            var result = await _servicesService.CreateService(request);
+            return StatusCode((int)result.StatusCode, result);
         }
         catch (Exception ex)
         {
-            return StatusCode(500, new BaseResponse<Services>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null));
+            return StatusCode(500, new BaseResponse<GetAllServices>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null));
         }
     }
 
     [HttpPut("UpdateService/{serviceId}")]
     [Consumes("multipart/form-data")]
-    public async Task<ActionResult<BaseResponse<Services>>> UpdateService([FromRoute] int serviceId, [FromForm] UpdateServices request)
+    public async Task<ActionResult<BaseResponse<GetAllServices>>> UpdateService([FromRoute] int serviceId, [FromForm] UpdateServices request)
     {
         if (serviceId <= 0)
         {
-            return BadRequest(new BaseResponse<Services>("Invalid Service ID.", StatusCodeEnum.BadRequest_400, null));
+            return BadRequest(new BaseResponse<GetAllServices>("Invalid Service ID.", StatusCodeEnum.BadRequest_400, null));
         }
 
         if (request == null)
         {
-            return BadRequest(new BaseResponse<Services>("Request body cannot be null.", StatusCodeEnum.BadRequest_400, null));
+            return BadRequest(new BaseResponse<GetAllServices>("Request body cannot be null.", StatusCodeEnum.BadRequest_400, null));
         }
 
         if (!ModelState.IsValid)
         {
-            return BadRequest(new BaseResponse<Services>("Invalid request data!", StatusCodeEnum.BadRequest_400, null));
+            return BadRequest(new BaseResponse<GetAllServices>("Invalid request data!", StatusCodeEnum.BadRequest_400, null));
         }
 
         var result = await _servicesService.UpdateService(serviceId, request);
 
         if (result == null)
         {
-            return StatusCode(500, new BaseResponse<Services>("An error occurred while updating the Service.", StatusCodeEnum.InternalServerError_500, null));
+            return StatusCode(500, new BaseResponse<GetAllServices>("An error occurred while updating the Service.", StatusCodeEnum.InternalServerError_500, null));
         }
 
         return StatusCode((int)result.StatusCode, result);

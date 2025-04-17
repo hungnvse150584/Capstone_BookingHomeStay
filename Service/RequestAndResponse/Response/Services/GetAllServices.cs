@@ -31,6 +31,10 @@ namespace Service.RequestAndResponse.Response.Services
         public bool Status { get; set; }
 
         public int? HomeStayID { get; set; }
+        public int Quantity { get; set; }
+
+
+        public ServiceType ServiceType { get; set; }
         //public HomeStayResponse? HomeStay { get; set; }
         public IEnumerable<GetAllImageService> ImageServices { get; set; }
 
