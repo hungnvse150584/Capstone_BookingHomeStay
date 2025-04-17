@@ -323,5 +323,19 @@ namespace Service.Service
 
             return new BaseResponse<List<GetAccountUser>>("Get All Success", StatusCodeEnum.OK_200, result);
         }
+
+        public async Task<BaseResponse<List<GetCurrentWeekRevenueForHomeStay>>> GetCurrentWeekRevenueForHomeStay(int homestayId)
+        {
+            var revenueData = await _bookingRepository.GetCurrentWeekRevenueForHomeStay(homestayId);
+
+            // Chuyển đổi dữ liệu từ tuple (string, double) thành đối tượng GetCurrentWeekRevenueForHomeStay
+            var result = revenueData.Select(d => new GetCurrentWeekRevenueForHomeStay
+            {
+                Date = d.date,
+                totalBookingsAmount = d.totalBookingsAmount
+            }).ToList();
+
+            return new BaseResponse<List<GetCurrentWeekRevenueForHomeStay>>("Get All Success", StatusCodeEnum.OK_200, result);
+        }
     }
 }

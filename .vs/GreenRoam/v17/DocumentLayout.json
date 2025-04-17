@@ -102,8 +102,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Services\\CreateServices.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAuwCEAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:37:37.614Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:37:37.614Z"
             },
             {
               "$type": "Document",
@@ -115,8 +114,7 @@
               "RelativeToolTip": "Service\\IService\\IServiceServices.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:37:26.07Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:37:26.07Z"
             },
             {
               "$type": "Document",
@@ -128,8 +126,7 @@
               "RelativeToolTip": "Service\\Service\\ServicesService.cs",
               "ViewState": "AgIAADUAAAAAAAAAAAAowGkAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:37:46.927Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:37:46.927Z"
             },
             {
               "$type": "Document",
@@ -139,7 +136,7 @@
               "RelativeDocumentMoniker": "Service\\Mapping\\MappingProfile.cs",
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Mapping\\MappingProfile.cs",
               "RelativeToolTip": "Service\\Mapping\\MappingProfile.cs",
-              "ViewState": "AgIAAGIBAAAAAAAAAAAswHgBAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAGIBAAAAAAAAAAAswHcBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-16T16:50:13.998Z",
               "EditorCaption": ""
@@ -154,8 +151,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Services\\ServiceWithTotalPriceResponse.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAAkAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:46:06.723Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:46:06.723Z"
             },
             {
               "$type": "Document",
@@ -167,8 +163,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Services\\UpdateServices.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwA4AAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:43:45.807Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:43:45.807Z"
             },
             {
               "$type": "Document",
@@ -180,8 +175,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\ServiceController.cs",
               "ViewState": "AgIAACYAAAAAAAAAAAAwwFIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:36:32.06Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:36:32.06Z"
             },
             {
               "$type": "Document",

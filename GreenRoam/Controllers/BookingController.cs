@@ -101,5 +101,11 @@ namespace GreenRoam.Controllers
         {
             return await _bookingService.GetCustomersByHomeStay(homeStayId);
         }
+
+        [HttpGet("adminDashBoard/GetCurrentWeekRevenueForHomeStay")]
+        public async Task<BaseResponse<List<GetCurrentWeekRevenueForHomeStay>>> GetCurrentWeekRevenueForHomeStay(int homestayId)
+        {
+            return await _bookingService.GetCurrentWeekRevenueForHomeStay(homestayId);
+        }
     }
 }

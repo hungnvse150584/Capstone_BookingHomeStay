@@ -37,5 +37,6 @@ namespace Service.IService
         (int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType);
         Task<BaseResponse<List<GetTopLoyalCustomers>>> GetTopLoyalCustomers(int homeStayId, int top = 5);
         Task<BaseResponse<List<GetAccountUser>>> GetCustomersByHomeStay(int homeStayId);
+        Task<BaseResponse<List<GetCurrentWeekRevenueForHomeStay>>> GetCurrentWeekRevenueForHomeStay(int homestayId);
     }
 }
