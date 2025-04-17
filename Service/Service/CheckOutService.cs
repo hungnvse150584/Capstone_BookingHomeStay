@@ -497,6 +497,20 @@ namespace Service.Service
                     bookingService.PaymentServiceStatus = PaymentServicesStatus.Deposited; // Đặt cọc
                 }
 
+                var detail = bookingService.BookingServicesDetails.FirstOrDefault();
+                if (detail != null)
+                {
+                    var service = detail.Services;
+                    if (service != null)
+                    {
+                        if (service.Quantity.HasValue && detail.Quantity >= 0)
+                        {
+                            service.Quantity -= detail.Quantity;
+                            await _serviceRepository.UpdateAsync(service);
+                        }
+                    }
+                }
+
                 bookingService.Status = BookingServicesStatus.Confirmed;
 
                 transaction.HomeStay = bookingService.HomeStay;
@@ -543,6 +557,22 @@ namespace Service.Service
                     transaction.Account = service.HomeStay.Account;
                     service.Transactions.Add(transaction);
                     await _bookingServiceRepository.UpdateBookingServicesAsync(service);
+                    if (service.BookingServicesDetails != null)
+                    {
+                        foreach (var detail in service.BookingServicesDetails)
+                        {
+                            var s = detail.Services;
+                            if (s != null)
+                            {
+                                // Kiểm tra xem dịch vụ có Quantity hợp lệ không (Có giá trị và không âm)
+                                if (s.Quantity.HasValue && detail.Quantity >= 0)
+                                {
+                                    s.Quantity += detail.Quantity;  // Tăng số lượng dịch vụ
+                                    await _serviceRepository.UpdateAsync(s);  // Cập nhật dịch vụ trong cơ sở dữ liệu
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -563,6 +593,19 @@ namespace Service.Service
             }
 
             bookingService.Transactions ??= new List<Transaction>();
+
+            var service = bookingService.BookingServicesDetails.FirstOrDefault()?.Services;
+            if (service != null)
+            {
+                if (service.Quantity < bookingService.BookingServicesDetails.FirstOrDefault()?.Quantity)
+                {
+                    throw new Exception("Not enough service quantity available.");
+                }
+
+                // Trừ số lượng dịch vụ
+                service.Quantity -= bookingService.BookingServicesDetails.FirstOrDefault()?.Quantity ?? 0;
+                await _serviceRepository.UpdateAsync(service);  // Cập nhật lại số lượng dịch vụ
+            }
 
             bookingService.Transactions.Add(transaction);
 
@@ -585,7 +628,7 @@ namespace Service.Service
                 var booking = bookingService.Booking;
                 if (booking != null)
                 {
-                    
+
                     booking.Total += bookingService.Total;
                     booking.bookingDeposit += bookingService.bookingServiceDeposit;
                     await _bookingRepository.UpdateBookingAsync(booking);  // Cập nhật lại Booking
@@ -616,6 +659,13 @@ namespace Service.Service
             bookingService.Transactions ??= new List<Transaction>();
 
             bookingService.Transactions.Add(transaction);
+
+            var service = bookingService.BookingServicesDetails.FirstOrDefault()?.Services;
+            if (service != null)
+            {
+                service.Quantity += bookingService.BookingServicesDetails.FirstOrDefault()?.Quantity ?? 0;  // Khôi phục số lượng dịch vụ
+                await _serviceRepository.UpdateAsync(service);  // Cập nhật lại dịch vụ
+            }
 
             if (bookingService.BookingID.HasValue)
             {

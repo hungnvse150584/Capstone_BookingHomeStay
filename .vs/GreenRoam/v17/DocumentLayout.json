@@ -174,8 +174,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\HomeStayRentals.cs",
               "ViewState": "AgIAACoAAAAAAAAAAAAiwD0AAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T08:04:50.169Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-17T08:04:50.169Z"
             },
             {
               "$type": "Document",
@@ -187,8 +186,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\HistoryPricing.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAwwBoAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T08:07:15.289Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-17T08:07:15.289Z"
             },
             {
               "$type": "Document",
@@ -198,7 +196,7 @@
               "RelativeDocumentMoniker": "Service\\Service\\HomeStayService.cs",
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\HomeStayService.cs",
               "RelativeToolTip": "Service\\Service\\HomeStayService.cs",
-              "ViewState": "AgIAAGwCAAAAAAAAAAAswHkCAAARAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAHkCAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-16T16:26:33.821Z",
               "EditorCaption": ""
@@ -213,8 +211,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\Pricing.cs",
               "ViewState": "AgIAABsAAAAAAAAAAAAowCsAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T08:06:34.245Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-17T08:06:34.245Z"
             },
             {
               "$type": "Document",
@@ -226,8 +223,7 @@
               "RelativeToolTip": "DataAccessObject\\HomeStayDAO.cs",
               "ViewState": "AgIAAFkAAAAAAAAAAAAAAH8AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T15:43:12.989Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-17T15:43:12.989Z"
             },
             {
               "$type": "Document",
@@ -239,8 +235,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\Booking.cs",
               "ViewState": "AgIAADMAAAAAAAAAAAA+wAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T16:17:25.101Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-17T16:17:25.101Z"
             },
             {
               "$type": "Document",
@@ -252,8 +247,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Services\\UpdateServices.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwCQAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:43:45.807Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:43:45.807Z"
             },
             {
               "$type": "Document",
