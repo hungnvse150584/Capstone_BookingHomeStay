@@ -31,6 +31,8 @@ namespace BusinessObject.Model;
 
         public DateTime UpdateAt { get; set; }
 
+        public DateTime? DeleteAt { get; set; }
+
         [EnumDataType(typeof(HomeStayStatus))]
         public HomeStayStatus Status { get; set; }
 

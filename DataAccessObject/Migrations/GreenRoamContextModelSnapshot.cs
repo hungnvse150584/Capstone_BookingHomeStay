@@ -449,6 +449,59 @@ namespace DataAccessObject.Migrations
                     b.ToTable("CultureExperiences");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.HistoryPricing", b =>
+                {
+                    b.Property<int>("HistoryPricingID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HistoryPricingID"));
+
+                    b.Property<int>("DayType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("HomeStayRentalID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Percentage")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("PricingID")
+                        .HasColumnType("int");
+
+                    b.Property<double>("RentPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("RoomTypesID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("HistoryPricingID");
+
+                    b.HasIndex("HomeStayRentalID");
+
+                    b.HasIndex("PricingID");
+
+                    b.HasIndex("RoomTypesID");
+
+                    b.ToTable("PricingHistories");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.HomeStay", b =>
                 {
                     b.Property<int>("HomeStayID")
@@ -475,6 +528,9 @@ namespace DataAccessObject.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -523,6 +579,9 @@ namespace DataAccessObject.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HomeStayRentalID"));
 
                     b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -985,6 +1044,9 @@ namespace DataAccessObject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomID"));
 
+                    b.Property<DateTime?>("DeleteAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("RoomTypesID")
                         .HasColumnType("int");
 
@@ -1014,6 +1076,9 @@ namespace DataAccessObject.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomTypesID"));
 
                     b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -1069,11 +1134,17 @@ namespace DataAccessObject.Migrations
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeleteAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("HomeStayID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<int>("ServiceType")
@@ -1506,6 +1577,27 @@ namespace DataAccessObject.Migrations
                     b.Navigation("HomeStay");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.HistoryPricing", b =>
+                {
+                    b.HasOne("BusinessObject.Model.HomeStayRentals", "HomeStayRentals")
+                        .WithMany("PricingHistories")
+                        .HasForeignKey("HomeStayRentalID");
+
+                    b.HasOne("BusinessObject.Model.Pricing", "Pricing")
+                        .WithMany("PricingHistories")
+                        .HasForeignKey("PricingID");
+
+                    b.HasOne("BusinessObject.Model.RoomTypes", "RoomTypes")
+                        .WithMany("PricingHistories")
+                        .HasForeignKey("RoomTypesID");
+
+                    b.Navigation("HomeStayRentals");
+
+                    b.Navigation("Pricing");
+
+                    b.Navigation("RoomTypes");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.HomeStay", b =>
                 {
                     b.HasOne("BusinessObject.Model.Account", "Account")
@@ -1908,7 +2000,14 @@ namespace DataAccessObject.Migrations
 
                     b.Navigation("Prices");
 
+                    b.Navigation("PricingHistories");
+
                     b.Navigation("RoomTypes");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.Pricing", b =>
+                {
+                    b.Navigation("PricingHistories");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Report", b =>
@@ -1926,6 +2025,8 @@ namespace DataAccessObject.Migrations
                     b.Navigation("ImageRoomTypes");
 
                     b.Navigation("Prices");
+
+                    b.Navigation("PricingHistories");
 
                     b.Navigation("Rooms");
                 });

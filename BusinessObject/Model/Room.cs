@@ -20,6 +20,8 @@ namespace BusinessObject.Model
 
         public bool isActive { get; set; }
 
+        public DateTime? DeleteAt { get; set; }
+
         public int? RoomTypesID { get; set; }
         [ForeignKey("RoomTypesID")]
         public RoomTypes? RoomTypes { get; set; }

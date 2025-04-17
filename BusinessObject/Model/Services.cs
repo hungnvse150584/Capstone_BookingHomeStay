@@ -23,6 +23,10 @@ namespace BusinessObject.Model;
 
         public DateTime UpdateAt { get; set; }
 
+        public DateTime? DeleteAt { get; set; }
+
+        public int? Quantity { get; set; }
+
         [Required]
         public double UnitPrice { get; set; }
 

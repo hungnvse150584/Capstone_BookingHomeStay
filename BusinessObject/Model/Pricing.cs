@@ -42,6 +42,8 @@ namespace BusinessObject.Model
 
         [EnumDataType(typeof(DayType))]
         public DayType DayType { get; set; }
+
+        public ICollection<HistoryPricing> PricingHistories { get; set; }
     }
 
     public enum DayType

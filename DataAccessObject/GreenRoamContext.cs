@@ -133,6 +133,7 @@ namespace DataAccessObject
         public DbSet<HomeStay> HomeStays { get; set; }
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<Pricing> Prices { get; set; }
+        public DbSet<HistoryPricing> PricingHistories { get; set; }
         public DbSet<CancellationPolicy> CancelPolicy { get; set; }
         public DbSet<CommissionRate> CommissionRates { get; set; }
         public DbSet<CultureExperience> CultureExperiences { get; set; }

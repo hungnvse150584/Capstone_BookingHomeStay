@@ -23,6 +23,8 @@ namespace BusinessObject.Model;
 
         public DateTime UpdateAt { get; set; }
 
+        public DateTime? DeleteAt { get; set; }
+
         [Required]
         public int numberBedRoom { get; set; }
 
@@ -49,5 +51,7 @@ namespace BusinessObject.Model;
         public ICollection<Room> Rooms { get; set; }
 
         public ICollection<Pricing> Prices { get; set; }
+
+        public ICollection<HistoryPricing> PricingHistories { get; set; }
     }
 
