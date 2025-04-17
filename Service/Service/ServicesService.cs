@@ -32,7 +32,7 @@ public class ServicesService : IServiceServices
         _cloudinary = cloudinary;
     }
 
-    public async Task<BaseResponse<Services>> CreateService(CreateServices request)
+    public async Task<BaseResponse<GetAllServices>> CreateService(CreateServices request)
     {
         try
         {
@@ -60,17 +60,25 @@ public class ServicesService : IServiceServices
                 }
             }
 
-            return new BaseResponse<Services>("Service created successfully", StatusCodeEnum.Created_201, serviceEntity);
+            // Ánh xạ dịch vụ vừa tạo sang GetAllServices
+            var serviceDto = _mapper.Map<GetAllServices>(serviceEntity);
+            return new BaseResponse<GetAllServices>(
+                "Service created successfully",
+                StatusCodeEnum.Created_201,
+                serviceDto);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error: {ex.Message}");
             Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
-            return new BaseResponse<Services>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
+            return new BaseResponse<GetAllServices>(
+                $"Something went wrong! Error: {ex.Message}",
+                StatusCodeEnum.InternalServerError_500,
+                null);
         }
     }
 
-    public async Task<BaseResponse<Services>> UpdateService(int serviceId, UpdateServices request)
+    public async Task<BaseResponse<GetAllServices>> UpdateService(int serviceId, UpdateServices request)
     {
         try
         {
@@ -78,7 +86,10 @@ public class ServicesService : IServiceServices
             var serviceExist = await _servicesRepository.GetByIdAsync(serviceId);
             if (serviceExist == null)
             {
-                return new BaseResponse<Services>("Cannot find service", StatusCodeEnum.BadGateway_502, null);
+                return new BaseResponse<GetAllServices>(
+                    "Cannot find service",
+                    StatusCodeEnum.BadGateway_502,
+                    null);
             }
 
             // Ánh xạ dữ liệu từ request sang entity
@@ -105,13 +116,21 @@ public class ServicesService : IServiceServices
             //    }
             //}
 
-            return new BaseResponse<Services>("Update Service successfully", StatusCodeEnum.OK_200, updatedService);
+            // Ánh xạ dịch vụ vừa cập nhật sang GetAllServices
+            var serviceDto = _mapper.Map<GetAllServices>(updatedService);
+            return new BaseResponse<GetAllServices>(
+                "Update Service successfully",
+                StatusCodeEnum.OK_200,
+                serviceDto);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error: {ex.Message}");
             Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
-            return new BaseResponse<Services>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
+            return new BaseResponse<GetAllServices>(
+                $"Something went wrong! Error: {ex.Message}",
+                StatusCodeEnum.InternalServerError_500,
+                null);
         }
     }
 
@@ -120,13 +139,17 @@ public class ServicesService : IServiceServices
         var serviceList = await _servicesRepository.GetAllServiceAsync(homestayId);
         if (serviceList == null)
         {
-            return new BaseResponse<IEnumerable<GetAllServices>>("Something went wrong!",
-                StatusCodeEnum.BadGateway_502, null);
+            return new BaseResponse<IEnumerable<GetAllServices>>(
+                "Something went wrong!",
+                StatusCodeEnum.BadGateway_502,
+                null);
         }
 
         var serviceDtos = _mapper.Map<IEnumerable<GetAllServices>>(serviceList);
-        return new BaseResponse<IEnumerable<GetAllServices>>("Get all Services by HomeStayID success",
-            StatusCodeEnum.OK_200, serviceDtos);
+        return new BaseResponse<IEnumerable<GetAllServices>>(
+            "Get all Services by HomeStayID success",
+            StatusCodeEnum.OK_200,
+            serviceDtos);
     }
 
     private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> files)

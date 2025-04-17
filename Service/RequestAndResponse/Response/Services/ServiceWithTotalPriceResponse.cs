@@ -23,11 +23,12 @@ namespace Service.RequestAndResponse.Response.Services
 
         public double servicesPrice { get; set; }
 
-        public double TotalPrice { get; set; } 
-
-        public bool Status { get; set; }
 
         public int? HomeStayID { get; set; }
+
+        public bool Status { get; set; }
+        public int Quantity {  get; set; }
+
 
         public ServiceType ServiceType { get; set; }
     }

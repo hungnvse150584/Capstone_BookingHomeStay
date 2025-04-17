@@ -25,6 +25,7 @@ namespace Service.RequestAndResponse.Request.Services
         public double servicesPrice { get; set; }
 
         public bool Status { get; set; }
+        public int? Quantity {  get; set; }
 
         public int? HomeStayID { get; set; }
 
