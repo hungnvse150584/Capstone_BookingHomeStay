@@ -115,17 +115,18 @@
                 }
                 return entity;
             }
-            public async Task<IEnumerable<HomeStay>> GetAllWithDetailsAsync()
-            {
-                return await _context.HomeStays
-                    .Include(h => h.HomeStayRentals)
-                    .Include(h => h.Bookings)
-                     .ThenInclude(b => b.BookingDetails)
-                    .Include(h => h.ImageHomeStays)
-                   
-                    .ToListAsync();
-            }
-            public async Task<HomeStay> GetOwnerHomeStayByIdAsync(string accountId)
+        public async Task<IEnumerable<HomeStay>> GetAllWithDetailsAsync()
+        {
+            return await _context.HomeStays
+                .Include(h => h.HomeStayRentals)
+                    .ThenInclude(r => r.RoomTypes)
+                        .ThenInclude(rt => rt.Rooms)
+                .Include(h => h.Bookings)
+                    .ThenInclude(b => b.BookingDetails)
+                .Include(h => h.ImageHomeStays)
+                .ToListAsync();
+        }
+        public async Task<HomeStay> GetOwnerHomeStayByIdAsync(string accountId)
             {
                 if (string.IsNullOrEmpty(accountId))
                 {
