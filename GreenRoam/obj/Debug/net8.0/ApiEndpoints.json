@@ -3416,26 +3416,11 @@
         "Name": "ServiceType",
         "Type": "System.String",
         "IsRequired": false
-      },
-      {
-        "Name": "Quantity",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "StartDate",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "EndDate",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Services.ServiceWithTotalPriceResponse, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[BusinessObject.Model.Services, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -3510,29 +3495,19 @@
         "IsRequired": false
       },
       {
+        "Name": "HomeStayID",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
         "Name": "ServiceType",
         "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Quantity",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "StartDate",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "EndDate",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Services.ServiceWithTotalPriceResponse, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[BusinessObject.Model.Services, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

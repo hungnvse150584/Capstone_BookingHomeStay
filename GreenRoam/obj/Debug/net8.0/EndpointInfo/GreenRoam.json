@@ -5500,18 +5500,6 @@
                   },
                   "ServiceType": {
                     "$ref": "#/components/schemas/ServiceType"
-                  },
-                  "Quantity": {
-                    "type": "integer",
-                    "format": "int32"
-                  },
-                  "StartDate": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "EndDate": {
-                    "type": "string",
-                    "format": "date-time"
                   }
                 }
               },
@@ -5539,15 +5527,6 @@
                 },
                 "ServiceType": {
                   "style": "form"
-                },
-                "Quantity": {
-                  "style": "form"
-                },
-                "StartDate": {
-                  "style": "form"
-                },
-                "EndDate": {
-                  "style": "form"
                 }
               }
             }
@@ -5559,17 +5538,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ServiceWithTotalPriceResponseBaseResponse"
+                  "$ref": "#/components/schemas/ServicesBaseResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ServiceWithTotalPriceResponseBaseResponse"
+                  "$ref": "#/components/schemas/ServicesBaseResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ServiceWithTotalPriceResponseBaseResponse"
+                  "$ref": "#/components/schemas/ServicesBaseResponse"
                 }
               }
             }
@@ -5623,20 +5602,12 @@
                   "Status": {
                     "type": "boolean"
                   },
-                  "ServiceType": {
-                    "$ref": "#/components/schemas/ServiceType"
-                  },
-                  "Quantity": {
+                  "HomeStayID": {
                     "type": "integer",
                     "format": "int32"
                   },
-                  "StartDate": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "EndDate": {
-                    "type": "string",
-                    "format": "date-time"
+                  "ServiceType": {
+                    "$ref": "#/components/schemas/ServiceType"
                   }
                 }
               },
@@ -5656,16 +5627,10 @@
                 "Status": {
                   "style": "form"
                 },
+                "HomeStayID": {
+                  "style": "form"
+                },
                 "ServiceType": {
-                  "style": "form"
-                },
-                "Quantity": {
-                  "style": "form"
-                },
-                "StartDate": {
-                  "style": "form"
-                },
-                "EndDate": {
                   "style": "form"
                 }
               }
@@ -5678,17 +5643,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ServiceWithTotalPriceResponseBaseResponse"
+                  "$ref": "#/components/schemas/ServicesBaseResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ServiceWithTotalPriceResponseBaseResponse"
+                  "$ref": "#/components/schemas/ServicesBaseResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ServiceWithTotalPriceResponseBaseResponse"
+                  "$ref": "#/components/schemas/ServicesBaseResponse"
                 }
               }
             }
@@ -11617,71 +11582,6 @@
         "type": "integer",
         "format": "int32"
       },
-      "ServiceWithTotalPriceResponse": {
-        "type": "object",
-        "properties": {
-          "servicesID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "servicesName": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "createAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updateAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "unitPrice": {
-            "type": "number",
-            "format": "double"
-          },
-          "servicesPrice": {
-            "type": "number",
-            "format": "double"
-          },
-          "totalPrice": {
-            "type": "number",
-            "format": "double"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "homeStayID": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "serviceType": {
-            "$ref": "#/components/schemas/ServiceType"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ServiceWithTotalPriceResponseBaseResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "statusCode": {
-            "$ref": "#/components/schemas/StatusCodeEnum"
-          },
-          "data": {
-            "$ref": "#/components/schemas/ServiceWithTotalPriceResponse"
-          }
-        },
-        "additionalProperties": false
-      },
       "Services": {
         "required": [
           "description",
@@ -11746,6 +11646,22 @@
               "$ref": "#/components/schemas/BookingServicesDetail"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ServicesBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Services"
           }
         },
         "additionalProperties": false

@@ -3,36 +3,36 @@
   "WorkspaceRootPath": "D:\\FPT\\SEP490_Capstone\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\servicesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\servicesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\services\\updateservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\services\\updateservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\iservice\\iserviceservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\iserviceservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\services\\createservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\services\\createservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\servicesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\servicesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\controllers\\servicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\servicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\iservice\\iserviceservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\iserviceservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\services\\createservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\services\\createservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\response\\services\\servicewithtotalpriceresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\response\\services\\servicewithtotalpriceresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\staff.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -70,7 +70,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -94,16 +94,100 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CreateServices.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Services\\CreateServices.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Services\\CreateServices.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Services\\CreateServices.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Services\\CreateServices.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAuwCEAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T16:37:37.614Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IServiceServices.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IServiceServices.cs",
+              "RelativeDocumentMoniker": "Service\\IService\\IServiceServices.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IServiceServices.cs",
+              "RelativeToolTip": "Service\\IService\\IServiceServices.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T16:37:26.07Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ServicesService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\ServicesService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\ServicesService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\ServicesService.cs",
+              "RelativeToolTip": "Service\\Service\\ServicesService.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAowGkAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T16:37:46.927Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Mapping\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "Service\\Mapping\\MappingProfile.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Mapping\\MappingProfile.cs",
+              "RelativeToolTip": "Service\\Mapping\\MappingProfile.cs",
+              "ViewState": "AgIAAGIBAAAAAAAAAAAswHcBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T16:50:13.998Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ServiceWithTotalPriceResponse.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Services\\ServiceWithTotalPriceResponse.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Services\\ServiceWithTotalPriceResponse.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Services\\ServiceWithTotalPriceResponse.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Services\\ServiceWithTotalPriceResponse.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAkAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T16:46:06.723Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
               "Title": "UpdateServices.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Services\\UpdateServices.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Services\\UpdateServices.cs",
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Services\\UpdateServices.cs",
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Services\\UpdateServices.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwCIAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA4AAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:43:45.807Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:43:45.807Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ServiceController.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\ServiceController.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\ServiceController.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\ServiceController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\ServiceController.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAwwFIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T16:36:32.06Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Services.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Services.cs",
+              "RelativeDocumentMoniker": "BusinessObject\\Model\\Services.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Services.cs",
+              "RelativeToolTip": "BusinessObject\\Model\\Services.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAUwCcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T16:36:03.734Z"
             },
             {
               "$type": "Document",
@@ -115,99 +199,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\Staff.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:43:16.533Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CreateServices.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Services\\CreateServices.cs",
-              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Services\\CreateServices.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Services\\CreateServices.cs",
-              "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Services\\CreateServices.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAACcAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:37:37.614Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IServiceServices.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IServiceServices.cs",
-              "RelativeDocumentMoniker": "Service\\IService\\IServiceServices.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IServiceServices.cs",
-              "RelativeToolTip": "Service\\IService\\IServiceServices.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:37:26.07Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ServiceController.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\ServiceController.cs",
-              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\ServiceController.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\ServiceController.cs",
-              "RelativeToolTip": "GreenRoam\\Controllers\\ServiceController.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAgwFEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:36:32.06Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Services.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Services.cs",
-              "RelativeDocumentMoniker": "BusinessObject\\Model\\Services.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Services.cs",
-              "RelativeToolTip": "BusinessObject\\Model\\Services.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAUwCcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:36:03.734Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ServicesService.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\ServicesService.cs",
-              "RelativeDocumentMoniker": "Service\\Service\\ServicesService.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\ServicesService.cs",
-              "RelativeToolTip": "Service\\Service\\ServicesService.cs",
-              "ViewState": "AgIAAF4AAAAAAAAAAAAvwHoAAABuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:37:46.927Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MappingProfile.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Mapping\\MappingProfile.cs",
-              "RelativeDocumentMoniker": "Service\\Mapping\\MappingProfile.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Mapping\\MappingProfile.cs",
-              "RelativeToolTip": "Service\\Mapping\\MappingProfile.cs",
-              "ViewState": "AgIAAFMBAAAAAAAAAAAswHUBAABWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:50:13.998Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ServiceWithTotalPriceResponse.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Services\\ServiceWithTotalPriceResponse.cs",
-              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Services\\ServiceWithTotalPriceResponse.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Services\\ServiceWithTotalPriceResponse.cs",
-              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Services\\ServiceWithTotalPriceResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:46:06.723Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:43:16.533Z"
             },
             {
               "$type": "Document",
@@ -219,8 +211,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\BookingServicesDetail.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:40:12.9Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:40:12.9Z"
             },
             {
               "$type": "Document",
@@ -232,8 +223,7 @@
               "RelativeToolTip": "Repository\\Repositories\\ServiceRepository.cs",
               "ViewState": "AgIAABQAAAAAAAAAAAAqwEMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:36:44.156Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:36:44.156Z"
             },
             {
               "$type": "Document",
@@ -245,8 +235,7 @@
               "RelativeToolTip": "DataAccessObject\\ServicesDAO.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAYwEwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:36:24.695Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:36:24.695Z"
             },
             {
               "$type": "Document",
@@ -270,8 +259,7 @@
               "RelativeToolTip": "Service\\Service\\HomeStayService.cs",
               "ViewState": "AgIAAKcCAAAAAAAAAAAuwN8CAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T16:26:33.821Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T16:26:33.821Z"
             },
             {
               "$type": "Document",

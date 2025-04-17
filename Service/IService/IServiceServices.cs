@@ -14,9 +14,9 @@ namespace Service.IService
 {
     public interface IServiceServices
     {
-        Task<BaseResponse<ServiceWithTotalPriceResponse>> CreateService(CreateServices request);
-        Task<BaseResponse<IEnumerable<ServiceWithTotalPriceResponse>>> GetAllServices(int homestayId);
-        Task<BaseResponse<ServiceWithTotalPriceResponse>> UpdateService(int serviceId, UpdateServices request);
+        Task<BaseResponse<Services>> CreateService(CreateServices request);
+        Task<BaseResponse<IEnumerable<GetAllServices>>> GetAllServices(int homestayId);
+        Task<BaseResponse<Services>> UpdateService(int serviceId, UpdateServices request);
         //Task<BaseResponse<Services>> UpdateServiceByHomeStayId(int homeStayId, UpdateServices request);
     }
 }

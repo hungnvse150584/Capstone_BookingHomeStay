@@ -365,17 +365,16 @@ namespace Service.Mapping
             .ForMember(dest => dest.ServiceType, opt => opt.MapFrom(src => src.ServiceType));
 
             // Ánh xạ cho UpdateServices -> Services
-            CreateMap<UpdateServices, Services>()
-               
-                .ForMember(dest => dest.servicesName, opt => opt.MapFrom(src => src.servicesName))
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-                .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
-                .ForMember(dest => dest.servicesPrice, opt => opt.MapFrom(src => src.servicesPrice))
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.ServiceType, opt => opt.MapFrom(src => src.ServiceType));
+            CreateMap<CreateServices, Services>()
+              .ForMember(dest => dest.servicesName, opt => opt.MapFrom(src => src.servicesName))
+              .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+              .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+              .ForMember(dest => dest.servicesPrice, opt => opt.MapFrom(src => src.servicesPrice))
+              .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+              .ForMember(dest => dest.HomeStayID, opt => opt.MapFrom(src => src.HomeStayID))
+              .ForMember(dest => dest.ServiceType, opt => opt.MapFrom(src => src.ServiceType));
 
-            // Ánh xạ cho Services -> ServiceWithTotalPriceResponse
-            CreateMap<Services, ServiceWithTotalPriceResponse>()
+            CreateMap<UpdateServices, Services>()
                 .ForMember(dest => dest.servicesName, opt => opt.MapFrom(src => src.servicesName))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
