@@ -549,7 +549,6 @@ namespace Service.Service
                 var filteredHomeStays = new List<(HomeStay HomeStay, double Distance)>();
                 foreach (var (homeStay, distance) in homeStaysWithDistance)
                 {
-                    // Kiểm tra sức chứa và phòng trống
                     bool hasAvailableRental = false;
                     var rentals = homeStay.HomeStayRentals ?? new List<HomeStayRentals>();
 
@@ -559,12 +558,13 @@ namespace Service.Service
                         continue;
                     }
 
-                    // Lấy danh sách các BookingDetail liên quan đến HomeStay này
                     var activeBookings = homeStay.Bookings?
                         .Where(b => b.Status == BookingStatus.Pending ||
                                     b.Status == BookingStatus.Confirmed ||
                                     b.Status == BookingStatus.InProgress)
                         .ToList() ?? new List<Booking>();
+
+                    Console.WriteLine($"HomeStayID: {homeStay.HomeStayID} has {rentals.Count} rentals and {activeBookings.Count} active bookings.");
 
                     foreach (var rental in rentals)
                     {
@@ -577,11 +577,22 @@ namespace Service.Service
                             continue;
                         }
 
-                        // Kiểm tra xem rental này có lịch đặt trùng không
-                        bool isRentalAvailable = true;
+                        // Lấy danh sách phòng trong rental
+                        var roomTypes = rental.RoomTypes ?? new List<RoomTypes>();
+                        var allRooms = roomTypes.SelectMany(rt => rt.Rooms ?? new List<Room>()).ToList();
+
+                        if (!allRooms.Any())
+                        {
+                            Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, RentalID: {rental.HomeStayRentalID} is excluded due to no rooms.");
+                            continue;
+                        }
+
+                        // Lấy danh sách phòng đã được đặt trong khoảng thời gian yêu cầu
+                        var bookedRoomIds = new HashSet<int>();
                         foreach (var booking in activeBookings)
                         {
-                            foreach (var detail in booking.BookingDetails ?? new List<BookingDetail>())
+                            var bookingDetails = booking.BookingDetails ?? new List<BookingDetail>();
+                            foreach (var detail in bookingDetails)
                             {
                                 if (detail.HomeStayRentalID != rental.HomeStayRentalID)
                                     continue;
@@ -589,25 +600,25 @@ namespace Service.Service
                                 var detailCheckInDate = detail.CheckInDate.Date;
                                 var detailCheckOutDate = detail.CheckOutDate.Date;
 
-                                Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, RentalID: {rental.HomeStayRentalID}, BookingDetailID: {detail.BookingDetailID}, " +
-                                                  $"CheckIn: {detailCheckInDate:yyyy-MM-dd}, CheckOut: {detailCheckOutDate:yyyy-MM-dd}, " +
-                                                  $"Request CheckIn: {checkInDate:yyyy-MM-dd}, Request CheckOut: {checkOutDate:yyyy-MM-dd}");
-
                                 if (detailCheckInDate <= checkOutDate && detailCheckOutDate >= checkInDate)
                                 {
-                                    isRentalAvailable = false;
-                                    Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, RentalID: {rental.HomeStayRentalID} is not available due to overlapping booking.");
-                                    break;
+                                    bookedRoomIds.Add((int)detail.RoomID);
                                 }
                             }
-                            if (!isRentalAvailable) break;
                         }
+
+                        // Kiểm tra xem có phòng nào còn trống không
+                        bool isRentalAvailable = allRooms.Any(room => !bookedRoomIds.Contains(room.RoomID) && room.isActive);
 
                         if (isRentalAvailable)
                         {
                             hasAvailableRental = true;
-                            Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, RentalID: {rental.HomeStayRentalID} is available.");
-                            break; // Nếu tìm thấy một rental trống, không cần kiểm tra tiếp
+                            Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, RentalID: {rental.HomeStayRentalID} is available (has available rooms).");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, RentalID: {rental.HomeStayRentalID} is not available (all rooms are booked).");
                         }
                     }
 
