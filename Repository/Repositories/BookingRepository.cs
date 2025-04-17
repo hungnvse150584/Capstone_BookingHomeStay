@@ -111,5 +111,10 @@ namespace Repository.Repositories
         {
            return await _bookingDao.GetCustomersByHomeStayAsync(homeStayId);
         }
+
+        public async Task<List<(string date, double totalBookingsAmount)>> GetCurrentWeekRevenueForHomeStay(int homestayId)
+        {
+            return await _bookingDao.GetCurrentWeekRevenueForHomeStayAsync(homestayId);
+        }
     }
 }
