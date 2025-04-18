@@ -127,16 +127,28 @@ namespace GreenRoam.Controllers
 
                         double serviceRefundAmount = 0;
 
-                        if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited)
+                        if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited &&
+                            booking.Data.paymentStatus == PaymentStatus.Deposited)
+                        {
+                            serviceRefundAmount = 0;
+                        }
+                        else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited &&
+                            booking.Data.paymentStatus == PaymentStatus.FullyPaid)
                         {
                             serviceRefundAmount = bookingService.bookingServiceDeposit;
                         }
-                        else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
+                        else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid
+                            && booking.Data.paymentStatus == PaymentStatus.Deposited)
                         {
                             serviceRefundAmount = bookingService.Total * cancellation.Data.RefundPercentage;
                         }
+                        else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid
+                            && booking.Data.paymentStatus == PaymentStatus.FullyPaid)
+                        {
+                            serviceRefundAmount = 0;
+                        }
 
-                        amount += serviceRefundAmount;
+                            amount += serviceRefundAmount;
                     }
 
                 }
