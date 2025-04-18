@@ -254,6 +254,9 @@ namespace DataAccessObject.Migrations
                     b.Property<double>("bookingServiceDeposit")
                         .HasColumnType("float");
 
+                    b.Property<bool>("isPaidWithBooking")
+                        .HasColumnType("bit");
+
                     b.Property<double>("remainingBalance")
                         .HasColumnType("float");
 

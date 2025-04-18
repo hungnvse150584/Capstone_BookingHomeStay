@@ -119,6 +119,26 @@ namespace GreenRoam.Controllers
                     {
                         amount = booking.Data.Total * cancellation.Data.RefundPercentage;
                     }
+                    foreach (var bookingService in booking.Data.BookingServices)
+                    {
+                        // Bỏ qua các service đã được thanh toán cùng booking
+                        if (bookingService.isPaidWithBooking)
+                            continue;
+
+                        double serviceRefundAmount = 0;
+
+                        if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited)
+                        {
+                            serviceRefundAmount = bookingService.bookingServiceDeposit;
+                        }
+                        else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
+                        {
+                            serviceRefundAmount = bookingService.Total * cancellation.Data.RefundPercentage;
+                        }
+
+                        amount += serviceRefundAmount;
+                    }
+
                 }
                 else
                 {

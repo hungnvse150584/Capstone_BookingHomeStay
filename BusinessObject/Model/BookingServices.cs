@@ -25,6 +25,8 @@
 
             public double remainingBalance { get; set; }
 
+            public bool isPaidWithBooking { get; set; }
+
             [ForeignKey("AccountID")]
             public string AccountID { get; set; }
             public Account Account { get; set; }

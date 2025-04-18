@@ -103,6 +103,7 @@ namespace Service.Service
                 Status = BookingServicesStatus.Pending,
                 HomeStayID = bookingServiceRequest.HomeStayID,
                 PaymentServiceStatus = PaymentServicesStatus.Pending,
+                isPaidWithBooking = false,
                 PaymentServicesMethod = paymentServicesMethod == PaymentServicesMethod.Cod ? PaymentServicesMethod.Cod : PaymentServicesMethod.VnPay,
                 BookingServicesDetails = new List<BookingServicesDetail>()
             };
@@ -294,7 +295,7 @@ namespace Service.Service
                     if (updatedServiceDetails.RentHour is null || updatedServiceDetails.RentHour <= 0)
                         return new BaseResponse<UpdateBookingService>("RentHour must be > 0 for Hour service.", StatusCodeEnum.BadRequest_400, null);
 
-                    totalServiceAmount = service.UnitPrice * updatedServiceDetails.Quantity * updatedServiceDetails.RentHour.Value;
+                    totalServiceAmount = service.servicesPrice * updatedServiceDetails.Quantity * updatedServiceDetails.RentHour.Value;
                 }
                 else if (service.ServiceType == ServiceType.Day)
                 {
@@ -308,12 +309,12 @@ namespace Service.Service
                     if (days <= 0)
                         return new BaseResponse<UpdateBookingService>("EndDate must be after StartDate.", StatusCodeEnum.BadRequest_400, null);
 
-                    totalServiceAmount = service.UnitPrice * updatedServiceDetails.Quantity * days;
+                    totalServiceAmount = service.servicesPrice * updatedServiceDetails.Quantity * days;
                 }
                 else
                 {
                     // Dịch vụ mặc định theo số lượng
-                    totalServiceAmount = service.UnitPrice * updatedServiceDetails.Quantity;
+                    totalServiceAmount = service.servicesPrice * updatedServiceDetails.Quantity;
                 }
 
                 // Check if we are updating an existing service detail
@@ -393,6 +394,7 @@ namespace Service.Service
             existingBookingService.Total = totalAmount;
             existingBookingService.bookingServiceDeposit = deposit;
             existingBookingService.remainingBalance = remaining;
+            existingBookingService.isPaidWithBooking = existingBookingService.isPaidWithBooking;
 
             await _bookingServiceRepository.UpdateBookingServicesAsync(existingBookingService);
 

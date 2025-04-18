@@ -20,5 +20,6 @@ namespace BusinessObject.IdentityModel
         public IList<string> Roles { get; set; }
         public string Token { get; set; }
         public string RefreshToken { get; set; }
+        public int? HomeStayID { get; set; }
     }
 }

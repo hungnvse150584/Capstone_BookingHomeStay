@@ -7,6 +7,7 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using Service.IService;
 using System.Text;
+using Service.Service;
 
 namespace GreenRoam.Controllers
 {
@@ -18,14 +19,16 @@ namespace GreenRoam.Controllers
         private readonly ITokenService _tokenService;
         private readonly SignInManager<Account> _signinManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IStaffService _staffService;
 
         public AccountController(UserManager<Account> userManager, ITokenService tokenService,
-            SignInManager<Account> signInManager, RoleManager<IdentityRole> roleManager)
+            SignInManager<Account> signInManager, RoleManager<IdentityRole> roleManager, IStaffService staffService)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _signinManager = signInManager;
             _roleManager = roleManager;
+            _staffService = staffService;
         }
 
         [HttpPost("login")]
@@ -57,6 +60,19 @@ namespace GreenRoam.Controllers
             {
                 return BadRequest("Sorry, Your account has Proplem to Identify who you are");
             }
+
+            int? homeStayId = null;
+            if (roles.Contains("staff"))
+            {
+                var staffResult = await _staffService.GetStaffByID(user.Id);
+
+                if (staffResult == null || staffResult.Data == null)
+                {
+                    return BadRequest("Staff account does not have a HomeStay assigned.");
+                }
+
+                homeStayId = staffResult.Data.HomeStayID;
+            }
             var token = await _tokenService.createToken(user);
             return Ok(
                 new NewUserDto
@@ -68,6 +84,7 @@ namespace GreenRoam.Controllers
                     Phone = user.Phone,
                     Name = user.Name,
                     Address = user.Address,
+                    HomeStayID = homeStayId,
                     Token = token.AccessToken,
                     RefreshToken = token.RefreshToken
                 }

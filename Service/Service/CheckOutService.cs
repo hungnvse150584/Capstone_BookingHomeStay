@@ -162,15 +162,22 @@ namespace Service.Service
                 if (serviceIds.Count != serviceIds.Distinct().Count())
                     return new BaseResponse<int>("Duplicate services are not allowed.", StatusCodeEnum.Conflict_409, 0);
 
+                
+
                 var services = await _serviceRepository.GetServicesByIdsAsync(serviceIds);
                 if (services.Count() != createBookingRequest.BookingOfServices.BookingServicesDetails.Count)
                     return new BaseResponse<int>("Some selected services are invalid.", StatusCodeEnum.NotFound_404, 0);
 
                 var bookingServiceDetails = createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s =>
                 {
+                    
                     var service = services.FirstOrDefault(x => x.ServicesID == s.ServicesID);
+
                     if (service == null)
                         throw new Exception($"Service with ID {s.ServicesID} not found.");
+
+                    if (s.Quantity <= 0)
+                        throw new Exception($"Service '{service.servicesName}' must have quantity greater than 0.");
 
                     double unitPrice = service.UnitPrice;
                     double servicePrice = service.servicesPrice;
@@ -230,6 +237,7 @@ namespace Service.Service
                     HomeStayID = createBookingRequest.HomeStayID,
                     BookingServicesDetails = bookingServiceDetails,
                     Total = totalPriceServices,
+                    isPaidWithBooking = true,
                     bookingServiceDeposit = commissionRate.PlatformShare * totalPriceServices,
                     remainingBalance = totalPriceServices - (commissionRate.PlatformShare * totalPriceServices)
                 };
@@ -629,8 +637,15 @@ namespace Service.Service
                 if (booking != null)
                 {
 
-                    booking.Total += bookingService.Total;
-                    booking.bookingDeposit += bookingService.bookingServiceDeposit;
+                    if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
+                    {
+                        booking.Total += bookingService.Total;
+                    }
+                    if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited)
+                    {
+                        booking.Total += bookingService.Total;
+                        booking.bookingDeposit += bookingService.bookingServiceDeposit;
+                    }
                     await _bookingRepository.UpdateBookingAsync(booking);  // Cập nhật lại Booking
                 }
             }
@@ -673,8 +688,15 @@ namespace Service.Service
                 if (booking != null)
                 {
                     // Cập nhật tổng tiền thanh toán cho Booking
-                    booking.Total -= bookingService.Total;
-                    booking.bookingDeposit -= bookingService.bookingServiceDeposit;
+                    if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
+                    {
+                        booking.Total -= (transaction.Amount/100);
+                    }
+                    else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited)
+                    {
+                        booking.Total -= bookingService.Total;
+                        booking.bookingDeposit -= bookingService.bookingServiceDeposit;
+                    }
                     await _bookingRepository.UpdateBookingAsync(booking);  // Cập nhật lại Booking
                 }
             }
