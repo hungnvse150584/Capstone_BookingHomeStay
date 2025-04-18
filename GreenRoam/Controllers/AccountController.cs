@@ -62,7 +62,7 @@ namespace GreenRoam.Controllers
             }
 
             int? homeStayId = null;
-            if (roles.Contains("staff"))
+            if (roles.Contains("Staff"))
             {
                 var staffResult = await _staffService.GetStaffByID(user.Id);
 
