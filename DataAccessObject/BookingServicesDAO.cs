@@ -57,6 +57,7 @@ namespace DataAccessObject
             return await _context.BookingServices
                 .Include(b => b.Account)
                 .Include(o => o.Booking)
+                .ThenInclude(o => o.BookingDetails)
                 .Include(b => b.HomeStay)
                 .Include(b => b.BookingServicesDetails)
                 .ThenInclude(bd => bd.Services)
@@ -84,6 +85,7 @@ namespace DataAccessObject
                 .Include(b => b.BookingServicesDetails)
                 .ThenInclude(bd => bd.Services)
                 .Include(b => b.Booking)
+                .ThenInclude(o => o.BookingDetails)
                 .Include(b => b.Account)
                 .Include(b => b.HomeStay)
                 .Where(b => b.AccountID == accountId)
@@ -96,6 +98,7 @@ namespace DataAccessObject
                 .Include(b => b.BookingServicesDetails)
                 .ThenInclude(bd => bd.Services)
                 .Include(b => b.Booking)
+                .ThenInclude(o => o.BookingDetails)
                 .Include(b => b.Transactions)
                 .Where(b => b.BookingID == bookingID && b.Status == BookingServicesStatus.Confirmed)
                 .ToListAsync();
@@ -107,6 +110,7 @@ namespace DataAccessObject
                 .Include(b => b.BookingServicesDetails)
                 .ThenInclude(bd => bd.Services)
                 .Include(b => b.Booking)
+                .ThenInclude(o => o.BookingDetails)
                 .Include(b => b.Account)
                 .Include(b => b.HomeStay)
                 .Where(b => b.Booking != null && b.Booking.HomeStayID == homeStayID)
@@ -124,6 +128,7 @@ namespace DataAccessObject
             return await _context.BookingServices
                 .Include(o => o.Account)
                 .Include(o => o.Booking)
+                .ThenInclude(o => o.BookingDetails)
                 .Include(o => o.BookingServicesDetails)
                 .ThenInclude(bd => bd.Services)
                 .ThenInclude(s => s.ImageServices)
@@ -136,6 +141,7 @@ namespace DataAccessObject
             return await _context.BookingServices
                 .Include(o => o.Account)
                 .Include(o => o.Booking)
+                .ThenInclude(o => o.BookingDetails)
                 .Include(o => o.BookingServicesDetails)
                 .ThenInclude(bd => bd.Services)
                 .ThenInclude(s => s.ImageServices)
@@ -148,6 +154,7 @@ namespace DataAccessObject
             return await _context.BookingServices
                 .Include(o => o.Account)
                 .Include(o => o.Booking)
+                .ThenInclude(o => o.BookingDetails)
                 .Include(b => b.HomeStay)
                 .Include(o => o.BookingServicesDetails)
                 .ThenInclude(bd => bd.Services)
@@ -160,6 +167,7 @@ namespace DataAccessObject
             return await _context.BookingServices
                 .Include(o => o.Account)
                 .Include(o => o.Booking)
+                .ThenInclude(o => o.BookingDetails)
                 .Include(b => b.HomeStay)
                 .Include(o => o.BookingServicesDetails)
                 .ThenInclude(bd => bd.Services)
@@ -172,6 +180,7 @@ namespace DataAccessObject
             return await _context.BookingServices
                 .Include(o => o.Account)
                 .Include(o => o.Booking)
+                .ThenInclude(o => o.BookingDetails)
                 .Include(b => b.HomeStay)
                 .Include(o => o.BookingServicesDetails)
                 .ThenInclude(bd => bd.Services)
@@ -184,6 +193,7 @@ namespace DataAccessObject
             return await _context.BookingServices
                 .Include(o => o.Account)
                 .Include(o => o.Booking)
+                .ThenInclude(o => o.BookingDetails)
                 .Include(b => b.HomeStay)
                 .Include(o => o.BookingServicesDetails)
                 .ThenInclude(bd => bd.Services)

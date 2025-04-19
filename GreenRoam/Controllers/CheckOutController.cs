@@ -228,6 +228,11 @@ namespace GreenRoam.Controllers
                     return BadRequest("Cannot Find the Cancellation Policy Of the HomeStay");
                 }
 
+                if (bookingService.Data.Booking?.BookingDetails == null || !bookingService.Data.Booking.BookingDetails.Any())
+                {
+                    return BadRequest("No booking details found.");
+                }
+
                 var checkInDate = bookingService.Data.Booking.BookingDetails.FirstOrDefault()?.CheckInDate;
 
                 double amount = 0;
