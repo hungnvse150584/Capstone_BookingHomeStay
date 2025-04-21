@@ -293,6 +293,14 @@ namespace DataAccessObject
             {
                 throw new ArgumentException("Invalid HomeStayID");
             }
+
+            var commissionRate = await _context.CommissionRates
+            .FirstOrDefaultAsync(c => c.HomeStayID == homeStayID);
+
+            if (commissionRate == null)
+            {
+                throw new Exception("Commission rate not found for the homestay.");
+            }
             switch (timeSpanType?.ToLower())
             {
                 case "day":
@@ -318,7 +326,7 @@ namespace DataAccessObject
 
                         double completedBookingsAmount = await bookingsDay
                              .Where(o => o.Status == BookingStatus.Completed)
-                             .SumAsync(o => o.Total);
+                             .SumAsync(o => o.Total) * commissionRate.HostShare;
 
                         // Tính tổng tiền từ các booking bị hủy và có hoàn trả
                         double refundedBookingsAmount = await bookingsDay
@@ -329,7 +337,7 @@ namespace DataAccessObject
                             .Where(o => o.Status == BookingStatus.Cancelled
                                         && o.paymentStatus != PaymentStatus.Refunded
                                         && o.paymentStatus != PaymentStatus.Pending) // bỏ pending
-                            .SumAsync(o => o.Total);
+                            .SumAsync(o => o.Total) * commissionRate.HostShare;
                         double totalEachHomeStay = completedBookingsAmount + refundedBookingsAmount + nonRefundedBookingsAmount;
                         totalBookingsAmount = totalEachHomeStay;
 
@@ -368,7 +376,7 @@ namespace DataAccessObject
 
                         double completedBookingsAmount = await bookingWeek
                             .Where(o => o.Status == BookingStatus.Completed)
-                            .SumAsync(o => o.Total);
+                            .SumAsync(o => o.Total) * commissionRate.HostShare;
 
                         // Tính tổng tiền từ các booking bị hủy và có hoàn trả
                         double refundedBookingsAmount = await bookingWeek
@@ -379,7 +387,7 @@ namespace DataAccessObject
                             .Where(o => o.Status == BookingStatus.Cancelled
                                         && o.paymentStatus != PaymentStatus.Refunded
                                         && o.paymentStatus != PaymentStatus.Pending) // bỏ pending
-                            .SumAsync(o => o.Total);
+                            .SumAsync(o => o.Total) * commissionRate.HostShare;
                         double totalEachHomeStay = completedBookingsAmount + refundedBookingsAmount + nonRefundedBookingsAmount;
                         totalBookingsAmount = totalEachHomeStay;
 
@@ -415,7 +423,7 @@ namespace DataAccessObject
 
                         double completedBookingsAmount = await bookingMonth
                             .Where(o => o.Status == BookingStatus.Completed)
-                            .SumAsync(o => o.Total);
+                            .SumAsync(o => o.Total) * commissionRate.HostShare;
 
                         // Tính tổng tiền từ các booking bị hủy và có hoàn trả
                         double refundedBookingsAmount = await bookingMonth
@@ -426,7 +434,7 @@ namespace DataAccessObject
                             .Where(o => o.Status == BookingStatus.Cancelled
                                         && o.paymentStatus != PaymentStatus.Refunded
                                         && o.paymentStatus != PaymentStatus.Pending) // bỏ pending
-                            .SumAsync(o => o.Total);
+                            .SumAsync(o => o.Total) * commissionRate.HostShare;
                         double totalEachHomeStay = completedBookingsAmount + refundedBookingsAmount + nonRefundedBookingsAmount;
                         totalBookingsAmount = totalEachHomeStay;
 
@@ -461,7 +469,7 @@ namespace DataAccessObject
 
                         double completedBookingsAmount = await bookingsDay
                              .Where(o => o.Status == BookingStatus.Completed)
-                             .SumAsync(o => o.Total);
+                             .SumAsync(o => o.Total) * commissionRate.HostShare;
 
                         // Tính tổng tiền từ các booking bị hủy và có hoàn trả
                         double refundedBookingsAmount = await bookingsDay
@@ -472,7 +480,7 @@ namespace DataAccessObject
                             .Where(o => o.Status == BookingStatus.Cancelled
                                         && o.paymentStatus != PaymentStatus.Refunded
                                         && o.paymentStatus != PaymentStatus.Pending) // bỏ pending
-                            .SumAsync(o => o.Total);
+                            .SumAsync(o => o.Total) * commissionRate.HostShare;
                         double totalEachHomeStay = completedBookingsAmount + refundedBookingsAmount + nonRefundedBookingsAmount;
                         totalBookingsAmount = totalEachHomeStay;
 
@@ -512,7 +520,10 @@ namespace DataAccessObject
             }
             List<(object span, int totalBookings, double totalBookingsAmount)> result = new List<(object, int, double)>();
 
-            var homestays = await _context.HomeStays.ToListAsync();
+            var homestays = await _context.HomeStays
+                .Include(h => h.CommissionRate)
+                .Include(h => h.CancelPolicy)
+                .ToListAsync();
 
             switch (timeSpanType?.ToLower())
             {
@@ -529,6 +540,7 @@ namespace DataAccessObject
 
                         foreach (var homestay in homestays)
                         {
+                            var commissionRate = homestay.CommissionRate;
                             var bookingsDay = _context.Bookings
                             .Where(o => o.HomeStayID == homestay.HomeStayID)
                             .Where(o => o.BookingDetails
@@ -544,7 +556,7 @@ namespace DataAccessObject
 
                             double completedBookingsAmount = await bookingsDay
                                  .Where(o => o.Status == BookingStatus.Completed)
-                                 .SumAsync(o => o.Total);
+                                 .SumAsync(o => o.Total) * commissionRate.PlatformShare;
 
                             // Tính tổng tiền từ các booking bị hủy và có hoàn trả
                             double refundedBookingsAmount = await bookingsDay
@@ -555,7 +567,7 @@ namespace DataAccessObject
                                 .Where(o => o.Status == BookingStatus.Cancelled
                                             && o.paymentStatus != PaymentStatus.Refunded
                                             && o.paymentStatus != PaymentStatus.Pending) // bỏ pending
-                                .SumAsync(o => o.Total);
+                                .SumAsync(o => o.Total) * commissionRate.PlatformShare;
                             double totalEachHomeStay = completedBookingsAmount + refundedBookingsAmount + nonRefundedBookingsAmount;
                             totalBookingsAmount += totalEachHomeStay;
 
@@ -582,6 +594,7 @@ namespace DataAccessObject
                         int totalBookings = 0;
                         foreach (var homestay in homestays)
                         {
+                            var commissionRate = homestay.CommissionRate;
                             var bookingWeek = _context.Bookings
                           .Where(o => o.HomeStayID == homestay.HomeStayID)
                           .Where(o => o.BookingDetails
@@ -597,7 +610,7 @@ namespace DataAccessObject
 
                             double completedBookingsAmount = await bookingWeek
                                 .Where(o => o.Status == BookingStatus.Completed)
-                                .SumAsync(o => o.Total);
+                                .SumAsync(o => o.Total) * commissionRate.PlatformShare;
 
                             // Tính tổng tiền từ các booking bị hủy và có hoàn trả
                             double refundedBookingsAmount = await bookingWeek
@@ -608,7 +621,7 @@ namespace DataAccessObject
                                 .Where(o => o.Status == BookingStatus.Cancelled
                                             && o.paymentStatus != PaymentStatus.Refunded
                                             && o.paymentStatus != PaymentStatus.Pending) // bỏ pending
-                                .SumAsync(o => o.Total);
+                                .SumAsync(o => o.Total) * commissionRate.PlatformShare;
                             double totalEachHomeStay = completedBookingsAmount + refundedBookingsAmount + nonRefundedBookingsAmount;
                             totalBookingsAmount += totalEachHomeStay;
                         }
@@ -632,6 +645,7 @@ namespace DataAccessObject
                         int totalBookings = 0;
                         foreach (var homestay in homestays)
                         {
+                            var commissionRate = homestay.CommissionRate;
                             var bookingMonth = _context.Bookings
                                 .Where(o => o.HomeStayID == homestay.HomeStayID)
                                 .Where(o => o.BookingDetails
@@ -647,7 +661,7 @@ namespace DataAccessObject
 
                             double completedBookingsAmount = await bookingMonth
                                 .Where(o => o.Status == BookingStatus.Completed)
-                                .SumAsync(o => o.Total);
+                                .SumAsync(o => o.Total) * commissionRate.PlatformShare;
 
                             // Tính tổng tiền từ các booking bị hủy và có hoàn trả
                             double refundedBookingsAmount = await bookingMonth
@@ -658,7 +672,7 @@ namespace DataAccessObject
                                 .Where(o => o.Status == BookingStatus.Cancelled
                                             && o.paymentStatus != PaymentStatus.Refunded
                                             && o.paymentStatus != PaymentStatus.Pending) // bỏ pending
-                                .SumAsync(o => o.Total);
+                                .SumAsync(o => o.Total) * commissionRate.PlatformShare;
                             double totalEachHomeStay = completedBookingsAmount + refundedBookingsAmount + nonRefundedBookingsAmount;
                             totalBookingsAmount += totalEachHomeStay;
                         }
@@ -684,6 +698,7 @@ namespace DataAccessObject
 
                         foreach (var homestay in homestays)
                         {
+                            var commissionRate = homestay.CommissionRate;
                             var bookingsDay = _context.Bookings
                             .Where(o => o.HomeStayID == homestay.HomeStayID)
                             .Where(o => o.BookingDetails
@@ -698,7 +713,7 @@ namespace DataAccessObject
 
                             double completedBookingsAmount = await bookingsDay
                                  .Where(o => o.Status == BookingStatus.Completed)
-                                 .SumAsync(o => o.Total);
+                                 .SumAsync(o => o.Total) * commissionRate.PlatformShare;
 
                             // Tính tổng tiền từ các booking bị hủy và có hoàn trả
                             double refundedBookingsAmount = await bookingsDay
@@ -709,7 +724,7 @@ namespace DataAccessObject
                                 .Where(o => o.Status == BookingStatus.Cancelled
                                             && o.paymentStatus != PaymentStatus.Refunded
                                             && o.paymentStatus != PaymentStatus.Pending) // bỏ pending
-                                .SumAsync(o => o.Total);
+                                .SumAsync(o => o.Total) * commissionRate.PlatformShare;
                             double totalEachHomeStay = completedBookingsAmount + refundedBookingsAmount + nonRefundedBookingsAmount;
                             totalBookingsAmount += totalEachHomeStay;
                         }
