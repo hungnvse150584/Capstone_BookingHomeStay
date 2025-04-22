@@ -16,4 +16,3 @@ C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\DataAccessObje
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\DataAccessObject\obj\Debug\net8.0\DataAccessObject.pdb
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\DataAccessObject\obj\Debug\net8.0\DataAccessObject.genruntimeconfig.cache
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\DataAccessObject\obj\Debug\net8.0\ref\DataAccessObject.dll
-D:\FPT\SEP490_Capstone\DataAccessObject\obj\Debug\net8.0\DataAccessObject.AssemblyInfo.cs

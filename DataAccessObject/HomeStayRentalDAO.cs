@@ -109,10 +109,7 @@ namespace DataAccessObject
      int numberOfAdults,
      int numberOfChildren)
         {
-            if (homeStayId <= 0)
-            {
-                throw new ArgumentException("HomeStayID must be greater than 0.");
-            }
+            Console.WriteLine($"DAO: Parameters received - HomeStayID: {homeStayId}, RentWhole: {rentWhole?.ToString() ?? "null"}, CheckInDate: {checkInDate}, CheckOutDate: {checkOutDate}, NumberOfAdults: {numberOfAdults}, NumberOfChildren: {numberOfChildren}");
 
             var query = _context.HomeStayRentals
                 .AsNoTracking()
@@ -122,20 +119,18 @@ namespace DataAccessObject
                             h.MaxChildren >= numberOfChildren &&
                             h.MaxPeople >= (numberOfAdults + numberOfChildren));
 
-            // Log số lượng trước khi áp dụng điều kiện RentWhole
-            var initialCount = await query.CountAsync();
-            Console.WriteLine($"Initial HomeStayRentals count for HomeStayID {homeStayId}: {initialCount}");
+            // Log giá trị rentWhole
+            Console.WriteLine($"DAO: RentWhole value received: {rentWhole?.ToString() ?? "null"}");
 
-            // Chỉ thêm điều kiện RentWhole nếu rentWhole có giá trị
+            // Áp dụng lọc RentWhole nếu có giá trị
             if (rentWhole.HasValue)
             {
+                Console.WriteLine($"DAO: Applying RentWhole filter: {rentWhole.Value}");
                 query = query.Where(h => h.RentWhole == rentWhole.Value);
-                var countAfterRentWhole = await query.CountAsync();
-                Console.WriteLine($"HomeStayRentals count after applying RentWhole filter ({rentWhole.Value}): {countAfterRentWhole}");
             }
             else
             {
-                Console.WriteLine("No RentWhole filter applied, returning both RentWhole = true and false.");
+                Console.WriteLine("DAO: No RentWhole filter applied.");
             }
 
             query = query
@@ -151,18 +146,13 @@ namespace DataAccessObject
                 .Include(h => h.BookingDetails)
                     .ThenInclude(bd => bd.Booking);
 
-            var homeStayRentals = await query.ToListAsync();
-
-            foreach (var rental in homeStayRentals)
+            var result = await query.ToListAsync();
+            Console.WriteLine($"DAO: Number of HomeStayRentals retrieved: {result.Count}");
+            foreach (var rental in result)
             {
-                rental.BookingDetails = rental.BookingDetails
-                    .Where(bd => bd.HomeStayRentalID == rental.HomeStayRentalID)
-                    .ToList();
+                Console.WriteLine($"DAO: HomeStayRentalID: {rental.HomeStayRentalID}, RentWhole: {rental.RentWhole}");
             }
-
-            // Log số lượng sau khi lấy dữ liệu
-            Console.WriteLine($"Final HomeStayRentals count after includes: {homeStayRentals.Count}");
-            return homeStayRentals;
+            return result;
         }
     }
 }

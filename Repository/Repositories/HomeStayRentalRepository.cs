@@ -73,18 +73,20 @@ namespace Repository.Repositories
             return await _homestayrentalDao.GetAllHomeStayTypesAsyncFilter(homestayId, rentWhole);
         }
         public async Task<IEnumerable<HomeStayRentals>> FilterHomeStayRentalsAsync(
-    int homeStayId,
-    bool? rentWhole,
-    DateTime checkInDate,
-    DateTime checkOutDate,
-    int numberOfAdults,
-    int numberOfChildren)
+          int homeStayId,
+          bool? rentWhole,
+          DateTime checkInDate,
+          DateTime checkOutDate,
+          int numberOfAdults,
+          int numberOfChildren)
         {
-           
-            bool rentWholeValue = rentWhole ?? false; 
+            // Thêm log để kiểm tra giá trị RentWhole tại tầng Repository
+            Console.WriteLine($"Repository: Parameters received - HomeStayID: {homeStayId}, RentWhole: {rentWhole?.ToString() ?? "null"}, CheckInDate: {checkInDate}, CheckOutDate: {checkOutDate}, NumberOfAdults: {numberOfAdults}, NumberOfChildren: {numberOfChildren}");
+
+            // Không gán giá trị mặc định, truyền trực tiếp rentWhole
             return await _homestayrentalDao.FilterHomeStayRentalsAsync(
                 homeStayId,
-                rentWholeValue,
+                rentWhole, // Giữ nguyên giá trị gốc
                 checkInDate,
                 checkOutDate,
                 numberOfAdults,
