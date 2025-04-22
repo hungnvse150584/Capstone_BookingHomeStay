@@ -110,7 +110,7 @@ namespace GreenRoam.Controllers
                         StatusCodeEnum.BadRequest_400,
                         null));
                 }
-
+                Console.WriteLine($"Controller: RentWhole value received: {request.RentWhole?.ToString() ?? "null"}");
                 var response = await _homeStayTypeService.FilterHomeStayRentalsAsync(request);
                 return StatusCode((int)response.StatusCode, response);
             }

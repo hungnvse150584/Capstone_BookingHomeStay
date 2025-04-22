@@ -154,16 +154,16 @@ builder.Services.AddSignalR();
 //            .AllowAnyMethod()
 //            .AllowCredentials());
 //});
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll", builder =>
-    {
-        builder.WithOrigins("http://localhost:5173", "https://localhost:7221")
-               .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials();
-    });
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowAll", builder =>
+//    {
+//        builder.WithOrigins("http://localhost:5173", "https://localhost:7221")
+//               .AllowAnyMethod()
+//               .AllowAnyHeader()
+//               .AllowCredentials();
+//    });
+//});
 builder.Services.AddAuthorization();
 var cloudName = builder.Configuration["Cloudinary:CloudName"];
 var apiKey = builder.Configuration["Cloudinary:ApiKey"];
