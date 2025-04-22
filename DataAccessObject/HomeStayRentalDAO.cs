@@ -122,10 +122,20 @@ namespace DataAccessObject
                             h.MaxChildren >= numberOfChildren &&
                             h.MaxPeople >= (numberOfAdults + numberOfChildren));
 
+            // Log số lượng trước khi áp dụng điều kiện RentWhole
+            var initialCount = await query.CountAsync();
+            Console.WriteLine($"Initial HomeStayRentals count for HomeStayID {homeStayId}: {initialCount}");
+
             // Chỉ thêm điều kiện RentWhole nếu rentWhole có giá trị
             if (rentWhole.HasValue)
             {
                 query = query.Where(h => h.RentWhole == rentWhole.Value);
+                var countAfterRentWhole = await query.CountAsync();
+                Console.WriteLine($"HomeStayRentals count after applying RentWhole filter ({rentWhole.Value}): {countAfterRentWhole}");
+            }
+            else
+            {
+                Console.WriteLine("No RentWhole filter applied, returning both RentWhole = true and false.");
             }
 
             query = query
@@ -150,6 +160,8 @@ namespace DataAccessObject
                     .ToList();
             }
 
+            // Log số lượng sau khi lấy dữ liệu
+            Console.WriteLine($"Final HomeStayRentals count after includes: {homeStayRentals.Count}");
             return homeStayRentals;
         }
     }
