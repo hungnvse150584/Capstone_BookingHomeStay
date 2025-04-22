@@ -139,4 +139,3 @@ C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.pdb
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.genruntimeconfig.cache
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\ref\GreenRoam.dll
-D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
