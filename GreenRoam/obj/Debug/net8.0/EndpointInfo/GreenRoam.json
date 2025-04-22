@@ -6639,6 +6639,9 @@
             "type": "number",
             "format": "double"
           },
+          "isPaidWithBooking": {
+            "type": "boolean"
+          },
           "accountID": {
             "type": "string",
             "nullable": true
@@ -8688,6 +8691,11 @@
           },
           "owner": {
             "$ref": "#/components/schemas/GetAccountUser"
+          },
+          "homeStayID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "homeStay": {
             "$ref": "#/components/schemas/HomeStayResponse"

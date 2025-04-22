@@ -431,24 +431,25 @@ namespace Service.Service
                     // Xử lý logic RentWhole
                     if (request.RentWhole.HasValue)
                     {
+                        Console.WriteLine($"Applying RentWhole filter: {request.RentWhole.Value} for HomeStayRentalID: {rental.HomeStayRentalID}");
                         if (request.RentWhole.Value) // RentWhole = true
                         {
                             // Nếu thuê nguyên căn, cần tất cả các phòng đều khả dụng
                             if (rental.TotalAvailableRooms != roomIds.Count)
                             {
                                 rental.TotalAvailableRooms = 0;
+                                Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID} excluded (RentWhole = true, not all rooms available).");
                             }
                         }
                         else // RentWhole = false
                         {
                             // Nếu không thuê nguyên căn, chỉ cần có ít nhất 1 phòng khả dụng
-                            // Không cần đặt lại TotalAvailableRooms, vì đã tính ở trên
+                            Console.WriteLine($"HomeStayRentalID: {rental.HomeStayRentalID} included (RentWhole = false, has available rooms).");
                         }
                     }
-                    else // RentWhole = null
+                    else
                     {
-                        // Nếu RentWhole là null, không áp dụng thêm điều kiện
-                        // Chỉ cần có phòng khả dụng là được
+                        Console.WriteLine($"No RentWhole filter applied for HomeStayRentalID: {rental.HomeStayRentalID}, keeping both RentWhole = true and false.");
                     }
 
                     // Log TotalAvailableRooms sau khi xử lý
