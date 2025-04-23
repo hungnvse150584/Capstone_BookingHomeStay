@@ -244,6 +244,7 @@ namespace Service.Service
                 request.RentPrice = weekdayPricing.RentPrice * (1 + request.Percentage / 100);
             }
 
+            // Cập nhật thông tin Pricing hiện tại
             pricingExist.Description = request.Description;
             pricingExist.UnitPrice = request.UnitPrice;
             pricingExist.RentPrice = request.RentPrice;
@@ -257,6 +258,38 @@ namespace Service.Service
             pricingExist.EndDate = request.IsDefault ? null : request.EndDate;
 
             await _priceRepository.UpdateAsync(pricingExist);
+
+            // Nếu Pricing vừa cập nhật là của ngày Weekday, cần cập nhật các Pricing của Weekend và Holiday
+            if (pricingExist.DayType == DayType.Weekday)
+            {
+                IEnumerable<Pricing> relatedPricings;
+
+                // Lấy tất cả các Pricing liên quan (cùng HomeStayRentalID hoặc RoomTypesID)
+                if (homeStayRental.RentWhole)
+                {
+                    relatedPricings = await _priceRepository.GetPricingByHomeStayRentalAsync((int)pricingExist.HomeStayRentalID);
+                }
+                else
+                {
+                    relatedPricings = await _priceRepository.GetPricingByRoomTypeAsync(pricingExist.RoomTypesID.Value);
+                }
+
+                // Lọc ra các Pricing có DayType là Weekend hoặc Holiday
+                var weekendAndHolidayPricings = relatedPricings
+                    .Where(p => p.DayType == DayType.Weekend || p.DayType == DayType.Holiday)
+                    .ToList();
+
+                // Cập nhật giá cho các Pricing của Weekend và Holiday
+                foreach (var relatedPricing in weekendAndHolidayPricings)
+                {
+                    if (relatedPricing.Percentage > 0) // Đảm bảo Percentage hợp lệ
+                    {
+                        relatedPricing.UnitPrice = pricingExist.UnitPrice * (1 + relatedPricing.Percentage / 100);
+                        relatedPricing.RentPrice = pricingExist.RentPrice * (1 + relatedPricing.Percentage / 100);
+                        await _priceRepository.UpdateAsync(relatedPricing);
+                    }
+                }
+            }
 
             return new BaseResponse<Pricing>("Pricing updated successfully!", StatusCodeEnum.OK_200, pricingExist);
         }
