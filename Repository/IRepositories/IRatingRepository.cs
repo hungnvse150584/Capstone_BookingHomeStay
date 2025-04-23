@@ -9,7 +9,7 @@ namespace Repository.IRepositories
 {
     public interface IRatingRepository
     {
-        Task<double> GetAverageRating(int homeStayId);
+        /*Task<double> GetAverageRating(int homeStayId);*/
         Task<IEnumerable<Rating?>> GetRatingByHomeStayId(int homeStayId);
         Task<IEnumerable<Rating?>> GetRatingByAccountId(string accountId);
         Task<Rating?> GetRatingByUserIdAndHomeStay(string accountId, int homeStayId);

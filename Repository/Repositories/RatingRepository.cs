@@ -19,10 +19,10 @@ namespace Repository.Repositories
             _ratingDao = ratingDao;
         }
 
-        public async Task<double> GetAverageRating(int homeStayId)
+        /*public async Task<double> GetAverageRating(int homeStayId)
         {
             return await _ratingDao.GetAverageRating(homeStayId);
-        }
+        }*/
 
         public async Task<IEnumerable<Rating?>> GetRatingByAccountId(string accountId)
         {

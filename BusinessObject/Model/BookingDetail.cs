@@ -34,5 +34,7 @@ namespace BusinessObject.Model;
         public int? BookingID { get; set; }
         [ForeignKey("BookingID")]
         public Booking? Booking { get; set; }
+
+        public ICollection<RoomChangeHistory>? RoomChangeHistories { get; set; }
     }
 

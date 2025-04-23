@@ -701,6 +701,28 @@ namespace DataAccessObject.Migrations
                     b.ToTable("ImageHomeStayRentals");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.ImageRating", b =>
+                {
+                    b.Property<int>("ImageRatingID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageRatingID"));
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RatingID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ImageRatingID");
+
+                    b.HasIndex("RatingID");
+
+                    b.ToTable("ImageRatings");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.ImageRoomTypes", b =>
                 {
                     b.Property<int>("ImageRoomTypesID")
@@ -901,14 +923,26 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<double>("CleaningRate")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<double>("FacilityRate")
+                        .HasColumnType("float");
 
                     b.Property<int?>("HomeStayID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Rate")
-                        .HasColumnType("int");
+                    b.Property<double>("ServiceRate")
+                        .HasColumnType("float");
+
+                    b.Property<double>("SumRate")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -1068,6 +1102,42 @@ namespace DataAccessObject.Migrations
                     b.HasIndex("RoomTypesID");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.RoomChangeHistory", b =>
+                {
+                    b.Property<int>("RoomChangeHistoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomChangeHistoryID"));
+
+                    b.Property<string>("AccountID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("BookingDetailID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ChangedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("NewRoomID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OldRoomID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UsagedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("RoomChangeHistoryID");
+
+                    b.HasIndex("AccountID");
+
+                    b.HasIndex("BookingDetailID");
+
+                    b.ToTable("RoomChangeHistories");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.RoomTypes", b =>
@@ -1654,6 +1724,15 @@ namespace DataAccessObject.Migrations
                     b.Navigation("HomeStayRentals");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.ImageRating", b =>
+                {
+                    b.HasOne("BusinessObject.Model.Rating", "Ratings")
+                        .WithMany("ImageRatings")
+                        .HasForeignKey("RatingID");
+
+                    b.Navigation("Ratings");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.ImageRoomTypes", b =>
                 {
                     b.HasOne("BusinessObject.Model.RoomTypes", "RoomTypes")
@@ -1804,6 +1883,25 @@ namespace DataAccessObject.Migrations
                     b.Navigation("RoomTypes");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.RoomChangeHistory", b =>
+                {
+                    b.HasOne("BusinessObject.Model.Account", "ChangedBy")
+                        .WithMany()
+                        .HasForeignKey("AccountID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BusinessObject.Model.BookingDetail", "BookingDetail")
+                        .WithMany("RoomChangeHistories")
+                        .HasForeignKey("BookingDetailID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BookingDetail");
+
+                    b.Navigation("ChangedBy");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.RoomTypes", b =>
                 {
                     b.HasOne("BusinessObject.Model.HomeStayRentals", "HomeStayRentals")
@@ -1949,6 +2047,11 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Transactions");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.BookingDetail", b =>
+                {
+                    b.Navigation("RoomChangeHistories");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.BookingServices", b =>
                 {
                     b.Navigation("BookingServicesDetails");
@@ -2011,6 +2114,11 @@ namespace DataAccessObject.Migrations
             modelBuilder.Entity("BusinessObject.Model.Pricing", b =>
                 {
                     b.Navigation("PricingHistories");
+                });
+
+            modelBuilder.Entity("BusinessObject.Model.Rating", b =>
+                {
+                    b.Navigation("ImageRatings");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.Report", b =>
