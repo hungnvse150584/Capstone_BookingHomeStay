@@ -13,6 +13,8 @@ namespace Service.RequestAndResponse.Request.Booking
 
         public int numberOfAdults { get; set; }
 
+        public string AccountID { get; set; }
+
         public ICollection<UpdateChangingRoomRequest> BookingDetails { get; set; }
     }
 }

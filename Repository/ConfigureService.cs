@@ -28,6 +28,7 @@ namespace Repository
             services.AddScoped<IHomeStayRentalRepository, HomeStayRentalRepository>();
             services.AddScoped<IRoomTypeRepository, RoomTypeRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IRoomChangeHistoryRepository, RoomChangeHistoryRepository>();
             services.AddScoped<IPricingRepository, PricingRepository>();
          
 

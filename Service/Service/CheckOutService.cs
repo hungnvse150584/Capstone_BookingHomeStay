@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessObject.Model;
 using Repository.IRepositories;
+using Repository.Repositories;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
@@ -27,6 +28,7 @@ namespace Service.Service
         private readonly IBookingDetailRepository _bookingDetailRepository;
         private readonly IBookingServiceDetailRepository _bookingServiceDetailRepository;
         private readonly ICancellationPolicyRepository _cancelltaionRepository;
+        private readonly IRoomChangeHistoryRepository _roomchangeHistoryRepository;
 
         public CheckOutService(IMapper mapper, IBookingRepository bookingRepository,
                               IHomeStayRentalRepository homeStayTypeRepository,
@@ -38,7 +40,7 @@ namespace Service.Service
                               ICommissionRateRepository commissionRateRepository,
                               IBookingDetailRepository bookingDetailRepository,
                               IBookingServiceDetailRepository bookingServiceDetailRepository,
-                              ICancellationPolicyRepository cancelltaionRepository)
+                              ICancellationPolicyRepository cancelltaionRepository, IRoomChangeHistoryRepository roomchangeHistoryRepository)
         {
             _mapper = mapper;
             _bookingRepository = bookingRepository;
@@ -52,6 +54,7 @@ namespace Service.Service
             _bookingDetailRepository = bookingDetailRepository;
             _bookingServiceDetailRepository = bookingServiceDetailRepository;
             _cancelltaionRepository = cancelltaionRepository;
+            _roomchangeHistoryRepository = roomchangeHistoryRepository;
         }
 
         public async Task<BaseResponse<int>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod)
@@ -458,6 +461,128 @@ namespace Service.Service
 
             await _bookingRepository.UpdateBookingAsync(existingBooking);
             return new BaseResponse<UpdateBookingRequest>("Booking updated successfully!", StatusCodeEnum.OK_200, request);
+        }
+
+        public async Task<BaseResponse<UpdateBookingForRoomRequest>> ChangeRoomForBooking(int bookingID, UpdateBookingForRoomRequest request)
+        {
+            var existingBooking = await _bookingRepository.GetBookingByIdAsync(bookingID);
+            if (existingBooking == null)
+            {
+                return new BaseResponse<UpdateBookingForRoomRequest>("Cannot find your Booking!",
+                         StatusCodeEnum.NotFound_404, null);
+            }
+
+            bool isCompleted = existingBooking.Status == BookingStatus.Completed;
+            bool isCancelled = existingBooking.Status == BookingStatus.Cancelled;
+
+            if (isCompleted)
+            {
+                return new BaseResponse<UpdateBookingForRoomRequest>("This booking is already completed and cannot be modified.",
+                           StatusCodeEnum.NotFound_404, null);
+            }
+
+            if (isCancelled)
+            {
+                return new BaseResponse<UpdateBookingForRoomRequest>("This booking is already cancelled and cannot be modified.",
+                           StatusCodeEnum.NotFound_404, null);
+            }
+
+            var existingDetails = existingBooking.BookingDetails.ToList();
+
+            var updatedDetailIds = request.BookingDetails
+                                    .Select(d => d.BookingDetailID)
+                                    .Where(id => id.HasValue)
+                                    .Select(id => id.Value)
+                                    .ToList();
+
+            var detailsToRemove = await _bookingDetailRepository.GetBookingDetailsToRemoveAsync(bookingID, updatedDetailIds);
+
+            if (detailsToRemove.Any())
+            {
+                await _bookingDetailRepository.DeleteBookingDetailAsync(detailsToRemove);
+            }
+
+            var duplicatedRoomIDs = request.BookingDetails
+                .Where(d => d.roomID.HasValue)
+                .GroupBy(d => d.roomID)
+                .Where(g => g.Count() > 1)
+                .Select(g => g.Key)
+                .ToList();
+
+            if (duplicatedRoomIDs.Any())
+            {
+                return new BaseResponse<UpdateBookingForRoomRequest>($"RoomID(s) duplicated in request: " +
+                    $"{string.Join(", ", duplicatedRoomIDs)}", StatusCodeEnum.Conflict_409, null);
+            }
+
+            // ✅ Check duplicated HomeStayTypeID (for RentWhole)
+
+            foreach (var updatedBookingDetails in request.BookingDetails)
+            {
+                if (updatedBookingDetails.roomTypeID > 0)
+                {
+                    var roomType = await _roomTypeRepository.GetRoomTypesByIdAsync(updatedBookingDetails.roomTypeID);
+                    if (roomType == null)
+                    {
+                        return new BaseResponse<UpdateBookingForRoomRequest>("Invalid RoomType.", StatusCodeEnum.BadRequest_400, null);
+                    }
+
+                    var room = await _roomRepository.GetRoomByIdAsync(updatedBookingDetails.roomID.Value);
+                    if (room == null || room.RoomTypesID != updatedBookingDetails.roomTypeID)
+                    {
+                        return new BaseResponse<UpdateBookingForRoomRequest>("Room does not belong to the specified RoomType.", StatusCodeEnum.BadRequest_400, null);
+                    }
+
+                    var availableRooms = await _roomRepository.GetAvailableRoomFilter(updatedBookingDetails.CheckInDate, updatedBookingDetails.CheckOutDate);
+                    if (!availableRooms.Any(r => r.RoomID == updatedBookingDetails.roomID && r.RoomTypesID == updatedBookingDetails.roomTypeID))
+                    {
+                        return new BaseResponse<UpdateBookingForRoomRequest>("Room is not available.", StatusCodeEnum.Conflict_409, null);
+                    }
+                }
+                else
+                {
+                    return new BaseResponse<UpdateBookingForRoomRequest>("Must provide RoomTypeID.", StatusCodeEnum.BadRequest_400, null);
+                }
+
+                if (updatedBookingDetails.BookingDetailID.HasValue)
+                {
+                    var existingDetail = existingBooking.BookingDetails
+                        .FirstOrDefault(d => d.BookingDetailID == updatedBookingDetails.BookingDetailID.Value);
+                    if (existingDetail == null)
+                        return new BaseResponse<UpdateBookingForRoomRequest>("Booking detail not found.", StatusCodeEnum.BadRequest_400, null);
+                    if (existingDetail.RoomID != updatedBookingDetails.roomID)
+                    {
+                        var roomChange = new RoomChangeHistory
+                        {
+                            BookingDetailID = existingDetail.BookingDetailID,
+                            OldRoomID = existingDetail.RoomID,
+                            NewRoomID = updatedBookingDetails.roomID,
+                            UsagedDate = updatedBookingDetails.CheckInDate,
+                            ChangedDate = DateTime.UtcNow,
+                            AccountID =  request.AccountID,// bạn cần truyền field này từ request
+                        };
+                        await _roomchangeHistoryRepository.AddRoomHistory(roomChange);
+                    }
+
+                    existingDetail.HomeStayRentalID = updatedBookingDetails.homeStayTypeID;
+                    existingDetail.RoomID = updatedBookingDetails.roomID;
+                    existingDetail.CheckInDate = updatedBookingDetails.CheckInDate;
+                    existingDetail.CheckOutDate = updatedBookingDetails.CheckOutDate;
+                    
+                }
+                else
+                {
+                    existingBooking.BookingDetails.Add(new BookingDetail
+                    {
+                        HomeStayRentalID = updatedBookingDetails.homeStayTypeID,
+                        RoomID = updatedBookingDetails.roomID,
+                        CheckInDate = updatedBookingDetails.CheckInDate,
+                        CheckOutDate = updatedBookingDetails.CheckOutDate,
+                    });
+                }
+            }
+            await _bookingRepository.UpdateBookingAsync(existingBooking);
+            return new BaseResponse<UpdateBookingForRoomRequest>("Booking updated successfully!", StatusCodeEnum.OK_200, request);
         }
 
         public async Task<Booking> CreateBookingPayment(int? bookingID, int? bookingServiceID, Transaction transaction)

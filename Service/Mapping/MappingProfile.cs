@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using BusinessObject.Model;
+using Service.RequestAndResponse.Request.Booking;
+using Service.RequestAndResponse.Request.BookingDetail;
 using Service.RequestAndResponse.Request.CancellationPolicy;
 using Service.RequestAndResponse.Request.CommissionRates;
 using Service.RequestAndResponse.Request.HomeStay;
@@ -10,6 +12,7 @@ using Service.RequestAndResponse.Request.ImageService;
 using Service.RequestAndResponse.Request.Notifications;
 using Service.RequestAndResponse.Request.Pricing;
 using Service.RequestAndResponse.Request.Room;
+using Service.RequestAndResponse.Request.RoomChangeHistory;
 using Service.RequestAndResponse.Request.RoomType;
 using Service.RequestAndResponse.Request.Services;
 using Service.RequestAndResponse.Request.Staffs;
@@ -270,6 +273,11 @@ namespace Service.Mapping
             CreateMap<Booking, GetBookingByAccount>().ReverseMap();
             CreateMap<Booking, GetBookingByHomeStay>().ReverseMap();
             CreateMap<Booking, GetSimpleBooking>().ReverseMap();
+            //Cho phép đổi phòng khi có sự cố
+            CreateMap<BookingDetail, UpdateChangingRoomRequest>().ReverseMap();
+            CreateMap<RoomChangeHistory, CreateRoomChagingRequest>().ReverseMap();
+            CreateMap<Booking, UpdateBookingForRoomRequest>().ReverseMap();
+
 
             CreateMap<ImageServices, GetAllImageService>();
             CreateMap<ImageServices, GetImageService>();

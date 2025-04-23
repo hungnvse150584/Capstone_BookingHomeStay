@@ -382,6 +382,18 @@ namespace GreenRoam.Controllers
         }
 
         [HttpPut]
+        [Route("ChangingRoom")]
+        public async Task<ActionResult<BaseResponse<UpdateBookingForRoomRequest>>> ChangeRoomForBooking(int bookingID, UpdateBookingForRoomRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Please Implement all Information");
+            }
+            var booking = await _checkoutService.ChangeRoomForBooking(bookingID, request);
+            return booking;
+        }
+
+        [HttpPut]
         [Route("ChangeBookingStatus")]
         public async Task<ActionResult<BaseResponse<Booking>>> ChangeTheBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)
         {
