@@ -130,6 +130,7 @@ namespace DataAccessObject
               };
             modelBuilder.Entity<IdentityRole>().HasData(roles);*/
         }
+        public DbSet<Account> Accounts { get; set; }
         public DbSet<HomeStay> HomeStays { get; set; }
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<Pricing> Prices { get; set; }

@@ -24,6 +24,7 @@ namespace Service.IService
 
         public (int? bookingId, int? serviceId) ParseOrderInfo(string orderInfo);
         Task<BaseResponse<IEnumerable<GetBookingByHomeStay>>> GetBookingsByHomeStayId(int homeStayID);
+        Task<BaseResponse<IEnumerable<GetBookingByRoom>>> GetBookingsByRoom(int roomId);
         Task<BaseResponse<Booking>> GetBookingsById(int bookingID);
         Task<BaseResponse<GetBookingResponse>> GetBookingById(int? bookingID);
         Task<BaseResponse<IEnumerable<GetBookingByAccount>>> GetBookingsByAccountId(string accountId);
@@ -36,7 +37,7 @@ namespace Service.IService
         Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>> GetTotalBookingsTotalBookingsAmountForHomeStay
         (int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType);
         Task<BaseResponse<List<GetTopLoyalCustomers>>> GetTopLoyalCustomers(int homeStayId, int top = 5);
-        Task<BaseResponse<List<GetAccountUser>>> GetCustomersByHomeStay(int homeStayId);
+        Task<BaseResponse<List<GetCustomerUser>>> GetCustomersByHomeStay(int homeStayId);
         Task<BaseResponse<List<GetCurrentWeekRevenueForHomeStay>>> GetCurrentWeekRevenueForHomeStay(int homestayId);
     }
 }

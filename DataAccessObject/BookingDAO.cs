@@ -511,6 +511,35 @@ namespace DataAccessObject
                   .ToList();
         }
 
+        /*public async Task<List<(string accountID, string CustomerName, int BookingCount)>>
+        GetTopLoyalCustomersAsync(int homeStayId, int top = 10)
+        {
+            var customers = await _context.Bookings
+                .Where(b => b.HomeStayID == homeStayId && b.Status == BookingStatus.Completed)
+                .Select(b => new
+                {
+                    b.AccountID,
+                    CustomerName = b.Account.Name,
+                    BookingDetails = b.BookingDetails
+                })
+                .GroupBy(x => new { x.AccountID, x.CustomerName })
+                .Select(g => new
+                {
+                    AccountId = g.Key.AccountID,
+                    CustomerName = g.Key.CustomerName,
+                    BookingCount = g.Count(),
+                    LastCheckInDate = g.SelectMany(x => x.BookingDetails)
+                                       .Max(d => d.CheckInDate)
+                })
+                .OrderByDescending(x => x.LastCheckInDate) // chỉ để sort
+                .Take(top)
+                .ToListAsync();
+
+            return customers
+                .Select(x => (x.AccountId, x.CustomerName, x.BookingCount))
+                .ToList();
+        }*/
+
         public async Task<List<(object span, int totalBookings, double totalBookingsAmount)>> GetTotalBookingsTotalBookingsAmountAsync
         (DateTime startDate, DateTime endDate, string? timeSpanType)
         {
@@ -735,13 +764,60 @@ namespace DataAccessObject
             return result;
         }
 
-        public async Task<List<Account>> GetCustomersByHomeStayAsync(int homeStayId)
+        public async Task<IEnumerable<Booking>> GetBookingsByRoomIdAsync(int roomId)
         {
             return await _context.Bookings
-                .Where(b => b.HomeStayID == homeStayId)
-                .Select(b => b.Account)
-                .Distinct()
+                .Include(b => b.BookingDetails)
+                    .ThenInclude(bd => bd.Rooms)
+                .Include(b => b.BookingDetails)
+                    .ThenInclude(bd => bd.HomeStayRentals)
+                .Include(b => b.Account)
+                .Where(b => b.BookingDetails.Any(bd => bd.RoomID == roomId))
+                .Where(b => b.Status != BookingStatus.Pending) // Loại bỏ các booking có trạng thái Pending
                 .ToListAsync();
+        }
+
+        public async Task<List<(Account Account, int TotalBooking)>> GetCustomersByHomeStayAsync(int homeStayId)
+        {
+            var result = await _context.Bookings
+            .Where(b => b.HomeStayID == homeStayId)
+            .GroupBy(b => b.AccountID)
+            .Select(g => new
+            {
+                AccountId = g.Key,
+                TotalBooking = g.Count(),
+            })
+            .Join(_context.Accounts,
+                  booking => booking.AccountId,
+                  account => account.Id,
+                  (booking, account) => new { Account = account, booking.TotalBooking })
+            .ToListAsync();
+
+            // Lấy thông tin `CheckIn` mới nhất từ `BookingRoomDetails`
+            var latestCheckInDates = await _context.BookingDetails
+                .Where(bd => bd.Booking.HomeStayID == homeStayId)
+                .GroupBy(bd => bd.Booking.AccountID)
+                .Select(g => new
+                {
+                    AccountId = g.Key,
+                    LatestCheckInDate = g.Max(bd => bd.CheckInDate)
+                })
+                .ToListAsync();
+
+            // Gộp dữ liệu từ kết quả trên
+            var mergedResult = result.Join(latestCheckInDates,
+                                           r => r.Account.Id,
+                                           l => l.AccountId,
+                                           (r, l) => new
+                                           {
+                                               r.Account,
+                                               r.TotalBooking,
+                                               l.LatestCheckInDate
+                                           })
+                                           .Where(x => x.LatestCheckInDate != null) // Chỉ lấy khách hàng có ngày CheckIn
+                                           .ToList();
+
+            return mergedResult.Select(x => (x.Account, x.TotalBooking)).ToList();
         }
 
         public async Task<List<(string date, double totalBookingsAmount)>> GetCurrentWeekRevenueForHomeStayAsync(int homestayId)

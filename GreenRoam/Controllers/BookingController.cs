@@ -1,6 +1,7 @@
 ﻿using BusinessObject.Model;
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.Booking;
@@ -55,6 +56,14 @@ namespace GreenRoam.Controllers
         }
 
         [HttpGet]
+        [Route("GetBookingByRoomID/{roomId}")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetBookingByRoom>>>> GetBookingsByRoom(int roomId)
+        {
+            var bookings = await _bookingService.GetBookingsByRoom(roomId);
+            return Ok(bookings);
+        }
+
+        [HttpGet]
         [Route("GetCancellationBooking/{bookingID}")]
         public async Task<ActionResult<BaseResponse<GetCancellationBooking>>> GetCancellationBooking(int bookingID)
         {
@@ -97,7 +106,7 @@ namespace GreenRoam.Controllers
         }
 
         [HttpGet("adminDashBoard/GetCustomersByHomeStay")]
-        public async Task<BaseResponse<List<GetAccountUser>>> GetCustomersByHomeStay(int homeStayId)
+        public async Task<BaseResponse<List<GetCustomerUser>>> GetCustomersByHomeStay(int homeStayId)
         {
             return await _bookingService.GetCustomersByHomeStay(homeStayId);
         }

@@ -107,7 +107,7 @@ namespace Repository.Repositories
             return await _bookingDao.GetTopLoyalCustomersAsync(homeStayId, top);
         }
 
-        public async Task<List<Account>> GetCustomersByHomeStay(int homeStayId)
+        public async Task<List<(Account Account, int TotalBooking)>> GetCustomersByHomeStay(int homeStayId)
         {
            return await _bookingDao.GetCustomersByHomeStayAsync(homeStayId);
         }
@@ -115,6 +115,11 @@ namespace Repository.Repositories
         public async Task<List<(string date, double totalBookingsAmount)>> GetCurrentWeekRevenueForHomeStay(int homestayId)
         {
             return await _bookingDao.GetCurrentWeekRevenueForHomeStayAsync(homestayId);
+        }
+
+        public async Task<IEnumerable<Booking>> GetBookingsByRoom(int roomId)
+        {
+            return await _bookingDao.GetBookingsByRoomIdAsync(roomId);
         }
     }
 }

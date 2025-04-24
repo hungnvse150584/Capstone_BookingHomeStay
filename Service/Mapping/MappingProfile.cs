@@ -255,6 +255,7 @@ namespace Service.Mapping
             CreateMap<Booking, GetAllBookings>();
             CreateMap<Booking, GetBookingResponse>().ReverseMap();
 
+            CreateMap<BookingDetail, GetBookingDetailForRoom>().ReverseMap();
             CreateMap<BookingDetail, GetBookingDetailResponse>().ReverseMap();
             CreateMap<BookingDetail, GetBookingDetails>().ReverseMap();
             CreateMap<BookingDetail, GetSimpleBookingDetail>().ReverseMap();
@@ -272,6 +273,7 @@ namespace Service.Mapping
             CreateMap<Booking, GetCancellationBooking>();
             CreateMap<Booking, GetBookingByAccount>().ReverseMap();
             CreateMap<Booking, GetBookingByHomeStay>().ReverseMap();
+            CreateMap<Booking, GetBookingByRoom>().ReverseMap();
             CreateMap<Booking, GetSimpleBooking>().ReverseMap();
             //Cho phép đổi phòng khi có sự cố
             CreateMap<BookingDetail, UpdateChangingRoomRequest>().ReverseMap();

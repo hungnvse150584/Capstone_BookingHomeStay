@@ -2,6 +2,7 @@
 using Azure;
 using BusinessObject.Model;
 using CloudinaryDotNet;
+using Microsoft.Identity.Client;
 using Repository.IRepositories;
 using Repository.Repositories;
 using Service.IService;
@@ -210,6 +211,23 @@ namespace Service.Service
                 StatusCodeEnum.OK_200, bookings);
         }
 
+        public async Task<BaseResponse<IEnumerable<GetBookingByRoom>>> GetBookingsByRoom(int roomId)
+        {
+            IEnumerable<Booking> booking = await _bookingRepository.GetBookingsByRoom(roomId);
+            if (booking == null || !booking.Any())
+            {
+                return new BaseResponse<IEnumerable<GetBookingByRoom>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            var bookings = _mapper.Map<IEnumerable<GetBookingByRoom>>(booking);
+            if (bookings == null || !bookings.Any())
+            {
+                return new BaseResponse<IEnumerable<GetBookingByRoom>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            return new BaseResponse<IEnumerable<GetBookingByRoom>>("Get all bookings as base success",
+                StatusCodeEnum.OK_200, bookings);
+        }
 
         public async Task<BaseResponse<GetBookingResponse>> GetBookingById(int? bookingID)
         {
@@ -308,20 +326,21 @@ namespace Service.Service
             return new BaseResponse<List<GetTopLoyalCustomers>>("Get All Success", StatusCodeEnum.OK_200, response);
         }
 
-        public async Task<BaseResponse<List<GetAccountUser>>> GetCustomersByHomeStay(int homeStayId)
+        public async Task<BaseResponse<List<GetCustomerUser>>> GetCustomersByHomeStay(int homeStayId)
         {
             var accounts = await _bookingRepository.GetCustomersByHomeStay(homeStayId);
 
-            var result = accounts.Select(a => new GetAccountUser
+            var result = accounts.Select(a => new GetCustomerUser
             {
-                AccountID = a.Id,
-                Email = a.Email,
-                Name = a.Name,
-                Phone = a.Phone,
-                Address = a.Address
+                AccountID = a.Account.Id,
+                Email = a.Account.Email,
+                Name = a.Account.Name,
+                Phone = a.Account.Phone,
+                Address = a.Account.Address,
+                TotalBooking = a.TotalBooking
             }).ToList();
 
-            return new BaseResponse<List<GetAccountUser>>("Get All Success", StatusCodeEnum.OK_200, result);
+            return new BaseResponse<List<GetCustomerUser>>("Get All Success", StatusCodeEnum.OK_200, result);
         }
 
         public async Task<BaseResponse<List<GetCurrentWeekRevenueForHomeStay>>> GetCurrentWeekRevenueForHomeStay(int homestayId)
