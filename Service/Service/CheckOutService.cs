@@ -515,12 +515,17 @@ namespace Service.Service
                     $"{string.Join(", ", duplicatedRoomIDs)}", StatusCodeEnum.Conflict_409, null);
             }
 
-            // ✅ Check duplicated HomeStayTypeID (for RentWhole)
+            var today = DateTime.UtcNow;
 
             foreach (var updatedBookingDetails in request.BookingDetails)
             {
                 if (updatedBookingDetails.roomTypeID > 0)
                 {
+                    
+                    if (updatedBookingDetails.CheckOutDate <= today)
+                    {
+                        return new BaseResponse<UpdateBookingForRoomRequest>("Cannot change Room due to the nearly or over of checkout date", StatusCodeEnum.BadRequest_400, null);
+                    }
                     var roomType = await _roomTypeRepository.GetRoomTypesByIdAsync(updatedBookingDetails.roomTypeID);
                     if (roomType == null)
                     {

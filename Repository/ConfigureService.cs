@@ -67,6 +67,7 @@ namespace Repository
             services.AddScoped<HomeStayRentalDAO>();
             services.AddScoped<RoomTypesDAO>();
             services.AddScoped<RoomDAO>();
+            services.AddScoped<RoomChangeHistoryDAO>();
             services.AddScoped<PricingDAO>();
             services.AddScoped<ImageHomeStayDAO>();
             services.AddScoped<CancellationPolicyDAO>();
