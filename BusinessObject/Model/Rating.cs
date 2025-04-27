@@ -35,6 +35,10 @@ namespace BusinessObject.Model;
         [ForeignKey("HomeStayID")]
         public HomeStay? HomeStay { get; set; }
 
+        public int? BookingID { get; set; }
+        [ForeignKey("BookingID")]
+        public Booking? Booking { get; set; }
+
         public ICollection<ImageRating> ImageRatings { get; set; }
     }
 

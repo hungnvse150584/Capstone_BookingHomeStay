@@ -40,6 +40,9 @@ namespace BusinessObject.Model;
         public int? ReportID { get; set; }
         public Report? Report { get; set; }
 
+        public int? RatingID { get; set; }
+        public Rating Rating { get; set; }
+
         [ForeignKey("AccountID")]
         public string AccountID { get; set; }    
         public Account Account { get; set; }
