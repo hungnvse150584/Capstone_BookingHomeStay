@@ -356,5 +356,30 @@ namespace Service.Service
 
             return new BaseResponse<List<GetCurrentWeekRevenueForHomeStay>>("Get All Success", StatusCodeEnum.OK_200, result);
         }
+
+        public async Task<BaseResponse<int>> CancelExpiredBookings()
+        {
+            var expiredBookings = await _bookingRepository.GetExpiredBookings();
+            
+
+            foreach (var booking in expiredBookings)
+            {
+                booking.Status = BookingStatus.Cancelled;
+                booking.paymentStatus = PaymentStatus.Pending;
+
+                if (booking.BookingServices != null && booking.BookingServices.Any())
+                {
+                    foreach (var service in booking.BookingServices)
+                    {
+                        service.Status = BookingServicesStatus.Cancelled;
+                        service.PaymentServiceStatus = PaymentServicesStatus.Pending;
+                    }
+                }
+
+                await _bookingRepository.UpdateBookingAsync(booking);
+            }
+            return new BaseResponse<int>("The booking has been automatically cancelled successfully!", StatusCodeEnum.Created_201, 1);
+
+        }
     }
 }

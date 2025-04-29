@@ -63,6 +63,14 @@ namespace DataAccessObject
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Booking>> GetExpiredBookingsAsync()
+        {
+            return await _context.Bookings
+                .Include(b => b.BookingServices)
+                .Where(b => b.ExpiredTime < DateTime.Now && b.Status == BookingStatus.Pending)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Booking>> GetBookingsByHomeStayId(int homeStayID)
         {
             return await _context.Bookings
