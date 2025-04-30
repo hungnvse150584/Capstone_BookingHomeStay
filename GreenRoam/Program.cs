@@ -209,6 +209,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHangfireDashboard();
 
 app.MapHub<ChatHub>("/chatHub");
 app.MapHub<NotificationHub>("/notificationHub");
