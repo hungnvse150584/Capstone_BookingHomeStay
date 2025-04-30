@@ -1,6 +1,7 @@
 ﻿using BusinessObject.Model;
 using CloudinaryDotNet;
 using DataAccessObject;
+using GreenRoam.HangFireSetup;
 using GreenRoam.Hubs;
 using Hangfire;
 using Hangfire.SqlServer;
@@ -132,6 +133,7 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
+
 builder.Services.AddHangfire(config => config
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
     .UseSimpleAssemblyNameTypeSerializer()
@@ -199,8 +201,13 @@ recurringJobManager.AddOrUpdate<IBookingService>(
     service => service.CancelExpiredBookings(),
     Cron.MinuteInterval(5)); // Chạy job mỗi 5 phút
 
-app.UseHangfireDashboard("/hangfire"); 
+/*app.UseHangfireDashboard("/hangfire"); */
 //http://localhost:7221/hangfire
+
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    Authorization = new[] { new DashboardNoAuthFilter() }
+});
 
 app.UseHttpsRedirection();
 //app.UseHangfireDashboard();
