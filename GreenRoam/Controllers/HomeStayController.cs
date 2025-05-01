@@ -6,6 +6,7 @@ using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Request.Pricing;
+using Service.RequestAndResponse.Response.Accounts;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.ImageHomeStay;
 using Service.Service;
@@ -210,6 +211,12 @@ namespace GreenRoam.Controllers
         {
             var result = await _homestayService.FilterHomeStaysAsync(request);
             return StatusCode((int)result.StatusCode, result);
+        }
+
+        [HttpGet("adminDashBoard/GetOwnersWithHomeStayStats")]
+        public async Task<BaseResponse<List<GetOwnerUser>>> GetOwnersWithHomeStayStats()
+        {
+            return await _homestayService.GetOwnersWithHomeStayStats();
         }
     }
 }

@@ -73,15 +73,15 @@
             entity.CancelPolicy = await GetCancellationPolicyByHomeStayIdAsync(id);
             return entity;
             }
-        private async Task<CancellationPolicy> GetCancellationPolicyByHomeStayIdAsync(int homeStayId)
-        {
-            // Lấy CancellationPolicy mới nhất dựa trên CreateAt hoặc UpdateAt
-            return await _context.CancelPolicy
-                .Where(cp => cp.HomeStayID == homeStayId)
-                .OrderByDescending(cp => cp.UpdateAt) // Sắp xếp theo UpdateAt giảm dần
-                .FirstOrDefaultAsync(); // Lấy cái đầu tiên (mới nhất)
-        }
-        public async Task<IEnumerable<HomeStay>> GetAllHomeStayAsync()
+            private async Task<CancellationPolicy> GetCancellationPolicyByHomeStayIdAsync(int homeStayId)
+            {
+                // Lấy CancellationPolicy mới nhất dựa trên CreateAt hoặc UpdateAt
+                return await _context.CancelPolicy
+                    .Where(cp => cp.HomeStayID == homeStayId)
+                    .OrderByDescending(cp => cp.UpdateAt) // Sắp xếp theo UpdateAt giảm dần
+                    .FirstOrDefaultAsync(); // Lấy cái đầu tiên (mới nhất)
+            }
+            public async Task<IEnumerable<HomeStay>> GetAllHomeStayAsync()
             {
                 return await _context.HomeStays
                             .Include(h => h.Account)
@@ -115,18 +115,18 @@
                 }
                 return entity;
             }
-        public async Task<IEnumerable<HomeStay>> GetAllWithDetailsAsync()
-        {
-            return await _context.HomeStays
-                .Include(h => h.HomeStayRentals)
-                    .ThenInclude(r => r.RoomTypes)
-                        .ThenInclude(rt => rt.Rooms)
-                .Include(h => h.Bookings)
-                    .ThenInclude(b => b.BookingDetails)
-                .Include(h => h.ImageHomeStays)
-                .ToListAsync();
-        }
-        public async Task<HomeStay> GetOwnerHomeStayByIdAsync(string accountId)
+            public async Task<IEnumerable<HomeStay>> GetAllWithDetailsAsync()
+            {
+                return await _context.HomeStays
+                    .Include(h => h.HomeStayRentals)
+                        .ThenInclude(r => r.RoomTypes)
+                            .ThenInclude(rt => rt.Rooms)
+                    .Include(h => h.Bookings)
+                        .ThenInclude(b => b.BookingDetails)
+                    .Include(h => h.ImageHomeStays)
+                    .ToListAsync();
+            }
+            public async Task<HomeStay> GetOwnerHomeStayByIdAsync(string accountId)
             {
                 if (string.IsNullOrEmpty(accountId))
                 {
@@ -199,6 +199,37 @@
             private double DegreesToRadians(double degrees)
             {
                 return degrees * (Math.PI / 180);
+            }
+
+            public async Task<List<(Account Account, int TotalHomeStays)>> GetOwnersWithHomeStayStatsAsync()
+            {
+                // Ép EF thực hiện query HomeStays trước (chạy trên SQL)
+                var homeStayStats = await _context.HomeStays
+                    .GroupBy(h => h.AccountID)
+                    .Select(g => new
+                    {
+                        OwnerId = g.Key,
+                        TotalHomeStays = g.Count(),
+                        LatestCreatedDate = g.Max(h => h.CreateAt)
+                    })
+                    .ToListAsync(); // Dữ liệu đã nằm client-side, giờ join thoải mái
+
+                // Join ở đây là LINQ thuần (in-memory)
+                var result = homeStayStats
+                    .Join(_context.Accounts.AsEnumerable(),
+                          stat => stat.OwnerId,
+                          acc => acc.Id,
+                          (stat, acc) => new
+                          {
+                              Account = acc,
+                              stat.TotalHomeStays,
+                              stat.LatestCreatedDate
+                          })
+                    .OrderByDescending(x => x.LatestCreatedDate)
+                    .Select(x => (x.Account, x.TotalHomeStays))
+                    .ToList();
+
+                return result;
             }
         }
     }

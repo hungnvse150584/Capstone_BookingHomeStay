@@ -107,5 +107,10 @@ namespace Repository.Repositories
         {
             return _homestayDao.CalculateHaversineDistance(lat1, lon1, lat2, lon2);
         }
+
+        public async Task<List<(Account Account, int TotalHomeStays)>> GetOwnersWithHomeStayStats()
+        {
+            return await _homestayDao.GetOwnersWithHomeStayStatsAsync();
+        }
     }
 }
