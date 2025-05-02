@@ -116,5 +116,13 @@ namespace GreenRoam.Controllers
         {
             return await _bookingService.GetCurrentWeekRevenueForHomeStay(homestayId);
         }
+        [HttpGet]
+        [Route("CheckBookingForRating")]
+        public async Task<ActionResult<BaseResponse<int>>> CheckBookingForRating(string accountId, int homeStayId)
+        {
+            var result = await _bookingService.GetBookingByAccountAndHomeStayAsync(accountId, homeStayId);
+            return StatusCode((int)result.StatusCode, result);
+        }
+
     }
 }

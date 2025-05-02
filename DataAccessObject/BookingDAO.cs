@@ -884,5 +884,15 @@ namespace DataAccessObject
                 .Where(b => b.Status == BookingStatus.Pending || b.Status == BookingStatus.Completed) // Chỉ gửi email cho booking chưa bị hủy
                 .ToListAsync();
         }
+        public async Task<Booking?> GetBookingByAccountAndHomeStayAsync(string accountId, int homeStayId)
+        {
+            return await _context.Bookings
+                .Include(b => b.BookingDetails)
+                .Where(b => b.AccountID == accountId && b.HomeStayID == homeStayId)
+                .Where(b => b.Status == BookingStatus.Completed) // Booking phải ở trạng thái Completed
+                .Where(b => b.RatingID == null) // Booking chưa có Rating
+                .OrderByDescending(b => b.BookingDate) // Lấy booking gần nhất
+                .FirstOrDefaultAsync();
+        }
     }
 }

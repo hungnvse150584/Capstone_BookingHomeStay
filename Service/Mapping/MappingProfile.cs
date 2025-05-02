@@ -11,6 +11,7 @@ using Service.RequestAndResponse.Request.ImageHomeStayTypes;
 using Service.RequestAndResponse.Request.ImageService;
 using Service.RequestAndResponse.Request.Notifications;
 using Service.RequestAndResponse.Request.Pricing;
+using Service.RequestAndResponse.Request.Rating;
 using Service.RequestAndResponse.Request.Room;
 using Service.RequestAndResponse.Request.RoomChangeHistory;
 using Service.RequestAndResponse.Request.RoomType;
@@ -393,6 +394,9 @@ namespace Service.Mapping
                 .ForMember(dest => dest.HomeStayID, opt => opt.MapFrom(src => src.HomeStayID))
                 .ForMember(dest => dest.ServiceType, opt => opt.MapFrom(src => src.ServiceType))
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
+            CreateMap<CreateRatingRequest, Rating>().ReverseMap();
+            CreateMap<UpdateRatingRequest, Rating>().ReverseMap();
+            CreateMap<CreateRatingResponse, Rating>().ReverseMap();
         }
 
     }

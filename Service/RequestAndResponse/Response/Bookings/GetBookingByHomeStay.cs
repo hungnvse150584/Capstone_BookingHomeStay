@@ -36,6 +36,7 @@ namespace Service.RequestAndResponse.Response.Bookings
         public double remainingBalance { get; set; }
 
         public PaymentMethod PaymentMethod { get; set; }
+        public int? RatingID { get; set; }
 
         public ICollection<GetSimpleBookingDetail> BookingDetails { get; set; }
 

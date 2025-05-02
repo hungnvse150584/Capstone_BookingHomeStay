@@ -32,6 +32,7 @@ namespace Service.RequestAndResponse.Response.Bookings
         public double bookingDeposit { get; set; }
 
         public double remainingBalance { get; set; }
+        public int? RatingID { get; set; }
 
         public string AccountID { get; set; }
         public GetAccountUser Account { get; set; }

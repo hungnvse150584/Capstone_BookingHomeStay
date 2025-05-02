@@ -356,5 +356,39 @@ namespace Service.Service
 
             return new BaseResponse<List<GetCurrentWeekRevenueForHomeStay>>("Get All Success", StatusCodeEnum.OK_200, result);
         }
+        public async Task<BaseResponse<int>> GetBookingByAccountAndHomeStayAsync(string accountId, int homeStayId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(accountId) || homeStayId <= 0)
+                {
+                    return new BaseResponse<int>(
+                        "Please provide a valid Account ID and HomeStay ID.",
+                        StatusCodeEnum.BadRequest_400,
+                        0);
+                }
+
+                var booking = await _bookingRepository.GetBookingByAccountAndHomeStayAsync(accountId, homeStayId);
+                if (booking == null)
+                {
+                    return new BaseResponse<int>(
+                        "No valid booking found for this AccountID and HomeStayID!",
+                        StatusCodeEnum.NotFound_404,
+                        0);
+                }
+
+                return new BaseResponse<int>(
+                    "Booking found and eligible for rating.",
+                    StatusCodeEnum.OK_200,
+                    booking.BookingID);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<int>(
+                    $"Something went wrong! Error: {ex.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    0);
+            }
+        }
     }
 }

@@ -90,5 +90,29 @@ namespace GreenRoam.Controllers
             var rooms = await _roomService.FilterRoomsByRoomTypeAndDates(roomTypeId, checkInDate, checkOutDate);
             return Ok(rooms);
         }
+        [HttpGet]
+        [Route("FilterAllRoomsByHomeStayID")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllRooms>>>> FilterAllRoomsByHomeStayID(
+    int homeStayID, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            if (homeStayID <= 0)
+            {
+                return BadRequest(new BaseResponse<IEnumerable<GetAllRooms>>(
+                    "Invalid HomeStayID!",
+                    StatusCodeEnum.BadRequest_400,
+                    null));
+            }
+
+            if (startDate.HasValue && endDate.HasValue && startDate >= endDate)
+            {
+                return BadRequest(new BaseResponse<IEnumerable<GetAllRooms>>(
+                    "End date must be after start date!",
+                    StatusCodeEnum.BadRequest_400,
+                    null));
+            }
+
+            var rooms = await _roomService.FilterAllRoomsByHomeStayIDAsync(homeStayID, startDate, endDate);
+            return Ok(rooms);
+        }
     }
 }
