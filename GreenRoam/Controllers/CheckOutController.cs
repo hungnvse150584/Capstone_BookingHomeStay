@@ -354,7 +354,7 @@ namespace GreenRoam.Controllers
                     return BadRequest($"Booking with ID {bookingId} not found.");
 
                 await _checkoutService.CreateBookingRefundPayment(bookingId, bookingserviceId, transaction);
-                return Redirect($"{_configuration["VnPay:UrlReturnPayment2"]}/{bookingId}");
+                return Redirect($"{_configuration["VnPay:PaymentBackReturnUrl2"]}/{bookingId}");
             }
 
             if (bookingserviceId.HasValue)
@@ -364,7 +364,7 @@ namespace GreenRoam.Controllers
                     return BadRequest($"Booking with ID {bookingserviceId} not found.");
 
                 await _checkoutService.CreateBookingServiceRefundPayment(bookingserviceId, transaction);
-                return Redirect($"{_configuration["VnPay:UrlReturnPayment2"]}/{bookingserviceId}");
+                return Redirect($"{_configuration["VnPay:PaymentBackReturnUrl2"]}/{bookingserviceId}");
             }
             return BadRequest("Cannot find Booking or Booking Service");
         }

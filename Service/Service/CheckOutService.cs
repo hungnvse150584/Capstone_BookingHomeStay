@@ -796,6 +796,7 @@ namespace Service.Service
             {
                 throw new Exception("BookingService not found");
             }
+            var oldPaymentServiceStatus = bookingService.PaymentServiceStatus;
 
             bookingService.PaymentServiceStatus = PaymentServicesStatus.Refunded;
 
@@ -818,11 +819,11 @@ namespace Service.Service
                 if (booking != null)
                 {
                     // Cập nhật tổng tiền thanh toán cho Booking
-                    if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
+                    if (oldPaymentServiceStatus == PaymentServicesStatus.FullyPaid)
                     {
-                        booking.Total -= (transaction.Amount/100);
+                        booking.Total -= bookingService.Total;
                     }
-                    else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited)
+                    else if (oldPaymentServiceStatus == PaymentServicesStatus.Deposited)
                     {
                         booking.Total -= bookingService.Total;
                         booking.bookingDeposit -= bookingService.bookingServiceDeposit;

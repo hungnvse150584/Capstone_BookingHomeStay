@@ -13,6 +13,7 @@ using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Request.Pricing;
+using Service.RequestAndResponse.Response.Accounts;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.HomeStayType;
 using Service.RequestAndResponse.Response.ImageHomeStay;
@@ -966,6 +967,21 @@ namespace Service.Service
                     StatusCodeEnum.InternalServerError_500,
                     null);
             }
+        }
+
+        public async Task<BaseResponse<List<GetOwnerUser>>> GetOwnersWithHomeStayStats()
+        {
+            var owners = await _homeStayRepository.GetOwnersWithHomeStayStats();
+            var result = owners.Select(a => new GetOwnerUser
+            {
+                AccountID = a.Account.Id,
+                Email = a.Account.Email,
+                Name = a.Account.Name,
+                Phone = a.Account.Phone,
+                Address = a.Account.Address,
+                TotalHomeStay = a.TotalHomeStays
+            }).ToList();
+            return new BaseResponse<List<GetOwnerUser>>("Get All Success", StatusCodeEnum.OK_200, result);
         }
     }
 }

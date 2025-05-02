@@ -22,6 +22,7 @@ namespace Service.IService
 
         /*Task<BaseResponse<UpdateBookingRequest>> UpdateBooking(int bookingID, UpdateBookingRequest request);*/
 
+        Task<BaseResponse<int>> CancelExpiredBookings();
         public (int? bookingId, int? serviceId) ParseOrderInfo(string orderInfo);
         Task<BaseResponse<IEnumerable<GetBookingByHomeStay>>> GetBookingsByHomeStayId(int homeStayID);
         Task<BaseResponse<IEnumerable<GetBookingByRoom>>> GetBookingsByRoom(int roomId);

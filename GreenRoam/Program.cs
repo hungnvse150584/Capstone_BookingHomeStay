@@ -1,6 +1,7 @@
 ﻿using BusinessObject.Model;
 using CloudinaryDotNet;
 using DataAccessObject;
+using GreenRoam.HangFireSetup;
 using GreenRoam.Hubs;
 using Hangfire;
 using Hangfire.SqlServer;
@@ -12,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repository;
 using Service;
+using Service.IService;
 using Account = BusinessObject.Model.Account;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -131,19 +133,22 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
-//builder.Services.AddHangfire(config => config
-//    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-//    .UseSimpleAssemblyNameTypeSerializer()
-//    .UseRecommendedSerializerSettings()
-//    .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
-//    {
-//        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-//        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-//        QueuePollInterval = TimeSpan.Zero,
-//        UseRecommendedIsolationLevel = true,
-//        DisableGlobalLocks = true
-//    }));
-//builder.Services.AddHangfireServer();
+
+builder.Services.AddHangfire(config => config
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(builder.Configuration.GetConnectionString("DbConnection"), new SqlServerStorageOptions
+    {
+        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+        QueuePollInterval = TimeSpan.Zero,
+        UseRecommendedIsolationLevel = true,
+        DisableGlobalLocks = true
+    }));
+
+builder.Services.AddHangfireServer();
+
 builder.Services.AddSignalR();
 //builder.Services.AddCors(options =>
 //{
@@ -190,6 +195,19 @@ app.UseSwaggerUI(options =>
         options.RoutePrefix = "swagger";
     });
 
+var recurringJobManager = app.Services.GetRequiredService<IRecurringJobManager>();
+recurringJobManager.AddOrUpdate<IBookingService>(
+    "cancel-expired-bookings",
+    service => service.CancelExpiredBookings(),
+    Cron.MinuteInterval(5)); // Chạy job mỗi 5 phút
+
+/*app.UseHangfireDashboard("/hangfire"); */
+//http://localhost:7221/hangfire
+
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    Authorization = new[] { new DashboardNoAuthFilter() }
+});
 
 app.UseHttpsRedirection();
 //app.UseHangfireDashboard();
@@ -198,6 +216,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHangfireDashboard();
 
 app.MapHub<ChatHub>("/chatHub");
 app.MapHub<NotificationHub>("/notificationHub");

@@ -19,5 +19,6 @@ namespace Repository.IRepositories
         Task<double> CalculateHaversineDistance(double lat1, double lon1, double lat2, double lon2);
         Task SaveChangesAsync();
         Task<IEnumerable<HomeStay>> GetAllWithDetailsAsync();
+        Task<List<(Account Account, int TotalHomeStays)>> GetOwnersWithHomeStayStats();
     }
 }
