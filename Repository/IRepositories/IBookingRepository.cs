@@ -36,6 +36,8 @@ namespace Repository.IRepositories
         Task<List<(string accountID, string CustomerName, int BookingCount)>> GetTopLoyalCustomersAsync(int homeStayId, int top = 5);
         Task<List<(Account Account, int TotalBooking)>> GetCustomersByHomeStay(int homeStayId);
         Task<IEnumerable<Booking>> GetBookingsByRoom(int roomId);
+        Task<Booking?> GetBookingByAccountAndHomeStayAsync(string accountId, int homeStayId);
+
 
     }
 }

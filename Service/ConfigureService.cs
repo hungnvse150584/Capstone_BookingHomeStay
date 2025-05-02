@@ -41,7 +41,7 @@ namespace Service
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<ITransactionService, TransactionService>();
-
+            services.AddScoped<IRatingService, RatingService>();
             return services;
         }
     }

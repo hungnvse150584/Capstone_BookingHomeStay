@@ -11,6 +11,7 @@ using Service.RequestAndResponse.Response.BookingOfServices;
 using Service.RequestAndResponse.Response.Accounts;
 using Service.RequestAndResponse.Response.Reports;
 using Service.RequestAndResponse.Response.HomeStays;
+using Service.RequestAndResponse.Response.Ratings;
 
 namespace Service.RequestAndResponse.Response.Bookings
 {
@@ -35,6 +36,8 @@ namespace Service.RequestAndResponse.Response.Bookings
         public double remainingBalance { get; set; }
 
         public int? ReportID { get; set; }
+        public int? RatingID { get; set; }
+        public CreateRatingResponse? Rating { get; set; }
         public GetReportResponse? Report { get; set; }
 
         public string AccountID { get; set; }

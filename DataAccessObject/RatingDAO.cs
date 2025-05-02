@@ -17,7 +17,7 @@ namespace DataAccessObject;
             _context = context;
         }
 
-        /*public async Task<double> GetAverageRating(int homeStayId)
+        public async Task<double> GetAverageRating(int homeStayId)
         {
             if (homeStayId <= 0)
             {
@@ -32,11 +32,11 @@ namespace DataAccessObject;
                 return 0;
             }
 
-            var sum = ratings.Sum(r => r.Rate);
+            var sum = ratings.Sum(r => r.SumRate);
             var average = (double)sum / ratings.Count;
 
             return average;
-        }*/
+        }
 
         public async Task<IEnumerable<Rating?>> GetRatingByHomeStayId(int homeStayId)
         {
@@ -89,5 +89,9 @@ namespace DataAccessObject;
             }
             return entity;
         }
-    }
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+}
 

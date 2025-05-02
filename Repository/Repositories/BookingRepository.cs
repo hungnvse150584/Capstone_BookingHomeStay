@@ -122,9 +122,15 @@ namespace Repository.Repositories
             return await _bookingDao.GetBookingsByRoomIdAsync(roomId);
         }
 
+        public async Task<Booking?> GetBookingByAccountAndHomeStayAsync(string accountId, int homeStayId)
+        {
+            return await _bookingDao.GetBookingByAccountAndHomeStayAsync(accountId, homeStayId);
+        }
+
         public async Task<IEnumerable<Booking>> GetExpiredBookings()
         {
             return await _bookingDao.GetExpiredBookingsAsync();
+
         }
     }
 }

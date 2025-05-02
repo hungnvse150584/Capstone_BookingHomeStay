@@ -176,5 +176,36 @@ namespace Service.Service
                     null);
             }
         }
+        public async Task<BaseResponse<IEnumerable<GetAllRooms>>> FilterAllRoomsByHomeStayIDAsync(int homeStayID, DateTime? startDate, DateTime? endDate)
+        {
+            try
+            {
+                // Gọi repository để lấy danh sách phòng theo HomeStayID
+                var rooms = await _roomRepository.FilterAllRoomsByHomeStayIDAsync(homeStayID, startDate, endDate);
+
+                if (rooms == null || !rooms.Any())
+                {
+                    return new BaseResponse<IEnumerable<GetAllRooms>>(
+                        "No rooms found for the specified HomeStayID.",
+                        StatusCodeEnum.OK_200,
+                        new List<GetAllRooms>());
+                }
+
+                // Ánh xạ sang GetAllRooms
+                var roomResponses = _mapper.Map<IEnumerable<GetAllRooms>>(rooms);
+
+                return new BaseResponse<IEnumerable<GetAllRooms>>(
+                    "Rooms retrieved successfully!",
+                    StatusCodeEnum.OK_200,
+                    roomResponses);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<IEnumerable<GetAllRooms>>(
+                    $"An error occurred while retrieving rooms: {ex.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
+            }
+        }
     }
 }

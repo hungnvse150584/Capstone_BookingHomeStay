@@ -67,5 +67,9 @@ namespace Repository.Repositories
         {
             return await _roomDao.FilterRoomsByRoomTypeAndDates(roomTypeId, checkInDate, checkOutDate);
         }
+        public async Task<IEnumerable<Room>> FilterAllRoomsByHomeStayIDAsync(int homeStayID, DateTime? startDate, DateTime? endDate)
+        {
+            return await _roomDao.FilterAllRoomsByHomeStayIDAsync(homeStayID, startDate, endDate);
+        }
     }
 }
