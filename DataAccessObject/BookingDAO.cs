@@ -71,6 +71,17 @@ namespace DataAccessObject
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Booking>> GetCheckOutBookingsAsync()
+        {
+            return await _context.Bookings
+                .Include(b => b.BookingServices)
+                .Include(b => b.Notifications)
+                .Include(b => b.HomeStay)
+                .Include(b => b.BookingDetails)
+                .Where(b => b.BookingDetails.Any(bd => bd.CheckOutDate <= DateTime.Now) && b.Status == BookingStatus.InProgress)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Booking>> GetBookingsByHomeStayId(int homeStayID)
         {
             return await _context.Bookings

@@ -132,5 +132,10 @@ namespace Repository.Repositories
             return await _bookingDao.GetExpiredBookingsAsync();
 
         }
+
+        public async Task<IEnumerable<Booking>> GetCheckOutBookings()
+        {
+            return await _bookingDao.GetCheckOutBookingsAsync();
+        }
     }
 }

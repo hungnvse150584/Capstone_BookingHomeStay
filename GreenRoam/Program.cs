@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repository;
 using Service;
+using Service.Hubs;
 using Service.IService;
 using Account = BusinessObject.Model.Account;
 
@@ -201,6 +202,11 @@ recurringJobManager.AddOrUpdate<IBookingService>(
     service => service.CancelExpiredBookings(),
     Cron.MinuteInterval(5)); // Chạy job mỗi 5 phút
 
+recurringJobManager.AddOrUpdate<IBookingService>(
+    "check-out-bookings",
+    service => service.AutoCheckOutBookings(),
+    Cron.MinuteInterval(5)); // Chạy job mỗi 5 phút
+
 /*app.UseHangfireDashboard("/hangfire"); */
 //http://localhost:7221/hangfire
 
@@ -220,6 +226,7 @@ app.MapHangfireDashboard();
 
 app.MapHub<ChatHub>("/chatHub");
 app.MapHub<NotificationHub>("/notificationHub");
+app.MapHub<NotificationHubs>("/notificationHubs");
 app.MapFallbackToFile("/index.html");
 
 app.Run();

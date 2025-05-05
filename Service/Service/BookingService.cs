@@ -2,9 +2,11 @@
 using Azure;
 using BusinessObject.Model;
 using CloudinaryDotNet;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Identity.Client;
 using Repository.IRepositories;
 using Repository.Repositories;
+using Service.Hubs;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
@@ -32,6 +34,7 @@ namespace Service.Service
         private readonly ICancellationPolicyRepository _cancelltaionRepository;
         private readonly IHomeStayRepository _homeStayRepository;
         private readonly INotificationService _notificationService;
+        private readonly IHubContext<NotificationHubs> _notificationHub;
 
         public BookingService(IMapper mapper, IBookingRepository bookingRepository,
                               IHomeStayRentalRepository homeStayTypeRepository,
@@ -43,11 +46,13 @@ namespace Service.Service
                               ICommissionRateRepository commissionRateRepository, 
                               IBookingDetailRepository bookingDetailRepository, 
                               IBookingServiceDetailRepository bookingServiceDetailRepository, 
-                              ICancellationPolicyRepository cancelltaionRepository)
+                              ICancellationPolicyRepository cancelltaionRepository,
+                              IHubContext<NotificationHubs> notificationHub)
         {
             _mapper = mapper;
             _bookingRepository = bookingRepository;
             _cancelltaionRepository = cancelltaionRepository;
+            _notificationHub = notificationHub;
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllBookings>>> GetAllBooking(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
@@ -415,6 +420,72 @@ namespace Service.Service
             }
             return new BaseResponse<int>("The booking has been automatically cancelled successfully!", StatusCodeEnum.Created_201, 1);
 
+        }
+
+        public async Task<BaseResponse<string>> AutoCheckOutBookings()
+        {
+            var checkoutBookings= await _bookingRepository.GetCheckOutBookings();
+
+            foreach(var booking in checkoutBookings)
+            {
+                booking.Status = BookingStatus.Completed;
+
+                var guestNotification = new Notification
+                {
+                    AccountID = booking.AccountID, // Account của khách
+                    Title = "Check-out Successful",
+                    Message = $"Your booking (ID: {booking.BookingID}) has been successfully checked out.",
+                    BookingID = booking.BookingID,
+                    TypeNotify = NotificationType.Reminder
+                };
+
+                // Thêm thông báo cho khách vào danh sách Notifications của Booking
+                booking.Notifications.Add(guestNotification);
+
+                Notification hostNotification = null;
+                if (booking.HomeStayID.HasValue)
+                {
+                    hostNotification = new Notification
+                    {
+                        AccountID = booking.HomeStay?.AccountID, // Account của chủ homestay
+                        Title = "Booking Check-out Notification",
+                        Message = $"A guest has checked out from your homestay. Booking ID: {booking.BookingID}.",
+                        BookingID = booking.BookingID,
+                        TypeNotify = NotificationType.Reminder
+                    };
+
+                    // Thêm thông báo cho chủ homestay vào danh sách Notifications của Booking
+                    booking.Notifications.Add(hostNotification);
+                }
+
+                await _bookingRepository.UpdateBookingAsync(booking);
+
+                await _notificationHub.Clients.User(booking.AccountID).SendAsync(
+                    "ReceiveNotification",
+                    guestNotification.AccountID,
+                    guestNotification.Title,
+                    guestNotification.Message,
+                    guestNotification.NotificationID,
+                    guestNotification.CreateAt,
+                    guestNotification.IsRead,
+                    guestNotification.TypeNotify
+                );
+
+                if (hostNotification != null)
+                {
+                    await _notificationHub.Clients.User(booking.HomeStay.AccountID).SendAsync(
+                        "ReceiveNotification",
+                        hostNotification.AccountID,
+                        hostNotification.Title,
+                        hostNotification.Message,
+                        hostNotification.NotificationID,
+                        hostNotification.CreateAt,
+                        hostNotification.IsRead,
+                        hostNotification.TypeNotify
+                    );
+                }
+            }
+            return new BaseResponse<string>("The booking has been automatically Checkout successfully!", StatusCodeEnum.Created_201, "Success");
         }
     }
 }
