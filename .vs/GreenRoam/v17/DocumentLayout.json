@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "D:\\FPT\\SEP490_Capstone\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\iservice\\iratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\iratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\ratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\ratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\iservice\\iratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\iratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\repositories\\ratingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -37,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\requestandresponse\\request\\rating\\createratingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\requestandresponse\\request\\rating\\createratingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\controllers\\homestaycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -454,33 +454,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RatingService.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RatingService.cs",
-              "RelativeDocumentMoniker": "Service\\Service\\RatingService.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RatingService.cs",
-              "RelativeToolTip": "Service\\Service\\RatingService.cs",
-              "ViewState": "AgIAAIYAAAAAAAAAAAAgwBMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T11:28:51.189Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "RatingController.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\RatingController.cs",
-              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\RatingController.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\RatingController.cs",
-              "RelativeToolTip": "GreenRoam\\Controllers\\RatingController.cs",
-              "ViewState": "AgIAAIYAAAAAAAAAAAAYwKgAAABrAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T11:10:46.306Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "RatingDAO.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\RatingDAO.cs",
               "RelativeDocumentMoniker": "DataAccessObject\\RatingDAO.cs",
@@ -488,12 +462,11 @@
               "RelativeToolTip": "DataAccessObject\\RatingDAO.cs",
               "ViewState": "AgIAAFAAAAAAAAAAAAAgwGsAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T12:40:03.842Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-27T12:40:03.842Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "IRatingRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\IRepositories\\IRatingRepository.cs",
               "RelativeDocumentMoniker": "Repository\\IRepositories\\IRatingRepository.cs",
@@ -501,12 +474,11 @@
               "RelativeToolTip": "Repository\\IRepositories\\IRatingRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAADEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T12:38:46.505Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-27T12:38:46.505Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "RatingRepository.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\RatingRepository.cs",
               "RelativeDocumentMoniker": "Repository\\Repositories\\RatingRepository.cs",
@@ -514,12 +486,11 @@
               "RelativeToolTip": "Repository\\Repositories\\RatingRepository.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAIwDUAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T12:38:43.205Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-27T12:38:43.205Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "IRatingService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IRatingService.cs",
               "RelativeDocumentMoniker": "Service\\IService\\IRatingService.cs",
@@ -532,7 +503,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "CreateRatingResponse.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\Ratings\\CreateRatingResponse.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\Ratings\\CreateRatingResponse.cs",
@@ -540,12 +511,49 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Ratings\\CreateRatingResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T17:11:28.536Z",
+              "WhenOpened": "2025-04-27T17:11:28.536Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Booking.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Booking.cs",
+              "RelativeDocumentMoniker": "BusinessObject\\Model\\Booking.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Booking.cs",
+              "RelativeToolTip": "BusinessObject\\Model\\Booking.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAiwFMAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-27T10:58:48.222Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
+              "Title": "RatingService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RatingService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\RatingService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RatingService.cs",
+              "RelativeToolTip": "Service\\Service\\RatingService.cs",
+              "ViewState": "AgIAAL0AAAAAAAAAAAAIwNgAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-27T11:28:51.189Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "RatingController.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\RatingController.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\RatingController.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\RatingController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\RatingController.cs",
+              "ViewState": "AgIAAIYAAAAAAAAAAAAYwKgAAABrAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-27T11:10:46.306Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "CreateRatingRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Rating\\CreateRatingRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Rating\\CreateRatingRequest.cs",
@@ -553,21 +561,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Rating\\CreateRatingRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T17:08:39.561Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Booking.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Booking.cs",
-              "RelativeDocumentMoniker": "BusinessObject\\Model\\Booking.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Booking.cs",
-              "RelativeToolTip": "BusinessObject\\Model\\Booking.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAwwEQAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T10:58:48.222Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-27T17:08:39.561Z"
             },
             {
               "$type": "Document",
@@ -579,8 +573,7 @@
               "RelativeToolTip": "Service\\IService\\ITokenService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:51:01.037Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:51:01.037Z"
             },
             {
               "$type": "Document",
@@ -592,12 +585,11 @@
               "RelativeToolTip": "Service\\IService\\ITransactionService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:51:01.203Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:51:01.203Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "UpdateRatingRequest.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Request\\Rating\\UpdateRatingRequest.cs",
               "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Request\\Rating\\UpdateRatingRequest.cs",
@@ -605,8 +597,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Rating\\UpdateRatingRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:27:23.006Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:27:23.006Z"
             },
             {
               "$type": "Document",
@@ -618,8 +609,7 @@
               "RelativeToolTip": "DataAccessObject\\TransactionDAO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:55:06.098Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:55:06.098Z"
             },
             {
               "$type": "Document",
@@ -631,8 +621,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\HomeStayController.cs",
               "ViewState": "AgIAAEQAAAAAAAAAAAAswFgAAABhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:57:42.813Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:57:42.813Z"
             },
             {
               "$type": "Document",
@@ -644,8 +633,7 @@
               "RelativeToolTip": "DataAccessObject\\ConfigureService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:55:10.04Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:55:10.04Z"
             },
             {
               "$type": "Document",
@@ -657,8 +645,7 @@
               "RelativeToolTip": "Service\\ConfigureService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T17:25:31.045Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-27T17:25:31.045Z"
             },
             {
               "$type": "Document",
@@ -670,8 +657,7 @@
               "RelativeToolTip": "Repository\\ConfigureService.cs",
               "ViewState": "AgIAACUAAAAAAAAAAAAQwFUAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:55:28.238Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:55:28.238Z"
             },
             {
               "$type": "Document",
@@ -683,8 +669,7 @@
               "RelativeToolTip": "Service\\IService\\IVnPayService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:51:01.414Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:51:01.414Z"
             },
             {
               "$type": "Document",
@@ -696,8 +681,7 @@
               "RelativeToolTip": "Service\\Service\\ImageRatingService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwBIAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:21:13.158Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:21:13.158Z"
             },
             {
               "$type": "Document",
@@ -709,8 +693,7 @@
               "RelativeToolTip": "GreenRoam\\Program.cs",
               "ViewState": "AgIAAJQAAAAAAAAAAAAYwLIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T16:55:31.022Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-27T16:55:31.022Z"
             },
             {
               "$type": "Document",
@@ -722,8 +705,7 @@
               "RelativeToolTip": "Service\\IService\\IImageRatingService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:20:46.039Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:20:46.039Z"
             },
             {
               "$type": "Document",
@@ -735,8 +717,7 @@
               "RelativeToolTip": "Service\\IService\\IStaffService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:51:00.86Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:51:00.86Z"
             },
             {
               "$type": "Document",
@@ -748,8 +729,7 @@
               "RelativeToolTip": "Service\\IService\\IReviewService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:51:00.481Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:51:00.481Z"
             },
             {
               "$type": "Document",
@@ -761,8 +741,7 @@
               "RelativeToolTip": "Service\\IService\\IPricingService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:51:00.269Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:51:00.269Z"
             },
             {
               "$type": "Document",
@@ -774,8 +753,7 @@
               "RelativeToolTip": "Service\\IService\\INotificationService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:51:00.106Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:51:00.106Z"
             },
             {
               "$type": "Document",
@@ -787,8 +765,7 @@
               "RelativeToolTip": "Service\\IService\\IRoomService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-02T16:19:30.881Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-02T16:19:30.881Z"
             },
             {
               "$type": "Document",
@@ -800,8 +777,7 @@
               "RelativeToolTip": "Service\\IService\\IRoomTypeService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T03:56:57.365Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T03:56:57.365Z"
             },
             {
               "$type": "Document",
@@ -813,8 +789,7 @@
               "RelativeToolTip": "Service\\IService\\IServiceServices.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T03:56:55.71Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T03:56:55.71Z"
             },
             {
               "$type": "Document",
@@ -826,8 +801,7 @@
               "RelativeToolTip": "Service\\IService\\IImageServicesService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:50:59.961Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:50:59.961Z"
             },
             {
               "$type": "Document",
@@ -839,8 +813,7 @@
               "RelativeToolTip": "Service\\IService\\IHomeStayTypeService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:50:59.366Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:50:59.366Z"
             },
             {
               "$type": "Document",
@@ -852,8 +825,7 @@
               "RelativeToolTip": "Service\\IService\\IEmailService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:50:59.064Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:50:59.064Z"
             },
             {
               "$type": "Document",
@@ -865,8 +837,7 @@
               "RelativeToolTip": "Service\\IService\\ICommissionRateService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:50:58.858Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:50:58.858Z"
             },
             {
               "$type": "Document",
@@ -878,8 +849,7 @@
               "RelativeToolTip": "Service\\IService\\IImageHomeStayService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:41:12.058Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:41:12.058Z"
             },
             {
               "$type": "Document",
@@ -891,8 +861,7 @@
               "RelativeToolTip": "Service\\IService\\IImageHomeStayTypesService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:20:52.942Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:20:52.942Z"
             },
             {
               "$type": "Document",
@@ -904,8 +873,7 @@
               "RelativeToolTip": "Service\\IService\\ICheckOutService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:50:58.646Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:50:58.646Z"
             },
             {
               "$type": "Document",
@@ -917,8 +885,7 @@
               "RelativeToolTip": "Service\\IService\\IChatService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:50:58.48Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:50:58.48Z"
             },
             {
               "$type": "Document",
@@ -930,8 +897,7 @@
               "RelativeToolTip": "Service\\IService\\ICancellationPolicyService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:50:58.305Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:50:58.305Z"
             },
             {
               "$type": "Document",
@@ -943,8 +909,7 @@
               "RelativeToolTip": "Service\\IService\\IHomeStayService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:16:56.054Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:16:56.054Z"
             },
             {
               "$type": "Document",
@@ -956,8 +921,7 @@
               "RelativeToolTip": "Service\\IService\\IBookingForService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:50:58.048Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:50:58.048Z"
             },
             {
               "$type": "Document",
@@ -969,8 +933,7 @@
               "RelativeToolTip": "Service\\IService\\IAISuggestionService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:50:57.819Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:50:57.819Z"
             },
             {
               "$type": "Document",
@@ -982,8 +945,7 @@
               "RelativeToolTip": "Service\\Mapping\\MappingProfile.cs",
               "ViewState": "AgIAAHwBAAAAAAAAAAAUwK8BAACBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T17:47:47.042Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-27T17:47:47.042Z"
             },
             {
               "$type": "Document",
@@ -995,8 +957,7 @@
               "RelativeToolTip": "Service\\IService\\IBookingService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAABmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T17:18:05.127Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-27T17:18:05.127Z"
             },
             {
               "$type": "Document",
@@ -1008,8 +969,7 @@
               "RelativeToolTip": "Service\\Service\\ImageHomeStayService.cs",
               "ViewState": "AgIAABEAAAAAAAAAAADwv00AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:17:21.454Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:17:21.454Z"
             },
             {
               "$type": "Document",
@@ -1021,8 +981,7 @@
               "RelativeToolTip": "Service\\Service\\HomeStayService.cs",
               "ViewState": "AgIAAJ4DAAAAAAAAAAAIwNsDAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:17:04.641Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:17:04.641Z"
             },
             {
               "$type": "Document",
@@ -1034,8 +993,7 @@
               "RelativeToolTip": "Repository\\Repositories\\ImageHomeStayRepository.cs",
               "ViewState": "AgIAACYAAAAAAAAAAAAAwFsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T16:23:54.278Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-04T16:23:54.278Z"
             },
             {
               "$type": "Document",
@@ -1047,8 +1005,7 @@
               "RelativeToolTip": "Repository\\Repositories\\HomeStayRepository.cs",
               "ViewState": "AgIAAD4AAAAAAAAAAAAQwHQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:16:40.551Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:16:40.551Z"
             },
             {
               "$type": "Document",
@@ -1060,8 +1017,7 @@
               "RelativeToolTip": "Repository\\IRepositories\\IImageHomeStayRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:40:40.575Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:40:40.575Z"
             },
             {
               "$type": "Document",
@@ -1073,8 +1029,7 @@
               "RelativeToolTip": "Repository\\IRepositories\\IHomeStayRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:40:33.517Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:40:33.517Z"
             },
             {
               "$type": "Document",
@@ -1086,8 +1041,7 @@
               "RelativeToolTip": "DataAccessObject\\HomeStayDAO.cs",
               "ViewState": "AgIAAK8AAAAAAAAAAAAwwOsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:12:43.951Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:12:43.951Z"
             },
             {
               "$type": "Document",
@@ -1099,8 +1053,7 @@
               "RelativeToolTip": "DataAccessObject\\ImageHomeStayDAO.cs",
               "ViewState": "AgIAADMAAAAAAAAAAAAwwG8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:12:10.642Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:12:10.642Z"
             },
             {
               "$type": "Document",
@@ -1112,8 +1065,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\Account.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:30:25.772Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:30:25.772Z"
             },
             {
               "$type": "Document",
@@ -1125,8 +1077,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\ImageRating\\ImageRatingResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:26:41.232Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:26:41.232Z"
             },
             {
               "$type": "Document",
@@ -1138,8 +1089,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\ImageHomeStay\\ImageHomeStayResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:26:22.814Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:26:22.814Z"
             },
             {
               "$type": "Document",
@@ -1151,8 +1101,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\ImageRating\\UpdateImageRatingRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:26:05.414Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:26:05.414Z"
             },
             {
               "$type": "Document",
@@ -1164,8 +1113,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\ImageRating\\UploadImageRatingRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:25:15.615Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:25:15.615Z"
             },
             {
               "$type": "Document",
@@ -1177,8 +1125,7 @@
               "RelativeToolTip": "Repository\\Repositories\\ImageRatingRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:20:29.66Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:20:29.66Z"
             },
             {
               "$type": "Document",
@@ -1190,8 +1137,7 @@
               "RelativeToolTip": "Repository\\IRepositories\\IImageRatingRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:20:15.853Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:20:15.853Z"
             },
             {
               "$type": "Document",
@@ -1203,8 +1149,7 @@
               "RelativeToolTip": "DataAccessObject\\ImageRatingDAO.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAUwEIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:19:59.987Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:19:59.987Z"
             },
             {
               "$type": "Document",
@@ -1216,8 +1161,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\ImageHomeStay\\UploadImageRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:18:01.435Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:18:01.435Z"
             },
             {
               "$type": "Document",
@@ -1229,8 +1173,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\HomeStay\\FilterHomeStayRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:17:55.424Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:17:55.424Z"
             },
             {
               "$type": "Document",
@@ -1242,8 +1185,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\HomeStay\\CreateHomeStayWithRentalsAndPricingRequest.cs",
               "ViewState": "AgIAABoAAAAAAAAAAAAswAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:17:47.803Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:17:47.803Z"
             },
             {
               "$type": "Document",
@@ -1255,8 +1197,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\HomeStay\\CreateHomeStayRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:17:39.07Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:17:39.07Z"
             },
             {
               "$type": "Document",
@@ -1268,8 +1209,7 @@
               "RelativeToolTip": "DataAccessObject\\RoomDAO.cs",
               "ViewState": "AgIAAI8AAAAAAAAAAAA0wM0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T12:42:41.883Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-27T12:42:41.883Z"
             },
             {
               "$type": "Document",
@@ -1281,8 +1221,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\ImageHomeStay.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:13:31.234Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:13:31.234Z"
             },
             {
               "$type": "Document",
@@ -1294,8 +1233,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\HomeStay.cs",
               "ViewState": "AgIAADcAAAAAAAAAAAAqwGoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:09:37.785Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:09:37.785Z"
             },
             {
               "$type": "Document",
@@ -1307,8 +1245,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\ImageRating.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T07:11:37.145Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T07:11:37.145Z"
             },
             {
               "$type": "Document",
@@ -1344,8 +1281,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\Rating.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-27T10:59:03.592Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-27T10:59:03.592Z"
             },
             {
               "$type": "Document",

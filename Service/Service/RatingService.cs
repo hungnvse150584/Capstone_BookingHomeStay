@@ -91,7 +91,9 @@ namespace Service.Service
                     await _imageRatingRepository.SaveChangesAsync();
                 }
 
+                // Cập nhật Booking
                 booking.RatingID = rating.RatingID;
+                booking.IsRating = true; // Đặt IsRating thành true khi Rating được tạo
                 await _bookingRepository.UpdateBookingAsync(booking);
 
                 var savedRating = await _ratingRepository.GetByIdAsync(rating.RatingID, includeAccount: true);
@@ -196,6 +198,15 @@ namespace Service.Service
                 var rating = await _ratingRepository.GetByIdAsync(ratingId);
                 if (rating == null)
                     return new BaseResponse<string>("Rating not found!", StatusCodeEnum.NotFound_404, null);
+
+                // Tìm Booking liên quan đến Rating
+                var booking = await _bookingRepository.GetBookingByIdAsync((int)rating.BookingID);
+                if (booking != null)
+                {
+                    booking.RatingID = null; // Xóa liên kết với Rating
+                    booking.IsRating = false; // Đặt lại IsRating thành false
+                    await _bookingRepository.UpdateBookingAsync(booking);
+                }
 
                 var images = await _imageRatingRepository.GetImagesByRatingIdAsync(ratingId);
                 foreach (var image in images)

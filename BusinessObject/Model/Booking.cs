@@ -54,6 +54,8 @@ namespace BusinessObject.Model;
         [EnumDataType(typeof(PaymentMethod))]
         public PaymentMethod PaymentMethod { get; set; }
 
+        public bool IsRating { get; set; } = false;
+
         public ICollection<Transaction> Transactions { get; set; }
 
         public ICollection<BookingDetail> BookingDetails { get; set; }

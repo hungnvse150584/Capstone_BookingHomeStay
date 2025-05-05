@@ -7292,6 +7292,9 @@
           "paymentMethod": {
             "$ref": "#/components/schemas/PaymentMethod"
           },
+          "isRating": {
+            "type": "boolean"
+          },
           "transactions": {
             "type": "array",
             "items": {
