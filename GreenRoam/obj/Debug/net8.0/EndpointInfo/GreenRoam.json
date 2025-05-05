@@ -3608,6 +3608,35 @@
         }
       }
     },
+    "/api/homestay/adminDashBoard/GetOwnersWithHomeStayStats": {
+      "get": {
+        "tags": [
+          "HomeStay"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOwnerUserListBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOwnerUserListBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOwnerUserListBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/homestayrental/GetAllHomeStayRentals/{homestayId}": {
       "get": {
         "tags": [
@@ -9398,15 +9427,21 @@
             "type": "string",
             "nullable": true
           },
-          "isUsed": {
-            "type": "boolean"
-          },
           "isActive": {
             "type": "boolean"
           },
           "roomTypesID": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "roomTypeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "rentPrice": {
+            "type": "number",
+            "format": "double",
             "nullable": true
           }
         },
@@ -10639,6 +10674,56 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GetHomeStayRentalDetailResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetOwnerUser": {
+        "type": "object",
+        "properties": {
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalHomeStay": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetOwnerUserListBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetOwnerUser"
             },
             "nullable": true
           }
