@@ -13,10 +13,10 @@ namespace Service.RequestAndResponse.Request.Rating
         public double? CleaningRate { get; set; }
         public double? ServiceRate { get; set; }
         public double? FacilityRate { get; set; }
-        public string Content { get; set; }
+        public string? Content { get; set; }
         public string AccountID { get; set; }
         public int HomeStayID { get; set; }
         public int BookingID { get; set; }
-        //public List<IFormFile> Images { get; set; }
+        public List<IFormFile>? Images { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,16 @@ namespace DataAccessObject;
             _context = context;
         }
 
-        public async Task<double> GetAverageRating(int homeStayId)
+    public async Task<Rating> GetByIdAsync(int id, bool includeAccount = false)
+    {
+        var query = _context.Rating.AsQueryable();
+        if (includeAccount)
+        {
+            query = query.Include(r => r.Account);
+        }
+        return await query.FirstOrDefaultAsync(r => r.RatingID == id);
+    }
+    public async Task<double> GetAverageRating(int homeStayId)
         {
             if (homeStayId <= 0)
             {
@@ -38,39 +48,39 @@ namespace DataAccessObject;
             return average;
         }
 
-        public async Task<IEnumerable<Rating?>> GetRatingByHomeStayId(int homeStayId)
-        {
-            if (homeStayId <= 0)
-            {
-                throw new ArgumentException("Product ID must be greater than zero.", nameof(homeStayId));
-            }
-            var entity = await _context.Rating
-                .Where(r => r.HomeStayID == homeStayId)
-                .ToListAsync();
-            if (entity == null)
-            {
-                throw new ArgumentNullException($"Entity with id {homeStayId} not found");
-            }
-            return entity;
+    public async Task<(IEnumerable<Rating> Data, int TotalCount)> GetRatingByHomeStayIdAsync(int homeStayId, bool includeAccount = false, int pageNumber = 1, int pageSize = 10)
+    {
+        var query = _context.Rating.AsQueryable();
+        if (includeAccount)
+        {            query = query.Include(r => r.Account);
         }
+        query = query.Where(r => r.HomeStayID == homeStayId);
+        var totalCount = await query.CountAsync();
+        var data = await query
+            .OrderByDescending(r => r.CreatedAt)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return (data, totalCount);
+    }
 
-        public async Task<IEnumerable<Rating?>> GetRatingByAccountId(string accountId)
+    public async Task<(IEnumerable<Rating> Data, int TotalCount)> GetRatingByAccountIdAsync(string accountId, bool includeAccount = false, int pageNumber = 1, int pageSize = 10)
+    {
+        var query = _context.Rating.AsQueryable();
+        if (includeAccount)
         {
-            if (string.IsNullOrEmpty(accountId))
-            {
-                throw new ArgumentException("Account ID is required.", nameof(accountId));
-            }
-            var entity = await _context.Rating
-                .Where(r => r.AccountID == accountId)
-                .ToListAsync();
-            if (entity == null)
-            {
-                throw new ArgumentNullException($"Entity with id {accountId} not found");
-            }
-            return entity;
+            query = query.Include(r => r.Account);
         }
-
-        public async Task<Rating?> GetRatingByUserIdAndHomeStay(string accountId, int homeStayId)
+        query = query.Where(r => r.AccountID == accountId);
+        var totalCount = await query.CountAsync();
+        var data = await query
+            .OrderByDescending(r => r.CreatedAt)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return (data, totalCount);
+    }
+    public async Task<Rating?> GetRatingByUserIdAndHomeStay(string accountId, int homeStayId)
         {
             if (string.IsNullOrEmpty(accountId))
             {
@@ -93,5 +103,22 @@ namespace DataAccessObject;
         {
             await _context.SaveChangesAsync();
         }
+    public async Task<(IEnumerable<Rating> Data, int TotalCount)> GetAllRatingByUserIdAndHomeStayAsync(string accountId, int homeStayId, bool includeAccount = false, int pageNumber = 1, int pageSize = 10)
+    {
+        var query = _context.Rating.AsQueryable();
+        if (includeAccount)
+        {
+            query = query.Include(r => r.Account);
+        }
+        query = query.Where(r => r.AccountID == accountId && r.HomeStayID == homeStayId);
+        var totalCount = await query.CountAsync();
+        var data = await query
+            .OrderByDescending(r => r.CreatedAt)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return (data, totalCount);
+    }
+
 }
 

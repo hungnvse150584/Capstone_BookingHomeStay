@@ -24,7 +24,7 @@
             [ProducesResponseType(StatusCodes.Status201Created)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public async Task<ActionResult<BaseResponse<CreateRatingResponse>>> CreateRating([FromBody] CreateRatingRequest request)
+            public async Task<ActionResult<BaseResponse<CreateRatingResponse>>> CreateRating([FromForm] CreateRatingRequest request)
             {
                 try
                 {
@@ -62,7 +62,7 @@
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
             [ProducesResponseType(StatusCodes.Status404NotFound)]
             [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-            public async Task<ActionResult<BaseResponse<CreateRatingResponse>>> UpdateRating(int ratingId, [FromBody] UpdateRatingRequest request)
+            public async Task<ActionResult<BaseResponse<CreateRatingResponse>>> UpdateRating(int ratingId, [FromForm] UpdateRatingRequest request)
             {
                 if (ratingId <= 0)
                 {

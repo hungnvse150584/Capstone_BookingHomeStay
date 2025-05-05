@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using BusinessObject.Model;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Repository.IRepositories;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.Rating;
+using Service.RequestAndResponse.Response.ImageRating;
 using Service.RequestAndResponse.Response.Ratings;
 using System;
 using System.Collections.Generic;
@@ -19,16 +22,17 @@ namespace Service.Service
     {
         private readonly IMapper _mapper;
         private readonly IRatingRepository _ratingRepository;
-        private readonly IBookingRepository _bookingRepository; // Thêm IBookingRepository
+        private readonly IBookingRepository _bookingRepository;
+        private readonly IImageRatingRepository _imageRatingRepository;
+        private readonly Cloudinary _cloudinary;
 
-        public RatingService(
-            IMapper mapper,
-            IRatingRepository ratingRepository,
-            IBookingRepository bookingRepository)
+        public RatingService(IMapper mapper, IRatingRepository ratingRepository, IBookingRepository bookingRepository, IImageRatingRepository imageRatingRepository, Cloudinary cloudinary)
         {
             _mapper = mapper;
             _ratingRepository = ratingRepository;
             _bookingRepository = bookingRepository;
+            _imageRatingRepository = imageRatingRepository;
+            _cloudinary = cloudinary;
         }
 
         // Tạo Rating mới
@@ -36,75 +40,29 @@ namespace Service.Service
         {
             try
             {
-                // Step 1: Kiểm tra dữ liệu bắt buộc
                 if (string.IsNullOrEmpty(request.AccountID) || request.HomeStayID <= 0 || request.BookingID <= 0)
-                {
-                    return new BaseResponse<CreateRatingResponse>(
-                        "Required fields are missing (AccountID, HomeStayID, BookingID)!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
+                    return new BaseResponse<CreateRatingResponse>("Required fields are missing!", StatusCodeEnum.BadRequest_400, null);
 
                 if (request.CleaningRate == null || request.ServiceRate == null || request.FacilityRate == null)
-                {
-                    return new BaseResponse<CreateRatingResponse>(
-                        "Rating fields (CleaningRate, ServiceRate, FacilityRate) are required!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
+                    return new BaseResponse<CreateRatingResponse>("Rating fields are required!", StatusCodeEnum.BadRequest_400, null);
 
                 if (request.CleaningRate < 0 || request.ServiceRate < 0 || request.FacilityRate < 0)
-                {
-                    return new BaseResponse<CreateRatingResponse>(
-                        "Rating values must be non-negative!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
-                // Step 2: Kiểm tra xem Booking có tồn tại và hợp lệ không
+                    return new BaseResponse<CreateRatingResponse>("Rating values must be non-negative!", StatusCodeEnum.BadRequest_400, null);
+
                 var booking = await _bookingRepository.GetBookingByIdAsync(request.BookingID);
                 if (booking == null)
-                {
-                    return new BaseResponse<CreateRatingResponse>(
-                        "Booking not found!",
-                        StatusCodeEnum.NotFound_404,
-                        null);
-                }
+                    return new BaseResponse<CreateRatingResponse>("Booking not found!", StatusCodeEnum.NotFound_404, null);
 
-                // Thêm logging để debug
-                Console.WriteLine($"BookingID: {booking.BookingID}, Status: {(int)booking.Status}, Status Enum: {booking.Status}");
-
-                // Kiểm tra xem booking có thuộc về AccountID và HomeStayID không
                 if (booking.AccountID != request.AccountID || booking.HomeStayID != request.HomeStayID)
-                {
-                    return new BaseResponse<CreateRatingResponse>(
-                        "Booking does not belong to this AccountID or HomeStayID!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
+                    return new BaseResponse<CreateRatingResponse>("Booking does not belong to this AccountID or HomeStayID!", StatusCodeEnum.BadRequest_400, null);
 
-                // Step 3: Kiểm tra trạng thái của Booking
                 if (booking.Status != BookingStatus.Completed)
-                {
-                    return new BaseResponse<CreateRatingResponse>(
-                        "You can only rate after the booking is completed!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
-            
+                    return new BaseResponse<CreateRatingResponse>("You can only rate after the booking is completed!", StatusCodeEnum.BadRequest_400, null);
 
-                // Step 4: Kiểm tra xem Booking đã có Rating chưa
                 if (booking.RatingID != null)
-                {
-                    return new BaseResponse<CreateRatingResponse>(
-                        "A rating already exists for this booking!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
+                    return new BaseResponse<CreateRatingResponse>("A rating already exists for this booking!", StatusCodeEnum.BadRequest_400, null);
 
-                // Step 5: Tính SumRate từ 3 giá trị CleaningRate, ServiceRate, FacilityRate
                 double sumRate = (request.CleaningRate.Value + request.ServiceRate.Value + request.FacilityRate.Value) / 3.0;
-
-                // Step 6: Tạo Rating
                 var rating = new Rating
                 {
                     SumRate = sumRate,
@@ -116,30 +74,36 @@ namespace Service.Service
                     UpdatedAt = DateTime.UtcNow,
                     AccountID = request.AccountID,
                     HomeStayID = request.HomeStayID,
-                    BookingID = request.BookingID // Gán BookingID
+                    BookingID = request.BookingID
                 };
 
                 await _ratingRepository.AddAsync(rating);
                 await _ratingRepository.SaveChangesAsync();
 
-                // Step 7: Cập nhật Booking để liên kết với Rating
+                if (request.Images != null && request.Images.Any())
+                {
+                    var imageUrls = await UploadImagesToCloudinary(request.Images);
+                    foreach (var url in imageUrls)
+                    {
+                        var imageRating = new ImageRating { Image = url, RatingID = rating.RatingID };
+                        await _imageRatingRepository.AddImageAsync(imageRating);
+                    }
+                    await _imageRatingRepository.SaveChangesAsync();
+                }
+
+                // Cập nhật Booking
                 booking.RatingID = rating.RatingID;
+                booking.IsRating = true; // Đặt IsRating thành true khi Rating được tạo
                 await _bookingRepository.UpdateBookingAsync(booking);
 
-                // Step 8: Ánh xạ dữ liệu để trả về
-                var response = _mapper.Map<CreateRatingResponse>(rating);
-
-                return new BaseResponse<CreateRatingResponse>(
-                    "Rating created successfully!",
-                    StatusCodeEnum.Created_201,
-                    response);
+                var savedRating = await _ratingRepository.GetByIdAsync(rating.RatingID, includeAccount: true);
+                var response = _mapper.Map<CreateRatingResponse>(savedRating);
+                response.ImageRatings = _mapper.Map<ICollection<ImageRatingResponse>>(await _imageRatingRepository.GetImagesByRatingIdAsync(rating.RatingID));
+                return new BaseResponse<CreateRatingResponse>("Rating created successfully!", StatusCodeEnum.Created_201, response);
             }
             catch (Exception ex)
             {
-                return new BaseResponse<CreateRatingResponse>(
-                    $"Something went wrong! Error: {ex.Message}. Inner Exception: {ex.InnerException?.Message}",
-                    StatusCodeEnum.InternalServerError_500,
-                    null);
+                return new BaseResponse<CreateRatingResponse>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
             }
         }
 
@@ -148,60 +112,82 @@ namespace Service.Service
         {
             try
             {
-                // Kiểm tra dữ liệu đầu vào
                 if (ratingId <= 0)
-                {
-                    return new BaseResponse<CreateRatingResponse>(
-                        "RatingID must be greater than 0",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
+                    return new BaseResponse<CreateRatingResponse>("RatingID must be greater than 0", StatusCodeEnum.BadRequest_400, null);
 
                 if (request.CleaningRate < 0 || request.ServiceRate < 0 || request.FacilityRate < 0)
-                {
-                    return new BaseResponse<CreateRatingResponse>(
-                        "Rating values must be non-negative!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
+                    return new BaseResponse<CreateRatingResponse>("Rating values must be non-negative!", StatusCodeEnum.BadRequest_400, null);
 
-                // Kiểm tra Rating tồn tại
-                var rating = await _ratingRepository.GetByIdAsync(ratingId);
+                var rating = await _ratingRepository.GetByIdAsync(ratingId, includeAccount: true);
                 if (rating == null)
-                {
-                    return new BaseResponse<CreateRatingResponse>(
-                        "Rating not found!",
-                        StatusCodeEnum.NotFound_404,
-                        null);
-                }
+                    return new BaseResponse<CreateRatingResponse>("Rating not found!", StatusCodeEnum.NotFound_404, null);
 
-                // Tính lại SumRate từ 3 giá trị mới
-                double sumRate = (request.CleaningRate + request.ServiceRate + request.FacilityRate) / 3.0;
-
-                // Cập nhật thông tin Rating
+                double sumRate = (double)((request.CleaningRate + request.ServiceRate + request.FacilityRate) / 3.0);
                 rating.SumRate = sumRate;
-                rating.CleaningRate = request.CleaningRate;
-                rating.ServiceRate = request.ServiceRate;
-                rating.FacilityRate = request.FacilityRate;
+                rating.CleaningRate = (double)request.CleaningRate;
+                rating.ServiceRate = (double)request.ServiceRate;
+                rating.FacilityRate = (double)request.FacilityRate;
                 rating.Content = request.Content;
                 rating.UpdatedAt = DateTime.UtcNow;
+
+                if (request.Images != null && request.Images.Any())
+                {
+                    var existingImages = await _imageRatingRepository.GetImagesByRatingIdAsync(ratingId);
+                    foreach (var existingImage in existingImages)
+                    {
+                        var publicId = ExtractPublicIdFromUrl(existingImage.Image);
+                        if (!string.IsNullOrEmpty(publicId))
+                        {
+                            var deletionParams = new DeletionParams(publicId);
+                            await _cloudinary.DestroyAsync(deletionParams);
+                        }
+                        await _imageRatingRepository.DeleteAsync(existingImage);
+                    }
+
+                    var imageUrls = await UploadImagesToCloudinary(request.Images);
+                    foreach (var url in imageUrls)
+                    {
+                        var imageRating = new ImageRating { Image = url, RatingID = rating.RatingID };
+                        await _imageRatingRepository.AddImageAsync(imageRating);
+                    }
+                    await _imageRatingRepository.SaveChangesAsync();
+                }
 
                 await _ratingRepository.UpdateAsync(rating);
                 await _ratingRepository.SaveChangesAsync();
 
-                var response = _mapper.Map<CreateRatingResponse>(rating);
-                return new BaseResponse<CreateRatingResponse>(
-                    "Rating updated successfully!",
-                    StatusCodeEnum.OK_200,
-                    response);
+                var updatedRating = await _ratingRepository.GetByIdAsync(ratingId, includeAccount: true);
+                var response = _mapper.Map<CreateRatingResponse>(updatedRating);
+                response.ImageRatings = _mapper.Map<ICollection<ImageRatingResponse>>(await _imageRatingRepository.GetImagesByRatingIdAsync(rating.RatingID));
+                return new BaseResponse<CreateRatingResponse>("Rating updated successfully!", StatusCodeEnum.OK_200, response);
             }
             catch (Exception ex)
             {
-                return new BaseResponse<CreateRatingResponse>(
-                    $"Something went wrong! Error: {ex.Message}",
-                    StatusCodeEnum.InternalServerError_500,
-                    null);
+                return new BaseResponse<CreateRatingResponse>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
             }
+        }
+
+        private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> images)
+        {
+            var imageUrls = new List<string>();
+            foreach (var image in images)
+            {
+                var uploadParams = new ImageUploadParams { File = new FileDescription(image.FileName, image.OpenReadStream()), Folder = "RatingImages" };
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
+                    imageUrls.Add(uploadResult.SecureUrl.ToString());
+            }
+            return imageUrls;
+        }
+
+        private string ExtractPublicIdFromUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url)) return null;
+            var parts = url.Split('/');
+            var fileNameWithExtension = parts.Last();
+            var publicId = fileNameWithExtension.Split('.').First();
+            var folder = "RatingImages/";
+            return $"{folder}{publicId}";
         }
 
         // Xóa Rating
@@ -211,88 +197,102 @@ namespace Service.Service
             {
                 var rating = await _ratingRepository.GetByIdAsync(ratingId);
                 if (rating == null)
+                    return new BaseResponse<string>("Rating not found!", StatusCodeEnum.NotFound_404, null);
+
+                // Tìm Booking liên quan đến Rating
+                var booking = await _bookingRepository.GetBookingByIdAsync((int)rating.BookingID);
+                if (booking != null)
                 {
-                    return new BaseResponse<string>(
-                        "Rating not found!",
-                        StatusCodeEnum.NotFound_404,
-                        null);
+                    booking.RatingID = null; // Xóa liên kết với Rating
+                    booking.IsRating = false; // Đặt lại IsRating thành false
+                    await _bookingRepository.UpdateBookingAsync(booking);
+                }
+
+                var images = await _imageRatingRepository.GetImagesByRatingIdAsync(ratingId);
+                foreach (var image in images)
+                {
+                    var publicId = ExtractPublicIdFromUrl(image.Image);
+                    if (!string.IsNullOrEmpty(publicId))
+                    {
+                        var deletionParams = new DeletionParams(publicId);
+                        await _cloudinary.DestroyAsync(deletionParams);
+                    }
+                    await _imageRatingRepository.DeleteAsync(image);
                 }
 
                 await _ratingRepository.DeleteAsync(rating);
-                return new BaseResponse<string>(
-                    "Rating deleted successfully!",
-                    StatusCodeEnum.OK_200,
-                    "Deleted successfully");
+                return new BaseResponse<string>("Rating deleted successfully!", StatusCodeEnum.OK_200, "Deleted successfully");
             }
             catch (Exception ex)
             {
-                return new BaseResponse<string>(
-                    $"Something went wrong! Error: {ex.Message}",
-                    StatusCodeEnum.InternalServerError_500,
-                    null);
+                return new BaseResponse<string>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
             }
         }
 
-        // Lấy Rating theo HomeStayID
-        public async Task<BaseResponse<IEnumerable<CreateRatingResponse>>> GetRatingByHomeStayIdAsync(int homeStayId)
+        public async Task<BaseResponse<(IEnumerable<CreateRatingResponse> Data, int TotalCount)>> GetRatingByHomeStayIdAsync(int homeStayId, int pageNumber = 1, int pageSize = 10)
         {
             try
             {
-                var ratings = await _ratingRepository.GetRatingByHomeStayId(homeStayId);
-                var response = _mapper.Map<IEnumerable<CreateRatingResponse>>(ratings);
-                return new BaseResponse<IEnumerable<CreateRatingResponse>>(
-                    "Ratings retrieved successfully!",
-                    StatusCodeEnum.OK_200,
-                    response);
+                // Khai báo rõ ràng kiểu dữ liệu của tuple
+                var result = await _ratingRepository.GetRatingByHomeStayIdAsync(homeStayId, includeAccount: true, pageNumber, pageSize);
+                var ratings = result.Data;
+                var totalCount = result.TotalCount;
+                var response = new List<CreateRatingResponse>();
+                foreach (var rating in ratings)
+                {
+                    var ratingResponse = _mapper.Map<CreateRatingResponse>(rating);
+                    ratingResponse.ImageRatings = _mapper.Map<ICollection<ImageRatingResponse>>(await _imageRatingRepository.GetImagesByRatingIdAsync(rating.RatingID));
+                    response.Add(ratingResponse);
+                }
+                return new BaseResponse<(IEnumerable<CreateRatingResponse> Data, int TotalCount)>("Ratings retrieved successfully!", StatusCodeEnum.OK_200, (response, totalCount));
             }
             catch (Exception ex)
             {
-                return new BaseResponse<IEnumerable<CreateRatingResponse>>(
-                    $"Something went wrong! Error: {ex.Message}",
-                    StatusCodeEnum.InternalServerError_500,
-                    null);
+                return new BaseResponse<(IEnumerable<CreateRatingResponse> Data, int TotalCount)>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, (null, 0));
             }
         }
 
-        // Lấy Rating theo AccountID
-        public async Task<BaseResponse<IEnumerable<CreateRatingResponse>>> GetRatingByAccountIdAsync(string accountId)
+        public async Task<BaseResponse<(IEnumerable<CreateRatingResponse> Data, int TotalCount)>> GetRatingByAccountIdAsync(string accountId, int pageNumber = 1, int pageSize = 10)
         {
             try
             {
-                var ratings = await _ratingRepository.GetRatingByAccountId(accountId);
-                var response = _mapper.Map<IEnumerable<CreateRatingResponse>>(ratings);
-                return new BaseResponse<IEnumerable<CreateRatingResponse>>(
-                    "Ratings retrieved successfully!",
-                    StatusCodeEnum.OK_200,
-                    response);
+                // Khai báo rõ ràng kiểu dữ liệu của tuple
+                var result = await _ratingRepository.GetRatingByAccountIdAsync(accountId, includeAccount: true, pageNumber, pageSize);
+                var ratings = result.Data;
+                var totalCount = result.TotalCount;
+                var response = new List<CreateRatingResponse>();
+                foreach (var rating in ratings)
+                {
+                    var ratingResponse = _mapper.Map<CreateRatingResponse>(rating);
+                    ratingResponse.ImageRatings = _mapper.Map<ICollection<ImageRatingResponse>>(await _imageRatingRepository.GetImagesByRatingIdAsync(rating.RatingID));
+                    response.Add(ratingResponse);
+                }
+                return new BaseResponse<(IEnumerable<CreateRatingResponse> Data, int TotalCount)>("Ratings retrieved successfully!", StatusCodeEnum.OK_200, (response, totalCount));
             }
             catch (Exception ex)
             {
-                return new BaseResponse<IEnumerable<CreateRatingResponse>>(
-                    $"Something went wrong! Error: {ex.Message}",
-                    StatusCodeEnum.InternalServerError_500,
-                    null);
+                return new BaseResponse<(IEnumerable<CreateRatingResponse> Data, int TotalCount)>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, (null, 0));
             }
         }
 
         // Lấy Rating theo AccountID và HomeStayID
-        public async Task<BaseResponse<CreateRatingResponse>> GetRatingByUserIdAndHomeStayAsync(string accountId, int homeStayId)
+        public async Task<BaseResponse<(IEnumerable<CreateRatingResponse> Data, int TotalCount)>> GetRatingByUserIdAndHomeStayAsync(string accountId, int homeStayId, int pageNumber = 1, int pageSize = 10)
         {
             try
             {
-                var rating = await _ratingRepository.GetRatingByUserIdAndHomeStay(accountId, homeStayId);
-                var response = _mapper.Map<CreateRatingResponse>(rating);
-                return new BaseResponse<CreateRatingResponse>(
-                    "Rating retrieved successfully!",
-                    StatusCodeEnum.OK_200,
-                    response);
+                var result = await _ratingRepository.GetAllRatingByUserIdAndHomeStayAsync(accountId, homeStayId, includeAccount: true, pageNumber, pageSize);
+                var response = new List<CreateRatingResponse>();
+                foreach (var rating in result.Data)
+                {
+                    var ratingResponse = _mapper.Map<CreateRatingResponse>(rating);
+                    ratingResponse.ImageRatings = _mapper.Map<ICollection<ImageRatingResponse>>(await _imageRatingRepository.GetImagesByRatingIdAsync(rating.RatingID));
+                    response.Add(ratingResponse);
+                }
+                return new BaseResponse<(IEnumerable<CreateRatingResponse> Data, int TotalCount)>("Ratings retrieved successfully!", StatusCodeEnum.OK_200, (response, result.TotalCount));
             }
             catch (Exception ex)
             {
-                return new BaseResponse<CreateRatingResponse>(
-                    $"Something went wrong! Error: {ex.Message}",
-                    StatusCodeEnum.InternalServerError_500,
-                    null);
+                return new BaseResponse<(IEnumerable<CreateRatingResponse> Data, int TotalCount)>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, (null, 0));
             }
         }
 
