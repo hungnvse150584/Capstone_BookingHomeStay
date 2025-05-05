@@ -34,12 +34,13 @@ namespace Service.RequestAndResponse.Response.Bookings
         public double remainingBalance { get; set; }
         public int? RatingID { get; set; }
 
+        public bool IsRating { get; set; }
+
         public string AccountID { get; set; }
         public GetAccountUser Account { get; set; }
 
         public int HomeStayID { get; set; }
         public HomeStayResponse HomeStay { get; set; }
-
 
         public PaymentMethod PaymentMethod { get; set; }
 
