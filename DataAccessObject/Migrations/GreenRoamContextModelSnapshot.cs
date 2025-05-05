@@ -132,6 +132,9 @@ namespace DataAccessObject.Migrations
                     b.Property<int?>("HomeStayID")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsRating")
+                        .HasColumnType("bit");
+
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
