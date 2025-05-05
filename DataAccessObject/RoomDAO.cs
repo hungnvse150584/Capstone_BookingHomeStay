@@ -143,24 +143,22 @@ namespace DataAccessObject
         }
         public async Task<IEnumerable<Room>> FilterAllRoomsByHomeStayIDAsync(int homeStayID, DateTime? startDate, DateTime? endDate)
         {
-            // Log thời gian hiện tại
             Console.WriteLine($"Current DateTime.UtcNow: {DateTime.UtcNow}");
 
-            // Kiểm tra nếu startDate và endDate đều không null, thì phải hợp lệ
             if (startDate.HasValue && endDate.HasValue)
             {
                 if (startDate >= endDate)
                 {
-                    throw new ArgumentException("End date must be after start date.");
+                    throw new ArgumentException("Ngày kết thúc phải sau ngày bắt đầu.");
                 }
             }
 
-            // Khởi tạo truy vấn cơ bản
             IQueryable<Room> query = _context.Rooms
-                .Where(r => r.RoomTypes.HomeStayRentals.HomeStayID == homeStayID) // Liên kết trực tiếp với HomeStayID
-                .Where(r => r.isActive == true && r.isUsed == false); // Phòng chưa bị khóa và chưa có khách
+                .Where(r => r.RoomTypes != null)
+                .Where(r => r.RoomTypes.HomeStayRentals != null)
+                .Where(r => r.RoomTypes.HomeStayRentals.HomeStayID == homeStayID)
+                .Where(r => r.isActive == true && r.isUsed == false);
 
-            // Nếu startDate và endDate không null, lọc phòng trống
             if (startDate.HasValue && endDate.HasValue)
             {
                 query = query.Where(r => !_context.BookingDetails
@@ -170,7 +168,7 @@ namespace DataAccessObject
                             (bd.Booking.Status == BookingStatus.Confirmed &&
                              (bd.Booking.paymentStatus == PaymentStatus.Deposited ||
                               bd.Booking.paymentStatus == PaymentStatus.FullyPaid)) ||
-                            (bd.Booking.Status == BookingStatus.InProgress) || // Bỏ kiểm tra paymentStatus
+                            (bd.Booking.Status == BookingStatus.InProgress) ||
                             (bd.Booking.Status == BookingStatus.Pending &&
                              bd.Booking.ExpiredTime > DateTime.UtcNow) ||
                             (bd.Booking.Status == BookingStatus.RequestRefund &&
@@ -179,15 +177,27 @@ namespace DataAccessObject
                         (startDate < bd.CheckOutDate && endDate > bd.CheckInDate)));
             }
 
-            // Thêm Include và ThenInclude sau cùng
             query = query
                 .Include(r => r.RoomTypes)
-                .ThenInclude(rt => rt.HomeStayRentals); // Bao gồm HomeStayRentals để kiểm tra HomeStayID
+                .ThenInclude(rt => rt.HomeStayRentals)
+                .Include(r => r.RoomTypes)
+                .ThenInclude(rt => rt.Prices);
 
-            var rooms = await query.ToListAsync();
+            var rooms = await query.AsNoTracking().ToListAsync();
 
-            // Log danh sách phòng
-            Console.WriteLine($"Rooms after filter for HomeStayID {homeStayID}: {string.Join(", ", rooms.Select(r => r.RoomID))}");
+            Console.WriteLine($"Phòng sau khi lọc cho HomeStayID {homeStayID}: {string.Join(", ", rooms.Select(r => r.RoomID))}");
+            foreach (var room in rooms)
+            {
+                Console.WriteLine($"RoomID: {room.RoomID}, RoomTypesID: {room.RoomTypesID}, RoomTypeName: {room.RoomTypes?.Name}");
+                if (room.RoomTypes?.Prices != null)
+                {
+                    Console.WriteLine($"Giá cho RoomTypesID {room.RoomTypesID}: {string.Join(", ", room.RoomTypes.Prices.Select(p => $"RentPrice: {p.RentPrice}, DayType: {p.DayType}, IsActive: {p.IsActive}"))}");
+                }
+                else
+                {
+                    Console.WriteLine($"Không tìm thấy giá cho RoomTypesID {room.RoomTypesID}");
+                }
+            }
 
             return rooms;
         }

@@ -17,13 +17,17 @@ namespace Service.RequestAndResponse.Response.Room
 
         public string roomNumber { get; set; }
 
-        public bool isUsed { get; set; }
+        //public bool isUsed { get; set; }
 
         public bool isActive { get; set; }
 
         public int? RoomTypesID { get; set; }
+        public string RoomTypeName { get; set; } // Chỉ lấy tên của RoomType
+        public decimal? RentPrice { get; set; }
+
         //public GetAllRoomType? RoomTypes { get; set; }
 
         //public ICollection<GetBookingDetails> BookingDetails { get; set; }
     }
+   
 }

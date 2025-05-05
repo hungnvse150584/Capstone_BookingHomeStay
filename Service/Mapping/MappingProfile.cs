@@ -54,6 +54,13 @@ namespace Service.Mapping
 {
     public class MappingProfile : Profile
     {
+        private decimal? GetRentPriceFromPrices(ICollection<Pricing> prices)
+        {
+            if (prices == null || !prices.Any()) return null;
+            var pricing = prices.FirstOrDefault(p => p.DayType == DayType.Weekday && p.IsActive)
+                         ?? prices.FirstOrDefault(p => p.IsActive);
+            return pricing != null ? (decimal?)pricing.RentPrice : null;
+        }
         public MappingProfile()
         {
             CreateMap<HomeStay, HomeStayResponse>()
@@ -116,6 +123,16 @@ namespace Service.Mapping
             // Thêm ánh xạ từ Room sang GetRoomResponse
             CreateMap<Room, GetRoomResponse>().ReverseMap();
             CreateMap<Room, GetRoomsResponse>().ReverseMap();
+
+
+            // Ánh xạ từ Room sang GetAllRooms
+            CreateMap<Room, GetAllRooms>()
+              .ForMember(dest => dest.RoomID, opt => opt.MapFrom(src => src.RoomID))
+              .ForMember(dest => dest.roomNumber, opt => opt.MapFrom(src => src.roomNumber))
+              .ForMember(dest => dest.isActive, opt => opt.MapFrom(src => src.isActive))
+              .ForMember(dest => dest.RoomTypesID, opt => opt.MapFrom(src => src.RoomTypesID))
+              .ForMember(dest => dest.RoomTypeName, opt => opt.MapFrom(src => src.RoomTypes != null ? src.RoomTypes.Name : null))
+              .ForMember(dest => dest.RentPrice, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.Prices != null ? GetRentPriceFromPrices(src.RoomTypes.Prices) : null));
 
             CreateMap<Booking, GetAllBookings>().ReverseMap();
             CreateMap<ImageRoomTypes, ImageRoomTypeResponse>().ReverseMap();
@@ -225,7 +242,7 @@ namespace Service.Mapping
                 .ForMember(dest => dest.BookingDetails, opt => opt.MapFrom(src => src.BookingDetails));
 
             CreateMap<CreateRoomRequest, Room>().ReverseMap();
-            CreateMap<GetAllRooms, Room>().ReverseMap();
+         
             CreateMap<CreateRoomRequest, Room>().ReverseMap();
             CreateMap<UpdateRoomRequest, Room>().ReverseMap();
 
@@ -398,6 +415,7 @@ namespace Service.Mapping
             CreateMap<UpdateRatingRequest, Rating>().ReverseMap();
             CreateMap<CreateRatingResponse, Rating>().ReverseMap();
         }
-
+      
     }
+
 }
