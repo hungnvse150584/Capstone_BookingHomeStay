@@ -5070,24 +5070,70 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CreateRatingRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRatingRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRatingRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRatingRequest"
+                "type": "object",
+                "properties": {
+                  "CleaningRate": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "ServiceRate": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "FacilityRate": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Content": {
+                    "type": "string"
+                  },
+                  "AccountID": {
+                    "type": "string"
+                  },
+                  "HomeStayID": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "BookingID": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "CleaningRate": {
+                  "style": "form"
+                },
+                "ServiceRate": {
+                  "style": "form"
+                },
+                "FacilityRate": {
+                  "style": "form"
+                },
+                "Content": {
+                  "style": "form"
+                },
+                "AccountID": {
+                  "style": "form"
+                },
+                "HomeStayID": {
+                  "style": "form"
+                },
+                "BookingID": {
+                  "style": "form"
+                },
+                "Images": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -5157,24 +5203,50 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateRatingRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRatingRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRatingRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRatingRequest"
+                "type": "object",
+                "properties": {
+                  "CleaningRate": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "ServiceRate": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "FacilityRate": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Content": {
+                    "type": "string"
+                  },
+                  "Images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "CleaningRate": {
+                  "style": "form"
+                },
+                "ServiceRate": {
+                  "style": "form"
+                },
+                "FacilityRate": {
+                  "style": "form"
+                },
+                "Content": {
+                  "style": "form"
+                },
+                "Images": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -8066,43 +8138,6 @@
         },
         "additionalProperties": false
       },
-      "CreateRatingRequest": {
-        "type": "object",
-        "properties": {
-          "cleaningRate": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "serviceRate": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "facilityRate": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "content": {
-            "type": "string",
-            "nullable": true
-          },
-          "accountID": {
-            "type": "string",
-            "nullable": true
-          },
-          "homeStayID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "bookingID": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateRatingResponse": {
         "type": "object",
         "properties": {
@@ -8134,6 +8169,10 @@
             "type": "string",
             "nullable": true
           },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
           "homeStayID": {
             "type": "integer",
             "format": "int32"
@@ -8149,6 +8188,13 @@
           "updatedAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "imageRatings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageRatingResponse"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -12059,6 +12105,24 @@
         },
         "additionalProperties": false
       },
+      "ImageRatingResponse": {
+        "type": "object",
+        "properties": {
+          "imageRatingID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "ratingID": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "ImageRoomTypeResponse": {
         "type": "object",
         "properties": {
@@ -14254,28 +14318,6 @@
           "roomTypesID": {
             "type": "integer",
             "format": "int32",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateRatingRequest": {
-        "type": "object",
-        "properties": {
-          "cleaningRate": {
-            "type": "number",
-            "format": "double"
-          },
-          "serviceRate": {
-            "type": "number",
-            "format": "double"
-          },
-          "facilityRate": {
-            "type": "number",
-            "format": "double"
-          },
-          "content": {
-            "type": "string",
             "nullable": true
           }
         },

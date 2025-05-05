@@ -42,6 +42,7 @@ namespace Service
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IRatingService, RatingService>();
+            services.AddScoped<IImageRatingService, ImageRatingService>();
             return services;
         }
     }

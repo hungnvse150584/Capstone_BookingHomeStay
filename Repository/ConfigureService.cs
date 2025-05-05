@@ -42,6 +42,7 @@ namespace Repository
             services.AddScoped<INotificationRepository, NotificationRepository>();
             
             services.AddScoped<IRatingRepository, RatingRepository>();
+            services.AddScoped<IImageRatingRepository, ImageRatingRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
             services.AddScoped<IReportRepository, ReportRepository>();
             services.AddTransient<IReportRepository, ReportRepository>();
@@ -82,6 +83,7 @@ namespace Repository
             services.AddScoped<ImageHomeStayRentalsDAO>();
             services.AddScoped<ReportDAO>();
             services.AddScoped<ImageServicesDAO>();
+            services.AddScoped<ImageRatingDAO>();
 
             //
 

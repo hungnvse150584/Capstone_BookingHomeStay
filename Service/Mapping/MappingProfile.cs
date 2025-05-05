@@ -30,6 +30,7 @@ using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.HomeStayType;
 using Service.RequestAndResponse.Response.ImageHomeStay;
 using Service.RequestAndResponse.Response.ImageHomeStayTypes;
+using Service.RequestAndResponse.Response.ImageRating;
 using Service.RequestAndResponse.Response.ImageService;
 using Service.RequestAndResponse.Response.Messages;
 using Service.RequestAndResponse.Response.Notifications;
@@ -413,7 +414,25 @@ namespace Service.Mapping
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
             CreateMap<CreateRatingRequest, Rating>().ReverseMap();
             CreateMap<UpdateRatingRequest, Rating>().ReverseMap();
-            CreateMap<CreateRatingResponse, Rating>().ReverseMap();
+            CreateMap<ImageRating, ImageRatingResponse>()
+                 .ForMember(dest => dest.ImageRatingID, opt => opt.MapFrom(src => src.ImageRatingID))
+                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image))
+                 .ForMember(dest => dest.RatingID, opt => opt.MapFrom(src => src.RatingID));
+
+            CreateMap<Rating, CreateRatingResponse>()
+                .ForMember(dest => dest.RatingID, opt => opt.MapFrom(src => src.RatingID))
+                .ForMember(dest => dest.SumRate, opt => opt.MapFrom(src => src.SumRate))
+                .ForMember(dest => dest.CleaningRate, opt => opt.MapFrom(src => src.CleaningRate))
+                .ForMember(dest => dest.ServiceRate, opt => opt.MapFrom(src => src.ServiceRate))
+                .ForMember(dest => dest.FacilityRate, opt => opt.MapFrom(src => src.FacilityRate))
+                .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt))
+                .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.UpdatedAt))
+                .ForMember(dest => dest.AccountID, opt => opt.MapFrom(src => src.AccountID))
+                  .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Account != null ? src.Account.UserName : null))
+                .ForMember(dest => dest.HomeStayID, opt => opt.MapFrom(src => src.HomeStayID))
+                .ForMember(dest => dest.BookingID, opt => opt.MapFrom(src => src.BookingID))
+                .ForMember(dest => dest.ImageRatings, opt => opt.MapFrom(src => src.ImageRatings));
         }
       
     }
