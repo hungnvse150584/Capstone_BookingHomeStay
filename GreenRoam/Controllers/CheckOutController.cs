@@ -105,56 +105,44 @@ namespace GreenRoam.Controllers
 
                 double amount = 0;
 
-                DateTime today = DateTime.UtcNow.Date;
-
-                int daysUntilCheckIn = (checkInDate.Value.Date - today).Days;
-
-                if (daysUntilCheckIn >= cancellation.Data.DayBeforeCancel)
+                if (booking.Data.paymentStatus == PaymentStatus.Deposited)
                 {
-                    if (booking.Data.paymentStatus == PaymentStatus.Deposited)
-                    {
-                        amount = booking.Data.bookingDeposit;
-                    }
-                    if (booking.Data.paymentStatus == PaymentStatus.FullyPaid)
-                    {
-                        amount = booking.Data.Total * cancellation.Data.RefundPercentage;
-                    }
-                    foreach (var bookingService in booking.Data.BookingServices)
-                    {
-                        // Bỏ qua các service đã được thanh toán cùng booking
-                        if (bookingService.isPaidWithBooking)
-                            continue;
-
-                        double serviceRefundAmount = 0;
-
-                        if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited &&
-                            booking.Data.paymentStatus == PaymentStatus.Deposited)
-                        {
-                            serviceRefundAmount = 0;
-                        }
-                        else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited &&
-                            booking.Data.paymentStatus == PaymentStatus.FullyPaid)
-                        {
-                            serviceRefundAmount = bookingService.bookingServiceDeposit;
-                        }
-                        else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid
-                            && booking.Data.paymentStatus == PaymentStatus.Deposited)
-                        {
-                            serviceRefundAmount = bookingService.Total * cancellation.Data.RefundPercentage;
-                        }
-                        else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid
-                            && booking.Data.paymentStatus == PaymentStatus.FullyPaid)
-                        {
-                            serviceRefundAmount = 0;
-                        }
-
-                            amount += serviceRefundAmount;
-                    }
-
+                    amount = booking.Data.bookingDeposit;
                 }
-                else
+                if (booking.Data.paymentStatus == PaymentStatus.FullyPaid)
                 {
-                    return BadRequest("Booking cannot be refunded because it does not meet the homestay's cancellation policy.");
+                    amount = booking.Data.Total * cancellation.Data.RefundPercentage;
+                }
+                foreach (var bookingService in booking.Data.BookingServices)
+                {
+                    // Bỏ qua các service đã được thanh toán cùng booking
+                    if (bookingService.isPaidWithBooking)
+                        continue;
+
+                    double serviceRefundAmount = 0;
+
+                    if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited &&
+                        booking.Data.paymentStatus == PaymentStatus.Deposited)
+                    {
+                        serviceRefundAmount = 0;
+                    }
+                    else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited &&
+                        booking.Data.paymentStatus == PaymentStatus.FullyPaid)
+                    {
+                        serviceRefundAmount = bookingService.bookingServiceDeposit;
+                    }
+                    else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid
+                        && booking.Data.paymentStatus == PaymentStatus.Deposited)
+                    {
+                        serviceRefundAmount = bookingService.Total * cancellation.Data.RefundPercentage;
+                    }
+                    else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid
+                        && booking.Data.paymentStatus == PaymentStatus.FullyPaid)
+                    {
+                        serviceRefundAmount = 0;
+                    }
+
+                    amount += serviceRefundAmount;
                 }
 
                 var bookingServiceID = booking.Data.BookingServices.FirstOrDefault()?.BookingServicesID;
@@ -237,24 +225,13 @@ namespace GreenRoam.Controllers
 
                 double amount = 0;
 
-                DateTime today = DateTime.UtcNow.Date;
-
-                int daysUntilCheckIn = (checkInDate.Value.Date - today).Days;
-
-                if (daysUntilCheckIn >= cancellation.Data.DayBeforeCancel)
+                if (bookingService.Data.PaymentServiceStatus == PaymentServicesStatus.Deposited)
                 {
-                    if (bookingService.Data.PaymentServiceStatus == PaymentServicesStatus.Deposited)
-                    {
-                        amount = bookingService.Data.bookingServiceDeposit;
-                    }
-                    if (bookingService.Data.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
-                    {
-                        amount = bookingService.Data.Total * cancellation.Data.RefundPercentage;
-                    }
+                    amount = bookingService.Data.bookingServiceDeposit;
                 }
-                else
+                if (bookingService.Data.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
                 {
-                    return BadRequest("Booking cannot be refunded because it does not meet the homestay's cancellation policy.");
+                    amount = bookingService.Data.Total * cancellation.Data.RefundPercentage;
                 }
 
                 var vnPayModel = new VnPayRequestModel
@@ -268,7 +245,7 @@ namespace GreenRoam.Controllers
                     CreatedDate = DateTime.UtcNow,
                 };
 
-                 return _vpnPayService.CreatePaymentUrlWeb(HttpContext, vnPayModel);
+                return _vpnPayService.CreatePaymentUrlWeb(HttpContext, vnPayModel);
             }
             else
             {
