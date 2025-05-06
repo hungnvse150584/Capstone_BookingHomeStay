@@ -19,12 +19,14 @@ namespace GreenRoam.Controllers
         private readonly IVnPayService _vpnPayService;
         private readonly IConfiguration _configuration;
         private readonly ICancellationPolicyService _cancellationService;
+        private readonly IAccountService _accountService;
         public CheckOutController(ICheckOutService checkoutService,
             IBookingService bookingService,
             IBookingForService bookingForService,
             IVnPayService vpnPayService,
             IConfiguration configuration,
-            ICancellationPolicyService cancellationService)
+            ICancellationPolicyService cancellationService,
+            IAccountService accountService)
         {
             _checkoutService = checkoutService;
             _bookingService = bookingService;
@@ -32,6 +34,7 @@ namespace GreenRoam.Controllers
             _vpnPayService = vpnPayService;
             _configuration = configuration;
             _cancellationService = cancellationService;
+            _accountService = accountService;
         }
         [HttpPost]
         [Route("CreateBooking")]
@@ -88,7 +91,7 @@ namespace GreenRoam.Controllers
 
         [HttpPost]
         [Route("BookingPayment-Refund")]
-        public async Task<ActionResult<string>> CheckOutRefundBooking(int bookingID)
+        public async Task<ActionResult<string>> CheckOutRefundBooking(int bookingID, string accountId)
         {
             var booking = await _bookingService.GetBookingsById(bookingID);
 
@@ -152,7 +155,7 @@ namespace GreenRoam.Controllers
                     BookingID = booking.Data.BookingID,
                     BookingServiceID = bookingServiceID.HasValue ? bookingServiceID : null,
                     HomeStayID = booking.Data.HomeStayID,
-                    AccountID = booking.Data.AccountID,
+                    AccountID = accountId,
                     Amount = amount,
                     FullName = booking.Data.Account.Name,
                     Description = $"{booking.Data.Account.Name} {booking.Data.Account.Phone}",
@@ -199,7 +202,7 @@ namespace GreenRoam.Controllers
 
         [HttpPost]
         [Route("BookingPaymentService-Refund")]
-        public async Task<ActionResult<string>> CheckOutRefundBookingService(int bookingServiceID)
+        public async Task<ActionResult<string>> CheckOutRefundBookingService(int bookingServiceID, string accountId)
         {
             var bookingService = await _bookingForService.GetBookingServiceById(bookingServiceID);
 
@@ -238,7 +241,7 @@ namespace GreenRoam.Controllers
                 {
                     BookingServiceID = bookingService.Data.BookingServicesID,
                     HomeStayID = bookingService.Data.HomeStayID,
-                    AccountID = bookingService.Data.AccountID,
+                    AccountID = accountId,
                     Amount = amount,
                     FullName = bookingService.Data.Account.Name,
                     Description = $"{bookingService.Data.Account.Name} {bookingService.Data.Account.Phone}",
@@ -258,7 +261,7 @@ namespace GreenRoam.Controllers
         {
             if (model.Vnp_TransactionStatus != "00") return BadRequest();
 
-            var (bookingId, bookingserviceId) = _bookingService.ParseOrderInfo(model.Vnp_OrderInfo);
+            var (bookingId, bookingserviceId, accountId) = _bookingService.ParseOrderInfo(model.Vnp_OrderInfo);
 
             var transaction = new Transaction
             {
@@ -304,10 +307,13 @@ namespace GreenRoam.Controllers
         {
             if (model.Vnp_TransactionStatus != "00") return BadRequest();
 
-            var (bookingId, bookingserviceId) = _bookingService.ParseOrderInfo(model.Vnp_OrderInfo);
+            var (bookingId, bookingserviceId, accountId) = _bookingService.ParseOrderInfo(model.Vnp_OrderInfo);
+
+            var account = await _accountService.GetByStringId(accountId);
 
             var transaction = new Transaction
             {
+                Account = account,
                 Amount = model.Vnp_Amount,
                 BankCode = model.Vnp_BankCode,
                 BankTranNo = model.Vnp_BankTranNo,

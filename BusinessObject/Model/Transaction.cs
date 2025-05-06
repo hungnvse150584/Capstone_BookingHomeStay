@@ -22,6 +22,8 @@ namespace BusinessObject.Model
 
         public Account? Account { get; set; } = null!;
 
+        public Staff? Staff { get; set; } = null!;
+
         public string TmnCode { get; set; }
 
         public string TxnRef { get; set; }
@@ -46,5 +48,15 @@ namespace BusinessObject.Model
         public string TransactionStatus { get; set; }
 
         public string SecureHash { get; set; }
+
+        [EnumDataType(typeof(TransactionKind))]
+        public TransactionKind TransactionKind { get; set; }
+    }
+
+    public enum TransactionKind
+    {
+        Deposited = 0,
+        FullPayment = 1,
+        Refund = 2
     }
 }

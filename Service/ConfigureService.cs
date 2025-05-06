@@ -21,6 +21,7 @@ namespace Service
 
             services.AddAutoMapper(typeof(MappingProfile));
 
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IHomeStayService, HomeStayService>();
             services.AddScoped<IImageServicesService, ImageServicesService>();
             services.AddScoped<IImageHomeStayTypesService, ImageHomeStayTypesService>();
