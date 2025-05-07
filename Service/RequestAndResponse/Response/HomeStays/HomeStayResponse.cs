@@ -39,5 +39,7 @@ namespace Service.RequestAndResponse.Response.HomeStays
         public string AccountID { get; set; }
         public GetAccountUser Account { get; set; }
         public IEnumerable<ImageHomeStayResponse> ImageHomeStays { get; set; }
+        public double? SumRate { get; set; }
+        public decimal? DefaultRentPrice { get; set; }
     }
 }

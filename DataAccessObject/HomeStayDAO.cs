@@ -51,29 +51,69 @@
                    .ToListAsync();
             }
 
-            public async Task<HomeStay> GetHomeStayDetailByIdAsync(int id)
+        public async Task<HomeStay> GetHomeStayDetailByIdAsync(int id)
+        {
+            if (id <= 0)
             {
-                if (id <= 0)
-                {
-                    throw new ArgumentNullException($"id {id} not found");
-                }
-                var entity = await _context.Set<HomeStay>()
-                            .Include(c => c.Account)
-                            .Include(h => h.Reports)
-                             .Include(h => h.ImageHomeStays)
-                              .Include(h => h.CultureExperiences)
-                              .Include(h => h.Services)
-                              
-                   .Include(h => h.Ratings)
-                   .SingleOrDefaultAsync(c => c.HomeStayID == id);
-                if (entity == null)
-                {
-                    throw new ArgumentNullException($"Entity with id {id} not found");
-                }
-            entity.CancelPolicy = await GetCancellationPolicyByHomeStayIdAsync(id);
-            return entity;
+                throw new ArgumentNullException($"id {id} not found");
             }
-            private async Task<CancellationPolicy> GetCancellationPolicyByHomeStayIdAsync(int homeStayId)
+
+            var entity = await _context.Set<HomeStay>()
+                .Include(c => c.Account)
+                .Include(h => h.Reports)
+                .Include(h => h.ImageHomeStays)
+                .Include(h => h.CultureExperiences)
+                .Include(h => h.Services)
+                .Include(h => h.Ratings)
+                    .ThenInclude(r => r.ImageRatings)
+                .Include(h => h.Ratings)
+                    .ThenInclude(r => r.Account)
+                .Include(h => h.HomeStayRentals)
+                    .ThenInclude(r => r.RoomTypes)
+                        .ThenInclude(rt => rt.Prices)
+                .Include(h => h.CancelPolicy)
+                .SingleOrDefaultAsync(c => c.HomeStayID == id);
+
+            if (entity == null)
+            {
+                throw new ArgumentNullException($"Entity with id {id} not found");
+            }
+
+            // Log để debug
+            Console.WriteLine($"Ratings count for HomeStayID {id}: {(entity.Ratings != null ? entity.Ratings.Count : 0)}");
+            if (entity.Ratings != null)
+            {
+                foreach (var rating in entity.Ratings)
+                {
+                    Console.WriteLine($"RatingID: {rating.RatingID}, SumRate: {rating.SumRate}");
+                }
+            }
+            Console.WriteLine($"HomeStayRentals count for HomeStayID {id}: {(entity.HomeStayRentals != null ? entity.HomeStayRentals.Count : 0)}");
+            if (entity.HomeStayRentals != null && entity.HomeStayRentals.Any())
+            {
+                foreach (var rental in entity.HomeStayRentals)
+                {
+                    Console.WriteLine($"RoomTypes count for HomeStayRentalID {rental.HomeStayRentalID}: {(rental.RoomTypes != null ? rental.RoomTypes.Count : 0)}");
+                    if (rental.RoomTypes != null && rental.RoomTypes.Any())
+                    {
+                        foreach (var roomType in rental.RoomTypes)
+                        {
+                            Console.WriteLine($"Prices count for RoomTypeID {roomType.RoomTypesID}: {(roomType.Prices != null ? roomType.Prices.Count : 0)}");
+                            if (roomType.Prices != null)
+                            {
+                                foreach (var price in roomType.Prices)
+                                {
+                                    Console.WriteLine($"PriceID: {price.PricingID}, RentPrice: {price.RentPrice}, IsDefault: {price.IsDefault}, IsActive: {price.IsActive}");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return entity;
+        }
+        private async Task<CancellationPolicy> GetCancellationPolicyByHomeStayIdAsync(int homeStayId)
             {
                 // Lấy CancellationPolicy mới nhất dựa trên CreateAt hoặc UpdateAt
                 return await _context.CancelPolicy
@@ -121,9 +161,13 @@
                     .Include(h => h.HomeStayRentals)
                         .ThenInclude(r => r.RoomTypes)
                             .ThenInclude(rt => rt.Rooms)
+                    .Include(h => h.HomeStayRentals) 
+            .ThenInclude(r => r.RoomTypes)
+                .ThenInclude(rt => rt.Prices)
                     .Include(h => h.Bookings)
                         .ThenInclude(b => b.BookingDetails)
                     .Include(h => h.ImageHomeStays)
+                    .Include(h => h.Ratings)
                     .ToListAsync();
             }
             public async Task<HomeStay> GetOwnerHomeStayByIdAsync(string accountId)
