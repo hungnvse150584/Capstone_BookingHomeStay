@@ -9554,6 +9554,10 @@
             "type": "number",
             "format": "double",
             "nullable": true
+          },
+          "homeStayRentalName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

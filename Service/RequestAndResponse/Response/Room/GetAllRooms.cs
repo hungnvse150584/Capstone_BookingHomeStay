@@ -24,6 +24,7 @@ namespace Service.RequestAndResponse.Response.Room
         public int? RoomTypesID { get; set; }
         public string RoomTypeName { get; set; } // Chỉ lấy tên của RoomType
         public decimal? RentPrice { get; set; }
+        public string? HomeStayRentalName {  get; set; }
 
         //public GetAllRoomType? RoomTypes { get; set; }
 
