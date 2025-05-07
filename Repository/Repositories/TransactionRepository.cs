@@ -19,6 +19,11 @@ namespace Repository.Repositories
             _transactionDao = transactionDao;
         }
 
+        public async Task<Transaction?> GetTransactionByBookingId(int bookingID)
+        {
+            return await _transactionDao.GetTransactionByBookingId(bookingID);
+        }
+
         public async Task<Transaction?> GetTransactionById(string transactionID)
         {
             return await _transactionDao.GetTransactionById(transactionID);

@@ -265,7 +265,7 @@ namespace GreenRoam.Controllers
 
             var transaction = new Transaction
             {
-                Amount = model.Vnp_Amount,
+                Amount = model.Vnp_Amount/100,
                 BankCode = model.Vnp_BankCode,
                 BankTranNo = model.Vnp_BankTranNo,
                 TransactionType = model.Vnp_CardType,
@@ -314,7 +314,7 @@ namespace GreenRoam.Controllers
             var transaction = new Transaction
             {
                 Account = account,
-                Amount = model.Vnp_Amount,
+                Amount = model.Vnp_Amount/100,
                 BankCode = model.Vnp_BankCode,
                 BankTranNo = model.Vnp_BankTranNo,
                 TransactionType = model.Vnp_CardType,

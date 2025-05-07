@@ -13,5 +13,6 @@ namespace Repository.IRepositories
         Task<IEnumerable<Transaction>> GetTransactionsByAccountId(string accountId);
         Task<IEnumerable<Transaction>> GetTransactionsByHomeStayId(int homeStayID);
         Task<Transaction?> GetTransactionById(string transactionID);
+        Task<Transaction?> GetTransactionByBookingId(int bookingID);
     }
 }
