@@ -30,5 +30,6 @@ namespace Service.IService
         Task<BaseResponse<IEnumerable<SimpleHomeStayResponse>>> GetNearestHomeStays(double userLat, double userLon, int pageIndex = 1, int pageSize = 5);
         Task<BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>> CreateHomeStayWithRentalsAndPricingAsync(CreateHomeStayWithRentalsAndPricingRequest request);
         Task<BaseResponse<List<GetOwnerUser>>> GetOwnersWithHomeStayStats();
+        Task<BaseResponse<List<GetTrendingHomeStay>>> GetTrendingHomeStays(int top = 10);
     }
 }

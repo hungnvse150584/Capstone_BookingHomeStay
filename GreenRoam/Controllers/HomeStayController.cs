@@ -218,5 +218,11 @@ namespace GreenRoam.Controllers
         {
             return await _homestayService.GetOwnersWithHomeStayStats();
         }
+
+        [HttpGet("GetTrendingHomeStays")]
+        public async Task<BaseResponse<List<GetTrendingHomeStay>>> GetTrendingHomeStays(int top = 10)
+        {
+            return await _homestayService.GetTrendingHomeStays(top);
+        }
     }
 }
