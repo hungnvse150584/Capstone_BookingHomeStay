@@ -33,7 +33,7 @@ namespace BusinessObject.Model;
 
         public int? HomeStayID { get; set; }
         [ForeignKey("HomeStayID")]
-        public HomeStay? HomeStay { get; set; }
+        public HomeStay HomeStay { get; set; }
 
         public int? BookingID { get; set; }
         [ForeignKey("BookingID")]

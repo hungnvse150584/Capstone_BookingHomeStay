@@ -1,4 +1,5 @@
-﻿using Service.RequestAndResponse.Response.Accounts;
+﻿using BusinessObject.Model;
+using Service.RequestAndResponse.Response.Accounts;
 using Service.RequestAndResponse.Response.HomeStays;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,8 @@ namespace Service.RequestAndResponse.Response.Transactions
 
         public string TransactionStatus { get; set; }
 
+        public TransactionKind TransactionKind { get; set; }
+
         public GetAccountUser? Account { get; set; }
 
         public HomeStayResponse? HomeStay { get; set; }
@@ -39,5 +42,6 @@ namespace Service.RequestAndResponse.Response.Transactions
         public int BookingID { get; set; }
 
         public int BookingServicesID { get; set;}
+
     }
 }

@@ -38,7 +38,7 @@ namespace BusinessObject.Model
 
         public int? RoomTypesID { get; set; }
         [ForeignKey("RoomTypesID")]
-        public RoomTypes? RoomTypes { get; set; }
+        public RoomTypes RoomTypes { get; set; }
 
         [EnumDataType(typeof(DayType))]
         public DayType DayType { get; set; }
