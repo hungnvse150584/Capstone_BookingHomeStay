@@ -573,6 +573,7 @@ namespace DataAccessObject
             var homestays = await _context.HomeStays
                 .Include(h => h.CommissionRate)
                 .Include(h => h.CancelPolicy)
+                .Where(h => h.Status == HomeStayStatus.Accepted)
                 .ToListAsync();
 
             switch (timeSpanType?.ToLower())
