@@ -5,10 +5,13 @@ using GreenRoam.Hubs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.IdentityModel.Tokens;
 using Repository.IRepositories;
+using Repository.Repositories;
 using Service.IService;
 using Service.RequestAndResponse.Response.Conversation;
 using System.ComponentModel.DataAnnotations;
+
 
 [Route("api/[controller]")]
 [ApiController]
@@ -18,13 +21,20 @@ public class ChatController : ControllerBase
     private readonly IMapper _mapper;
     private readonly IHomeStayRepository _homeStayRepository;
     private readonly IAccountRepository _accountRepository;
+    private readonly IStaffRepository _staffRepository;
 
-    public ChatController(IChatService chatService, IMapper mapper, IHomeStayRepository homeStayRepository, IAccountRepository accountRepository)
+    public ChatController(
+        IChatService chatService,
+        IMapper mapper,
+        IHomeStayRepository homeStayRepository,
+        IAccountRepository accountRepository,
+        IStaffRepository staffRepository)
     {
         _chatService = chatService;
         _mapper = mapper;
         _homeStayRepository = homeStayRepository;
         _accountRepository = accountRepository;
+        _staffRepository = staffRepository;
     }
 
     //[HttpGet("conversations/{userId}")]
@@ -120,57 +130,58 @@ public class ChatController : ControllerBase
     {
         try
         {
-            // Kiểm tra CustomerId
             if (string.IsNullOrEmpty(customerId))
             {
                 return BadRequest(new { message = "CustomerId is required." });
             }
 
-            // Lấy danh sách các cuộc trò chuyện của khách hàng
             var conversations = await _chatService.GetConversationsByCustomerIdAsync(customerId);
 
-            // Nếu không có cuộc trò chuyện nào, trả về danh sách rỗng
             if (conversations == null || !conversations.Any())
             {
                 return Ok(new List<GetConversationResponse>());
             }
 
-            // Chuyển đổi dữ liệu sang response model
             var conversationResponses = new List<GetConversationResponse>();
 
             foreach (var conversation in conversations)
             {
-                // Kiểm tra xem cuộc trò chuyện có HomeStayID không
                 if (!conversation.HomeStayID.HasValue)
                 {
-                    continue; // Bỏ qua nếu không liên quan đến homestay
+                    continue;
                 }
 
                 var response = new GetConversationResponse
                 {
                     ConversationID = conversation.ConversationID,
-                    HomeStayID = conversation.HomeStayID.Value // Gán HomeStayID
+                    HomeStayID = conversation.HomeStayID.Value
                 };
 
-                // Lấy thông tin homestay
                 var homeStay = await _homeStayRepository.GetByIdAsync(conversation.HomeStayID.Value);
                 if (homeStay == null)
                 {
-                    continue; // Bỏ qua nếu không tìm thấy homestay
+                    continue;
                 }
 
-                response.HomeStayName = homeStay.Name; // Gán tên homestay
-                response.OwnerID = homeStay.AccountID; // Gán OwnerID (AccountID)
+                response.HomeStayName = homeStay.Name;
+                response.OwnerID = homeStay.AccountID;
 
-                // Lấy thông tin chủ homestay
-                var ownerId = homeStay.AccountID; // ownerId là string
-                var owner = await _accountRepository.GetByAccountIdAsync(ownerId); // Sử dụng phương thức mới
-                if (owner != null)
+                // Kiểm tra xem người nhận là nhân viên hay owner
+                var receiverId = conversation.User1ID == customerId ? conversation.User2ID : conversation.User1ID;
+                var staff = await _staffRepository.GetByStaffIdAccountAsync(receiverId);
+                if (staff != null && staff.HomeStayID == homeStay.HomeStayID)
                 {
-                    response.Owner = _mapper.Map<SimplifiedAccountResponse>(owner);
+                    response.Staff = _mapper.Map<SimplifiedStaffResponse>(staff);
+                }
+                else
+                {
+                    var owner = await _accountRepository.GetByAccountIdAsync(receiverId);
+                    if (owner != null)
+                    {
+                        response.Owner = _mapper.Map<SimplifiedAccountResponse>(owner);
+                    }
                 }
 
-                // Lấy tin nhắn cuối cùng
                 var messages = await _chatService.GetMessagesByConversationAsync(conversation.ConversationID);
                 var lastMessage = messages.OrderByDescending(m => m.SentAt).FirstOrDefault();
                 if (lastMessage != null)
@@ -188,7 +199,6 @@ public class ChatController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
-
     // API 1: Lấy danh sách cuộc trò chuyện dựa trên homeStayId
     [HttpGet("conversations/by-homestay/{homeStayId}")]
     public async Task<IActionResult> GetConversationsByHomeStay(int homeStayId)
@@ -346,43 +356,46 @@ public class ChatController : ControllerBase
         }
     }
 
-    // API 4: Gửi tin nhắn
     [HttpPost("send-message")]
     public async Task<IActionResult> SendMessage([FromForm] SendMessageRequest request)
     {
         try
         {
-            // Kiểm tra dữ liệu đầu vào
             if (string.IsNullOrEmpty(request.ReceiverID) || string.IsNullOrEmpty(request.SenderName) || request.HomeStayId <= 0)
             {
                 return BadRequest(new { message = "ReceiverID, SenderName, and HomeStayId are required." });
             }
 
-            // Lấy ownerId từ homeStayId
-            var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(request.HomeStayId);
-            if (ownerId == null)
+            string receiverId;
+            var staffList = await _staffRepository.GetStaffByHomeStayIdAsync(request.HomeStayId); // Lấy danh sách nhân viên
+            var staffId = staffList?.FirstOrDefault()?.StaffIdAccount; // Lấy StaffIdAccount từ nhân viên đầu tiên nếu có
+            if (!string.IsNullOrEmpty(staffId))
             {
-                return BadRequest(new { message = "Owner not found for this HomeStay." });
+                receiverId = staffId; // Ưu tiên gửi tin nhắn đến nhân viên nếu có
+            }
+            else
+            {
+                receiverId = await _chatService.GetOwnerIdByHomeStayIdAsync(request.HomeStayId);
+                if (receiverId == null)
+                {
+                    return BadRequest(new { message = "Owner not found for this HomeStay." });
+                }
             }
 
-            // Gửi tin nhắn với thông tin đầy đủ
-            var receiverId = request.ReceiverID ?? ownerId;
             var message = await _chatService.SendMessageAsync(
                 request.SenderID,
                 receiverId,
                 request.Content,
                 request.SenderName,
                 request.HomeStayId,
-                //request.ConversationID,
-                request.Images // Truyền danh sách hình ảnh (có thể null)
+                request.Images
             );
 
-            // Thông báo qua SignalR
             var hubContext = (IHubContext<ChatHub>)HttpContext.RequestServices.GetService(typeof(IHubContext<ChatHub>));
             await hubContext.Clients.All.SendAsync(
                 "ReceiveMessage",
                 request.SenderID,
-                message.Content, // Sử dụng message.Content để bao gồm cả URL hình ảnh nếu có
+                message.Content,
                 message.SentAt,
                 message.MessageID,
                 message.ConversationID,
@@ -403,33 +416,37 @@ public class ChatController : ControllerBase
     {
         try
         {
-            // Kiểm tra dữ liệu đầu vào
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            // Kiểm tra dữ liệu đầu vào
             if (string.IsNullOrEmpty(request.SenderID) || string.IsNullOrEmpty(request.ReceiverID) || request.HomeStayId <= 0)
             {
                 return BadRequest(new { message = "SenderID, ReceiverID, and HomeStayId are required." });
             }
 
-            // Kiểm tra HomeStay tồn tại và lấy OwnerId (nếu cần)
-            var ownerId = await _chatService.GetOwnerIdByHomeStayIdAsync(request.HomeStayId);
-            if (ownerId == null)
+            string receiverId;
+            var staff = await _staffRepository.GetByStaffIdAccountAsync(request.ReceiverID);
+            if (staff != null && staff.HomeStayID == request.HomeStayId)
             {
-                return BadRequest(new { message = "Owner not found for this HomeStay." });
+                receiverId = request.ReceiverID; // Chat với nhân viên nếu đúng HomeStay
+            }
+            else
+            {
+                receiverId = await _chatService.GetOwnerIdByHomeStayIdAsync(request.HomeStayId);
+                if (receiverId == null)
+                {
+                    return BadRequest(new { message = "Owner not found for this HomeStay." });
+                }
             }
 
-            // Tạo hoặc lấy cuộc hội thoại
             var conversation = await _chatService.GetOrCreateConversationAsync(
                 request.SenderID,
-                request.ReceiverID,
+                receiverId,
                 request.HomeStayId
             );
 
-            // Ánh xạ sang response model
             var response = _mapper.Map<ConversationResponse>(conversation);
 
             return Ok(new { message = "Conversation created successfully.", data = response });
@@ -532,5 +549,6 @@ public class GetConversationResponse
     public string HomeStayName { get; set; } // Thêm tên homestay
     public string OwnerID { get; set; }
     public SimplifiedAccountResponse Owner { get; set; } // Chủ homestay (thay thế OtherUser)
+    public SimplifiedStaffResponse Staff { get; set; }
     public SimplifiedMessageResponse LastMessage { get; set; }
 }

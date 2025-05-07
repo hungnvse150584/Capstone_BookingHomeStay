@@ -49,5 +49,17 @@ namespace DataAccessObject
                .Include(h => h.HomeStay)
                .FirstOrDefaultAsync(h => h.StaffIdAccount == accountID);
         }
+        public async Task<List<Staff>> GetStaffByHomeStayIdAsync(int homeStayId)
+        {
+            return await _context.Staffs
+                .Where(s => s.HomeStayID == homeStayId)
+                .ToListAsync();
+        }
+
+        public async Task<Staff> GetByStaffIdAccountAsync(string staffIdAccount)
+        {
+            return await _context.Staffs
+                .FirstOrDefaultAsync(s => s.StaffIdAccount == staffIdAccount);
+        }
     }  
 }

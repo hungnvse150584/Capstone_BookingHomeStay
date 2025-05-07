@@ -1,5 +1,6 @@
 ﻿using BusinessObject.Model;
 using DataAccessObject;
+using Microsoft.Identity.Client;
 using Repository.BaseRepository;
 using Repository.IRepositories;
 using System;
@@ -32,6 +33,16 @@ namespace Repository.Repositories
         public async Task<IEnumerable<Staff>> GetAllStaffByOwner(string accountID)
         {
             return await _staffDao.GetAllStaffByOwner(accountID);
+        }
+
+        public async Task<Staff> GetByStaffIdAccountAsync(string staffIdAccount)
+        {
+            return await _staffDao.GetByStaffIdAccountAsync(staffIdAccount);
+        }
+
+        public async Task<List<Staff>> GetStaffByHomeStayIdAsync(int homeStayId)
+        {
+            return await _staffDao.GetStaffByHomeStayIdAsync(homeStayId);
         }
 
         public async Task<Staff?> GetStaffByID(string accountID)
