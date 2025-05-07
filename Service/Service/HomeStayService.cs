@@ -288,7 +288,7 @@ namespace Service.Service
                 }
                 else
                 {
-                    result.StaffID = firstStaff.StaffID;
+                    result.StaffID = firstStaff.StaffIdAccount;
                     result.StaffName = firstStaff.StaffName;
                 }
 
@@ -875,15 +875,28 @@ namespace Service.Service
 
                 var response = _mapper.Map<IEnumerable<HomeStayResponse>>(finalHomeStays);
 
-                // Log kết quả sau ánh xạ
-                Console.WriteLine("Final HomeStays after mapping:");
+                // Bước 4: Lọc theo rating (cho phép khoảng chênh lệch ±0.5)
+                response = response.Where(r =>
+                    (!request.Rating.HasValue || (r.SumRate.HasValue && Math.Abs(r.SumRate.Value - request.Rating.Value) <= 0.5)) &&
+                    (r.SumRate.HasValue && r.SumRate >= 1 && r.SumRate <= 5)
+                ).ToList();
+
+                // Bước 5: Lọc theo price
+                response = response.Where(r =>
+                    (!request.MinPrice.HasValue || r.DefaultRentPrice >= request.MinPrice) &&
+                    (!request.MaxPrice.HasValue || r.DefaultRentPrice <= request.MaxPrice) &&
+                    r.DefaultRentPrice.HasValue
+                ).ToList();
+
+                // Log kết quả sau ánh xạ và lọc
+                Console.WriteLine("Final HomeStays after mapping and filtering:");
                 foreach (var res in response)
                 {
-                    Console.WriteLine($"HomeStayID: {res.HomeStayID}, DefaultRentPrice: {res.DefaultRentPrice}");
+                    Console.WriteLine($"HomeStayID: {res.HomeStayID}, DefaultRentPrice: {res.DefaultRentPrice}, SumRate: {res.SumRate}");
                 }
 
                 return new BaseResponse<IEnumerable<HomeStayResponse>>(
-                    finalHomeStays.Any() ? "HomeStays filtered successfully!" : "No HomeStays available for the given criteria.",
+                    response.Any() ? "HomeStays filtered successfully!" : "No HomeStays available for the given criteria.",
                     StatusCodeEnum.OK_200,
                     response);
             }

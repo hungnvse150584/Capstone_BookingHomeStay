@@ -23,7 +23,9 @@ namespace Service.RequestAndResponse.Request.HomeStayType
 
         [Range(0, int.MaxValue, ErrorMessage = "Number of children cannot be negative.")]
         public int? NumberOfChildren { get; set; }
+        public decimal? MinPrice { get; set; } 
+        public decimal? MaxPrice { get; set; } 
+        public int? Rating { get; set; }
 
-       
     }
 }
