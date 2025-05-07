@@ -34,9 +34,13 @@ namespace Service.RequestAndResponse.Response.HomeStays
 
         public IEnumerable<GetServiceForHomeStay> Services { get; set; }
         //public IEnumerable<GetAllRatingResponse> Ratings { get; set; }
-        public double? SumRate { get; set; } // Trung bình SumRate
-        public int TotalRatings { get; set; } // Tổng số lượt Rating
-        public IEnumerable<CreateRatingResponse> LatestRatings { get; set; } // 3-5 Rating mới nhất
-        public decimal? CheapestPrice { get; set; } // Giá rẻ nhất
+        public double? SumRate { get; set; }
+        public int TotalRatings { get; set; } 
+        public IEnumerable<CreateRatingResponse> LatestRatings { get; set; }
+        public decimal? CheapestPrice { get; set; }
+        public int? StaffID { get; set; } 
+        public string StaffName { get; set; }
+        public string OwnerID { get; set; } 
+       
     }
 }

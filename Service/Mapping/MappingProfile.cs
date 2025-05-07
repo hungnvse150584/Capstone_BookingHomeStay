@@ -98,50 +98,33 @@ namespace Service.Mapping
 
 
             CreateMap<HomeStay, SimpleHomeStayResponse>()
-     .ForMember(dest => dest.SumRate, opt => opt.MapFrom(src =>
-         src.Ratings != null && src.Ratings.Any(r => r.HomeStayID.HasValue && r.HomeStayID == src.HomeStayID)
-             ? src.Ratings.Where(r => r.HomeStayID.HasValue && r.HomeStayID == src.HomeStayID).Average(r => r.SumRate)
-             : (double?)null))
-     .ForMember(dest => dest.TotalRatings, opt => opt.MapFrom(src =>
-         src.Ratings != null ? src.Ratings.Count(r => r.HomeStayID.HasValue && r.HomeStayID == src.HomeStayID) : 0))
-     .ForMember(dest => dest.LatestRatings, opt => opt.MapFrom(src =>
-         src.Ratings != null && src.Ratings.Any(r => r.HomeStayID.HasValue && r.HomeStayID == src.HomeStayID)
-             ? src.Ratings.Where(r => r.HomeStayID.HasValue && r.HomeStayID == src.HomeStayID)
-                 .OrderByDescending(r => r.CreatedAt)
-                 .Take(5)
-                 .Select(r => new CreateRatingResponse
-                 {
-                     RatingID = r.RatingID,
-                     SumRate = r.SumRate,
-                     CleaningRate = r.CleaningRate,
-                     ServiceRate = r.ServiceRate,
-                     FacilityRate = r.FacilityRate,
-                     Content = r.Content,
-                     AccountID = r.AccountID,
-                     Username = r.Account != null ? r.Account.UserName : null,
-                     HomeStayID = r.HomeStayID ?? 0,
-                     BookingID = r.BookingID ?? 0,
-                     CreatedAt = r.CreatedAt,
-                     UpdatedAt = r.UpdatedAt,
-                     ImageRatings = r.ImageRatings != null
-                         ? r.ImageRatings.Select(ir => new ImageRatingResponse
-                         {
-                             ImageRatingID = ir.ImageRatingID,
-                             Image = ir.Image,
-                             RatingID = ir.RatingID ?? 0
-                         }).ToList()
-                         : new List<ImageRatingResponse>()
-                 }).ToList()
-             : new List<CreateRatingResponse>()))
-     .ForMember(dest => dest.CheapestPrice, opt => opt.MapFrom(src =>
-         src.HomeStayRentals != null && src.HomeStayRentals.Any()
-             ? src.HomeStayRentals.SelectMany(r => r.RoomTypes ?? new List<RoomTypes>())
-                 .SelectMany(rt => rt.Prices ?? new List<Pricing>())
-                 .Where(p => p.IsActive && p.RoomTypesID.HasValue)
-                 .OrderBy(p => p.RentPrice)
-                 .Select(p => (decimal?)p.RentPrice)
-                 .FirstOrDefault()
-             : null));
+         .ForMember(dest => dest.HomeStayID, opt => opt.MapFrom(src => src.HomeStayID))
+         .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+         .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+         .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
+         .ForMember(dest => dest.Latitude, opt => opt.MapFrom(src => src.Latitude))
+         .ForMember(dest => dest.Longitude, opt => opt.MapFrom(src => src.Longitude))
+         .ForMember(dest => dest.CreateAt, opt => opt.MapFrom(src => src.CreateAt))
+         .ForMember(dest => dest.UpdateAt, opt => opt.MapFrom(src => src.UpdateAt))
+         .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+         .ForMember(dest => dest.Area, opt => opt.MapFrom(src => src.Area))
+         .ForMember(dest => dest.AccountID, opt => opt.MapFrom(src => src.AccountID))
+         .ForMember(dest => dest.CommissionRateID, opt => opt.MapFrom(src => src.CommissionRateID))
+         .ForMember(dest => dest.CommissionRate, opt => opt.MapFrom(src => src.CommissionRate))
+         .ForMember(dest => dest.TypeOfRental, opt => opt.MapFrom(src => src.TypeOfRental))
+         .ForMember(dest => dest.CancelPolicy, opt => opt.MapFrom(src => src.CancelPolicy))
+         .ForMember(dest => dest.Reports, opt => opt.MapFrom(src => src.Reports))
+         .ForMember(dest => dest.ImageHomeStays, opt => opt.MapFrom(src => src.ImageHomeStays))
+         .ForMember(dest => dest.CultureExperiences, opt => opt.MapFrom(src => src.CultureExperiences))
+         .ForMember(dest => dest.Services, opt => opt.MapFrom(src => src.Services))
+         // Bỏ qua các trường sẽ xử lý thủ công
+         .ForMember(dest => dest.SumRate, opt => opt.Ignore())
+         .ForMember(dest => dest.TotalRatings, opt => opt.Ignore())
+         .ForMember(dest => dest.LatestRatings, opt => opt.Ignore())
+         .ForMember(dest => dest.CheapestPrice, opt => opt.Ignore())
+         .ForMember(dest => dest.StaffID, opt => opt.Ignore())
+            .ForMember(dest => dest.StaffName, opt => opt.Ignore())
+            .ForMember(dest => dest.OwnerID, opt => opt.Ignore());
             CreateMap<ImageHomeStay, ImageHomeStayResponse>().ReverseMap();
 
             CreateMap<CreateHomeStayRequest, HomeStay>().ReverseMap();
