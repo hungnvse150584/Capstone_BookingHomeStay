@@ -131,6 +131,7 @@ namespace Service.Mapping
             CreateMap<UpdateHomeStayRequest, HomeStay>().ReverseMap();
             CreateMap<UploadImageRequest, ImageHomeStay>().ReverseMap();
             CreateMap<UpdateHomeStayImagesBodyRequest, ImageHomeStay>().ReverseMap();
+            CreateMap<HomeStay, SingleHomeStayResponse>().ReverseMap();
 
             CreateMap<Account, GetAccountUser>().ReverseMap();
             CreateMap<CreateStaffRequest, Staff>().ReverseMap();
