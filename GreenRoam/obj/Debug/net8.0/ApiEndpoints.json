@@ -645,6 +645,11 @@
         "Name": "bookingID",
         "Type": "System.Int32",
         "IsRequired": false
+      },
+      {
+        "Name": "accountId",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -670,6 +675,11 @@
       {
         "Name": "bookingServiceID",
         "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "accountId",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],

@@ -1913,6 +1913,13 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "accountId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1997,6 +2004,13 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "accountId",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -13490,6 +13504,13 @@
           },
           "homeStay": {
             "$ref": "#/components/schemas/HomeStay"
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -13631,6 +13652,9 @@
           "account": {
             "$ref": "#/components/schemas/Account"
           },
+          "staff": {
+            "$ref": "#/components/schemas/Staff"
+          },
           "tmnCode": {
             "type": "string",
             "nullable": true
@@ -13682,9 +13706,21 @@
           "secureHash": {
             "type": "string",
             "nullable": true
+          },
+          "transactionKind": {
+            "$ref": "#/components/schemas/TransactionKind"
           }
         },
         "additionalProperties": false
+      },
+      "TransactionKind": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "TransactionResponse": {
         "type": "object",
