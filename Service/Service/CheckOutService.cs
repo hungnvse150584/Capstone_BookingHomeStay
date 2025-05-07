@@ -612,10 +612,12 @@ namespace Service.Service
             if (amountPaid >= totalAmount)
             {
                 booking.paymentStatus = PaymentStatus.FullyPaid; // Thanh toán đầy đủ
+                transaction.TransactionKind = TransactionKind.FullPayment;
             }
             else if (amountPaid > 0)
             {
                 booking.paymentStatus = PaymentStatus.Deposited; // Đặt cọc
+                transaction.TransactionKind = TransactionKind.Deposited;
             }
 
             if (bookingServiceID.HasValue && bookingServiceID.Value > 0)
@@ -629,10 +631,13 @@ namespace Service.Service
                 if (amountPaid >= totalAmount)
                 {
                     bookingService.PaymentServiceStatus = PaymentServicesStatus.FullyPaid; // Thanh toán đầy đủ
+                    transaction.TransactionKind = TransactionKind.FullPayment;
                 }
                 else if (amountPaid > 0)
                 {
                     bookingService.PaymentServiceStatus = PaymentServicesStatus.Deposited; // Đặt cọc
+                    transaction.TransactionKind = TransactionKind.Deposited;
+
                 }
 
                 var detail = bookingService.BookingServicesDetails.FirstOrDefault();
@@ -659,6 +664,7 @@ namespace Service.Service
                 bookingService.Transactions.Add(transaction);
                 await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
             }
+
             booking.Status = BookingStatus.Confirmed;
 
             // Lưu booking vào cơ sở dữ liệu nếu cần
@@ -677,7 +683,7 @@ namespace Service.Service
             booking.Transactions ??= new List<Transaction>();
 
             transaction.HomeStay = booking.HomeStay;
-            transaction.Account = booking.HomeStay.Account;
+            transaction.TransactionKind = TransactionKind.Refund;
 
             // Thêm transaction vào trong danh sách Transactions
             booking.Transactions.Add(transaction);
@@ -692,7 +698,7 @@ namespace Service.Service
                     service.Status = BookingServicesStatus.Cancelled;
                     service.Transactions ??= new List<Transaction>();
                     transaction.HomeStay = service.HomeStay;
-                    transaction.Account = service.HomeStay.Account;
+                    transaction.TransactionKind = TransactionKind.Refund;
                     service.Transactions.Add(transaction);
                     await _bookingServiceRepository.UpdateBookingServicesAsync(service);
                     if (service.BookingServicesDetails != null)
@@ -753,10 +759,12 @@ namespace Service.Service
             if (amountPaid >= totalAmount)
             {
                 bookingService.PaymentServiceStatus = PaymentServicesStatus.FullyPaid; // Thanh toán đầy đủ
+                transaction.TransactionKind = TransactionKind.FullPayment;
             }
             else if (amountPaid > 0)
             {
                 bookingService.PaymentServiceStatus = PaymentServicesStatus.Deposited; // Đặt cọc
+                transaction.TransactionKind = TransactionKind.Deposited;
             }
 
             bookingService.Status = BookingServicesStatus.Confirmed;
@@ -802,6 +810,8 @@ namespace Service.Service
 
             bookingService.Status = BookingServicesStatus.Cancelled;
 
+            transaction.TransactionKind = TransactionKind.Refund;
+
             bookingService.Transactions ??= new List<Transaction>();
 
             bookingService.Transactions.Add(transaction);
@@ -833,9 +843,7 @@ namespace Service.Service
             }
 
             transaction.HomeStay = bookingService.HomeStay;
-
-            transaction.Account = bookingService.HomeStay.Account;
-
+            
             await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
 
             return bookingService;

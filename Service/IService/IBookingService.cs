@@ -24,7 +24,7 @@ namespace Service.IService
 
         Task<BaseResponse<int>> CancelExpiredBookings();
         Task<BaseResponse<string>> AutoCheckOutBookings();
-        public (int? bookingId, int? serviceId) ParseOrderInfo(string orderInfo);
+        public (int? bookingId, int? serviceId, string? accountId) ParseOrderInfo(string orderInfo);
         Task<BaseResponse<IEnumerable<GetBookingByHomeStay>>> GetBookingsByHomeStayId(int homeStayID);
         Task<BaseResponse<IEnumerable<GetBookingByRoom>>> GetBookingsByRoom(int roomId);
         Task<BaseResponse<Booking>> GetBookingsById(int bookingID);

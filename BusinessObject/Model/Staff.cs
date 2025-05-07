@@ -32,5 +32,7 @@ namespace BusinessObject.Model
 
         public int? HomeStayID { get; set; }
         public HomeStay? HomeStay { get; set; }
+
+        public ICollection<Transaction> Transactions { get; set; }
     }
 }

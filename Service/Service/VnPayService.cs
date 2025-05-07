@@ -96,19 +96,19 @@ namespace Service.Service
             if (hasBookingID && hasBookingServiceID)
             {
                 // Both HomeStay and Service booked
-                orderInfo = $"BookingID:{requestModel.BookingID}, ServiceID:{requestModel.BookingServiceID}";
+                orderInfo = $"BookingID:{requestModel.BookingID}, ServiceID:{requestModel.BookingServiceID}, AccountID:{requestModel.AccountID}";
                 txnRef = $"H-{requestModel.BookingID}-S-{requestModel.BookingServiceID}-{tick}";
             }
             else if (hasBookingID)
             {
                 // Only HomeStay booked
-                orderInfo = $"BookingID:{requestModel.BookingID}";
+                orderInfo = $"BookingID:{requestModel.BookingID}, AccountID:{requestModel.AccountID}";
                 txnRef = $"H-{requestModel.BookingID}-{tick}";
             }
             else if (hasBookingServiceID)
             {
                 // Only Service booked
-                orderInfo = $"ServiceID:{requestModel.BookingServiceID}";
+                orderInfo = $"ServiceID:{requestModel.BookingServiceID}, AccountID:{requestModel.AccountID}";
                 txnRef = $"S-{requestModel.BookingServiceID}-{tick}";
             }
 

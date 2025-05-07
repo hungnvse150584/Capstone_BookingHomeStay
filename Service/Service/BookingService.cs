@@ -251,7 +251,7 @@ namespace Service.Service
             return new BaseResponse<GetBookingResponse>("Get HomeStay as base success", StatusCodeEnum.OK_200, result);
         }
 
-        public (int? bookingId, int? serviceId) ParseOrderInfo(string orderInfo)
+        /*public (int? bookingId, int? serviceId) ParseOrderInfo(string orderInfo)
         {
             int? bookingId = null;
             int? serviceId = null;
@@ -278,6 +278,43 @@ namespace Service.Service
             }
 
             return (bookingId, serviceId);
+        }*/
+
+        public (int? bookingId, int? serviceId, string? accountId) ParseOrderInfo(string orderInfo)
+        {
+            int? bookingId = null;
+            int? serviceId = null;
+            string? accountId = null;
+
+            if (string.IsNullOrWhiteSpace(orderInfo))
+                return (null, null, null);
+
+            var parts = orderInfo.Split(',', StringSplitOptions.TrimEntries);
+
+            foreach (var part in parts)
+            {
+                var keyValue = part.Split(':', StringSplitOptions.TrimEntries);
+                if (keyValue.Length == 2)
+                {
+                    switch (keyValue[0])
+                    {
+                        case "BookingID":
+                            if (int.TryParse(keyValue[1], out int bId))
+                                bookingId = bId;
+                            break;
+
+                        case "ServiceID":
+                            if (int.TryParse(keyValue[1], out int sId))
+                                serviceId = sId;
+                            break;
+
+                        case "AccountID":
+                            accountId = keyValue[1];
+                            break;
+                    }
+                }
+            }
+            return (bookingId, serviceId, accountId);
         }
 
         public async Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>> GetTotalBookingsTotalBookingsAmountForHomeStay(int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType)
