@@ -8,7 +8,7 @@ namespace Service.IService
 {
     public interface IChatService
     {
-        Task<Conversation> GetOrCreateConversationAsync(string user1Id, string user2Id, int homeStayId);
+        Task<Conversation> GetOrCreateConversationAsync(string user1Id, string user2Id, int homeStayId, string staffIdAccount = null);
         Task<List<Conversation>> GetConversationsByUserAsync(string userId);
         Task<List<Message>> GetMessagesByConversationAsync(int conversationId);
         Task<Message> SendMessageAsync(string senderId, string receiverId, string content, string senderName, int homeStayId,  List<IFormFile> images = null);

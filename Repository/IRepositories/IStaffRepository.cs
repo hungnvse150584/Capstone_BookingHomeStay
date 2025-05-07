@@ -13,6 +13,7 @@ namespace Repository.IRepositories
         Task<IEnumerable<Staff>> GetAllStaffByOwner(string accountID);
         Task<Staff?> GetStaffByID(string accountID);
         Task<IEnumerable<Staff>> GetAllStaffByHomeStay(int homeStayID);
-
+        Task<List<Staff>> GetStaffByHomeStayIdAsync(int homeStayId);
+        Task<Staff> GetByStaffIdAccountAsync(string staffIdAccount);
     }
 }
