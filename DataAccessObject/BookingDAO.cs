@@ -89,6 +89,8 @@ namespace DataAccessObject
                 .ThenInclude(bd => bd.HomeStayRentals)
                 .Include(b => b.BookingDetails)
                 .ThenInclude(bd => bd.Rooms)
+                .ThenInclude(bd => bd.RoomTypes)
+                .ThenInclude(bd => bd.Prices)
                 .Include(b => b.Account)
                 .Where(b => b.HomeStayID == homeStayID)
                 .ToListAsync();
