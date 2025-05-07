@@ -33,6 +33,10 @@ namespace Service.RequestAndResponse.Response.HomeStays
         //public IEnumerable<GetAllCancellationPolicy> CancellationPolicies { get; set; }
 
         public IEnumerable<GetServiceForHomeStay> Services { get; set; }
-        public IEnumerable<GetAllRatingResponse> Ratings { get; set; }
+        //public IEnumerable<GetAllRatingResponse> Ratings { get; set; }
+        public double? SumRate { get; set; } // Trung bình SumRate
+        public int TotalRatings { get; set; } // Tổng số lượt Rating
+        public IEnumerable<CreateRatingResponse> LatestRatings { get; set; } // 3-5 Rating mới nhất
+        public decimal? CheapestPrice { get; set; } // Giá rẻ nhất
     }
 }

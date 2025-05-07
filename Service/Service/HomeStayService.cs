@@ -128,9 +128,26 @@ namespace Service.Service
 
         public async Task<BaseResponse<SimpleHomeStayResponse>> GetHomeStayDetailByIdFromBase(int id)
         {
-            HomeStay homeStay = await _homeStayRepository.GetHomeStayDetailByIdAsync(id);
-            var result = _mapper.Map<SimpleHomeStayResponse>(homeStay);
-            return new BaseResponse<SimpleHomeStayResponse>("Get HomeStay as base success", StatusCodeEnum.OK_200, result);
+            try
+            {
+                HomeStay homeStay = await _homeStayRepository.GetHomeStayDetailByIdAsync(id);
+                if (homeStay == null)
+                {
+                    return new BaseResponse<SimpleHomeStayResponse>("HomeStay not found!", StatusCodeEnum.NotFound_404, null);
+                }
+
+                var result = _mapper.Map<SimpleHomeStayResponse>(homeStay);
+                Console.WriteLine($"Mapped SumRate for HomeStayID {id}: {result.SumRate}");
+                Console.WriteLine($"Mapped TotalRatings for HomeStayID {id}: {result.TotalRatings}");
+                Console.WriteLine($"Mapped LatestRatings count for HomeStayID {id}: {(result.LatestRatings != null ? result.LatestRatings.Count() : 0)}");
+                Console.WriteLine($"Mapped CheapestPrice for HomeStayID {id}: {result.CheapestPrice}");
+
+                return new BaseResponse<SimpleHomeStayResponse>("Get HomeStay as base success", StatusCodeEnum.OK_200, result);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<SimpleHomeStayResponse>($"An error occurred: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
+            }
         }
 
         public async Task<BaseResponse<HomeStayResponse>> GetOwnerHomeStayByIdFromBase(string accountId)
@@ -524,6 +541,29 @@ namespace Service.Service
                         new List<HomeStayResponse>());
                 }
 
+                // Log dữ liệu Rentals, RoomTypes, và Prices
+                Console.WriteLine("Data check for HomeStays:");
+                foreach (var homeStay in acceptedHomeStays)
+                {
+                    Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}");
+                    var rentals = homeStay.HomeStayRentals ?? new List<HomeStayRentals>();
+                    Console.WriteLine($"  Number of Rentals: {rentals.Count}");
+                    foreach (var rental in rentals)
+                    {
+                        var roomTypes = rental.RoomTypes ?? new List<RoomTypes>();
+                        Console.WriteLine($"    RentalID: {rental.HomeStayRentalID}, Number of RoomTypes: {roomTypes.Count}");
+                        foreach (var roomType in roomTypes)
+                        {
+                            var prices = roomType.Prices ?? new List<Pricing>();
+                            Console.WriteLine($"      RoomTypeID: {roomType.RoomTypesID}, Number of Prices: {prices.Count}");
+                            foreach (var price in prices)
+                            {
+                                Console.WriteLine($"        PriceID: {price.PricingID}, RentPrice: {price.RentPrice}, IsDefault: {price.IsDefault}, IsActive: {price.IsActive}");
+                            }
+                        }
+                    }
+                }
+
                 // Bước 2: Lọc theo Location (khoảng cách)
                 var homeStaysWithDistance = new List<(HomeStay HomeStay, double Distance)>();
                 foreach (var homeStay in acceptedHomeStays)
@@ -582,7 +622,6 @@ namespace Service.Service
                         bool isRentalAvailable = false;
                         if (rental.RentWhole)
                         {
-                            // Với RentWhole = true, kiểm tra xem rental có bị đặt trong khoảng thời gian yêu cầu hay không
                             var hasBookingForRental = activeBookings
                                 .SelectMany(b => b.BookingDetails ?? new List<BookingDetail>())
                                 .Any(bd => bd.HomeStayRentalID == rental.HomeStayRentalID &&
@@ -601,7 +640,6 @@ namespace Service.Service
                         }
                         else
                         {
-                            // Với RentWhole = false, kiểm tra phòng trống
                             var roomTypes = rental.RoomTypes ?? new List<RoomTypes>();
                             var allRooms = roomTypes.SelectMany(rt => rt.Rooms ?? new List<Room>()).ToList();
 
@@ -611,7 +649,6 @@ namespace Service.Service
                                 continue;
                             }
 
-                            // Lấy danh sách phòng đã được đặt trong khoảng thời gian yêu cầu
                             var bookedRoomIds = new HashSet<int>();
                             foreach (var booking in activeBookings)
                             {
@@ -626,7 +663,7 @@ namespace Service.Service
 
                                     if (detailCheckInDate <= checkOutDate && detailCheckOutDate >= checkInDate)
                                     {
-                                        if (detail.RoomID.HasValue) // Kiểm tra null để tránh lỗi
+                                        if (detail.RoomID.HasValue)
                                         {
                                             bookedRoomIds.Add(detail.RoomID.Value);
                                         }
@@ -634,7 +671,6 @@ namespace Service.Service
                                 }
                             }
 
-                            // Kiểm tra xem có phòng nào còn trống không
                             isRentalAvailable = allRooms.Any(room => !bookedRoomIds.Contains(room.RoomID) && room.isActive);
 
                             if (isRentalAvailable)
@@ -672,6 +708,13 @@ namespace Service.Service
                     .ToList();
 
                 var response = _mapper.Map<IEnumerable<HomeStayResponse>>(finalHomeStays);
+
+                // Log kết quả sau ánh xạ
+                Console.WriteLine("Final HomeStays after mapping:");
+                foreach (var res in response)
+                {
+                    Console.WriteLine($"HomeStayID: {res.HomeStayID}, DefaultRentPrice: {res.DefaultRentPrice}");
+                }
 
                 return new BaseResponse<IEnumerable<HomeStayResponse>>(
                     finalHomeStays.Any() ? "HomeStays filtered successfully!" : "No HomeStays available for the given criteria.",

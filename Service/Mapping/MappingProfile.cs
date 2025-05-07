@@ -62,10 +62,39 @@ namespace Service.Mapping
                          ?? prices.FirstOrDefault(p => p.IsActive);
             return pricing != null ? (decimal?)pricing.RentPrice : null;
         }
+        private decimal? GetDefaultRentPriceFromPrices(ICollection<Pricing> prices)
+        {
+            if (prices == null) return null;
+            // Ưu tiên lấy giá IsDefault và IsActive
+            var defaultPricing = prices
+                .Where(p => p.IsDefault && p.IsActive)
+                .OrderBy(p => p.RentPrice)
+                .FirstOrDefault();
+            if (defaultPricing != null)
+            {
+                return (decimal?)defaultPricing.RentPrice;
+            }
+            // Nếu không có giá IsDefault, lấy giá rẻ nhất từ tất cả Prices với IsActive = true
+            var cheapestPricing = prices
+                .Where(p => p.IsActive)
+                .OrderBy(p => p.RentPrice)
+                .FirstOrDefault();
+            return cheapestPricing != null ? (decimal?)cheapestPricing.RentPrice : null;
+        }
         public MappingProfile()
         {
             CreateMap<HomeStay, HomeStayResponse>()
-                .ForMember(dest => dest.CommissionRateID, opt => opt.MapFrom(src => src.CommissionRateID));
+      .ForMember(dest => dest.CommissionRateID, opt => opt.MapFrom(src => src.CommissionRateID))
+      .ForMember(dest => dest.SumRate, opt => opt.MapFrom(src => src.Ratings.Any() ? src.Ratings.Average(r => r.SumRate) : (double?)null))
+      .ForMember(dest => dest.DefaultRentPrice, opt => opt.MapFrom(src =>
+          src.HomeStayRentals != null && src.HomeStayRentals.Any()
+              ? src.HomeStayRentals.SelectMany(r => r.RoomTypes ?? new List<RoomTypes>())
+                  .SelectMany(rt => rt.Prices ?? new List<Pricing>())
+                  .Where(p => p.IsActive)
+                  .OrderBy(p => p.RentPrice)
+                  .Select(p => (decimal?)p.RentPrice)
+                  .FirstOrDefault()
+              : null));
             CreateMap<HomeStay, SingleHomeStayResponse>().ReverseMap();
             CreateMap<ImageHomeStay, ImageHomeStayResponse>().ReverseMap();
 

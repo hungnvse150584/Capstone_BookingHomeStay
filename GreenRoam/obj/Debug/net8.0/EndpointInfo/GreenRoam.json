@@ -9759,6 +9759,9 @@
             "format": "int32",
             "nullable": true
           },
+          "isRating": {
+            "type": "boolean"
+          },
           "accountID": {
             "type": "string",
             "nullable": true
@@ -11925,6 +11928,16 @@
               "$ref": "#/components/schemas/ImageHomeStayResponse"
             },
             "nullable": true
+          },
+          "sumRate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "defaultRentPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -13301,11 +13314,25 @@
             },
             "nullable": true
           },
-          "ratings": {
+          "sumRate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "totalRatings": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "latestRatings": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/GetAllRatingResponse"
+              "$ref": "#/components/schemas/CreateRatingResponse"
             },
+            "nullable": true
+          },
+          "cheapestPrice": {
+            "type": "number",
+            "format": "double",
             "nullable": true
           }
         },
