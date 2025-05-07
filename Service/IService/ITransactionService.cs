@@ -10,6 +10,7 @@ namespace Service.IService
 {
     public interface ITransactionService
     {
+        Task<BaseResponse<IEnumerable<TransactionResponse>>> GetAllTransactions();
         Task<BaseResponse<TransactionResponse?>> GetTransactionById(string transactionID);
         Task<BaseResponse<IEnumerable<TransactionResponse>>> GetTransactionsByAccountId(string accountId);
         Task<BaseResponse<IEnumerable<TransactionResponse>>> GetTransactionsByHomeStayId(int homeStayID);

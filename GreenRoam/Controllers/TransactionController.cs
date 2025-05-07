@@ -17,6 +17,14 @@ namespace GreenRoam.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllTransactions")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<TransactionResponse>>>> GetAllTransactions()
+        {
+            var transactions = await _transactionsService.GetAllTransactions();
+            return Ok(transactions);
+        }
+
+        [HttpGet]
         [Route("GetTransactionByID/{transactionID}")]
         public async Task<ActionResult<BaseResponse<TransactionResponse?>>> GetTransactionById(string transactionID)
         {
