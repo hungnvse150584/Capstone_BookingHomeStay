@@ -12,5 +12,6 @@ namespace Repository.IRepositories
     {
         Task<(int totalAccount, int ownersAccount, int customersAccount)> GetTotalAccount();
         Task<Account> GetByAccountIdAsync(string accountId);
+     
     }
 }

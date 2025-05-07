@@ -14,10 +14,13 @@ using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Request.Pricing;
 using Service.RequestAndResponse.Response.Accounts;
+using Service.RequestAndResponse.Response.CancellationPolicyRequest;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.HomeStayType;
 using Service.RequestAndResponse.Response.ImageHomeStay;
+using Service.RequestAndResponse.Response.ImageRating;
 using Service.RequestAndResponse.Response.Pricing;
+using Service.RequestAndResponse.Response.Ratings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +37,9 @@ namespace Service.Service
         private readonly IHomeStayRepository _homeStayRepository;
         private readonly IImageHomeStayRepository _imageHomeStayRepository;
         private readonly IHomeStayRentalRepository _homeStayRentalRepository;
-        private readonly IPricingRepository _priceRepository; // Add this
+        private readonly IPricingRepository _priceRepository;
+        private readonly IStaffRepository _staffRepository;
+        private readonly IAccountRepository _accountRepository;
         private readonly Cloudinary _cloudinary;
 
         public HomeStayService(
@@ -42,7 +47,9 @@ namespace Service.Service
             IHomeStayRepository homeStayRepository,
             IImageHomeStayRepository imageHomeStayRepository,
             IHomeStayRentalRepository homeRentalRepository,
-            IPricingRepository priceRepository, // Add this
+            IPricingRepository priceRepository,
+             IStaffRepository staffRepository,
+              IAccountRepository accountRepository,
             Cloudinary cloudinary)
         {
             _mapper = mapper;
@@ -50,7 +57,11 @@ namespace Service.Service
             _imageHomeStayRepository = imageHomeStayRepository;
             _cloudinary = cloudinary;
             _homeStayRentalRepository = homeRentalRepository;
-            _priceRepository = priceRepository; // Add this
+            _priceRepository = priceRepository;
+            _staffRepository = staffRepository;
+            _accountRepository = accountRepository;
+
+
         }
 
         public async Task<BaseResponse<HomeStayResponse>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status, int? commissionRateId = null)
@@ -136,11 +147,166 @@ namespace Service.Service
                     return new BaseResponse<SimpleHomeStayResponse>("HomeStay not found!", StatusCodeEnum.NotFound_404, null);
                 }
 
+                // Sử dụng AutoMapper để ánh xạ các trường cơ bản
                 var result = _mapper.Map<SimpleHomeStayResponse>(homeStay);
+
+                // Xử lý thủ công cho SumRate
+                if (homeStay.Ratings == null || !homeStay.Ratings.Any())
+                {
+                    Console.WriteLine($"No Ratings found for HomeStayID: {id}");
+                    result.SumRate = null;
+                }
+                else
+                {
+                    var validRatings = homeStay.Ratings
+                        .Where(r => r.HomeStayID.HasValue && r.HomeStayID == id)
+                        .ToList();
+                    if (!validRatings.Any())
+                    {
+                        Console.WriteLine($"No valid Ratings with HomeStayID matching {id}. Ratings count: {homeStay.Ratings.Count}");
+                        foreach (var rating in homeStay.Ratings)
+                        {
+                            Console.WriteLine($"RatingID: {rating.RatingID}, HomeStayID: {rating.HomeStayID}");
+                        }
+                        result.SumRate = null;
+                    }
+                    else
+                    {
+                        result.SumRate = validRatings.Average(r => r.SumRate);
+                    }
+                }
+
+                // Xử lý thủ công cho TotalRatings
+                if (homeStay.Ratings == null)
+                {
+                    Console.WriteLine($"Ratings is null for HomeStayID: {id}");
+                    result.TotalRatings = 0;
+                }
+                else
+                {
+                    result.TotalRatings = homeStay.Ratings
+                        .Count(r => r.HomeStayID.HasValue && r.HomeStayID == id);
+                }
+
+                // Xử lý thủ công cho LatestRatings
+                if (homeStay.Ratings == null || !homeStay.Ratings.Any())
+                {
+                    Console.WriteLine($"No Ratings found for LatestRatings, HomeStayID: {id}");
+                    result.LatestRatings = new List<CreateRatingResponse>();
+                }
+                else
+                {
+                    result.LatestRatings = homeStay.Ratings
+                        .Where(r => r.HomeStayID.HasValue && r.HomeStayID == id)
+                        .OrderByDescending(r => r.CreatedAt)
+                        .Take(5)
+                        .Select(r => new CreateRatingResponse
+                        {
+                            RatingID = r.RatingID,
+                            SumRate = r.SumRate,
+                            CleaningRate = r.CleaningRate,
+                            ServiceRate = r.ServiceRate,
+                            FacilityRate = r.FacilityRate,
+                            Content = r.Content,
+                            AccountID = r.AccountID,
+                            Username = r.Account?.UserName,
+                            HomeStayID = r.HomeStayID ?? 0,
+                            BookingID = r.BookingID ?? 0,
+                            CreatedAt = r.CreatedAt,
+                            UpdatedAt = r.UpdatedAt,
+                            ImageRatings = r.ImageRatings?.Select(ir => new ImageRatingResponse
+                            {
+                                ImageRatingID = ir.ImageRatingID,
+                                Image = ir.Image,
+                                RatingID = ir.RatingID ?? 0
+                            }).ToList() ?? new List<ImageRatingResponse>()
+                        }).ToList();
+                }
+
+                // Xử lý thủ công cho CheapestPrice
+                if (homeStay.HomeStayRentals == null || !homeStay.HomeStayRentals.Any())
+                {
+                    Console.WriteLine($"No HomeStayRentals found for HomeStayID: {id}");
+                    result.CheapestPrice = null;
+                }
+                else
+                {
+                    var prices = homeStay.HomeStayRentals
+                        .SelectMany(r => r.RoomTypes ?? new List<RoomTypes>())
+                        .SelectMany(rt => rt.Prices ?? new List<Pricing>())
+                        .Where(p => p.IsActive && p.RoomTypesID.HasValue)
+                        .OrderBy(p => p.RentPrice)
+                        .Select(p => (decimal?)p.RentPrice)
+                        .FirstOrDefault();
+                    if (prices == null)
+                    {
+                        Console.WriteLine($"No valid Prices found for HomeStayID: {id}");
+                        var allPrices = homeStay.HomeStayRentals
+                            .SelectMany(r => r.RoomTypes ?? new List<RoomTypes>())
+                            .SelectMany(rt => rt.Prices ?? new List<Pricing>())
+                            .ToList();
+                        Console.WriteLine($"Total Prices count: {allPrices.Count}");
+                        foreach (var price in allPrices)
+                        {
+                            Console.WriteLine($"PriceID: {price.PricingID}, RoomTypesID: {price.RoomTypesID}, IsActive: {price.IsActive}");
+                        }
+                        result.CheapestPrice = null;
+                    }
+                    else
+                    {
+                        result.CheapestPrice = prices;
+                    }
+                }
+
+                // Xử lý thủ công cho CancellationPolicy
+                if (homeStay.CancelPolicy == null)
+                {
+                    Console.WriteLine($"No CancellationPolicy found for HomeStayID: {id}");
+                    result.CancelPolicy = null;
+                }
+                else
+                {
+                    result.CancelPolicy = new GetAllCancellationPolicy
+                    {
+                        CancellationID = homeStay.CancelPolicy.CancellationID,
+                        DayBeforeCancel = homeStay.CancelPolicy.DayBeforeCancel,
+                        RefundPercentage = homeStay.CancelPolicy.RefundPercentage,
+                        CreateAt = homeStay.CancelPolicy.CreateAt,
+                        UpdateAt = homeStay.CancelPolicy.UpdateAt,
+                        HomeStayID = homeStay.CancelPolicy.HomeStayID 
+                    };
+                }
+
+                // Xử lý thủ công cho StaffID và StaffName
+                var staff = await _staffRepository.GetAllStaffByHomeStay(id);
+                var firstStaff = staff?.FirstOrDefault();
+                if (firstStaff == null)
+                {
+                    Console.WriteLine($"No Staff found for HomeStayID: {id}");
+                    result.StaffID = null;
+                    result.StaffName = null;
+                }
+                else
+                {
+                    result.StaffID = firstStaff.StaffID;
+                    result.StaffName = firstStaff.StaffName;
+                }
+
+                // Xử lý thủ công cho OwnerID và OwnerName
+                result.OwnerID = homeStay.AccountID;
+                var ownerAccount = await _accountRepository.GetByAccountIdAsync(homeStay.AccountID);
+             
+
+                // Log kết quả
                 Console.WriteLine($"Mapped SumRate for HomeStayID {id}: {result.SumRate}");
                 Console.WriteLine($"Mapped TotalRatings for HomeStayID {id}: {result.TotalRatings}");
                 Console.WriteLine($"Mapped LatestRatings count for HomeStayID {id}: {(result.LatestRatings != null ? result.LatestRatings.Count() : 0)}");
                 Console.WriteLine($"Mapped CheapestPrice for HomeStayID {id}: {result.CheapestPrice}");
+                Console.WriteLine($"Mapped CancellationPolicy for HomeStayID {id}: {(result.CancelPolicy != null ? result.CancelPolicy.CancellationID : "null")}");
+                Console.WriteLine($"Mapped StaffID for HomeStayID {id}: {result.StaffID}");
+                Console.WriteLine($"Mapped StaffName for HomeStayID {id}: {result.StaffName}");
+                Console.WriteLine($"Mapped OwnerID for HomeStayID {id}: {result.OwnerID}");
+           
 
                 return new BaseResponse<SimpleHomeStayResponse>("Get HomeStay as base success", StatusCodeEnum.OK_200, result);
             }
