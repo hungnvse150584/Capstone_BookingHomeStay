@@ -19,21 +19,24 @@ namespace Service
         private readonly IConversationRepository _conversationRepository;
         private readonly IMessageRepository _messageRepository;
         private readonly IHomeStayRepository _homeStayRepository;
+        private readonly IStaffRepository _staffRepository; 
         private readonly Cloudinary _cloudinary;
 
         public ChatService(
-                IConversationRepository conversationRepository,
-                IMessageRepository messageRepository,
-                IHomeStayRepository homeStayRepository,
-                Cloudinary cloudinary)
+            IConversationRepository conversationRepository,
+            IMessageRepository messageRepository,
+            IHomeStayRepository homeStayRepository,
+            IStaffRepository staffRepository,
+            Cloudinary cloudinary)
         {
             _conversationRepository = conversationRepository;
             _messageRepository = messageRepository;
             _homeStayRepository = homeStayRepository;
+            _staffRepository = staffRepository;
             _cloudinary = cloudinary;
         }
 
-        public async Task<Conversation> GetOrCreateConversationAsync(string user1Id, string user2Id, int homeStayId)
+        public async Task<Conversation> GetOrCreateConversationAsync(string user1Id, string user2Id, int homeStayId, string staffIdAccount = null)
         {
             var orderedUserIds = new[] { user1Id, user2Id }.OrderBy(id => id).ToArray();
             string orderedUser1Id = orderedUserIds[0];
@@ -47,7 +50,8 @@ namespace Service
                     User1ID = user1Id,
                     User2ID = user2Id,
                     CreatedAt = DateTime.UtcNow,
-                    HomeStayID = homeStayId
+                    HomeStayID = homeStayId,
+                   
                 };
                 await _conversationRepository.CreateConversationAsync(conversation);
             }
@@ -137,14 +141,24 @@ namespace Service
 
         public async Task<Conversation> GetOrCreateConversationWithHomeStayOwnerAsync(string customerId, int homeStayId)
         {
-            var ownerId = await GetOwnerIdByHomeStayIdAsync(homeStayId);
-            var conversation = await _conversationRepository.GetConversationByUsersAsync(customerId, ownerId, homeStayId);
+            string receiverId;
+            var staffId = await GetStaffIdByHomeStayIdAsync(homeStayId);
+            if (!string.IsNullOrEmpty(staffId))
+            {
+                receiverId = staffId;
+            }
+            else
+            {
+                receiverId = await GetOwnerIdByHomeStayIdAsync(homeStayId);
+            }
+
+            var conversation = await _conversationRepository.GetConversationByUsersAsync(customerId, receiverId, homeStayId);
             if (conversation == null)
             {
                 conversation = new Conversation
                 {
                     User1ID = customerId,
-                    User2ID = ownerId,
+                    User2ID = receiverId,
                     CreatedAt = DateTime.UtcNow,
                     HomeStayID = homeStayId
                 };
@@ -152,7 +166,12 @@ namespace Service
             }
             return conversation;
         }
-
+        public async Task<string> GetStaffIdByHomeStayIdAsync(int homeStayId)
+        {
+            var staffList = await _staffRepository.GetAllStaffByHomeStay(homeStayId);
+            var staff = staffList.FirstOrDefault(); // Chọn nhân viên đầu tiên (có thể tùy chỉnh logic chọn nhân viên)
+            return staff?.StaffIdAccount;
+        }
         public async Task<List<Conversation>> GetConversationsByHomeStayIdAsync(int homeStayId)
         {
             return await _conversationRepository.GetConversationsByHomeStayIdAsync(homeStayId);
@@ -194,6 +213,7 @@ namespace Service
 
             return urls;
         }
+
         public async Task<List<Conversation>> GetConversationsByCustomerIdAsync(string customerId)
         {
 
@@ -205,5 +225,7 @@ namespace Service
 
             return filteredConversations;
         }
+
+       
     }
 }

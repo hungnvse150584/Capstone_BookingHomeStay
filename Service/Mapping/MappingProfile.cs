@@ -375,7 +375,11 @@ namespace Service.Mapping
             CreateMap<HomeStay, GetHomeStayResponse>();
             CreateMap<HomeStay, GetAllHomeStayWithOwnerName>()
                 .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.Account.Name));
-
+            CreateMap<Staff, SimplifiedStaffResponse>()
+       .ForMember(dest => dest.StaffIdAccount, opt => opt.MapFrom(src => src.StaffIdAccount))
+       .ForMember(dest => dest.StaffName, opt => opt.MapFrom(src => src.StaffName))
+       .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+       .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Phone));
             CreateMap<Conversation, ConversationResponse>()
                 .ForMember(dest => dest.OtherUser, opt => opt.Ignore())
                 .ForMember(dest => dest.LastMessage, opt => opt.MapFrom(src => src.Messages.OrderByDescending(m => m.SentAt).FirstOrDefault()));
