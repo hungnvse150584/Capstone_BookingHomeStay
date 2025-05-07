@@ -30,5 +30,8 @@ namespace Service.RequestAndResponse.Request.HomeStay
 
         [Range(0, double.MaxValue, ErrorMessage = "Max distance must be non-negative.")]
         public double MaxDistance { get; set; } = 10;
+        public int? Rating { get; set; } 
+        public decimal? MinPrice { get; set; } 
+        public decimal? MaxPrice { get; set; }
     }
 }
