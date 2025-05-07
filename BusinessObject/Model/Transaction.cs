@@ -22,8 +22,6 @@ namespace BusinessObject.Model
 
         public Account? Account { get; set; } = null!;
 
-        public Staff? Staff { get; set; } = null!;
-
         public string TmnCode { get; set; }
 
         public string TxnRef { get; set; }
