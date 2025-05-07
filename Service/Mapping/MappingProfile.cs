@@ -191,7 +191,8 @@ namespace Service.Mapping
               .ForMember(dest => dest.isActive, opt => opt.MapFrom(src => src.isActive))
               .ForMember(dest => dest.RoomTypesID, opt => opt.MapFrom(src => src.RoomTypesID))
               .ForMember(dest => dest.RoomTypeName, opt => opt.MapFrom(src => src.RoomTypes != null ? src.RoomTypes.Name : null))
-              .ForMember(dest => dest.RentPrice, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.Prices != null ? GetRentPriceFromPrices(src.RoomTypes.Prices) : null));
+              .ForMember(dest => dest.RentPrice, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.Prices != null ? GetRentPriceFromPrices(src.RoomTypes.Prices) : null))
+              .ForMember(dest => dest.HomeStayRentalName, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.HomeStayRentals != null ? src.RoomTypes.HomeStayRentals.Name : null));
 
             CreateMap<Booking, GetAllBookings>().ReverseMap();
             CreateMap<ImageRoomTypes, ImageRoomTypeResponse>().ReverseMap();

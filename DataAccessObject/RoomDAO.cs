@@ -178,6 +178,7 @@ namespace DataAccessObject
             }
 
             query = query
+          
                 .Include(r => r.RoomTypes)
                 .ThenInclude(rt => rt.HomeStayRentals)
                 .Include(r => r.RoomTypes)
