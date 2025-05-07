@@ -95,7 +95,53 @@ namespace Service.Mapping
                   .Select(p => (decimal?)p.RentPrice)
                   .FirstOrDefault()
               : null));
-            CreateMap<HomeStay, SingleHomeStayResponse>().ReverseMap();
+
+
+            CreateMap<HomeStay, SimpleHomeStayResponse>()
+     .ForMember(dest => dest.SumRate, opt => opt.MapFrom(src =>
+         src.Ratings != null && src.Ratings.Any(r => r.HomeStayID.HasValue && r.HomeStayID == src.HomeStayID)
+             ? src.Ratings.Where(r => r.HomeStayID.HasValue && r.HomeStayID == src.HomeStayID).Average(r => r.SumRate)
+             : (double?)null))
+     .ForMember(dest => dest.TotalRatings, opt => opt.MapFrom(src =>
+         src.Ratings != null ? src.Ratings.Count(r => r.HomeStayID.HasValue && r.HomeStayID == src.HomeStayID) : 0))
+     .ForMember(dest => dest.LatestRatings, opt => opt.MapFrom(src =>
+         src.Ratings != null && src.Ratings.Any(r => r.HomeStayID.HasValue && r.HomeStayID == src.HomeStayID)
+             ? src.Ratings.Where(r => r.HomeStayID.HasValue && r.HomeStayID == src.HomeStayID)
+                 .OrderByDescending(r => r.CreatedAt)
+                 .Take(5)
+                 .Select(r => new CreateRatingResponse
+                 {
+                     RatingID = r.RatingID,
+                     SumRate = r.SumRate,
+                     CleaningRate = r.CleaningRate,
+                     ServiceRate = r.ServiceRate,
+                     FacilityRate = r.FacilityRate,
+                     Content = r.Content,
+                     AccountID = r.AccountID,
+                     Username = r.Account != null ? r.Account.UserName : null,
+                     HomeStayID = r.HomeStayID ?? 0,
+                     BookingID = r.BookingID ?? 0,
+                     CreatedAt = r.CreatedAt,
+                     UpdatedAt = r.UpdatedAt,
+                     ImageRatings = r.ImageRatings != null
+                         ? r.ImageRatings.Select(ir => new ImageRatingResponse
+                         {
+                             ImageRatingID = ir.ImageRatingID,
+                             Image = ir.Image,
+                             RatingID = ir.RatingID ?? 0
+                         }).ToList()
+                         : new List<ImageRatingResponse>()
+                 }).ToList()
+             : new List<CreateRatingResponse>()))
+     .ForMember(dest => dest.CheapestPrice, opt => opt.MapFrom(src =>
+         src.HomeStayRentals != null && src.HomeStayRentals.Any()
+             ? src.HomeStayRentals.SelectMany(r => r.RoomTypes ?? new List<RoomTypes>())
+                 .SelectMany(rt => rt.Prices ?? new List<Pricing>())
+                 .Where(p => p.IsActive && p.RoomTypesID.HasValue)
+                 .OrderBy(p => p.RentPrice)
+                 .Select(p => (decimal?)p.RentPrice)
+                 .FirstOrDefault()
+             : null));
             CreateMap<ImageHomeStay, ImageHomeStayResponse>().ReverseMap();
 
             CreateMap<CreateHomeStayRequest, HomeStay>().ReverseMap();
