@@ -80,7 +80,7 @@ namespace Service
                     finalContent = finalContent + (string.IsNullOrEmpty(finalContent) ? "" : "\n") + string.Join("\n", imageUrls);
                 }
             }
-
+           
             var message = new Message
             {
                 ConversationID = conversation.ConversationID,
@@ -88,9 +88,11 @@ namespace Service
                 receiverID = receiverId,
                 senderName = senderName,
                 Content = finalContent,
+                //SentAt = DateTime.SpecifyKind(vietnamTime, DateTimeKind.Unspecified),
                 SentAt = DateTime.UtcNow,
                 IsRead = false
             };
+
             return await _messageRepository.CreateMessageAsync(message);
         }
 
