@@ -374,21 +374,18 @@ public class ChatController : ControllerBase
                 return BadRequest(new { message = "ReceiverID, SenderName, and HomeStayId are required." });
             }
 
-            // Kiểm tra HomeStay tồn tại
             var homeStay = await _homeStayRepository.GetByIdAsync(request.HomeStayId);
             if (homeStay == null)
             {
                 return BadRequest(new { message = "HomeStay not found." });
             }
 
-            // Kiểm tra xem SenderID hoặc ReceiverID có phải là Staff hoặc Owner của HomeStay không
             var staffList = await _staffRepository.GetStaffByHomeStayIdAsync(request.HomeStayId);
             var senderIsStaff = staffList?.Any(s => s.StaffIdAccount == request.SenderID) ?? false;
             var senderIsOwner = homeStay.AccountID == request.SenderID;
             var receiverIsStaff = staffList?.Any(s => s.StaffIdAccount == request.ReceiverID) ?? false;
             var receiverIsOwner = homeStay.AccountID == request.ReceiverID;
 
-            // Một trong hai phải là Staff hoặc Owner của HomeStay
             if (!(senderIsStaff || senderIsOwner || receiverIsStaff || receiverIsOwner))
             {
                 return BadRequest(new { message = "At least one of Sender or Receiver must be a Staff or Owner of this HomeStay." });
@@ -403,6 +400,7 @@ public class ChatController : ControllerBase
                 request.Images
             );
 
+            // Gửi tin nhắn qua nhóm
             await _hubContext.Clients.Group(request.ReceiverID).SendAsync(
                 "ReceiveMessage",
                 request.SenderID,

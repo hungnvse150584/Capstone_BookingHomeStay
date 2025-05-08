@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realtime Chat Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #message-list {
+            border: 1px solid #ddd;
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+
+            #message-list div {
+                padding: 5px 0;
+            }
+
+        #message-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input[type="text"], button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        #status {
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h1>Realtime Chat Test</h1>
+        <div id="status">Disconnected</div>
+        <div id="message-list"></div>
+        <div id="message-form">
+            <input type="text" id="senderId" placeholder="Your User ID (Sender ID)" />
+            <input type="text" id="receiverId" placeholder="Receiver User ID" />
+            <input type="text" id="senderName" placeholder="Your Name" />
+            <input type="text" id="homeStayId" placeholder="HomeStay ID" value="1" />
+            <input type="text" id="messageInput" placeholder="Type your message..." />
+            <button onclick="sendMessage()">Send Message</button>
+        </div>
+    </div>
+
+    <!-- Include SignalR client library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+    <script>
+        // Khởi tạo kết nối SignalR
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("https://localhost:7221/chatHub") // Xóa accessTokenFactory tạm thời để test
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        // Hiển thị trạng thái kết nối
+        const statusElement = document.getElementById("status");
+        statusElement.textContent = "Connecting...";
+
+        // Xử lý khi nhận tin nhắn
+        connection.on("ReceiveMessage", (senderId, content, sentAt, messageId, conversationId, senderName, receiverId) => {
+            const messageList = document.getElementById("message-list");
+            const messageDiv = document.createElement("div");
+            messageDiv.textContent = `[${new Date(sentAt).toLocaleString()}] ${senderName} (to ${receiverId}): ${content}`;
+            messageList.appendChild(messageDiv);
+            messageList.scrollTop = messageList.scrollHeight; // Tự động cuộn xuống cuối
+            console.log("Received message:", { senderId, content, sentAt, messageId, conversationId, senderName, receiverId });
+        });
+
+        // Xử lý lỗi kết nối
+        connection.onclose(error => {
+            statusElement.textContent = "Disconnected: " + (error ? error.message : "Unknown error");
+            console.error("SignalR connection closed:", error);
+        });
+
+        // Khởi động kết nối
+        connection.start()
+            .then(() => {
+                statusElement.textContent = "Connected to SignalR";
+                console.log("SignalR connected");
+                // Đăng ký userId ngay khi kết nối
+                const senderId = document.getElementById("senderId").value;
+                if (senderId) {
+                    connection.invoke("RegisterUser", senderId)
+                        .then(() => console.log("User registered:", senderId))
+                        .catch(err => console.error("Error registering user:", err));
+                }
+            })
+            .catch(err => {
+                statusElement.textContent = "Connection failed: " + err.message;
+                console.error("SignalR connection error:", err);
+            });
+
+        // Hàm gửi tin nhắn
+        function sendMessage() {
+            const senderId = document.getElementById("senderId").value;
+            const receiverId = document.getElementById("receiverId").value;
+            const senderName = document.getElementById("senderName").value;
+            const homeStayId = parseInt(document.getElementById("homeStayId").value);
+            const content = document.getElementById("messageInput").value;
+
+            if (!senderId || !receiverId || !senderName || !homeStayId || !content) {
+                alert("Please fill in all fields!");
+                return;
+            }
+
+            // Gửi tin nhắn qua SignalR
+            connection.invoke("SendMessage", senderId, receiverId, content, senderName, homeStayId, null)
+                .then(() => {
+                    document.getElementById("messageInput").value = ""; // Xóa input sau khi gửi
+                    console.log("Message sent:", { senderId, receiverId, content, homeStayId });
+                })
+                .catch(err => console.error("Error sending message:", err));
+        }
+
+        // Đăng ký lại userId khi thay đổi senderId
+        document.getElementById("senderId").addEventListener("change", () => {
+            const senderId = document.getElementById("senderId").value;
+            if (senderId && connection.state === signalR.HubConnectionState.Connected) {
+                connection.invoke("RegisterUser", senderId)
+                    .then(() => console.log("User registered:", senderId))
+                    .catch(err => console.error("Error registering user:", err));
+            }
+        });
+    </script>
+</body>
+</html>
