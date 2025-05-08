@@ -49,7 +49,7 @@ namespace Repository.Repositories
             return await _accountDao.DeleteAsync(entity);
         }
 
-        public async Task<(int totalAccount, int ownersAccount, int customersAccount)> GetTotalAccount()
+        public async Task<(int totalAccount, int ownersAccount, int customersAccount, int staffsAccount)> GetTotalAccount()
         {
             return await _accountDao.GetTotalAccount();
         }

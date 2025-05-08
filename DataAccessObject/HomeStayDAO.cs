@@ -300,5 +300,24 @@
 
                 return result;
             }
+
+            public async Task<List<(string accountID, string ownerName, int totalHomeStays)>> GetTopLoyalOwnersAsync(int top = 5)
+            {
+                var topOwners = await _context.HomeStays
+                    .GroupBy(h => new { h.AccountID, h.Account.Name })
+                    .Select(g => new
+                    {
+                        AccountId = g.Key.AccountID,
+                        OwnerName = g.Key.Name,
+                        TotalHomeStays = g.Count()
+                    })
+                    .OrderByDescending(x => x.TotalHomeStays)
+                    .Take(top)
+                    .ToListAsync();
+
+                return topOwners
+                      .Select(x => (x.AccountId, x.OwnerName, x.TotalHomeStays))
+                      .ToList();
+            }
         }
     }

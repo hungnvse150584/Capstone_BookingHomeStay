@@ -9,6 +9,8 @@ using Service.IService;
 using System.Text;
 using Service.Service;
 using Microsoft.AspNetCore.Authorization;
+using Service.RequestAndResponse.BaseResponse;
+using Service.RequestAndResponse.Response.Accounts;
 
 namespace GreenRoam.Controllers
 {
@@ -21,15 +23,25 @@ namespace GreenRoam.Controllers
         private readonly SignInManager<Account> _signinManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IStaffService _staffService;
+        private readonly IAccountService _accountService;
 
         public AccountController(UserManager<Account> userManager, ITokenService tokenService,
-            SignInManager<Account> signInManager, RoleManager<IdentityRole> roleManager, IStaffService staffService)
+            SignInManager<Account> signInManager, RoleManager<IdentityRole> roleManager, IStaffService staffService, 
+            IAccountService accountService)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _signinManager = signInManager;
             _roleManager = roleManager;
             _staffService = staffService;
+            _accountService = accountService;
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("adminDashBoard/GetTotalAccount")]
+        public async Task<BaseResponse<GetTotalAccount>> GetTotalAccount()
+        {
+            return await _accountService.GetTotalAccount();
         }
 
         [HttpPost("login")]
