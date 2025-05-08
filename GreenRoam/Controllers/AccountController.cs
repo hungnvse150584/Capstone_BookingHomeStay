@@ -92,6 +92,7 @@ namespace GreenRoam.Controllers
             );
         }
 
+
         [HttpPost("register-Customer")]
         public async Task<IActionResult> RegisterCustomer([FromBody] RegisterDto registerDto)
         {

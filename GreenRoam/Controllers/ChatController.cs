@@ -361,6 +361,7 @@ public class ChatController : ControllerBase
     }
 
     //[Authorize(Roles = "Owner, Staff, Customer")]
+
     [HttpPost("send-message")]
     public async Task<IActionResult> SendMessage([FromForm] SendMessageRequest request)
     {
