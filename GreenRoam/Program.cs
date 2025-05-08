@@ -170,6 +170,7 @@ builder.Services.AddSignalR();
 //               .AllowCredentials();
 //    });
 //});
+
 builder.Services.AddAuthorization();
 var cloudName = builder.Configuration["Cloudinary:CloudName"];
 var apiKey = builder.Configuration["Cloudinary:ApiKey"];
