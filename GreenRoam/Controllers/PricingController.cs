@@ -56,7 +56,7 @@ namespace GreenRoam.Controllers
         }
 
 
-        //[HttpGet]
+        [HttpGet]
         [Route("GetTotalPrice")]
         public async Task<ActionResult<BaseResponse<GetTotalPrice>>> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId)
         {
@@ -64,7 +64,7 @@ namespace GreenRoam.Controllers
             return Ok(pricing);
         }
 
-        //[HttpGet]
+        [HttpGet]
         [Route("GetDateType")]
         public async Task<ActionResult<DayType>> GetDayType(DateTime dateTime)
         {
