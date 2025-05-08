@@ -90,6 +90,10 @@ namespace GreenRoam.Controllers
                 }
             );
         }
+<<<<<<< HEAD
+=======
+       
+>>>>>>> 2250ec7e (Remove google login)
 
         [HttpPost("register-Customer")]
         public async Task<IActionResult> RegisterCustomer([FromBody] RegisterDto registerDto)
