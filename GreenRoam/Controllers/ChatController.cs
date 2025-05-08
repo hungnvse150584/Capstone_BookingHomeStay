@@ -22,21 +22,23 @@ public class ChatController : ControllerBase
     private readonly IHomeStayRepository _homeStayRepository;
     private readonly IAccountRepository _accountRepository;
     private readonly IStaffRepository _staffRepository;
+    private readonly IHubContext<ChatHub> _hubContext;
 
     public ChatController(
         IChatService chatService,
         IMapper mapper,
         IHomeStayRepository homeStayRepository,
         IAccountRepository accountRepository,
-        IStaffRepository staffRepository)
+        IStaffRepository staffRepository,
+        IHubContext<ChatHub> hubContext)
     {
         _chatService = chatService;
         _mapper = mapper;
         _homeStayRepository = homeStayRepository;
         _accountRepository = accountRepository;
         _staffRepository = staffRepository;
+        _hubContext = hubContext;
     }
-
     //[HttpGet("conversations/{userId}")]
     //public async Task<IActionResult> GetConversations(string userId)
     //{
@@ -372,33 +374,36 @@ public class ChatController : ControllerBase
                 return BadRequest(new { message = "ReceiverID, SenderName, and HomeStayId are required." });
             }
 
-            string receiverId;
-            var staffList = await _staffRepository.GetStaffByHomeStayIdAsync(request.HomeStayId); // Lấy danh sách nhân viên
-            var staffId = staffList?.FirstOrDefault()?.StaffIdAccount; // Lấy StaffIdAccount từ nhân viên đầu tiên nếu có
-            if (!string.IsNullOrEmpty(staffId))
+            // Kiểm tra HomeStay tồn tại
+            var homeStay = await _homeStayRepository.GetByIdAsync(request.HomeStayId);
+            if (homeStay == null)
             {
-                receiverId = staffId; // Ưu tiên gửi tin nhắn đến nhân viên nếu có
+                return BadRequest(new { message = "HomeStay not found." });
             }
-            else
+
+            // Kiểm tra xem SenderID hoặc ReceiverID có phải là Staff hoặc Owner của HomeStay không
+            var staffList = await _staffRepository.GetStaffByHomeStayIdAsync(request.HomeStayId);
+            var senderIsStaff = staffList?.Any(s => s.StaffIdAccount == request.SenderID) ?? false;
+            var senderIsOwner = homeStay.AccountID == request.SenderID;
+            var receiverIsStaff = staffList?.Any(s => s.StaffIdAccount == request.ReceiverID) ?? false;
+            var receiverIsOwner = homeStay.AccountID == request.ReceiverID;
+
+            // Một trong hai phải là Staff hoặc Owner của HomeStay
+            if (!(senderIsStaff || senderIsOwner || receiverIsStaff || receiverIsOwner))
             {
-                receiverId = await _chatService.GetOwnerIdByHomeStayIdAsync(request.HomeStayId);
-                if (receiverId == null)
-                {
-                    return BadRequest(new { message = "Owner not found for this HomeStay." });
-                }
+                return BadRequest(new { message = "At least one of Sender or Receiver must be a Staff or Owner of this HomeStay." });
             }
 
             var message = await _chatService.SendMessageAsync(
                 request.SenderID,
-                receiverId,
+                request.ReceiverID,
                 request.Content,
                 request.SenderName,
                 request.HomeStayId,
                 request.Images
             );
 
-            var hubContext = (IHubContext<ChatHub>)HttpContext.RequestServices.GetService(typeof(IHubContext<ChatHub>));
-            await hubContext.Clients.All.SendAsync(
+            await _hubContext.Clients.Group(request.ReceiverID).SendAsync(
                 "ReceiveMessage",
                 request.SenderID,
                 message.Content,
@@ -416,7 +421,6 @@ public class ChatController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
-
     //[Authorize(Roles = "Owner, Staff, Customer")]
     [HttpPost("create-conversation")]
     public async Task<IActionResult> CreateConversation([FromBody] CreateConversationRequest request)
@@ -433,24 +437,29 @@ public class ChatController : ControllerBase
                 return BadRequest(new { message = "SenderID, ReceiverID, and HomeStayId are required." });
             }
 
-            string receiverId;
-            var staff = await _staffRepository.GetByStaffIdAccountAsync(request.ReceiverID);
-            if (staff != null && staff.HomeStayID == request.HomeStayId)
+            // Kiểm tra HomeStay tồn tại
+            var homeStay = await _homeStayRepository.GetByIdAsync(request.HomeStayId);
+            if (homeStay == null)
             {
-                receiverId = request.ReceiverID; // Chat với nhân viên nếu đúng HomeStay
+                return BadRequest(new { message = "HomeStay not found." });
             }
-            else
+
+            // Kiểm tra xem SenderID hoặc ReceiverID có phải là Staff hoặc Owner của HomeStay không
+            var staffList = await _staffRepository.GetStaffByHomeStayIdAsync(request.HomeStayId);
+            var senderIsStaff = staffList?.Any(s => s.StaffIdAccount == request.SenderID) ?? false;
+            var senderIsOwner = homeStay.AccountID == request.SenderID;
+            var receiverIsStaff = staffList?.Any(s => s.StaffIdAccount == request.ReceiverID) ?? false;
+            var receiverIsOwner = homeStay.AccountID == request.ReceiverID;
+
+            // Một trong hai phải là Staff hoặc Owner của HomeStay
+            if (!(senderIsStaff || senderIsOwner || receiverIsStaff || receiverIsOwner))
             {
-                receiverId = await _chatService.GetOwnerIdByHomeStayIdAsync(request.HomeStayId);
-                if (receiverId == null)
-                {
-                    return BadRequest(new { message = "Owner not found for this HomeStay." });
-                }
+                return BadRequest(new { message = "At least one of Sender or Receiver must be a Staff or Owner of this HomeStay." });
             }
 
             var conversation = await _chatService.GetOrCreateConversationAsync(
                 request.SenderID,
-                receiverId,
+                request.ReceiverID,
                 request.HomeStayId
             );
 
