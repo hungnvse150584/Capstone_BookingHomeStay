@@ -195,5 +195,24 @@ using Service.IService;
                 var result = await _ratingService.GetAverageRatingAsync(homeStayId);
                 return StatusCode((int)result.StatusCode, result);
             }
+        [HttpGet]
+        [Route("GetRatingDetail/{ratingId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<BaseResponse<CreateRatingResponse>>> GetRatingDetail(int ratingId)
+        {
+            if (ratingId <= 0)
+            {
+                return BadRequest(new BaseResponse<CreateRatingResponse>(
+                    "Please provide a valid Rating ID.",
+                    StatusCodeEnum.BadRequest_400,
+                    null));
+            }
+
+            var result = await _ratingService.GetRatingDetailByRatingIDAsync(ratingId);
+            return StatusCode((int)result.StatusCode, result);
         }
     }
+}

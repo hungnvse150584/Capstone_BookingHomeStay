@@ -3675,6 +3675,46 @@
         }
       }
     },
+    "/api/homestay/GetTrendingHomeStays": {
+      "get": {
+        "tags": [
+          "HomeStay"
+        ],
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTrendingHomeStayListBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTrendingHomeStayListBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTrendingHomeStayListBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/homestayrental/GetAllHomeStayRentals/{homestayId}": {
       "get": {
         "tags": [
@@ -5740,6 +5780,89 @@
         }
       }
     },
+    "/api/rating/GetRatingDetail/{ratingId}": {
+      "get": {
+        "tags": [
+          "Rating"
+        ],
+        "parameters": [
+          {
+            "name": "ratingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateRatingResponseBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateRatingResponseBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateRatingResponseBaseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
     "/api/rooms/GetAllRoom": {
       "get": {
         "tags": [
@@ -6850,6 +6973,35 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/StaffBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Transaction/GetAllTransactions": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponseIEnumerableBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponseIEnumerableBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponseIEnumerableBaseResponse"
                 }
               }
             }
@@ -11519,6 +11671,43 @@
         },
         "additionalProperties": false
       },
+      "GetTrendingHomeStay": {
+        "type": "object",
+        "properties": {
+          "homeStays": {
+            "$ref": "#/components/schemas/SingleHomeStayResponse"
+          },
+          "avgRating": {
+            "type": "number",
+            "format": "double"
+          },
+          "ratingCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTrendingHomeStayListBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetTrendingHomeStay"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "HistoryPricing": {
         "required": [
           "description",
@@ -13761,6 +13950,14 @@
             "type": "string",
             "nullable": true
           },
+          "ownerAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "adminAmount": {
+            "type": "number",
+            "format": "double"
+          },
           "transactionKind": {
             "$ref": "#/components/schemas/TransactionKind"
           }
@@ -13839,6 +14036,14 @@
           "bookingServicesID": {
             "type": "integer",
             "format": "int32"
+          },
+          "ownerAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "adminAmount": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false

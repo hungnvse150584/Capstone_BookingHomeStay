@@ -315,5 +315,25 @@ namespace Service.Service
                     0);
             }
         }
+        public async Task<BaseResponse<CreateRatingResponse>> GetRatingDetailByRatingIDAsync(int ratingId)
+        {
+            try
+            {
+                if (ratingId <= 0)
+                    return new BaseResponse<CreateRatingResponse>("RatingID must be greater than 0", StatusCodeEnum.BadRequest_400, null);
+
+                var rating = await _ratingRepository.GetByIdAsync(ratingId, includeAccount: true);
+                if (rating == null)
+                    return new BaseResponse<CreateRatingResponse>("Rating not found!", StatusCodeEnum.NotFound_404, null);
+
+                var response = _mapper.Map<CreateRatingResponse>(rating);
+                response.ImageRatings = _mapper.Map<ICollection<ImageRatingResponse>>(await _imageRatingRepository.GetImagesByRatingIdAsync(ratingId));
+                return new BaseResponse<CreateRatingResponse>("Rating details retrieved successfully!", StatusCodeEnum.OK_200, response);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<CreateRatingResponse>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
+            }
+        }
     }
 }
