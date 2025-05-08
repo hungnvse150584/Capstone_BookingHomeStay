@@ -5,6 +5,7 @@ using Repository.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -136,6 +137,16 @@ namespace Repository.Repositories
         public async Task<IEnumerable<Booking>> GetCheckOutBookings()
         {
             return await _bookingDao.GetCheckOutBookingsAsync();
+        }
+
+        public async Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmount()
+        {
+            return await _bookingDao.GetTotalBookingsAndAmount();
+        }
+
+        public async Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmountForHomeStay(int homeStayID)
+        {
+            return await _bookingDao.GetTotalBookingsAndAmountForHomeStay(homeStayID);
         }
     }
 }

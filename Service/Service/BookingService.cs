@@ -557,5 +557,42 @@ namespace Service.Service
             }
             return new BaseResponse<string>("The booking has been automatically Checkout successfully!", StatusCodeEnum.Created_201, "Success");
         }
+
+        public async Task<BaseResponse<GetTotalBookingsAndAmount>> GetTotalBookingsAndAmount()
+        {
+            var total = await _bookingRepository.GetTotalBookingsAndAmount();
+            var response = new GetTotalBookingsAndAmount
+            {
+
+                totalBookings = total.totalBookings,
+                totalBookingsAmount = total.totalBookingsAmount
+            };
+            if (response == null)
+            {
+                return new BaseResponse<GetTotalBookingsAndAmount>("Get Total Fail", StatusCodeEnum.BadRequest_400, null);
+            }
+            return new BaseResponse<GetTotalBookingsAndAmount>("Get All Success", StatusCodeEnum.OK_200, response);
+        }
+
+        public async Task<BaseResponse<GetTotalBookingsAndAmountForHomeStay>> GetTotalBookingsAndAmountForHomeStay(int homeStayID)
+        {
+            if (homeStayID <= 0)
+            {
+                return new BaseResponse<GetTotalBookingsAndAmountForHomeStay>("Please input correct ID", StatusCodeEnum.NotImplemented_501, null);
+            }
+
+            var total = await _bookingRepository.GetTotalBookingsAndAmountForHomeStay(homeStayID);
+            var response =  new GetTotalBookingsAndAmountForHomeStay
+            {
+                
+                totalBookings = total.totalBookings,
+                totalBookingsAmount =total.totalBookingsAmount
+            };
+            if (response == null)
+            {
+                return new BaseResponse<GetTotalBookingsAndAmountForHomeStay>("Get Total Fail", StatusCodeEnum.BadRequest_400, null);
+            }
+            return new BaseResponse<GetTotalBookingsAndAmountForHomeStay>("Get All Success", StatusCodeEnum.OK_200, response);
+        }
     }
 }

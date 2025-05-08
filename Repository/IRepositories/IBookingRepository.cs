@@ -38,6 +38,8 @@ namespace Repository.IRepositories
         Task<List<(Account Account, int TotalBooking)>> GetCustomersByHomeStay(int homeStayId);
         Task<IEnumerable<Booking>> GetBookingsByRoom(int roomId);
         Task<Booking?> GetBookingByAccountAndHomeStayAsync(string accountId, int homeStayId);
+        Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmount();
+        Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmountForHomeStay(int homeStayID);
 
 
     }
