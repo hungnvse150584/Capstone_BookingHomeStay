@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
@@ -36,6 +37,8 @@ namespace GreenRoam.Controllers
             _cancellationService = cancellationService;
             _accountService = accountService;
         }
+
+        //[Authorize(Roles = "Staff, Customer")]
         [HttpPost]
         [Route("CreateBooking")]
         public async Task<ActionResult<BaseResponse<int>>> CreateBooking([FromBody] CreateBookingRequest bookingRequest, PaymentMethod paymentMethod)
@@ -48,6 +51,7 @@ namespace GreenRoam.Controllers
             return booking;
         }
 
+        //[Authorize(Roles = "Customer")]
         [HttpPost]
         [Route("BookingPayment")]
         public async Task<ActionResult<string>> CheckOutBooking(int bookingID, bool isFullPayment)
@@ -89,6 +93,7 @@ namespace GreenRoam.Controllers
             return _vpnPayService.CreatePaymentUrl(HttpContext, vnPayModel);
         }
 
+        //[Authorize(Roles = "Owner, Staff")]
         [HttpPost]
         [Route("BookingPayment-Refund")]
         public async Task<ActionResult<string>> CheckOutRefundBooking(int bookingID, string accountId)
@@ -169,6 +174,7 @@ namespace GreenRoam.Controllers
             }
         }
 
+        //[Authorize(Roles = "Customer")]
         [HttpPost]
         [Route("BookingServicePayment")]
         public async Task<ActionResult<string>> CheckOutBookingService(int bookingServiceId, bool isFullPayment)
@@ -200,6 +206,7 @@ namespace GreenRoam.Controllers
             return _vpnPayService.CreatePaymentUrl(HttpContext, vnPayModel);
         }
 
+        //[Authorize(Roles = "Owner, Staff")]
         [HttpPost]
         [Route("BookingPaymentService-Refund")]
         public async Task<ActionResult<string>> CheckOutRefundBookingService(int bookingServiceID, string accountId)
@@ -256,6 +263,7 @@ namespace GreenRoam.Controllers
             }
         }
 
+        
         [HttpGet("vnpay-return")]
         public async Task<IActionResult> HandleVnPayReturn([FromQuery] VnPayReturnModel model)
         {
@@ -352,6 +360,7 @@ namespace GreenRoam.Controllers
             return BadRequest("Cannot find Booking or Booking Service");
         }
 
+        //[Authorize(Roles = "Customer")]
         [HttpPut]
         [Route("UpdateBooking")]
         public async Task<ActionResult<BaseResponse<UpdateBookingRequest>>> UpdateBooking(int bookingID, UpdateBookingRequest request)
@@ -364,6 +373,7 @@ namespace GreenRoam.Controllers
             return booking;
         }
 
+        //[Authorize(Roles = "Owner, Staff")]
         [HttpPut]
         [Route("ChangingRoom")]
         public async Task<ActionResult<BaseResponse<UpdateBookingForRoomRequest>>> ChangeRoomForBooking(int bookingID, UpdateBookingForRoomRequest request)
@@ -376,6 +386,7 @@ namespace GreenRoam.Controllers
             return booking;
         }
 
+        //[Authorize(Roles = "Owner, Staff")]
         [HttpPut]
         [Route("ChangeBookingStatus")]
         public async Task<ActionResult<BaseResponse<Booking>>> ChangeTheBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)

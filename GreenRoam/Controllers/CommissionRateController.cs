@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
@@ -18,6 +19,7 @@ namespace GreenRoam.Controllers
             _commissionService = commissionService;
         }
 
+        //[Authorize(Roles = "Admin")]
         [HttpGet("GetAll")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllCommissionRate>>>> GetAllCommissionRates()
         {
@@ -25,6 +27,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
+        //[Authorize(Roles = "Admin, Owner, Staff")]
         [HttpGet("GetByHomeStay/{homeStayID}")]
         public async Task<ActionResult<BaseResponse<GetAllCommissionRate>>> GetCommissionRateByHomeStay(int homeStayID)
         {
@@ -36,6 +39,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
+        //[Authorize(Roles = "Admin")]
         [HttpPost("Create")]
         public async Task<ActionResult<BaseResponse<CreateCommissionRateRequest>>> CreateCommissionRate([FromBody] CreateCommissionRateRequest request)
         {
@@ -51,6 +55,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
+        //[Authorize(Roles = "Admin")]
         [HttpPut("Update")]
         public async Task<ActionResult<BaseResponse<UpdateCommissionRateRequest>>> UpdateCommissionRate([FromBody] UpdateCommissionRateRequest request)
         {
@@ -65,6 +70,8 @@ namespace GreenRoam.Controllers
             var result = await _commissionService.UpdateCommmisionRate(request);
             return StatusCode((int)result.StatusCode, result);
         }
+
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("Delete/{id}")]
         public async Task<ActionResult<BaseResponse<string>>> DeleteCommissionRate(int id)
         {

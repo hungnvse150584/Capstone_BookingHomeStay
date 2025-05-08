@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
@@ -16,6 +17,7 @@ namespace GreenRoam.Controllers
             _transactionsService = transactionsService;
         }
 
+        //[Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("GetAllTransactions")]
         public async Task<ActionResult<BaseResponse<IEnumerable<TransactionResponse>>>> GetAllTransactions()
@@ -24,6 +26,7 @@ namespace GreenRoam.Controllers
             return Ok(transactions);
         }
 
+        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetTransactionByID/{transactionID}")]
         public async Task<ActionResult<BaseResponse<TransactionResponse?>>> GetTransactionById(string transactionID)
@@ -32,6 +35,7 @@ namespace GreenRoam.Controllers
             return Ok(transaction);
         }
 
+        //[Authorize(Roles = "Admin, Owner, Staff")]
         [HttpGet]
         [Route("GetTransactionByHomeStay/{homeStayID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<TransactionResponse>>>> GetTransactionsByHomeStayId(int homeStayID)
@@ -40,6 +44,7 @@ namespace GreenRoam.Controllers
             return Ok(transactions);
         }
 
+        //[Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetTransactionByAccountID/{accountId}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<TransactionResponse>>>> GetTransactionsByAccountId(string accountId)
