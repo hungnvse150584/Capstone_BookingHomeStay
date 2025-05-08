@@ -15,6 +15,7 @@ using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.HomeStay;
 using Service.RequestAndResponse.Request.Pricing;
 using Service.RequestAndResponse.Response.Accounts;
+using Service.RequestAndResponse.Response.Bookings;
 using Service.RequestAndResponse.Response.CancellationPolicyRequest;
 using Service.RequestAndResponse.Response.HomeStays;
 using Service.RequestAndResponse.Response.HomeStayType;
@@ -1472,6 +1473,22 @@ namespace Service.Service
             {
                 return new BaseResponse<List<GetTrendingHomeStay>>($"Đã xảy ra lỗi: {ex.Message}", StatusCodeEnum.BadGateway_502, null);
             }
+        }
+
+        public async Task<BaseResponse<List<GetTopLoyalOwners>>> GetTopLoyalOwnersAsync(int top = 5)
+        {
+            var total = await _homeStayRepository.GetTopLoyalOwnersAsync(top);
+            var response = total.Select(p => new GetTopLoyalOwners
+            {
+                accountID = p.accountID,
+                ownerName = p.ownerName,
+                totalHomeStays = p.totalHomeStays
+            }).ToList();
+            if (response == null || !response.Any())
+            {
+                return new BaseResponse<List<GetTopLoyalOwners>>("Get Total Fail", StatusCodeEnum.BadRequest_400, null);
+            }
+            return new BaseResponse<List<GetTopLoyalOwners>>("Get All Success", StatusCodeEnum.OK_200, response);
         }
     }
 }

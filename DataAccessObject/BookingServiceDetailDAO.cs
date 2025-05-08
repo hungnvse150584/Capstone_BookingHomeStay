@@ -23,5 +23,21 @@ namespace DataAccessObject
                                  .Where(d => d.BookingServicesID == bookingId && !updatedDetailIds.Contains(d.BookingServicesDetailID))
                                  .ToListAsync();
         }
+
+        public async Task<List<(string serviceName, int count)>> GetServiceUsageStatsAsync(int homestayId)
+        {
+            var stats = await _context.BookingServicesDetails
+                .Where(b => (b.BookingService.Status == BookingServicesStatus.Confirmed ||
+                       b.BookingService.Status == BookingServicesStatus.Completed) &&
+                       b.BookingService.HomeStayID == homestayId)
+                .GroupBy(b => b.Services.servicesName)
+                .Select(g => new
+                {
+                    serviceName = g.Key,
+                    count = g.Count()
+                }).ToListAsync();
+
+            return stats.Select(s => (s.serviceName, s.count)).ToList();
+        }
     }
 }

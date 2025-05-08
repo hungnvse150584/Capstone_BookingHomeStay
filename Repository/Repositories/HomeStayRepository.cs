@@ -117,5 +117,10 @@ namespace Repository.Repositories
         {
             return await _homestayDao.GetTrendingHomeStaysAsync(top);
         }
+
+        public async Task<List<(string accountID, string ownerName, int totalHomeStays)>> GetTopLoyalOwnersAsync(int top = 5)
+        {
+           return await _homestayDao.GetTopLoyalOwnersAsync();
+        }
     }
 }

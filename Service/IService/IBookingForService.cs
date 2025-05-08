@@ -2,6 +2,7 @@
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.BookingServices;
 using Service.RequestAndResponse.Response.BookingOfServices;
+using Service.RequestAndResponse.Response.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,6 @@ namespace Service.IService
         Task<BaseResponse<BookingServices>> GetBookingServiceById(int? bookingID);
         Task<BaseResponse<IEnumerable<GetBookingServiceByAccount>>> GetBookingServiceByAccountId(string accountId);
         Task<BaseResponse<IEnumerable<GetBookingServiceByHomeStay>>> GetBookingServicesByHomeStayId(int homeStayID);
+        Task<BaseResponse<List<GetServiceStats>>> GetServiceUsageStatsAsync(int homestayId);
     }
 }

@@ -5,6 +5,7 @@ using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.Booking;
 using Service.RequestAndResponse.Request.VnPayModel;
+using Service.RequestAndResponse.Response.RoomType;
 using Service.Service;
 using System.Globalization;
 
@@ -358,6 +359,13 @@ namespace GreenRoam.Controllers
                 return Redirect($"{_configuration["VnPay:PaymentBackReturnUrl2"]}/{bookingserviceId}");
             }
             return BadRequest("Cannot find Booking or Booking Service");
+        }
+
+        [HttpGet("GetRoomTypeStats")]
+        public async Task<ActionResult<BaseResponse<List<GetRoomTypeStats>>>> GetRoomTypeUsageStats(int homestayId)
+        {
+            var roomtypes = await _checkoutService.GetRoomTypeUsageStatsAsync(homestayId);
+            return Ok(roomtypes);
         }
 
         //[Authorize(Roles = "Customer")]

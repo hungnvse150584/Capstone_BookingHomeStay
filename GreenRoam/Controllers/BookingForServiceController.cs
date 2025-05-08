@@ -7,6 +7,7 @@ using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.BookingServices;
 using Service.RequestAndResponse.Response.BookingOfServices;
 using Service.RequestAndResponse.Response.Bookings;
+using Service.RequestAndResponse.Response.Services;
 
 namespace GreenRoam.Controllers
 {
@@ -45,6 +46,15 @@ namespace GreenRoam.Controllers
         {
             var bookings = await _bookingService.GetBookingServicesByHomeStayId(homeStayID);
             return Ok(bookings);
+        }
+
+        //[Authorize(Roles = "Owner, Staff")]
+        [HttpGet]
+        [Route("GetServiceStats")]
+        public async Task<ActionResult<BaseResponse<List<GetServiceStats>>>> GetServiceUsageStats(int homestayId)
+        {
+            var services = await _bookingService.GetServiceUsageStatsAsync(homestayId);
+            return Ok(services);
         }
 
         //[Authorize(Roles = "Customer")]

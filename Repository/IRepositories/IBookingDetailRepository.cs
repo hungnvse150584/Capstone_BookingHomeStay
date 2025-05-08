@@ -11,5 +11,6 @@ namespace Repository.IRepositories
     {
         Task<List<BookingDetail>> DeleteBookingDetailAsync(List<BookingDetail> bookingDetails);
         Task<List<BookingDetail>> GetBookingDetailsToRemoveAsync(int bookingId, List<int> updatedDetailIds);
+        Task<List<(string roomTypeName, int count)>> GetRoomTypeUsageStatsAsync(int homestayId);
     }
 }

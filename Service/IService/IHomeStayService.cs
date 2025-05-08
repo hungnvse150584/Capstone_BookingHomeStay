@@ -31,5 +31,6 @@ namespace Service.IService
         Task<BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>> CreateHomeStayWithRentalsAndPricingAsync(CreateHomeStayWithRentalsAndPricingRequest request);
         Task<BaseResponse<List<GetOwnerUser>>> GetOwnersWithHomeStayStats();
         Task<BaseResponse<List<GetTrendingHomeStay>>> GetTrendingHomeStays(int top = 10);
+        Task<BaseResponse<List<GetTopLoyalOwners>>> GetTopLoyalOwnersAsync(int top = 5);
     }
 }

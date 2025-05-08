@@ -27,5 +27,10 @@ namespace Repository.Repositories
         {
             return await _bookingDetailDao.GetBookingDetailsToRemoveAsync(bookingId, updatedDetailIds);
         }
+
+        public async Task<List<(string roomTypeName, int count)>> GetRoomTypeUsageStatsAsync(int homestayId)
+        {
+            return await _bookingDetailDao.GetRoomTypeUsageStatsAsync(homestayId);
+        }
     }
 }

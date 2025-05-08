@@ -96,6 +96,13 @@ namespace GreenRoam.Controllers
             return Ok(response);
         }
 
+        //[Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Route("adminDashBoard/GetTopLoyalOwners")]
+        public async Task<BaseResponse<List<GetTopLoyalOwners>>> GetTopLoyalOwnersAsync(int top = 5)
+        {
+            return await _homestayService.GetTopLoyalOwnersAsync(top);
+        }
         //[Authorize(Roles = "Admin, Owner")]
         [HttpPost]
         [Route("CreateHomeStay")]

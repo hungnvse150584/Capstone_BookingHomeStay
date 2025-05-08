@@ -181,8 +181,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\BookingDetail\\BookingDetailRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T18:01:43.412Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-08T18:01:43.412Z"
             },
             {
               "$type": "Document",
@@ -194,8 +193,7 @@
               "RelativeToolTip": "Service\\Service\\BookingService.cs",
               "ViewState": "AgIAAK8AAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T16:05:17.719Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-08T16:05:17.719Z"
             },
             {
               "$type": "Document",
@@ -207,8 +205,7 @@
               "RelativeToolTip": "Service\\Service\\ChatService.cs",
               "ViewState": "AgIAAEUAAAAAAAAAAAA7wGAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T15:47:24.419Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-08T15:47:24.419Z"
             },
             {
               "$type": "Document",
@@ -233,8 +230,7 @@
               "RelativeToolTip": "Service\\Service\\CheckOutService.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAAAawEAAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T16:04:45.907Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-08T16:04:45.907Z"
             },
             {
               "$type": "Document",
@@ -246,8 +242,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\CheckOutController.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAxwDEAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T16:38:30.653Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-08T16:38:30.653Z"
             },
             {
               "$type": "Document",
@@ -259,8 +254,7 @@
               "RelativeToolTip": "Service\\Service\\CommissionRateService.cs",
               "ViewState": "AgIAABQAAAAAAAAAAAAAwCsAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T16:12:40.161Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-08T16:12:40.161Z"
             },
             {
               "$type": "Document",
@@ -272,8 +266,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\ChatController.cs",
               "ViewState": "AgIAAG4BAAAAAAAAAAAAAIkBAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T09:23:30.32Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-08T09:23:30.32Z"
             },
             {
               "$type": "Document",
@@ -285,8 +278,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\CommissionRates\\CreateCommissionRateRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwA8AAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T16:13:00.875Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-08T16:13:00.875Z"
             },
             {
               "$type": "Document",
@@ -298,8 +290,7 @@
               "RelativeToolTip": "Service\\Service\\BookingForService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T16:05:18.755Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-08T16:05:18.755Z"
             },
             {
               "$type": "Document",

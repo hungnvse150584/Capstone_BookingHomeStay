@@ -1,6 +1,7 @@
 ﻿using BusinessObject.Model;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.Booking;
+using Service.RequestAndResponse.Response.RoomType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,6 @@ namespace Service.IService
         Task<BookingServices> CreateBookingServicePayment(int? bookingServiceID, Transaction transaction);
         Task<BookingServices> CreateBookingServiceRefundPayment(int? bookingServiceID, Transaction transaction);
         Task<BaseResponse<UpdateBookingForRoomRequest>> ChangeRoomForBooking(int bookingID, UpdateBookingForRoomRequest request);
-
+        Task<BaseResponse<List<GetRoomTypeStats>>> GetRoomTypeUsageStatsAsync(int homestayId);
     }
 }

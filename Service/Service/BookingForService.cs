@@ -9,6 +9,7 @@ using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.BookingServices;
 using Service.RequestAndResponse.Response.BookingOfServices;
+using Service.RequestAndResponse.Response.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -461,6 +462,25 @@ namespace Service.Service
             }
             return new BaseResponse<IEnumerable<GetBookingServiceByHomeStay>>("Get all bookings as base success",
                 StatusCodeEnum.OK_200, bookings);
+        }
+
+        public async Task<BaseResponse<List<GetServiceStats>>> GetServiceUsageStatsAsync(int homestayId)
+        {
+            var rawStats = await _bookingServiceDetailRepository.GetServiceUsageStatsAsync(homestayId);
+
+            var stats = rawStats.Select(tuple => new GetServiceStats
+            {
+                ServiceName = tuple.serviceName,
+                count = tuple.count
+            }).ToList();
+
+            if (stats == null || !stats.Any())
+            {
+                return new BaseResponse<List<GetServiceStats>>("Something went wrong!",
+                StatusCodeEnum.BadGateway_502, null);
+            }
+            return new BaseResponse<List<GetServiceStats>>("Get all bookings as base success",
+                StatusCodeEnum.OK_200, stats);
         }
     }
 }

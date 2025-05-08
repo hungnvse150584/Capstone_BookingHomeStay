@@ -21,5 +21,6 @@ namespace Repository.IRepositories
         Task<IEnumerable<HomeStay>> GetAllWithDetailsAsync();
         Task<List<(Account Account, int TotalHomeStays)>> GetOwnersWithHomeStayStats();
         Task<List<(HomeStay HomeStay, double AverageRating, int RatingCount)>> GetTrendingHomeStaysAsync(int top = 10);
+        Task<List<(string accountID, string ownerName, int totalHomeStays)>> GetTopLoyalOwnersAsync(int top = 5);
     }
 }
