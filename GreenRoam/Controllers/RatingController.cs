@@ -1,5 +1,6 @@
-﻿    using Microsoft.AspNetCore.Mvc;
-    using Service.IService;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Service.IService;
     using Service.RequestAndResponse.BaseResponse;
     using Service.RequestAndResponse.Enums;
     using Service.RequestAndResponse.Request.Rating;
@@ -18,7 +19,7 @@
             {
                 _ratingService = ratingService;
             }
-
+            //[Authorize(Roles = "Owner, Staff, Customer")]
             [HttpPost]
             [Route("CreateRating")]
             [ProducesResponseType(StatusCodes.Status201Created)]
@@ -56,6 +57,7 @@
                 }
             }
 
+            //[Authorize(Roles = "Owner, Staff, Customer")]
             [HttpPut]
             [Route("UpdateRating/{ratingId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
@@ -92,6 +94,7 @@
                 return StatusCode((int)result.StatusCode, result);
             }
 
+            //[Authorize(Roles = "Owner, Staff, Customer")]
             [HttpDelete]
             [Route("DeleteRating/{ratingId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
@@ -112,6 +115,7 @@
                 return StatusCode((int)result.StatusCode, result);
             }
 
+            //[Authorize(Roles = "Owner, Staff, Customer")]
             [HttpGet]
             [Route("GetByHomeStay/{homeStayId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
@@ -131,6 +135,7 @@
                 return StatusCode((int)result.StatusCode, result);
             }
 
+            //[Authorize(Roles = "Owner, Staff, Customer")]
             [HttpGet]
             [Route("GetByAccount/{accountId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
@@ -150,6 +155,7 @@
                 return StatusCode((int)result.StatusCode, result);
             }
 
+            //[Authorize(Roles = "Owner, Staff, Customer")]
             [HttpGet]
             [Route("GetByUserAndHomeStay")]
             [ProducesResponseType(StatusCodes.Status200OK)]
@@ -170,6 +176,7 @@
                 return StatusCode((int)result.StatusCode, result);
             }
 
+            //[Authorize(Roles = "Owner, Staff, Customer")]
             [HttpGet]
             [Route("GetAverageRating/{homeStayId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]

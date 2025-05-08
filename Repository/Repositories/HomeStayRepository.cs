@@ -112,5 +112,10 @@ namespace Repository.Repositories
         {
             return await _homestayDao.GetOwnersWithHomeStayStatsAsync();
         }
+
+        public async Task<List<(HomeStay HomeStay, double AverageRating, int RatingCount)>> GetTrendingHomeStaysAsync(int top = 10)
+        {
+            return await _homestayDao.GetTrendingHomeStaysAsync(top);
+        }
     }
 }

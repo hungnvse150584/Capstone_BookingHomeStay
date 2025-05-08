@@ -29,6 +29,16 @@ namespace DataAccessObject
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Transaction>> GetAllTransactions()
+        {
+            return await _context.Transactions
+                .Include(t => t.Account)
+                .Include(t => t.Booking)
+                .Include(t => t.BookingService)
+                .Include(t => t.HomeStay)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Transaction>> GetTransactionsByHomeStayId(int homeStayID)
         {
             return await _context.Transactions
@@ -48,6 +58,16 @@ namespace DataAccessObject
                 .Include(t => t.BookingService)
                 .Include(t => t.HomeStay)
                 .FirstOrDefaultAsync(t => t.ResponseId == transactionID);
+        }
+
+        public async Task<Transaction?> GetTransactionByBookingId(int bookingID)
+        {
+            return await _context.Transactions
+                .Include(t => t.Account)
+                .Include(t => t.Booking)
+                .Include(t => t.BookingService)
+                .Include(t => t.HomeStay)
+                .FirstOrDefaultAsync(t => t.Booking.BookingID == bookingID);
         }
     }
 }

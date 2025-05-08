@@ -43,5 +43,9 @@ namespace Service.RequestAndResponse.Response.Transactions
 
         public int BookingServicesID { get; set;}
 
+        public double OwnerAmount { get; set; }
+
+        public double AdminAmount { get; set; }
+
     }
 }

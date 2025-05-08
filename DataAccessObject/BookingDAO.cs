@@ -89,6 +89,8 @@ namespace DataAccessObject
                 .ThenInclude(bd => bd.HomeStayRentals)
                 .Include(b => b.BookingDetails)
                 .ThenInclude(bd => bd.Rooms)
+                .ThenInclude(bd => bd.RoomTypes)
+                .ThenInclude(bd => bd.Prices)
                 .Include(b => b.Account)
                 .Where(b => b.HomeStayID == homeStayID)
                 .ToListAsync();
@@ -571,6 +573,7 @@ namespace DataAccessObject
             var homestays = await _context.HomeStays
                 .Include(h => h.CommissionRate)
                 .Include(h => h.CancelPolicy)
+                .Where(h => h.Status == HomeStayStatus.Accepted)
                 .ToListAsync();
 
             switch (timeSpanType?.ToLower())
@@ -849,6 +852,8 @@ namespace DataAccessObject
 
             // Lấy các bookings trong tuần của homestay cụ thể
             var bookings = await _context.Bookings
+                .Include(b => b.HomeStay)
+                .ThenInclude(h => h.CancelPolicy)
                 .Where(b => b.HomeStayID == homestayId && b.BookingDate.Date >= startOfWeek && b.BookingDate.Date <= endOfWeek)
                 .ToListAsync();
 
@@ -863,7 +868,7 @@ namespace DataAccessObject
                             BookingStatus.Completed when b.paymentStatus == PaymentStatus.FullyPaid => b.Total, // Thanh toán đầy đủ
                             BookingStatus.Cancelled when b.paymentStatus == PaymentStatus.FullyPaid => b.Total, // Hủy + Đã thanh toán đầy đủ
                             BookingStatus.Cancelled when b.paymentStatus == PaymentStatus.Deposited => b.bookingDeposit, // Hủy + Đặt cọc
-                            BookingStatus.Cancelled when b.paymentStatus == PaymentStatus.Refunded => b.Total * (1 - b.HomeStay.CancelPolicy.RefundPercentage / 100.0), // Hủy + Hoàn tiền
+                            BookingStatus.Cancelled when b.paymentStatus == PaymentStatus.Refunded => b.Total * (1 - b.HomeStay.CancelPolicy.RefundPercentage), // Hủy + Hoàn tiền
                             _ => 0 // Các trường hợp khác không tính doanh thu
                         }
                     )

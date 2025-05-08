@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
@@ -18,6 +19,7 @@ namespace GreenRoam.Controllers
             _pricingService = pricingService;
         }
 
+        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetAllPricing/{homestayID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllPricing>>>> GetAllPricingByHomeStay(int homestayID)
@@ -26,6 +28,7 @@ namespace GreenRoam.Controllers
             return Ok(pricing);
         }
 
+        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetAllPricingByHomeStayRental/{rentalID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllPricing>>>> GetPricingByHomeStayRental(int rentalID)
@@ -34,6 +37,7 @@ namespace GreenRoam.Controllers
             return Ok(pricing);
         }
 
+        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetAllPricingByRoomType/{roomTypeID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllPricing>>>> GetPricingByRoomType(int roomTypeID)
@@ -42,6 +46,7 @@ namespace GreenRoam.Controllers
             return Ok(pricing);
         }
 
+        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetPricingByID/{id}")]
         public async Task<ActionResult<BaseResponse<GetAllPricing>>> GetPricingById(int id)
@@ -49,6 +54,7 @@ namespace GreenRoam.Controllers
             var pricing = await _pricingService.GetPricingByIdAsync(id);
             return Ok(pricing);
         }
+
 
         [HttpGet]
         [Route("GetTotalPrice")]
@@ -66,6 +72,7 @@ namespace GreenRoam.Controllers
             return Ok(date);
         }
 
+        //[Authorize(Roles = "Owner")]
         [HttpPost]
         [Route("CreatePricing")]
         public async Task<ActionResult<BaseResponse<Pricing>>> CreatePricing(CreatePricingRequest typeRequest)
@@ -85,6 +92,7 @@ namespace GreenRoam.Controllers
             return Ok(pricing);
         }
 
+        //[Authorize(Roles = "Owner")]
         [HttpPut]
         [Route("UpdatePricing")]
         public async Task<ActionResult<BaseResponse<Pricing>>> UpdatePricing(int pricingID, UpdatePricingRequest request)

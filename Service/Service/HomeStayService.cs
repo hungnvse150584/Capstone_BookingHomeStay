@@ -5,6 +5,7 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using Repository.IRepositories;
 using Repository.Repositories;
@@ -1448,6 +1449,29 @@ namespace Service.Service
                 TotalHomeStay = a.TotalHomeStays
             }).ToList();
             return new BaseResponse<List<GetOwnerUser>>("Get All Success", StatusCodeEnum.OK_200, result);
+        }
+
+        public async Task<BaseResponse<List<GetTrendingHomeStay>>> GetTrendingHomeStays(int top = 10)
+        {
+            try
+            {
+                var trendingData = await _homeStayRepository.GetTrendingHomeStaysAsync(top);
+
+                var result = trendingData
+                    .Select(item => new GetTrendingHomeStay
+                    {
+                        HomeStays = _mapper.Map<SingleHomeStayResponse>(item.HomeStay),
+                        AvgRating = Math.Round(item.AverageRating, 2),
+                        RatingCount = item.RatingCount
+                    })
+                    .ToList();
+
+                return new BaseResponse<List<GetTrendingHomeStay>>("Get All Success", StatusCodeEnum.OK_200, result);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<GetTrendingHomeStay>>($"Đã xảy ra lỗi: {ex.Message}", StatusCodeEnum.BadGateway_502, null);
+            }
         }
     }
 }

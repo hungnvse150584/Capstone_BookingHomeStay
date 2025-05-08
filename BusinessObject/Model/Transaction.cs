@@ -47,6 +47,10 @@ namespace BusinessObject.Model
 
         public string SecureHash { get; set; }
 
+        public double OwnerAmount {  get; set; }
+
+        public double AdminAmount {  get; set; }
+
         [EnumDataType(typeof(TransactionKind))]
         public TransactionKind TransactionKind { get; set; }
     }

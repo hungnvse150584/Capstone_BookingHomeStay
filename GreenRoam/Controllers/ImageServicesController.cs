@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Service.IService;
 using Service.RequestAndResponse.BaseResponse;
 using Service.RequestAndResponse.Request.ImageService;
@@ -19,6 +20,7 @@ namespace GreenRoam.Controllers
             _imageServicesService = imageServicesService;
         }
 
+        //[Authorize(Roles = "Owner, Staff")]
         [HttpGet]
         [Route("GetAllImageServices")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllImageService>>>> GetAllImageServices()
@@ -27,6 +29,7 @@ namespace GreenRoam.Controllers
             return Ok(imageServices);
         }
 
+        //[Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetImageService/{id}")]
         public async Task<ActionResult<BaseResponse<GetAllImageService>>> GetImageServiceById(int id)
@@ -38,6 +41,7 @@ namespace GreenRoam.Controllers
             return await _imageServicesService.GetImageServiceById(id);
         }
 
+        //[Authorize(Roles = "Owner, Staff")]
         [HttpPost]
         [Route("CreateImageService")]
         public async Task<ActionResult<BaseResponse<AddImageServicesRequest>>> CreateImageService([FromBody] AddImageServicesRequest imageServiceRequest)
@@ -50,6 +54,7 @@ namespace GreenRoam.Controllers
             return CreatedAtAction(nameof(GetImageServiceById), new { id = imageService.Data.ImageServicesID }, imageService);
         }
 
+        //[Authorize(Roles = "Owner, Staff")]
         [HttpPut]
         [Route("UpdateImageService/{id}")]
         public async Task<ActionResult<BaseResponse<UpdateImageServicesRequest>>> UpdateImageService(int id, [FromBody] UpdateImageServicesRequest imageServiceRequest)
@@ -61,6 +66,7 @@ namespace GreenRoam.Controllers
             return await _imageServicesService.UpdateImageService(id, imageServiceRequest);
         }
 
+        //[Authorize(Roles = "Owner, Staff")]
         [HttpDelete]
         [Route("DeleteImageService/{id}")]
         public async Task<ActionResult<BaseResponse<string>>> DeleteImageService(int id)

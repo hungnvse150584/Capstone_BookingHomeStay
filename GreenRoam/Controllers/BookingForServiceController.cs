@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using Service.IService;
@@ -19,6 +20,7 @@ namespace GreenRoam.Controllers
             _bookingService = bookingService;
         }
 
+        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetAllBookingServices")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllBookings>>>> GetAllBookingServices(string? search, DateTime? date = null, BookingServicesStatus? status = null, PaymentServicesStatus? paymentStatus = null)
@@ -27,6 +29,7 @@ namespace GreenRoam.Controllers
             return Ok(bookings);
         }
 
+        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetBookingServicesByAccountID/{accountId}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetBookingServiceByAccount>>>> GetBookingServiceByAccountId(string accountId)
@@ -35,6 +38,7 @@ namespace GreenRoam.Controllers
             return Ok(bookings);
         }
 
+        //[Authorize(Roles = "Admin, Owner, Staff")]
         [HttpGet]
         [Route("GetBookingServicesByHomeStayID/{homeStayID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetBookingServiceByHomeStay>>>> GetBookingServicesByHomeStayId(int homeStayID)
@@ -43,7 +47,7 @@ namespace GreenRoam.Controllers
             return Ok(bookings);
         }
 
-
+        //[Authorize(Roles = "Customer")]
         [HttpPost]
         [Route("CreateBookingServices")]
         public async Task<ActionResult<BaseResponse<BookingServices>>> CreateBookingServices([FromBody] CreateBookingServices bookingServiceRequest, PaymentServicesMethod paymentServicesMethod)
@@ -57,6 +61,7 @@ namespace GreenRoam.Controllers
             return booking;
         }
 
+        //[Authorize(Roles = "Customer")]
         [HttpPut]
         [Route("UpdateBookingServices")]
         public async Task<ActionResult<BaseResponse<UpdateBookingService>>> UpdateBookingServices(int bookingServiceID, UpdateBookingService request)

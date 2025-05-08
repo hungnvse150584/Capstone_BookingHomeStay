@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.IService;
@@ -20,7 +21,8 @@ namespace GreenRoam.Controllers
         {
             _roomTypeService = roomTypeService;
         }
-    
+
+        //[Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet("GetAllRoomTypeByHomeStayRentalID/{homeStayRentalId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -39,6 +41,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
+        //[Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetRoomTypeDetail/{roomTypeId}")]
         public async Task<ActionResult<BaseResponse<GetAllRoomTypeByRental>>> GetRoomTypeByID(int roomTypeId)
@@ -47,6 +50,7 @@ namespace GreenRoam.Controllers
             return Ok(roomType);
         }
 
+        //[Authorize(Roles = "Owner")]
         [HttpPost("CreateRoomType")]
         public async Task<IActionResult> CreateRoomType([FromForm] CreateRoomTypeRequest request, [FromQuery] int homeStayRentalId)
         {
@@ -64,6 +68,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
+        //[Authorize(Roles = "Owner")]
         [HttpPut("UpdateRoomType")]
         public async Task<ActionResult<BaseResponse<UpdateRoomTypeRequest>>> UpdateRoom(int roomID, UpdateRoomTypeRequest request)
         {

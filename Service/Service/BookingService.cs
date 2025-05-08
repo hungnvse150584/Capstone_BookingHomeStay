@@ -34,25 +34,22 @@ namespace Service.Service
         private readonly ICancellationPolicyRepository _cancelltaionRepository;
         private readonly IHomeStayRepository _homeStayRepository;
         private readonly INotificationService _notificationService;
+        private readonly ITransactionRepository _transactionRepository;
+        private readonly ICommissionRateRepository _commissionRateRepository;
         private readonly IHubContext<NotificationHubs> _notificationHub;
 
         public BookingService(IMapper mapper, IBookingRepository bookingRepository,
-                              IHomeStayRentalRepository homeStayTypeRepository,
-                              IServiceRepository serviceRepository,
-                              IBookingServiceRepository bookingServiceRepository,
-                              IRoomTypeRepository roomTypeRepository,
-                              IRoomRepository roomRepository,
-                              IPricingRepository pricingRepository,
-                              ICommissionRateRepository commissionRateRepository, 
-                              IBookingDetailRepository bookingDetailRepository, 
-                              IBookingServiceDetailRepository bookingServiceDetailRepository, 
                               ICancellationPolicyRepository cancelltaionRepository,
-                              IHubContext<NotificationHubs> notificationHub)
+                              IHubContext<NotificationHubs> notificationHub,
+                              ITransactionRepository transactionRepository, 
+                              ICommissionRateRepository commissionRateRepository)
         {
             _mapper = mapper;
             _bookingRepository = bookingRepository;
             _cancelltaionRepository = cancelltaionRepository;
             _notificationHub = notificationHub;
+            _transactionRepository = transactionRepository;
+            _commissionRateRepository = commissionRateRepository;
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllBookings>>> GetAllBooking(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
@@ -437,7 +434,10 @@ namespace Service.Service
         public async Task<BaseResponse<int>> CancelExpiredBookings()
         {
             var expiredBookings = await _bookingRepository.GetExpiredBookings();
-            
+            if (expiredBookings == null || !expiredBookings.Any())
+            {
+                throw new InvalidOperationException("There are no Bookings for cancellation!");
+            }
 
             foreach (var booking in expiredBookings)
             {
@@ -462,6 +462,10 @@ namespace Service.Service
         public async Task<BaseResponse<string>> AutoCheckOutBookings()
         {
             var checkoutBookings= await _bookingRepository.GetCheckOutBookings();
+            if (checkoutBookings == null || !checkoutBookings.Any())
+            {
+                throw new InvalidOperationException("There are no Bookings for checking-out!");
+            }
 
             foreach(var booking in checkoutBookings)
             {
@@ -495,7 +499,36 @@ namespace Service.Service
                     booking.Notifications.Add(hostNotification);
                 }
 
-                await _bookingRepository.UpdateBookingAsync(booking);
+                var transaction = await _transactionRepository.GetTransactionByBookingId(booking.BookingID);
+                if (transaction != null)
+                {
+                    var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(booking.HomeStayID.Value);
+                    if (commissionRate != null)
+                    {
+                        var hostRate = commissionRate.HostShare;
+                        var adminRate = commissionRate.PlatformShare;
+
+                        // Áp dụng theo loại giao dịch
+                        if (transaction.TransactionKind == TransactionKind.Deposited || transaction.TransactionKind == TransactionKind.FullPayment)
+                        {
+                            transaction.OwnerAmount = transaction.Amount * hostRate;
+                            transaction.AdminAmount = transaction.Amount * adminRate;
+                        }
+                        else if (transaction.TransactionKind == TransactionKind.Refund)
+                        {
+                            transaction.OwnerAmount = transaction.Amount;
+                            transaction.AdminAmount = 0;
+                        }
+
+                        await _transactionRepository.UpdateAsync(transaction);
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("The booking does not have a transaction!");
+                }
+
+                    await _bookingRepository.UpdateBookingAsync(booking);
 
                 await _notificationHub.Clients.User(booking.AccountID).SendAsync(
                     "ReceiveNotification",

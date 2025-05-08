@@ -275,5 +275,30 @@
 
                 return result;
             }
+
+            public async Task<List<(HomeStay HomeStay, double AverageRating, int RatingCount)>> GetTrendingHomeStaysAsync(int top = 10)
+            {
+                // Bước 1: Load data trước từ EF
+                var homeStays = await _context.HomeStays
+                    .Include(h => h.Ratings)
+                    .Include(h => h.ImageHomeStays)
+                    .Where(h => h.Status == HomeStayStatus.Accepted)
+                    .Where(h => h.Ratings.Any())
+                    .ToListAsync();
+
+                // Bước 2: In-memory processing
+                var result = homeStays
+                    .Select(h => (
+                        HomeStay: h,
+                        AverageRating: h.Ratings.Average(r => r.SumRate),
+                        RatingCount: h.Ratings.Count()
+                    ))
+                    .OrderByDescending(x => x.AverageRating)
+                    .ThenByDescending(x => x.RatingCount)
+                    .Take(top)
+                    .ToList();
+
+                return result;
+            }
         }
     }

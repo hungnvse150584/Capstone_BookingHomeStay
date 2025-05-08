@@ -29,6 +29,7 @@ namespace Service.Service
         private readonly IBookingServiceDetailRepository _bookingServiceDetailRepository;
         private readonly ICancellationPolicyRepository _cancelltaionRepository;
         private readonly IRoomChangeHistoryRepository _roomchangeHistoryRepository;
+        private readonly ITransactionRepository _transactionRepository;
 
         public CheckOutService(IMapper mapper, IBookingRepository bookingRepository,
                               IHomeStayRentalRepository homeStayTypeRepository,
@@ -40,7 +41,8 @@ namespace Service.Service
                               ICommissionRateRepository commissionRateRepository,
                               IBookingDetailRepository bookingDetailRepository,
                               IBookingServiceDetailRepository bookingServiceDetailRepository,
-                              ICancellationPolicyRepository cancelltaionRepository, IRoomChangeHistoryRepository roomchangeHistoryRepository)
+                              ICancellationPolicyRepository cancelltaionRepository, IRoomChangeHistoryRepository roomchangeHistoryRepository, 
+                              ITransactionRepository transactionRepository)
         {
             _mapper = mapper;
             _bookingRepository = bookingRepository;
@@ -55,6 +57,7 @@ namespace Service.Service
             _bookingServiceDetailRepository = bookingServiceDetailRepository;
             _cancelltaionRepository = cancelltaionRepository;
             _roomchangeHistoryRepository = roomchangeHistoryRepository;
+            _transactionRepository = transactionRepository;
         }
 
         public async Task<BaseResponse<int>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod)
@@ -282,6 +285,39 @@ namespace Service.Service
                     }
 
                     var bookingService = await _bookingServiceRepository.ChangeBookingServicesStatus(bookingServiceExist.BookingServicesID, servicesStatus, statusPayment);
+                }
+
+                if (status == BookingStatus.Completed) // Điều kiện cho trạng thái checkout
+                {
+                    var transaction = await _transactionRepository.GetTransactionByBookingId(bookingExist.BookingID);
+                    if (transaction != null)
+                    {
+                        var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingExist.HomeStayID.Value);
+                        if (commissionRate != null)
+                        {
+                            var hostRate = commissionRate.HostShare;
+                            var adminRate = commissionRate.PlatformShare;
+
+                            // Áp dụng theo loại giao dịch
+                            if (transaction.TransactionKind == TransactionKind.Deposited || transaction.TransactionKind == TransactionKind.FullPayment)
+                            {
+                                transaction.OwnerAmount = transaction.Amount * hostRate;
+                                transaction.AdminAmount = transaction.Amount * adminRate;
+                            }
+                            else if (transaction.TransactionKind == TransactionKind.Refund)
+                            {
+                                transaction.OwnerAmount = transaction.Amount;
+                                transaction.AdminAmount = 0;
+                            }
+
+                            await _transactionRepository.UpdateAsync(transaction);
+                        }
+                    }
+                    else
+                    {
+                        return new BaseResponse<Booking>("The booking does not have a transaction!",
+                                     StatusCodeEnum.BadGateway_502, null);
+                    }
                 }
                 var booking = await _bookingRepository.ChangeBookingStatus(bookingExist.BookingID, status, paymentStatus);
 
@@ -606,7 +642,7 @@ namespace Service.Service
             booking.Transactions.Add(transaction);
 
             double totalAmount = booking.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
-            double amountPaid = booking.Transactions.Sum(t => t.Amount) / 100; // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
+            double amountPaid = booking.Transactions.Sum(t => t.Amount); // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
 
             // Kiểm tra trạng thái thanh toán
             if (amountPaid >= totalAmount)
@@ -754,7 +790,7 @@ namespace Service.Service
             bookingService.Transactions.Add(transaction);
 
             double totalAmount = bookingService.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
-            double amountPaid = bookingService.Transactions.Sum(t => t.Amount) / 100; // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
+            double amountPaid = bookingService.Transactions.Sum(t => t.Amount); // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
                                                                                       // Kiểm tra trạng thái thanh toán
             if (amountPaid >= totalAmount)
             {

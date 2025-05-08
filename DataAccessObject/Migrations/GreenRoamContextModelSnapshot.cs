@@ -1314,6 +1314,9 @@ namespace DataAccessObject.Migrations
                     b.Property<string>("AccountId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<double>("AdminAmount")
+                        .HasColumnType("float");
+
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
@@ -1341,6 +1344,9 @@ namespace DataAccessObject.Migrations
                     b.Property<string>("OrderInfo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("OwnerAmount")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("PayDate")
                         .HasColumnType("datetime2");
