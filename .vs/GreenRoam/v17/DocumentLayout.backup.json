@@ -3,6 +3,30 @@
   "WorkspaceRootPath": "D:\\FPT\\SEP490_Capstone\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\controllers\\ratingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\ratingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|d:\\fpt\\sep490_capstone\\repository\\repositories\\ratingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{334C6968-AA3D-4215-9DB0-F59DDF26CB15}|Repository\\Repository.csproj|solutionrelative:repository\\repositories\\ratingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\service\\ratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\service\\ratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|d:\\fpt\\sep490_capstone\\service\\iservice\\iratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CACE64C-78F1-4FF4-9C7E-8991C75ECE38}|Service\\Service.csproj|solutionrelative:service\\iservice\\iratingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|d:\\fpt\\sep490_capstone\\dataaccessobject\\ratingdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{029AC824-36B8-404E-8D44-D3D8DC1C3EAF}|DataAccessObject\\DataAccessObject.csproj|solutionrelative:dataaccessobject\\ratingdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|d:\\fpt\\sep490_capstone\\businessobject\\model\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{127C27E8-9F8B-4B74-A323-968664A0A2C1}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\model\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|d:\\fpt\\sep490_capstone\\greenroam\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{21D3F6E0-83AB-49F2-8336-720FC2EDA15C}|GreenRoam\\GreenRoam.csproj|solutionrelative:greenroam\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -21,7 +45,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -45,18 +69,95 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IRatingService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IRatingService.cs",
+              "RelativeDocumentMoniker": "Service\\IService\\IRatingService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IRatingService.cs",
+              "RelativeToolTip": "Service\\IService\\IRatingService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-08T09:59:23.083Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Microsoft.PackageDependencyResolution.targets",
-              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.201\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.PackageDependencyResolution.targets",
-              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.201\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.PackageDependencyResolution.targets",
-              "ViewState": "AgIAAOgAAAAAAAAAAAAkwAkBAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2025-05-08T09:26:58.121Z",
+              "Title": "RatingRepository.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\RatingRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Repositories\\RatingRepository.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Repository\\Repositories\\RatingRepository.cs",
+              "RelativeToolTip": "Repository\\Repositories\\RatingRepository.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAQwDgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-08T09:57:54.201Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "RatingController.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\RatingController.cs",
+              "RelativeDocumentMoniker": "GreenRoam\\Controllers\\RatingController.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\RatingController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\RatingController.cs",
+              "ViewState": "AgIAAKwAAAAAAAAAAAAIwNkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-08T09:57:46.811Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RatingDAO.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\RatingDAO.cs",
+              "RelativeDocumentMoniker": "DataAccessObject\\RatingDAO.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\DataAccessObject\\RatingDAO.cs",
+              "RelativeToolTip": "DataAccessObject\\RatingDAO.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAswHwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-08T09:57:42.121Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RatingService.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RatingService.cs",
+              "RelativeDocumentMoniker": "Service\\Service\\RatingService.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\RatingService.cs",
+              "RelativeToolTip": "Service\\Service\\RatingService.cs",
+              "ViewState": "AgIAAB8BAAAAAAAAAAAIwFABAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-08T09:57:29.807Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Booking.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Booking.cs",
+              "RelativeDocumentMoniker": "BusinessObject\\Model\\Booking.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\BusinessObject\\Model\\Booking.cs",
+              "RelativeToolTip": "BusinessObject\\Model\\Booking.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAA2wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-08T09:35:04.003Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Microsoft.PackageDependencyResolution.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.201\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.PackageDependencyResolution.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.201\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.PackageDependencyResolution.targets",
+              "ViewState": "AgIAAOgAAAAAAAAAAAAkwAkBAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2025-05-08T09:26:58.121Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "ChatController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\ChatController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\ChatController.cs",
@@ -69,7 +170,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "AccountController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\AccountController.cs",

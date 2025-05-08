@@ -14,5 +14,6 @@ namespace Service.IService
         Task<BaseResponse<(IEnumerable<CreateRatingResponse> Data, int TotalCount)>> GetRatingByAccountIdAsync(string accountId, int pageNumber = 1, int pageSize = 10);
         Task<BaseResponse<(IEnumerable<CreateRatingResponse> Data, int TotalCount)>> GetRatingByUserIdAndHomeStayAsync(string accountId, int homeStayId, int pageNumber = 1, int pageSize = 10);
         Task<BaseResponse<double>> GetAverageRatingAsync(int homeStayId);
+        Task<BaseResponse<CreateRatingResponse>> GetRatingDetailByRatingIDAsync(int ratingId);
     }
 }
