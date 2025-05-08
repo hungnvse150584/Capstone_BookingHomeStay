@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessObject.Model;
+using GreenRoam.Ultilities;
 using Repository.IRepositories;
 using Repository.Repositories;
 using Service.IService;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Service.Service
 {
@@ -64,6 +66,10 @@ namespace Service.Service
 
         public async Task<BaseResponse<int>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod)
         {
+            var nowVN = DateTimeHelper.NowVietnamTime();
+            TimeZoneInfo vnZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            
+
             var unpaidBooking = await _bookingRepository.GetBookingStatusByAccountId(createBookingRequest.AccountID);
             if (unpaidBooking != null)
                 return new BaseResponse<int>("There is an unpaid booking. Please complete it before creating a new one.", StatusCodeEnum.Conflict_409, 0);
@@ -78,7 +84,6 @@ namespace Service.Service
             if (commissionRate == null || commissionRate.PlatformShare <= 0 || commissionRate.PlatformShare > 1)
                 return new BaseResponse<int>("Invalid commission settings, please check!", StatusCodeEnum.Conflict_409, 0);
 
-            // Lấy danh sách ID hợp lệ
             var homeStayTypeIds = createBookingRequest.BookingDetails
                 .Where(d => d.homeStayTypeID.HasValue && d.homeStayTypeID > 0)
                 .Select(d => d.homeStayTypeID.Value)
@@ -89,7 +94,6 @@ namespace Service.Service
                 .Select(d => d.roomTypeID.Value)
                 .ToList();
 
-            // Chỉ gọi khi có ID hợp lệ
             var homeStayTypes = homeStayTypeIds.Any()
                 ? (await _homeStayTypeRepository.GetHomeStayTypesByIdsAsync(homeStayTypeIds.Cast<int?>().ToList())).ToList()
                 : new List<HomeStayRentals>();
@@ -102,7 +106,10 @@ namespace Service.Service
 
             foreach (var detail in createBookingRequest.BookingDetails)
             {
-                if (detail.CheckOutDate.Date <= detail.CheckInDate.Date)
+                var checkInLocal = DateTimeHelper.ConvertToVietnamTime(detail.CheckInDate);
+                var checkOutLocal = DateTimeHelper.ConvertToVietnamTime(detail.CheckOutDate);
+
+                if (checkOutLocal.Date <= checkInLocal.Date)
                     return new BaseResponse<int>("Check-out date must be after check-in date.", StatusCodeEnum.Conflict_409, 0);
 
                 HomeStayRentals? homeStayType = null;
@@ -114,7 +121,7 @@ namespace Service.Service
                         return new BaseResponse<int>("Invalid HomeStayRental selection, please try again!", StatusCodeEnum.Conflict_409, 0);
                 }
 
-                var total = await _pricingRepository.GetTotalPrice(detail.CheckInDate, detail.CheckOutDate, detail.homeStayTypeID, detail.roomTypeID);
+                var total = await _pricingRepository.GetTotalPrice(checkInLocal, checkOutLocal, detail.homeStayTypeID, detail.roomTypeID);
 
                 if (homeStayType?.RentWhole == true)
                 {
@@ -123,22 +130,16 @@ namespace Service.Service
                 }
                 else
                 {
-                    if (detail.roomTypeID.HasValue && detail.roomTypeID > 0)
-                    {
-                        var roomType = roomTypes.FirstOrDefault(rt => rt.RoomTypesID == detail.roomTypeID);
-                    }
-
-                    var availableRooms = await _roomRepository.GetAvailableRoomFilter(detail.CheckInDate, detail.CheckOutDate);
+                    var availableRooms = await _roomRepository.GetAvailableRoomFilter(checkInLocal, checkOutLocal);
                     var selectedRoom = availableRooms.FirstOrDefault(r => r.RoomID == detail.roomID);
-
                     if (selectedRoom == null)
                         return new BaseResponse<int>("Selected room is not available.", StatusCodeEnum.Conflict_409, 0);
                 }
 
                 bookingDetails.Add(new BookingDetail
                 {
-                    CheckInDate = detail.CheckInDate,
-                    CheckOutDate = detail.CheckOutDate,
+                    CheckInDate = checkInLocal,
+                    CheckOutDate = checkOutLocal,
                     HomeStayRentalID = detail.homeStayTypeID,
                     RoomID = detail.roomID,
                     UnitPrice = total.totalUnitPrice,
@@ -149,8 +150,8 @@ namespace Service.Service
 
             var booking = new Booking
             {
-                BookingDate = DateTime.Now,
-                ExpiredTime = DateTime.Now.AddHours(1),
+                BookingDate = nowVN,
+                ExpiredTime = nowVN.AddHours(1),
                 numberOfAdults = createBookingRequest.numberOfAdults,
                 numberOfChildren = createBookingRequest.numberOfChildren,
                 Status = BookingStatus.Pending,
@@ -161,7 +162,6 @@ namespace Service.Service
                 BookingDetails = bookingDetails
             };
 
-            // Xử lý dịch vụ nếu có
             double totalPriceServices = 0;
             if (createBookingRequest.BookingOfServices?.BookingServicesDetails?.Any() == true)
             {
@@ -170,33 +170,31 @@ namespace Service.Service
                 if (serviceIds.Count != serviceIds.Distinct().Count())
                     return new BaseResponse<int>("Duplicate services are not allowed.", StatusCodeEnum.Conflict_409, 0);
 
-                
-
                 var services = await _serviceRepository.GetServicesByIdsAsync(serviceIds);
                 if (services.Count() != createBookingRequest.BookingOfServices.BookingServicesDetails.Count)
                     return new BaseResponse<int>("Some selected services are invalid.", StatusCodeEnum.NotFound_404, 0);
 
                 var bookingServiceDetails = createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s =>
                 {
-                    
                     var service = services.FirstOrDefault(x => x.ServicesID == s.ServicesID);
-
                     if (service == null)
                         throw new Exception($"Service with ID {s.ServicesID} not found.");
-
                     if (s.Quantity <= 0)
                         throw new Exception($"Service '{service.servicesName}' must have quantity greater than 0.");
+                    var startDateLocal = s.StartDate.HasValue ? DateTimeHelper.ConvertToVietnamTime(s.StartDate.Value) : (DateTime?)null;
+                    var endDateLocal = s.EndDate.HasValue ? DateTimeHelper.ConvertToVietnamTime(s.EndDate.Value) : (DateTime?)null;
 
                     double unitPrice = service.UnitPrice;
                     double servicePrice = service.servicesPrice;
                     double totalAmount = 0;
+
+                   
 
                     switch (service.ServiceType)
                     {
                         case ServiceType.Quantity:
                             if (s.RentHour.HasValue || s.StartDate.HasValue || s.EndDate.HasValue)
                                 throw new Exception($"Service '{service.servicesName}' is type Quantity, must not have RentHour or Date.");
-
                             totalAmount = servicePrice * s.Quantity;
                             break;
 
@@ -205,19 +203,16 @@ namespace Service.Service
                                 throw new Exception($"Service '{service.servicesName}' is type Hour, requires RentHour.");
                             if (s.StartDate.HasValue || s.EndDate.HasValue)
                                 throw new Exception($"Service '{service.servicesName}' is type Hour, must not have StartDate or EndDate.");
-
                             totalAmount = servicePrice * s.Quantity * s.RentHour.Value;
                             break;
 
                         case ServiceType.Day:
-                            if (!s.StartDate.HasValue || !s.EndDate.HasValue)
+                            if (!startDateLocal.HasValue || !endDateLocal.HasValue)
                                 throw new Exception($"Service '{service.servicesName}' is type Day, requires StartDate and EndDate.");
-                            if (s.StartDate.Value.Date >= s.EndDate.Value.Date)
+                            if (startDateLocal.Value.Date >= endDateLocal.Value.Date)
                                 throw new Exception($"Service '{service.servicesName}' has invalid date range. EndDate must be after StartDate.");
-                            int rentalDays = (s.EndDate.Value.Date - s.StartDate.Value.Date).Days;
-                            if (rentalDays <= 0)
-                                rentalDays = 1;
-
+                            int rentalDays = (endDateLocal.Value.Date - startDateLocal.Value.Date).Days;
+                            if (rentalDays <= 0) rentalDays = 1;
                             totalAmount = servicePrice * s.Quantity * rentalDays;
                             break;
                     }
@@ -229,15 +224,15 @@ namespace Service.Service
                         TotalAmount = totalAmount,
                         ServicesID = s.ServicesID,
                         RentHour = service.ServiceType == ServiceType.Hour ? s.RentHour : null,
-                        StartDate = service.ServiceType == ServiceType.Day ? s.StartDate : null,
-                        EndDate = service.ServiceType == ServiceType.Day ? s.EndDate : null
+                        StartDate = service.ServiceType == ServiceType.Day ? startDateLocal : null,
+                        EndDate = service.ServiceType == ServiceType.Day ? endDateLocal : null
                     };
                 }).ToList();
 
                 totalPriceServices = bookingServiceDetails.Sum(d => d.TotalAmount);
                 var bookingServices = new BookingServices
                 {
-                    BookingServicesDate = DateTime.Now,
+                    BookingServicesDate = nowVN,
                     Status = BookingServicesStatus.Pending,
                     PaymentServicesMethod = PaymentServicesMethod.VnPay,
                     PaymentServiceStatus = PaymentServicesStatus.Pending,
@@ -266,6 +261,7 @@ namespace Service.Service
 
             return new BaseResponse<int>("Booking created successfully!", StatusCodeEnum.Created_201, booking.BookingID);
         }
+
 
         public async Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)
         {

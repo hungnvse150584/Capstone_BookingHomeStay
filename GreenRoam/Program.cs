@@ -10,17 +10,22 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Repository;
 using Service;
 using Service.Hubs;
 using Service.IService;
+using Service.Service;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using Account = BusinessObject.Model.Account;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+TimeZoneInfo vietnamZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+AppDomain.CurrentDomain.SetData("TimeZone", vietnamZone);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -29,12 +34,23 @@ builder.Services.AddSwaggerGen();
 //add Serializer
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
+    //options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Unspecified;
+    //options.SerializerSettings.Converters.Clear(); // Xóa các converter mặc định để tránh xung đột
+    //options.SerializerSettings.Converters.Add(new VietnamDateTimeConverter());
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    options.SerializerSettings.Converters.Clear(); // Xóa các converter mặc định
+    options.SerializerSettings.Converters.Add(new VietnamDateTimeConverter());
+    //options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
+    options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+    options.SerializerSettings.DateFormatString = "yyyy-MM-ddTHH:mm:ss";// Đảm bảo định dạng ISO
+
 });
 // Connect Database
 builder.Services.AddDbContext<GreenRoamContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"),
-        sqlOptions => sqlOptions.MigrationsAssembly("DataAccessObject")));
+        sqlOptions => sqlOptions.MigrationsAssembly("DataAccessObject"))
+    .AddInterceptors(new VietnamTimeInterceptor()));
 
 // Configure Services
 builder.Services.ConfigureRepositoryService(builder.Configuration);
@@ -68,6 +84,12 @@ builder.Services.AddSwaggerGen(option =>
             },
             new string[]{}
         }
+    });
+    option.MapType<DateTime>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Format = "date-time",
+        Example = new OpenApiString("2025-05-09T00:00:00")
     });
     // Cấu hình hỗ trợ file upload (multipart/form-data)
     //option.MapType<IFormFile>(() => new OpenApiSchema

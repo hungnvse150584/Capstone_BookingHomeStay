@@ -444,7 +444,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -754,7 +755,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -762,7 +764,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -816,7 +819,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -824,7 +828,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -1049,7 +1054,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -3516,7 +3522,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -3524,7 +3531,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -4033,7 +4041,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -4041,7 +4050,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -4958,7 +4968,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -4966,7 +4977,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -5021,7 +5033,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           }
         ],
@@ -6106,7 +6119,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -6114,7 +6128,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           }
         ],
@@ -6161,7 +6176,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           },
           {
@@ -6169,7 +6185,8 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2025-05-09T00:00:00"
             }
           }
         ],
@@ -7254,7 +7271,8 @@
           },
           "dateOfBirth": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "homeStays": {
             "type": "array",
@@ -7436,11 +7454,13 @@
           },
           "bookingDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "expiredTime": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "numberOfChildren": {
             "type": "integer",
@@ -7573,11 +7593,13 @@
           },
           "checkInDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "checkOutDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "totalAmount": {
             "type": "number",
@@ -7637,11 +7659,13 @@
           },
           "checkInDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "checkOutDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           }
         },
         "additionalProperties": false
@@ -7660,12 +7684,14 @@
           "startDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "endDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "rentHour": {
             "type": "integer",
@@ -7705,7 +7731,8 @@
           },
           "bookingServicesDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "total": {
             "type": "number",
@@ -7804,12 +7831,14 @@
           "startDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "endDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "rentHour": {
             "type": "integer",
@@ -7884,11 +7913,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "homeStayID": {
             "type": "integer",
@@ -7945,11 +7976,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "homeStayID": {
             "type": "integer",
@@ -7993,7 +8026,8 @@
           },
           "createdAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "messages": {
             "type": "array",
@@ -8099,7 +8133,8 @@
           },
           "bookingServicesDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "accountID": {
             "type": "string",
@@ -8136,11 +8171,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "homeStayID": {
             "type": "integer",
@@ -8175,10 +8212,6 @@
           "platformShare": {
             "type": "number",
             "format": "double"
-          },
-          "createAt": {
-            "type": "string",
-            "format": "date-time"
           },
           "homeStayID": {
             "type": "integer",
@@ -8226,7 +8259,8 @@
           },
           "createdAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           }
         },
         "additionalProperties": false
@@ -8326,12 +8360,14 @@
           "startDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "endDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "isDefault": {
             "type": "boolean"
@@ -8400,11 +8436,13 @@
           },
           "createdAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "imageRatings": {
             "type": "array",
@@ -8567,11 +8605,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "status": {
             "type": "boolean"
@@ -8699,7 +8739,8 @@
           },
           "bookingServicesDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "total": {
             "type": "number",
@@ -8751,7 +8792,8 @@
           },
           "bookingDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "numberOfChildren": {
             "type": "integer",
@@ -8885,11 +8927,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "homeStayID": {
             "type": "integer",
@@ -8951,11 +8995,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           }
         },
         "additionalProperties": false
@@ -9017,11 +9063,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "status": {
             "type": "boolean"
@@ -9081,11 +9129,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "numberBedRoom": {
             "type": "integer",
@@ -9210,11 +9260,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "status": {
             "$ref": "#/components/schemas/HomeStayStatus"
@@ -9441,12 +9493,14 @@
           "startDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "endDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "isDefault": {
             "type": "boolean"
@@ -9539,11 +9593,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "numberBedRoom": {
             "type": "integer",
@@ -9768,11 +9824,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "unitPrice": {
             "type": "number",
@@ -9940,7 +9998,8 @@
           },
           "bookingDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "numberOfChildren": {
             "type": "integer",
@@ -10043,7 +10102,8 @@
           },
           "bookingDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "accountID": {
             "type": "string",
@@ -10136,7 +10196,8 @@
           },
           "bookingDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "accountID": {
             "type": "string",
@@ -10221,11 +10282,13 @@
           },
           "checkInDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "checkOutDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "totalAmount": {
             "type": "number",
@@ -10263,11 +10326,13 @@
           },
           "checkInDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "checkOutDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "totalAmount": {
             "type": "number",
@@ -10300,11 +10365,13 @@
           },
           "checkInDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "checkOutDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "totalAmount": {
             "type": "number",
@@ -10335,11 +10402,13 @@
           },
           "bookingDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "expiredTime": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "numberOfChildren": {
             "type": "integer",
@@ -10430,7 +10499,8 @@
           },
           "bookingServicesDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "total": {
             "type": "number",
@@ -10480,7 +10550,8 @@
           },
           "bookingServicesDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "total": {
             "type": "number",
@@ -10550,7 +10621,8 @@
           },
           "bookingServicesDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "total": {
             "type": "number",
@@ -10620,7 +10692,8 @@
           },
           "bookingServicesDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "total": {
             "type": "number",
@@ -10654,7 +10727,8 @@
           },
           "bookingDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "numberOfChildren": {
             "type": "integer",
@@ -10838,11 +10912,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "numberBedRoom": {
             "type": "integer",
@@ -11073,11 +11149,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "unitPrice": {
             "type": "number",
@@ -11109,7 +11187,8 @@
           },
           "bookingDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "numberOfChildren": {
             "type": "integer",
@@ -11200,11 +11279,13 @@
           },
           "checkInDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "checkOutDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "totalAmount": {
             "type": "number",
@@ -11246,7 +11327,8 @@
           },
           "bookingServicesDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "total": {
             "type": "number",
@@ -11422,11 +11504,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "unitPrice": {
             "type": "number",
@@ -11747,12 +11831,14 @@
           "startDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "endDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "isDefault": {
             "type": "boolean"
@@ -11815,16 +11901,19 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "deleteAt": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "status": {
             "$ref": "#/components/schemas/HomeStayStatus"
@@ -12001,16 +12090,19 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "deleteAt": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "numberBedRoom": {
             "type": "integer",
@@ -12149,11 +12241,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "status": {
             "$ref": "#/components/schemas/HomeStayStatus"
@@ -12567,7 +12661,8 @@
           },
           "sentAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "isRead": {
             "type": "boolean"
@@ -12599,7 +12694,8 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "bookingID": {
             "type": "integer",
@@ -12704,12 +12800,14 @@
           "startDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "endDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "isDefault": {
             "type": "boolean"
@@ -12776,12 +12874,14 @@
           "startDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "endDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "percentage": {
             "type": "number",
@@ -12826,12 +12926,14 @@
           "startDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "endDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "isDefault": {
             "type": "boolean"
@@ -12906,11 +13008,13 @@
           },
           "createdAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "accountID": {
             "type": "string",
@@ -13014,11 +13118,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "reportText": {
             "type": "string",
@@ -13116,11 +13222,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "accountID": {
             "type": "string",
@@ -13163,7 +13271,8 @@
           "deleteAt": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "roomTypesID": {
             "type": "integer",
@@ -13209,11 +13318,13 @@
           },
           "usagedDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "changedDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "accountID": {
             "type": "string",
@@ -13242,11 +13353,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "numberBedRoom": {
             "type": "integer",
@@ -13316,16 +13429,19 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "deleteAt": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "numberBedRoom": {
             "type": "integer",
@@ -13425,16 +13541,19 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "deleteAt": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "quantity": {
             "type": "integer",
@@ -13509,11 +13628,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "status": {
             "$ref": "#/components/schemas/HomeStayStatus"
@@ -13928,7 +14049,8 @@
           },
           "payDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "bankCode": {
             "type": "string",
@@ -14002,7 +14124,8 @@
           },
           "payDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "bankCode": {
             "type": "string",
@@ -14152,11 +14275,13 @@
           },
           "checkInDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "checkOutDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           }
         },
         "additionalProperties": false
@@ -14291,12 +14416,14 @@
           "startDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "endDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "rentHour": {
             "type": "integer",
@@ -14331,11 +14458,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "homeStayID": {
             "type": "integer",
@@ -14385,11 +14514,13 @@
           },
           "checkInDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "checkOutDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           }
         },
         "additionalProperties": false
@@ -14411,11 +14542,13 @@
           },
           "createAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "updateAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-05-09T00:00:00"
           },
           "homeStayID": {
             "type": "integer",
@@ -14622,12 +14755,14 @@
           "startDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "endDate": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "example": "2025-05-09T00:00:00"
           },
           "isDefault": {
             "type": "boolean"

@@ -13,7 +13,7 @@ namespace Service.RequestAndResponse.Request.CommissionRates
 
         public double PlatformShare { get; set; }
 
-        public DateTime CreateAt { get; set; }
+        //public DateTime CreateAt { get; set; }
 
         public int HomeStayID { get; set; }
     }
