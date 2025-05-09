@@ -77,7 +77,7 @@ namespace GreenRoam.Controllers
             return Ok(bookings);
         }
 
-        [Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner,Staff")]
         [HttpGet("GetStaticBookingsForHomeStay/{homestayId}")]
         public async Task<BaseResponse<GetStaticBookingsForHomeStay>> GetStaticBookingsForHomeStay(int homestayId)
         {
@@ -113,7 +113,7 @@ namespace GreenRoam.Controllers
             return await _bookingService.GetTotalBookingsTotalBookingsAmount(startDate, endDate, timeSpanType);
         }
 
-        [Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner,Staff")]
         [HttpGet("adminDashBoard/GetTotalBookingsTotalBookingsAmountForHomeStay")]
         public async Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>> GetTotalBookingsTotalBookingsAmountForHomeStay
             (int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType)
@@ -121,21 +121,21 @@ namespace GreenRoam.Controllers
             return await _bookingService.GetTotalBookingsTotalBookingsAmountForHomeStay(homeStayID, startDate, endDate, timeSpanType);
         }
 
-        [Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpGet("adminDashBoard/GetTopLoyalCustomers")]
         public async Task<BaseResponse<List<GetTopLoyalCustomers>>> GetTopLoyalCustomers(int homeStayId, int top = 5)
         {
             return await _bookingService.GetTopLoyalCustomers(homeStayId, top);
         }
 
-        [Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpGet("adminDashBoard/GetCustomersByHomeStay")]
         public async Task<BaseResponse<List<GetCustomerUser>>> GetCustomersByHomeStay(int homeStayId)
         {
             return await _bookingService.GetCustomersByHomeStay(homeStayId);
         }
 
-        [Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner,Staff")]
         [HttpGet("adminDashBoard/GetCurrentWeekRevenueForHomeStay")]
         public async Task<BaseResponse<List<GetCurrentWeekRevenueForHomeStay>>> GetCurrentWeekRevenueForHomeStay(int homestayId)
         {

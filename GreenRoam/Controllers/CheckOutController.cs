@@ -361,7 +361,7 @@ namespace GreenRoam.Controllers
             return BadRequest("Cannot find Booking or Booking Service");
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpGet("GetRoomTypeStats")]
         public async Task<ActionResult<BaseResponse<List<GetRoomTypeStats>>>> GetRoomTypeUsageStats(int homestayId)
         {
