@@ -454,11 +454,9 @@ namespace DataAccessObject
                             .Where(t => t.TransactionKind == TransactionKind.Refund)
                             .Sum(t => t.Amount);
 
-                        /*double refundedAmount = transactionsDay
-                            .Where(t => t.TransactionKind == TransactionKind.Refund)
-                            .Sum(t => t.Amount);*/
+                        double adminAmount = transactionsDay.Sum(t => t.AdminAmount);
 
-                        totalBookingsAmount += (paidAmount - refundAmount) * commissionRate.HostShare;
+                        totalBookingsAmount += (paidAmount - refundAmount - adminAmount);
 
                         result.Add((date.Date, totalBookings, totalBookingsAmount));
                     }
@@ -502,7 +500,9 @@ namespace DataAccessObject
                             .Where(t => t.TransactionKind == TransactionKind.Refund)
                             .Sum(t => t.Amount);
 
-                        totalBookingsAmount += (paidAmount - refundAmount) * commissionRate.HostShare;
+                        double adminAmount = transactionsWeek.Sum(t => t.AdminAmount);
+
+                        totalBookingsAmount += (paidAmount - refundAmount - adminAmount);
 
                         string weekRange = $"{currentWeekStart.ToString("MM/dd/yyyy")} - {currentWeekEnd.ToString("MM/dd/yyyy")}";
                         result.Add((weekRange, totalBookings, totalBookingsAmount));
@@ -543,7 +543,9 @@ namespace DataAccessObject
                            .Where(t => t.TransactionKind == TransactionKind.Refund)
                            .Sum(t => t.Amount);
 
-                        totalBookingsAmount += (paidAmount - refundAmount) * commissionRate.HostShare;
+                        double adminAmount = transactionsMonth.Sum(t => t.AdminAmount);
+
+                        totalBookingsAmount += (paidAmount - refundAmount - adminAmount);
 
                         string monthName = currentMonthStart.ToString("MM/yyyy");
 
@@ -583,7 +585,9 @@ namespace DataAccessObject
                             .Where(t => t.TransactionKind == TransactionKind.Refund)
                             .Sum(t => t.Amount);
 
-                        totalBookingsAmount += (paidAmount - refundAmount) * commissionRate.HostShare;
+                        double adminAmount = transactionsDay.Sum(t => t.AdminAmount);
+
+                        totalBookingsAmount += (paidAmount - refundAmount - adminAmount);
 
                         result.Add((date.Date, totalBookings, totalBookingsAmount));
                     }
@@ -662,7 +666,9 @@ namespace DataAccessObject
                                 .Where(t => t.TransactionKind == TransactionKind.Refund)
                                 .Sum(t => t.Amount);
 
-                            totalBookingsAmount += (paidAmount - refundAmount) * commissionRate.PlatformShare;
+                            double adminAmount = transactionsDay.Sum(t => t.AdminAmount);
+
+                            totalBookingsAmount += adminAmount;
                         }
 
                         result.Add((date.Date, totalBookings, totalBookingsAmount));
@@ -711,7 +717,9 @@ namespace DataAccessObject
                                 .Where(t => t.TransactionKind == TransactionKind.Refund)
                                 .Sum(t => t.Amount);
 
-                            totalBookingsAmount += (paidAmount - refundAmount) * commissionRate.PlatformShare;
+                            double adminAmount = transactionsWeek.Sum(t => t.AdminAmount);
+
+                            totalBookingsAmount += adminAmount;
                         }
 
                         string weekRange = $"{currentWeekStart:MM/dd/yyyy} - {currentWeekEnd:MM/dd/yyyy}";
@@ -756,7 +764,9 @@ namespace DataAccessObject
                                .Where(t => t.TransactionKind == TransactionKind.Refund)
                                .Sum(t => t.Amount);
 
-                            totalBookingsAmount += (paidAmount - refundAmount) * commissionRate.PlatformShare;
+                            double adminAmount = transactionsMonth.Sum(t => t.AdminAmount);
+
+                            totalBookingsAmount += adminAmount;
                         }
 
                         string monthName = currentMonthStart.ToString("MM/yyyy");
@@ -799,7 +809,9 @@ namespace DataAccessObject
                                 .Where(t => t.TransactionKind == TransactionKind.Refund)
                                 .Sum(t => t.Amount);
 
-                            totalBookingsAmount += (paidAmount - refundAmount) * commissionRate.PlatformShare;
+                            double adminAmount = transactionsDay.Sum(t => t.AdminAmount);
+
+                            totalBookingsAmount += adminAmount;
                         }
 
                         result.Add((date.Date, totalBookings, totalBookingsAmount));
@@ -851,7 +863,9 @@ namespace DataAccessObject
                 .Where(t => t.TransactionKind == TransactionKind.Refund)
                 .Sum(t => t.Amount);
 
-            totalBookingsAmount += (paidAmount - refundAmount) * commissionRate.HostShare;
+            double adminAmount = transactionsDay.Sum(t => t.AdminAmount);
+
+            totalBookingsAmount += (paidAmount - refundAmount - adminAmount);
 
             return (totalBookings, totalBookingsAmount);
         }
@@ -891,7 +905,9 @@ namespace DataAccessObject
                     .Where(t => t.TransactionKind == TransactionKind.Refund)
                     .Sum(t => t.Amount);
 
-                totalBookingsAmount += (paidAmount - refundAmount) * commissionRate.PlatformShare;
+                double adminAmount = transactionsDay.Sum(t => t.AdminAmount);
+
+                totalBookingsAmount += adminAmount;
             }
             return (totalBookings, totalBookingsAmount);
         }
@@ -1024,17 +1040,13 @@ namespace DataAccessObject
 
             // Gom nhóm theo ngày và tính doanh thu theo từng trạng thái
             var revenueByDay = transactions
-                .GroupBy(b => b.PayDate.Date)
-                .Select(g => (
-                    date: g.Key.ToString("yyyy-MM-dd"),
-                    totalBookingsAmount: g.Sum(b =>
-                        b.TransactionKind switch
-                        {
-                            TransactionKind.Deposited => b.Amount, // Đặt cọc
-                            TransactionKind.FullPayment => b.Amount, // Đã thanh toán đầy đủ
-                            TransactionKind.Refund => - b.Amount, // Hoàn trả thanh toán đặt cọc hoặc Hoàn trả thanh toán đầy đủ
-                        }
-                    ) * hostShare
+                        .GroupBy(b => b.PayDate.Date)
+                        .Select(g => (
+                            date: g.Key.ToString("yyyy-MM-dd"),
+                             totalBookingsAmount:
+                        g.Where(t => t.TransactionKind == TransactionKind.Deposited || t.TransactionKind == TransactionKind.FullPayment).Sum(t => t.Amount)
+                        - g.Where(t => t.TransactionKind == TransactionKind.Refund).Sum(t => t.Amount)
+                        - g.Where(t => t.TransactionKind == TransactionKind.Deposited || t.TransactionKind == TransactionKind.FullPayment).Sum(t => t.AdminAmount)
                 ))
                 .ToList();
 
