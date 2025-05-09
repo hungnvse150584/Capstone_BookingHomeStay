@@ -273,13 +273,23 @@ namespace Service.Service
             }
             else
             {
-                if (bookingServiceID != null || bookingServiceID > 0)
+                if (bookingServiceID != null && bookingServiceID > 0)
                 {
                     var bookingServiceExist = await _bookingServiceRepository.FindBookingServicesByIdAsync(bookingServiceID);
                     if (bookingServiceExist == null)
                     {
                         return new BaseResponse<Booking>("Cannot find your BookingServices!",
                                  StatusCodeEnum.NotFound_404, null);
+                    }
+
+                    if(servicesStatus == BookingServicesStatus.Cancelled)
+                    {
+                        var services = bookingServiceExist.BookingServicesDetails.FirstOrDefault();
+                        if (services?.Services != null)
+                        {
+                            services.Services.Quantity += services.Quantity;
+                            await _serviceRepository.UpdateAsync(services.Services);
+                        }
                     }
 
                     var bookingService = await _bookingServiceRepository.ChangeBookingServicesStatus(bookingServiceExist.BookingServicesID, servicesStatus, statusPayment);
@@ -290,25 +300,32 @@ namespace Service.Service
                     var transaction = await _transactionRepository.GetTransactionByBookingId(bookingExist.BookingID);
                     if (transaction != null)
                     {
-                        var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingExist.HomeStayID.Value);
-                        if (commissionRate != null)
+                        if (bookingExist.HomeStayID.HasValue)
                         {
-                            var hostRate = commissionRate.HostShare;
-                            var adminRate = commissionRate.PlatformShare;
-
-                            // Áp dụng theo loại giao dịch
-                            if (transaction.TransactionKind == TransactionKind.Deposited || transaction.TransactionKind == TransactionKind.FullPayment)
+                            var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingExist.HomeStayID.Value);
+                            if (commissionRate != null)
                             {
-                                transaction.OwnerAmount = transaction.Amount * hostRate;
-                                transaction.AdminAmount = transaction.Amount * adminRate;
-                            }
-                            else if (transaction.TransactionKind == TransactionKind.Refund)
-                            {
-                                transaction.OwnerAmount = transaction.Amount;
-                                transaction.AdminAmount = 0;
-                            }
+                                var hostRate = commissionRate.HostShare;
+                                var adminRate = commissionRate.PlatformShare;
 
-                            await _transactionRepository.UpdateAsync(transaction);
+                                // Áp dụng theo loại giao dịch
+                                if (transaction.TransactionKind == TransactionKind.Deposited || transaction.TransactionKind == TransactionKind.FullPayment)
+                                {
+                                    transaction.OwnerAmount = transaction.Amount * hostRate;
+                                    transaction.AdminAmount = transaction.Amount * adminRate;
+                                }
+                                else if (transaction.TransactionKind == TransactionKind.Refund)
+                                {
+                                    transaction.OwnerAmount = transaction.Amount;
+                                    transaction.AdminAmount = 0;
+                                }
+
+                                await _transactionRepository.UpdateAsync(transaction);
+                            }
+                        }
+                        else
+                        {
+                            return new BaseResponse<Booking>("The booking does not belong to any HomeStay !", StatusCodeEnum.NotFound_404, null);
                         }
                     }
                     else
@@ -633,6 +650,14 @@ namespace Service.Service
             }
             booking.Transactions ??= new List<Transaction>();
 
+            bool alreadyExists = booking.Transactions.Any(t =>
+            t.ResponseId == transaction.ResponseId && transaction.ResponseId != null);
+
+            if (alreadyExists)
+            {
+                throw new Exception("Duplicate transaction detected.");
+            }
+
             transaction.HomeStay = booking.HomeStay;
             transaction.Account = booking.Account;
 
@@ -716,6 +741,14 @@ namespace Service.Service
 
             booking.Transactions ??= new List<Transaction>();
 
+            bool alreadyExists = booking.Transactions.Any(t =>
+            t.ResponseId == transaction.ResponseId && transaction.ResponseId != null);
+
+            if (alreadyExists)
+            {
+                throw new Exception("Duplicate transaction detected.");
+            }
+
             transaction.HomeStay = booking.HomeStay;
             transaction.TransactionKind = TransactionKind.Refund;
 
@@ -771,6 +804,14 @@ namespace Service.Service
             }
 
             bookingService.Transactions ??= new List<Transaction>();
+
+            bool alreadyExists = bookingService.Transactions.Any(t =>
+            t.ResponseId == transaction.ResponseId && transaction.ResponseId != null);
+
+            if (alreadyExists)
+            {
+                throw new Exception("Duplicate transaction detected.");
+            }
 
             var service = bookingService.BookingServicesDetails.FirstOrDefault()?.Services;
             if (service != null)
@@ -847,6 +888,14 @@ namespace Service.Service
             transaction.TransactionKind = TransactionKind.Refund;
 
             bookingService.Transactions ??= new List<Transaction>();
+
+            bool alreadyExists = bookingService.Transactions.Any(t =>
+            t.ResponseId == transaction.ResponseId && transaction.ResponseId != null);
+
+            if (alreadyExists)
+            {
+                throw new Exception("Duplicate transaction detected.");
+            }
 
             bookingService.Transactions.Add(transaction);
 
