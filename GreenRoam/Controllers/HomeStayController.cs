@@ -44,7 +44,7 @@ namespace GreenRoam.Controllers
         }
 
 
-        [Authorize(Roles = "Admin, Owner")]
+        [Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetHomeStayDetail/{id}")]
         public async Task<ActionResult<BaseResponse<SimpleHomeStayResponse>>> GetHomeStayDetailById(int id)
