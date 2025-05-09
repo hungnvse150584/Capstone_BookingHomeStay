@@ -395,7 +395,7 @@ namespace GreenRoam.Controllers
             return booking;
         }
 
-        [Authorize(Roles = "Owner, Staff")]
+        [Authorize(Roles = "Owner, Staff, Customer")]
         [HttpPut]
         [Route("ChangeBookingStatus")]
         public async Task<ActionResult<BaseResponse<Booking>>> ChangeTheBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)
