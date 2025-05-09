@@ -441,10 +441,16 @@ namespace Service.Service
                 throw new InvalidOperationException("There are no Bookings for cancellation!");
             }
 
+            int cancelledCount = 0;
+
             foreach (var booking in expiredBookings)
             {
                 booking.Status = BookingStatus.Cancelled;
-                booking.paymentStatus = PaymentStatus.Pending;
+
+                if (booking.paymentStatus != PaymentStatus.FullyPaid && booking.paymentStatus != PaymentStatus.Deposited)
+                {
+                    booking.paymentStatus = PaymentStatus.Pending;
+                }
 
                 if (booking.BookingServices != null && booking.BookingServices.Any())
                 {
@@ -455,10 +461,37 @@ namespace Service.Service
                     }
                 }
 
-                await _bookingRepository.UpdateBookingAsync(booking);
-            }
-            return new BaseResponse<int>("The booking has been automatically cancelled successfully!", StatusCodeEnum.Created_201, 1);
+                
 
+                if ((booking.paymentStatus == PaymentStatus.FullyPaid || booking.paymentStatus == PaymentStatus.Deposited) && booking.HomeStayID.HasValue)
+                {
+                    var transaction = await _transactionRepository.GetTransactionByBookingId(booking.BookingID);
+                    if (transaction != null)
+                    {
+                        var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(booking.HomeStayID.Value);
+                        if (commissionRate != null)
+                        {
+
+                            // Chia tiền tùy theo loại giao dịch
+                            if (transaction.TransactionKind == TransactionKind.FullPayment || transaction.TransactionKind == TransactionKind.Deposited)
+                            {
+                                transaction.OwnerAmount = transaction.Amount * commissionRate.HostShare;
+                                transaction.AdminAmount = transaction.Amount * commissionRate.PlatformShare;
+                            }
+
+                            await _transactionRepository.UpdateAsync(transaction);
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("There are no CommissionRate for Bookings!");
+                        }
+                    }
+                }
+
+                await _bookingRepository.UpdateBookingAsync(booking);
+                cancelledCount++;
+            }
+            return new BaseResponse<int>("The booking has been automatically cancelled successfully!", StatusCodeEnum.Created_201, cancelledCount);
         }
 
         public async Task<BaseResponse<string>> AutoCheckOutBookings()
