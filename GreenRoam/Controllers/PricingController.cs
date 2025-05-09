@@ -19,7 +19,7 @@ namespace GreenRoam.Controllers
             _pricingService = pricingService;
         }
 
-        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
+        [Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetAllPricing/{homestayID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllPricing>>>> GetAllPricingByHomeStay(int homestayID)
@@ -28,7 +28,7 @@ namespace GreenRoam.Controllers
             return Ok(pricing);
         }
 
-        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
+        [Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetAllPricingByHomeStayRental/{rentalID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllPricing>>>> GetPricingByHomeStayRental(int rentalID)
@@ -37,7 +37,7 @@ namespace GreenRoam.Controllers
             return Ok(pricing);
         }
 
-        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
+        [Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetAllPricingByRoomType/{roomTypeID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllPricing>>>> GetPricingByRoomType(int roomTypeID)
@@ -46,7 +46,7 @@ namespace GreenRoam.Controllers
             return Ok(pricing);
         }
 
-        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
+        [Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetPricingByID/{id}")]
         public async Task<ActionResult<BaseResponse<GetAllPricing>>> GetPricingById(int id)
@@ -72,7 +72,7 @@ namespace GreenRoam.Controllers
             return Ok(date);
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpPost]
         [Route("CreatePricing")]
         public async Task<ActionResult<BaseResponse<Pricing>>> CreatePricing(CreatePricingRequest typeRequest)
@@ -92,7 +92,7 @@ namespace GreenRoam.Controllers
             return Ok(pricing);
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpPut]
         [Route("UpdatePricing")]
         public async Task<ActionResult<BaseResponse<Pricing>>> UpdatePricing(int pricingID, UpdatePricingRequest request)

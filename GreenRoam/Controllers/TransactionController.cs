@@ -17,7 +17,7 @@ namespace GreenRoam.Controllers
             _transactionsService = transactionsService;
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("GetAllTransactions")]
         public async Task<ActionResult<BaseResponse<IEnumerable<TransactionResponse>>>> GetAllTransactions()
@@ -26,7 +26,7 @@ namespace GreenRoam.Controllers
             return Ok(transactions);
         }
 
-        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
+        [Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetTransactionByID/{transactionID}")]
         public async Task<ActionResult<BaseResponse<TransactionResponse?>>> GetTransactionById(string transactionID)
@@ -34,8 +34,8 @@ namespace GreenRoam.Controllers
             var transaction = await _transactionsService.GetTransactionById(transactionID);
             return Ok(transaction);
         }
-
-        //[Authorize(Roles = "Admin, Owner, Staff")]
+     
+        [Authorize(Roles = "Admin, Owner, Staff")]
         [HttpGet]
         [Route("GetTransactionByHomeStay/{homeStayID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<TransactionResponse>>>> GetTransactionsByHomeStayId(int homeStayID)
@@ -44,7 +44,7 @@ namespace GreenRoam.Controllers
             return Ok(transactions);
         }
 
-        //[Authorize(Roles = "Owner, Staff, Customer")]
+        [Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetTransactionByAccountID/{accountId}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<TransactionResponse>>>> GetTransactionsByAccountId(string accountId)

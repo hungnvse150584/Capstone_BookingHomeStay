@@ -19,7 +19,7 @@ using Service.IService;
             {
                 _ratingService = ratingService;
             }
-            //[Authorize(Roles = "Owner, Staff, Customer")]
+            [Authorize(Roles = "Customer")]
             [HttpPost]
             [Route("CreateRating")]
             [ProducesResponseType(StatusCodes.Status201Created)]
@@ -57,8 +57,8 @@ using Service.IService;
                 }
             }
 
-            //[Authorize(Roles = "Owner, Staff, Customer")]
-            [HttpPut]
+        [Authorize(Roles = "Customer")]
+        [HttpPut]
             [Route("UpdateRating/{ratingId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -94,7 +94,7 @@ using Service.IService;
                 return StatusCode((int)result.StatusCode, result);
             }
 
-            //[Authorize(Roles = "Owner, Staff, Customer")]
+            [Authorize(Roles = "Owner, Staff, Customer")]
             [HttpDelete]
             [Route("DeleteRating/{ratingId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
@@ -115,8 +115,8 @@ using Service.IService;
                 return StatusCode((int)result.StatusCode, result);
             }
 
-            //[Authorize(Roles = "Owner, Staff, Customer")]
-            [HttpGet]
+        [Authorize(Roles = "Owner, Staff, Customer")]
+        [HttpGet]
             [Route("GetByHomeStay/{homeStayId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -135,8 +135,8 @@ using Service.IService;
                 return StatusCode((int)result.StatusCode, result);
             }
 
-            //[Authorize(Roles = "Owner, Staff, Customer")]
-            [HttpGet]
+        [Authorize(Roles = "Owner, Staff, Customer")]
+        [HttpGet]
             [Route("GetByAccount/{accountId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -155,7 +155,7 @@ using Service.IService;
                 return StatusCode((int)result.StatusCode, result);
             }
 
-            //[Authorize(Roles = "Owner, Staff, Customer")]
+            [Authorize(Roles = "Owner, Staff, Customer")]
             [HttpGet]
             [Route("GetByUserAndHomeStay")]
             [ProducesResponseType(StatusCodes.Status200OK)]
@@ -176,7 +176,7 @@ using Service.IService;
                 return StatusCode((int)result.StatusCode, result);
             }
 
-            //[Authorize(Roles = "Owner, Staff, Customer")]
+            [Authorize(Roles = "Owner, Staff, Customer")]
             [HttpGet]
             [Route("GetAverageRating/{homeStayId}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
@@ -195,6 +195,7 @@ using Service.IService;
                 var result = await _ratingService.GetAverageRatingAsync(homeStayId);
                 return StatusCode((int)result.StatusCode, result);
             }
+
         [HttpGet]
         [Route("GetRatingDetail/{ratingId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

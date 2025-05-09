@@ -31,7 +31,7 @@ namespace GreenRoam.Controllers
             _notificationHub = notificationHub;
         }
 
-        //[Authorize(Roles = "Admin, Owner, Staff")]
+        [Authorize(Roles = "Admin, Owner, Staff")]
         // API 1: Tạo thông báo mới
         [HttpPost("create-notification")]
         public async Task<IActionResult> CreateNotification([FromBody] CreateNotificationRequest request)
@@ -78,7 +78,7 @@ namespace GreenRoam.Controllers
         }
 
         // API 2: Lấy danh sách thông báo theo AccountID
-        //[Authorize(Roles = "Admin, Owner, Staff")]
+        [Authorize(Roles = "Admin, Owner, Staff")]
         [HttpGet("by-account/{accountId}")]
         public async Task<IActionResult> GetNotificationsByAccountId(string accountId)
         {
@@ -101,7 +101,7 @@ namespace GreenRoam.Controllers
         }
 
         // API 3: Đánh dấu một thông báo là đã đọc
-        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
+        [Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpPut("mark-as-read")]
         public async Task<IActionResult> MarkNotificationAsRead([FromBody] MarkNotificationAsReadRequest request)
         {
@@ -119,7 +119,7 @@ namespace GreenRoam.Controllers
         }
 
         // API 4: Đánh dấu tất cả thông báo của một tài khoản là đã đọc
-        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
+        [Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpPut("mark-all-as-read")]
         public async Task<IActionResult> MarkAllNotificationsAsRead([FromBody] MarkAllNotificationsAsReadRequest request)
         {

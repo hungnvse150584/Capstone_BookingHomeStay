@@ -21,7 +21,7 @@ namespace GreenRoam.Controllers
             _staffService = staffService;
         }
 
-        //[Authorize(Roles = "Owner, Staff")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpGet]
         [Route("GetAllStaffsByHomeStay/{homeStayID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllStaff>>>> GetAllStaffByHomeStay(int homeStayID)
@@ -30,7 +30,7 @@ namespace GreenRoam.Controllers
             return Ok(staffs);
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [HttpGet]
         [Route("GetAllStaffsByOwner/{accountID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllStaff>>>> GetAllStaffByOwner(string accountID)
@@ -39,7 +39,7 @@ namespace GreenRoam.Controllers
             return Ok(staffs);
         }
 
-        //[Authorize(Roles = "Owner, Staff")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpGet]
         [Route("GetStaffsByID/{accountID}")]
         public async Task<ActionResult<BaseResponse<GetAllStaff>>> GetStaffByID(string accountID)
@@ -51,7 +51,7 @@ namespace GreenRoam.Controllers
             return await _staffService.GetStaffByID(accountID);
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [HttpPost]
         [Route("CreateStaffAccount")]
         public async Task<ActionResult<BaseResponse<Staff>>> CreateStaffAccount(CreateStaffRequest request)
@@ -64,7 +64,7 @@ namespace GreenRoam.Controllers
             return staff;
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [HttpPut]
         [Route("UpdateStaffAccount/{userId}")]
         public async Task<ActionResult<BaseResponse<Staff>>> UpdateStaffAccount(string userId, UpdateStaffRequest request)

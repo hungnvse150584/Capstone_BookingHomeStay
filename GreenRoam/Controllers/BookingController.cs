@@ -24,7 +24,7 @@ namespace GreenRoam.Controllers
             _bookingService = bookingService;
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("GetAllBooking")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllBookings>>>> GetAllBookings(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
@@ -33,7 +33,7 @@ namespace GreenRoam.Controllers
             return Ok(bookings);
         }
 
-        //[Authorize(Roles = "Admin, Owner, Staff")]
+        [Authorize(Roles = "Customer, Owner, Staff")]
         [HttpGet]
         [Route("GetBookingByID/{bookingID}")]
         public async Task<ActionResult<BaseResponse<GetBookingResponse>>> GetBookingsById(int bookingID)
@@ -42,7 +42,7 @@ namespace GreenRoam.Controllers
             return Ok(booking);
         }
 
-        //[Authorize(Roles = "Admin, Owner, Staff")]
+        [Authorize(Roles = "Admin, Owner, Staff")]
         [HttpGet]
         [Route("GetBookingByHomeStay/{homeStayID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetBookingByHomeStay>>>> GetBookingsByHomeStayId(int homeStayID)
@@ -51,7 +51,7 @@ namespace GreenRoam.Controllers
             return Ok(bookings);
         }
 
-        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
+        [Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetBookingByAccountID/{accountId}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetBookingByAccount>>>> GetBookingsByAccountId(string accountId)
@@ -59,8 +59,7 @@ namespace GreenRoam.Controllers
             var bookings = await _bookingService.GetBookingsByAccountId(accountId);
             return Ok(bookings);
         }
-
-        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
+        [Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetBookingByRoomID/{roomId}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetBookingByRoom>>>> GetBookingsByRoom(int roomId)
@@ -69,7 +68,7 @@ namespace GreenRoam.Controllers
             return Ok(bookings);
         }
 
-        //[Authorize(Roles = "Owner, Staff")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpGet]
         [Route("GetCancellationBooking/{bookingID}")]
         public async Task<ActionResult<BaseResponse<GetCancellationBooking>>> GetCancellationBooking(int bookingID)
@@ -78,35 +77,35 @@ namespace GreenRoam.Controllers
             return Ok(bookings);
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [HttpGet("GetStaticBookingsForHomeStay/{homestayId}")]
         public async Task<BaseResponse<GetStaticBookingsForHomeStay>> GetStaticBookingsForHomeStay(int homestayId)
         {
             return await _bookingService.GetStaticBookingsForHomeStay(homestayId);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("adminDashBoard/GetStaticBookingsForAllHomeStay")]
         public async Task<BaseResponse<List<GetStaticBookingsForAllHomestays>>> GetStaticBookingsForAllHomestays()
         {
             return await _bookingService.GetStaticBookingsForAllHomestays();
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("adminDashBoard/GetStaticBookings")]
         public async Task<BaseResponse<GetStaticBookings>> GetStaticBookings()
         {
             return await _bookingService.GetStaticBookings();
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("adminDashBoard/GetTopHomeStayBookingInMonth")]
         public async Task<BaseResponse<GetTopHomeStayBookingInMonth>> GetTopHomeStayBookingInMonth()
         {
             return await _bookingService.GetTopHomeStayBookingInMonth();
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("adminDashBoard/GetTotalBookingsTotalBookingsAmount")]
         public async Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmount>>> GetTotalBookingsTotalBookingsAmount
            (DateTime startDate, DateTime endDate, string? timeSpanType)
@@ -114,7 +113,7 @@ namespace GreenRoam.Controllers
             return await _bookingService.GetTotalBookingsTotalBookingsAmount(startDate, endDate, timeSpanType);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Owner")]
         [HttpGet("adminDashBoard/GetTotalBookingsTotalBookingsAmountForHomeStay")]
         public async Task<BaseResponse<List<GetTotalBookingsTotalBookingsAmountForHomeStay>>> GetTotalBookingsTotalBookingsAmountForHomeStay
             (int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType)
@@ -122,28 +121,28 @@ namespace GreenRoam.Controllers
             return await _bookingService.GetTotalBookingsTotalBookingsAmountForHomeStay(homeStayID, startDate, endDate, timeSpanType);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Owner")]
         [HttpGet("adminDashBoard/GetTopLoyalCustomers")]
         public async Task<BaseResponse<List<GetTopLoyalCustomers>>> GetTopLoyalCustomers(int homeStayId, int top = 5)
         {
             return await _bookingService.GetTopLoyalCustomers(homeStayId, top);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Owner")]
         [HttpGet("adminDashBoard/GetCustomersByHomeStay")]
         public async Task<BaseResponse<List<GetCustomerUser>>> GetCustomersByHomeStay(int homeStayId)
         {
             return await _bookingService.GetCustomersByHomeStay(homeStayId);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Owner")]
         [HttpGet("adminDashBoard/GetCurrentWeekRevenueForHomeStay")]
         public async Task<BaseResponse<List<GetCurrentWeekRevenueForHomeStay>>> GetCurrentWeekRevenueForHomeStay(int homestayId)
         {
             return await _bookingService.GetCurrentWeekRevenueForHomeStay(homestayId);
         }
 
-        //[Authorize(Roles = "Owner, Staff, Customer")]
+        [Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet]
         [Route("CheckBookingForRating")]
         public async Task<ActionResult<BaseResponse<int>>> CheckBookingForRating(string accountId, int homeStayId)
@@ -152,7 +151,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("adminDashBoard/GetTotalBookingsAndAmount")]
         public async Task<BaseResponse<GetTotalBookingsAndAmount>> GetTotalBookingsAndAmount()
@@ -160,7 +159,7 @@ namespace GreenRoam.Controllers
             return await _bookingService.GetTotalBookingsAndAmount();
         }
 
-        //[Authorize(Roles = "Owner, Staff")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpGet]
         [Route("GetTotalBookingsAndAmountForHomeStay/{homeStayID}")]
         public async Task<BaseResponse<GetTotalBookingsAndAmountForHomeStay>> GetTotalBookingsAndAmountForHomeStay(int homeStayID)

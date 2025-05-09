@@ -37,7 +37,7 @@ namespace GreenRoam.Controllers
             _accountService = accountService;
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("adminDashBoard/GetTotalAccount")]
         public async Task<BaseResponse<GetTotalAccount>> GetTotalAccount()
         {
@@ -346,7 +346,7 @@ namespace GreenRoam.Controllers
 
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("create account")]
         public async Task<IActionResult> CreateAccount([FromBody] CreateAccountDto createAccountDto)
         {
@@ -441,7 +441,7 @@ namespace GreenRoam.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("Update-Account")]
         public async Task<IActionResult> UpdateAccount(string userId, [FromBody] UpdateAccountDto updateAccountDto)
         {
@@ -520,7 +520,7 @@ namespace GreenRoam.Controllers
 
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("Update-Account-Status")]
         public async Task<IActionResult> UpdateAccount(string userEmail, [FromBody] UpdateAccountStatusDto updateAccountStatusDto)
         {
@@ -558,7 +558,7 @@ namespace GreenRoam.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("Get-all-accounts")]
         public async Task<IActionResult> GetAllAccounts()
         {
@@ -590,7 +590,7 @@ namespace GreenRoam.Controllers
             }
         }
 
-        //[Authorize(Roles = "Customer, Owner, Staff")]
+        [Authorize(Roles = "Customer, Owner, Staff")]
         [HttpPost("Reset-Password-Token")]
         public async Task<IActionResult> ResetPasswordToken([FromBody] ResetTokenModel resetTokenModel)
         {
@@ -603,7 +603,7 @@ namespace GreenRoam.Controllers
             return Ok(new { token = token });
         }
 
-        //[Authorize(Roles = "Customer, Owner, Staff")]
+        [Authorize(Roles = "Customer, Owner, Staff")]
         [HttpPost("Reset-Password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetToken resetToken)
         {
@@ -647,7 +647,7 @@ namespace GreenRoam.Controllers
             });
         }
 
-        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
+        [Authorize(Roles = "Owner, Staff, Customer")]
         [HttpPost("Change-Password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel changePassword)
         {

@@ -19,7 +19,7 @@ public class ServiceController : ControllerBase
         _servicesService = servicesService;
     }
 
-    //[Authorize(Roles = "Owner, Staff, Customer")]
+    [Authorize(Roles = "Owner, Staff, Customer")]
     [HttpGet("GetAllServices/{homestayId}")]
     public async Task<ActionResult<BaseResponse<IEnumerable<GetAllServices>>>> GetAllServicesByHomeStayId(int homestayId)
     {
@@ -27,7 +27,7 @@ public class ServiceController : ControllerBase
         return StatusCode((int)result.StatusCode, result);
     }
 
-    //[Authorize(Roles = "Owner")]
+    [Authorize(Roles = "Owner, Staff")]
     [HttpPost]
     [Route("CreateService")]
     [Consumes("multipart/form-data")]
@@ -54,7 +54,7 @@ public class ServiceController : ControllerBase
         }
     }
 
-    //[Authorize(Roles = "Owner, Staff")]
+    [Authorize(Roles = "Owner, Staff")]
     [HttpPut("UpdateService/{serviceId}")]
     [Consumes("multipart/form-data")]
     public async Task<ActionResult<BaseResponse<GetAllServices>>> UpdateService([FromRoute] int serviceId, [FromForm] UpdateServices request)
