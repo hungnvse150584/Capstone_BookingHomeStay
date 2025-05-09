@@ -360,7 +360,7 @@ builder.Services.AddSwaggerGen(option =>
     {
         Type = "string",
         Format = "date-time",
-        Example = new OpenApiString("2025-05-09T00:00:00")
+        Example = new OpenApiString("2025-05-10T00:00:00")
     });
 });
 
