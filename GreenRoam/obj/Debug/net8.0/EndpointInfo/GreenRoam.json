@@ -11936,6 +11936,10 @@
           "bookingsReport": {
             "type": "integer",
             "format": "int32"
+          },
+          "bookingConfirmed": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -11983,6 +11987,10 @@
             "format": "int32"
           },
           "bookingsReport": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingConfirmed": {
             "type": "integer",
             "format": "int32"
           }
@@ -12033,6 +12041,10 @@
             "format": "int32"
           },
           "bookingsReport": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingConfirmed": {
             "type": "integer",
             "format": "int32"
           }
