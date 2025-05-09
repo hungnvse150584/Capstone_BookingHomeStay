@@ -78,6 +78,19 @@ namespace GreenRoam.Controllers
             return Ok(bookings);
         }
 
+        //[Authorize(Roles = "Owner")]
+        [HttpGet("GetStaticBookingsForHomeStay/{homestayId}")]
+        public async Task<BaseResponse<GetStaticBookingsForHomeStay>> GetStaticBookingsForHomeStay(int homestayId)
+        {
+            return await _bookingService.GetStaticBookingsForHomeStay(homestayId);
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("adminDashBoard/GetStaticBookingsForAllHomeStay")]
+        public async Task<BaseResponse<List<GetStaticBookingsForAllHomestays>>> GetStaticBookingsForAllHomestays()
+        {
+            return await _bookingService.GetStaticBookingsForAllHomestays();
+        }
 
         //[Authorize(Roles = "Admin")]
         [HttpGet("adminDashBoard/GetStaticBookings")]
