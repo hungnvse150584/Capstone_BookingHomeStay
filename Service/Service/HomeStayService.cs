@@ -1339,20 +1339,20 @@ namespace Service.Service
                 }
 
                 // Step 5: Kiểm tra RentWhole và Pricing (tương tự CreateHomeStayType)
-                if (rental.RentWhole && (pricingList == null || !pricingList.Any()))
-                {
-                    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
-                        "Pricing must be provided when RentWhole is true!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
-                if (!rental.RentWhole && pricingList != null && pricingList.Any())
-                {
-                    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
-                        "Pricing cannot be provided when RentWhole is false!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
+                //if (rental.RentWhole && (pricingList == null || !pricingList.Any()))
+                //{
+                //    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                //        "Pricing must be provided when RentWhole is true!",
+                //        StatusCodeEnum.BadRequest_400,
+                //        null);
+                //}
+                //if (!rental.RentWhole && pricingList != null && pricingList.Any())
+                //{
+                //    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                //        "Pricing cannot be provided when RentWhole is false!",
+                //        StatusCodeEnum.BadRequest_400,
+                //        null);
+                //}
 
                 // Step 6: Tạo Pricing nếu có
                 var pricings = new List<Pricing>();

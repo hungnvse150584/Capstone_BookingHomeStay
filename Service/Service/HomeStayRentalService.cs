@@ -140,20 +140,20 @@ namespace Service.Service
                 request.RentWhole ??= true;
 
                 // Kiểm tra RentWhole và Pricing
-                if (request.RentWhole.Value && (pricingList == null || !pricingList.Any()))
-                {
-                    return new BaseResponse<HomeStayRentals>(
-                        "Pricing must be provided when RentWhole is true!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
-                if (!request.RentWhole.Value && pricingList != null && pricingList.Any())
-                {
-                    return new BaseResponse<HomeStayRentals>(
-                        "Pricing cannot be provided when RentWhole is false!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
+                //if (request.RentWhole.Value && (pricingList == null || !pricingList.Any()))
+                //{
+                //    return new BaseResponse<HomeStayRentals>(
+                //        "Pricing must be provided when RentWhole is true!",
+                //        StatusCodeEnum.BadRequest_400,
+                //        null);
+                //}
+                //if (!request.RentWhole.Value && pricingList != null && pricingList.Any())
+                //{
+                //    return new BaseResponse<HomeStayRentals>(
+                //        "Pricing cannot be provided when RentWhole is false!",
+                //        StatusCodeEnum.BadRequest_400,
+                //        null);
+                //}
 
                 // Ánh xạ request sang HomeStayRentals
                 var homeStayRental = _mapper.Map<HomeStayRentals>(request);
