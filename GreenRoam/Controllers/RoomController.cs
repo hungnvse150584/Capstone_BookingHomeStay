@@ -21,7 +21,7 @@ namespace GreenRoam.Controllers
             _roomService = roomService;
         }
 
-        //[Authorize(Roles = "Admin, Owner, Staff")]
+        [Authorize(Roles = "Admin, Owner, Staff")]
         [HttpGet]
         [Route("GetAllRoom")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllRooms>>>> GetAllRooms()
@@ -30,7 +30,7 @@ namespace GreenRoam.Controllers
             return Ok(rooms);
         }
 
-        //[Authorize(Roles = "Owner, Staff, Customer")]
+        [Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetAllRoomByRoomType")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllRooms>>>> GetAllRoomsByRoomTypeId(int roomTypeId)
@@ -39,7 +39,7 @@ namespace GreenRoam.Controllers
             return Ok(rooms);
         }
 
-        //[Authorize(Roles = "Owner, Staff, Customer")]
+        [Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetRoom/{id}")]
         public async Task<ActionResult<BaseResponse<GetAllRooms>>> GetRoomByIdAsync(int id)
@@ -48,7 +48,7 @@ namespace GreenRoam.Controllers
             return Ok(rooms);
         }
 
-        //[Authorize(Roles = "Owner, Staff")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpPost]
         [Route("CreateRoom")]
         public async Task<ActionResult<BaseResponse<CreateRoomRequest>>> CreateRoom(CreateRoomRequest typeRequest)
@@ -61,7 +61,7 @@ namespace GreenRoam.Controllers
             return rooms;
         }
 
-        //[Authorize(Roles = "Owner, Staff")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpPut]
         [Route("UpdateRoom")]
         public async Task<ActionResult<BaseResponse<UpdateRoomRequest>>> UpdateRoom(int roomID, UpdateRoomRequest request)
@@ -73,7 +73,7 @@ namespace GreenRoam.Controllers
             return await _roomService.UpdateRoom(roomID, request);
         }
 
-        //[Authorize(Roles = "Owner, Staff, Customer")]
+        [Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet]
         [Route("FilterRoomsByRoomTypeAndDates")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllRooms>>>> FilterRoomsByRoomTypeAndDates(
@@ -99,7 +99,7 @@ namespace GreenRoam.Controllers
             return Ok(rooms);
         }
 
-        //[Authorize(Roles = "Owner, Staff, Customer")]
+        [Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet]
         [Route("FilterAllRoomsByHomeStayID")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllRooms>>>> FilterAllRoomsByHomeStayID(

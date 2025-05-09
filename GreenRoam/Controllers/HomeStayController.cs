@@ -24,7 +24,7 @@ namespace GreenRoam.Controllers
             _homestayService = homestayService;
         }
 
-        //[Authorize(Roles = "Admin, Owner")]
+        [Authorize(Roles = "Admin, Owner")]
         [HttpGet]
         [Route("GetAllRegisterHomeStay")]
         public async Task<ActionResult<BaseResponse<IEnumerable<HomeStayResponse>>>> GetAllHomeStayRegister()
@@ -34,7 +34,7 @@ namespace GreenRoam.Controllers
         }
 
 
-        //[Authorize(Roles = "Admin, Owner")]
+        [Authorize(Roles = "Admin, Owner")]
         [HttpGet]
         [Route("GetAllHomeStayWithOwnerName")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllHomeStayWithOwnerName>>>> GetAllHomeStayWithOwnerName()
@@ -44,7 +44,7 @@ namespace GreenRoam.Controllers
         }
 
 
-        //[Authorize(Roles = "Admin, Owner")]
+        [Authorize(Roles = "Admin, Owner")]
         [HttpGet]
         [Route("GetHomeStayDetail/{id}")]
         public async Task<ActionResult<BaseResponse<SimpleHomeStayResponse>>> GetHomeStayDetailById(int id)
@@ -57,7 +57,7 @@ namespace GreenRoam.Controllers
         }
 
 
-        //[Authorize(Roles = "Admin, Owner")]
+        [Authorize(Roles = "Admin, Owner")]
         [HttpGet]
         [Route("GetOwnerHomeStay/{accountId}")]
         public async Task<ActionResult<BaseResponse<HomeStayResponse>>> GetOwnerHomeStayById(string accountId)
@@ -70,7 +70,7 @@ namespace GreenRoam.Controllers
         }
 
 
-        //[Authorize(Roles = "Admin, Owner, Staff, Customer")]
+        [Authorize(Roles = "Admin, Owner, Staff, Customer")]
         //GetSimple
         [HttpGet("GetSimpleByAccount/{accountId}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<SimpleHomeStayResponse>>>> GetSimpleHomeStaysByAccount(string accountId)
@@ -83,7 +83,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)response.StatusCode, response);
         }
 
-        //[Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer")]
         [HttpGet]
         [Route("GetNearestHomeStay")]
         public async Task<ActionResult<BaseResponse<IEnumerable<SimpleHomeStayResponse>>>> GetNearestHomeStays(double userLat, double userLon, int pageIndex = 1, int pageSize = 5)
@@ -96,14 +96,14 @@ namespace GreenRoam.Controllers
             return Ok(response);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("adminDashBoard/GetTopLoyalOwners")]
         public async Task<BaseResponse<List<GetTopLoyalOwners>>> GetTopLoyalOwnersAsync(int top = 5)
         {
             return await _homestayService.GetTopLoyalOwnersAsync(top);
         }
-        //[Authorize(Roles = "Admin, Owner")]
+        [Authorize(Roles = "Admin, Owner")]
         [HttpPost]
         [Route("CreateHomeStay")]
         public async Task<ActionResult<BaseResponse<List<HomeStay>>>> RegisterHomeStay([FromForm] CreateHomeStayRequest request)
@@ -129,7 +129,7 @@ namespace GreenRoam.Controllers
             }
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [HttpPost]
         [Route("CreateWithRentalsAndPricing")]
         [Consumes("multipart/form-data")]
@@ -159,7 +159,7 @@ namespace GreenRoam.Controllers
             }
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [HttpPut]
         [Route("UpdateHomeStay/{homestayId}")]
         public async Task<ActionResult<BaseResponse<HomeStay>>> UpdateHomeStay(int homestayId, [FromBody] UpdateHomeStayRequest request)
@@ -183,7 +183,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
-        //[Authorize(Roles = "Owner, Staff")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpPut("UpdateImages/{homeStayId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -209,7 +209,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         [Route("ChangeHomeStayStatus")]
         public async Task<ActionResult<BaseResponse<HomeStayResponse>>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status, int? commissionRateID = null)
@@ -221,7 +221,7 @@ namespace GreenRoam.Controllers
             return await _homestayService.ChangeHomeStayStatus(homestayId, status, commissionRateID);
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [HttpDelete]
         [Route("DeleteHomeStay/{id}")]
         public async Task<ActionResult<BaseResponse<string>>> DeleteHomeStay(int id)
@@ -233,7 +233,7 @@ namespace GreenRoam.Controllers
             return await _homestayService.DeleteHomeStay(id);
         }
 
-        //[Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer")]
         [HttpGet("filter")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -244,14 +244,14 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("adminDashBoard/GetOwnersWithHomeStayStats")]
         public async Task<BaseResponse<List<GetOwnerUser>>> GetOwnersWithHomeStayStats()
         {
             return await _homestayService.GetOwnersWithHomeStayStats();
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetTrendingHomeStays")]
         public async Task<BaseResponse<List<GetTrendingHomeStay>>> GetTrendingHomeStays(int top = 10)
         {

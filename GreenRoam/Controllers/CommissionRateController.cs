@@ -19,7 +19,7 @@ namespace GreenRoam.Controllers
             _commissionService = commissionService;
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetAll")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllCommissionRate>>>> GetAllCommissionRates()
         {
@@ -27,7 +27,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
-        //[Authorize(Roles = "Admin, Owner, Staff")]
+        [Authorize(Roles = "Admin, Owner, Staff")]
         [HttpGet("GetByHomeStay/{homeStayID}")]
         public async Task<ActionResult<BaseResponse<GetAllCommissionRate>>> GetCommissionRateByHomeStay(int homeStayID)
         {
@@ -39,7 +39,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("Create")]
         public async Task<ActionResult<BaseResponse<CreateCommissionRateRequest>>> CreateCommissionRate([FromBody] CreateCommissionRateRequest request)
         {
@@ -55,7 +55,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("Update")]
         public async Task<ActionResult<BaseResponse<UpdateCommissionRateRequest>>> UpdateCommissionRate([FromBody] UpdateCommissionRateRequest request)
         {
@@ -71,7 +71,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("Delete/{id}")]
         public async Task<ActionResult<BaseResponse<string>>> DeleteCommissionRate(int id)
         {

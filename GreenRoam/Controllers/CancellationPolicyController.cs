@@ -21,7 +21,7 @@ namespace GreenRoam.Controllers
             _cancellationPolicyService = cancellationPolicyService;
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [HttpPost("Create")]
         public async Task<ActionResult<BaseResponse<CreateCancellationPolicyRequest>>> CreateCancellationPolicy([FromBody] CreateCancellationPolicyRequest request)
         {
@@ -39,7 +39,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)response.StatusCode, response);
         }
 
-        //[Authorize(Roles = "Owner, Staff")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpGet("GetAll")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetAllCancellationPolicy>>>> GetAll()
         {
@@ -47,7 +47,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)response.StatusCode, response);
         }
 
-        //[Authorize(Roles = "Owner, Staff")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpGet("GetById/{id}")]
         public async Task<ActionResult<BaseResponse<GetAllCancellationPolicy>>> GetCancellationPolicyById(int id)
         {
@@ -60,7 +60,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)response.StatusCode, response);
         }
 
-        //[Authorize(Roles = "Owner, Staff")]
+        [Authorize(Roles = "Owner, Staff")]
         [HttpGet("GetByHomeStayId/{homeStayID}")]
         public async Task<ActionResult<BaseResponse<GetAllCancellationPolicy>>> GetCancellationPolicyByHomeStay(int? homeStayID)
         {
@@ -79,7 +79,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)response.StatusCode, response);
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [HttpPut("Update")]
         public async Task<ActionResult<BaseResponse<UpdateCancellationPolicyRequest>>> UpdateCancellationPolicy([FromBody] UpdateCancellationPolicyRequest request)
         {
@@ -97,7 +97,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)response.StatusCode, response);
         }
 
-        //[Authorize(Roles = "Owner")]
+        [Authorize(Roles = "Owner")]
         [HttpDelete]
         [Route("DeleteCancellationPolicy/{id}")]
         public async Task<ActionResult<BaseResponse<string>>> DeleteCancellationPolicy(int id)
