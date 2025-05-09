@@ -139,21 +139,21 @@ namespace Service.Service
                 request.Status ??= true;
                 request.RentWhole ??= true;
 
-                // Kiểm tra RentWhole và Pricing
-                //if (request.RentWhole.Value && (pricingList == null || !pricingList.Any()))
-                //{
-                //    return new BaseResponse<HomeStayRentals>(
-                //        "Pricing must be provided when RentWhole is true!",
-                //        StatusCodeEnum.BadRequest_400,
-                //        null);
-                //}
-                //if (!request.RentWhole.Value && pricingList != null && pricingList.Any())
-                //{
-                //    return new BaseResponse<HomeStayRentals>(
-                //        "Pricing cannot be provided when RentWhole is false!",
-                //        StatusCodeEnum.BadRequest_400,
-                //        null);
-                //}
+                // Kiểm tra hợp lệ cho Pricing
+                if (pricingList != null && pricingList.Any())
+                {
+                    foreach (var pricingItem in pricingList)
+                    {
+                        // Kiểm tra UnitPrice và RentPrice cho Weekday
+                        if (pricingItem.DayType == DayType.Weekday && (pricingItem.UnitPrice <= 0 || pricingItem.RentPrice <= 0))
+                        {
+                            return new BaseResponse<HomeStayRentals>(
+                                "UnitPrice and RentPrice are required and must be greater than 0 for Weekday pricing!",
+                                StatusCodeEnum.BadRequest_400,
+                                null);
+                        }
+                    }
+                }
 
                 // Ánh xạ request sang HomeStayRentals
                 var homeStayRental = _mapper.Map<HomeStayRentals>(request);
@@ -178,13 +178,12 @@ namespace Service.Service
                     await _imageHomeStayTypesRepository.SaveChangesAsync();
                 }
 
-                // Xử lý Pricing nếu có
-                if (request.RentWhole.Value && pricingList != null && pricingList.Any())
+                // Xử lý Pricing nếu có (bất kể RentWhole là true hay false)
+                if (pricingList != null && pricingList.Any())
                 {
                     // Kiểm tra nếu có Pricing cho Weekend hoặc Holiday thì phải có Weekday trước
                     foreach (var pricingItem in pricingList)
                     {
-                        // Sửa lỗi CS0019: So sánh DayType đúng cách
                         if (pricingItem.DayType == DayType.Weekend || pricingItem.DayType == DayType.Holiday)
                         {
                             var existingPricing = await _pricingRepository.GetPricingByHomeStayRentalAsync(homeStayRental.HomeStayRentalID);
@@ -197,8 +196,7 @@ namespace Service.Service
                                     null);
                             }
 
-                            // Sửa lỗi CS0266: So sánh với 0.0 hoặc ép kiểu
-                            if (pricingItem.Percentage <= 0.0) // So sánh với 0.0 thay vì 0 để tránh lỗi chuyển đổi kiểu
+                            if (pricingItem.Percentage <= 0.0)
                             {
                                 return new BaseResponse<HomeStayRentals>(
                                     "Percentage must be greater than 0 for Weekend or Holiday pricing!",
@@ -212,13 +210,13 @@ namespace Service.Service
                         }
                     }
 
-                    // Tiếp tục lưu Pricing
+                    // Lưu Pricing
                     var prices = _mapper.Map<ICollection<Pricing>>(pricingList);
                     foreach (var price in prices)
                     {
                         price.PricingID = 0;
                         price.HomeStayRentalID = homeStayRental.HomeStayRentalID;
-                        price.RoomTypesID = null;
+                        price.RoomTypesID = null; // Có thể cần ánh xạ RoomTypesID nếu áp dụng cho phòng
                         price.StartDate = price.IsDefault ? null : price.StartDate;
                         price.EndDate = price.IsDefault ? null : price.EndDate;
                         await _pricingRepository.AddAsync(price);
