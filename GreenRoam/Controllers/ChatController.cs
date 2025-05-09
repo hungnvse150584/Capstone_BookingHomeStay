@@ -63,7 +63,7 @@ public class ChatController : ControllerBase
 
     //    return Ok(conversationResponses);
     //}
-    [Authorize(Roles = "Owner, Staff, Customer")]
+    /*[Authorize(Roles = "Owner, Staff, Customer")]*/
     [HttpGet("messages/{conversationId}")]
     public async Task<IActionResult> GetMessages(int conversationId)
     {
@@ -126,7 +126,7 @@ public class ChatController : ControllerBase
 
     //    return Ok(conversationResponses);
     //}
-    [Authorize(Roles = "Owner, Staff, Customer")]
+    /*[Authorize(Roles = "Owner, Staff, Customer")]*/
     [HttpGet("conversations/by-customer/{customerId}")]
     public async Task<IActionResult> GetAllChatByCustomerId(string customerId)
     {
@@ -202,7 +202,7 @@ public class ChatController : ControllerBase
         }
     }
     // API 1: Lấy danh sách cuộc trò chuyện dựa trên homeStayId
-    [Authorize(Roles = "Owner, Staff")]
+    /*[Authorize(Roles = "Owner, Staff")]*/
     [HttpGet("conversations/by-homestay/{homeStayId}")]
     public async Task<IActionResult> GetConversationsByHomeStay(int homeStayId)
     {
@@ -314,7 +314,7 @@ public class ChatController : ControllerBase
     // API 2: Lấy lịch sử tin nhắn dựa trên customerId và homeStayId
     // GreenRoam/Controllers/ChatController.cs
 
-    [Authorize(Roles = "Owner")]
+    /*[Authorize(Roles = "Owner")]*/
     [HttpGet("OwnerMessage")]
     public async Task<IActionResult> GetMessagesByCustomerAndHomeStay([FromQuery] string customerId, [FromQuery] int homeStayId)
     {
@@ -339,7 +339,7 @@ public class ChatController : ControllerBase
     }
 
     // API 3: Đánh dấu tất cả tin nhắn là đã đọc
-    [Authorize(Roles = "Owner, Staff, Customer")]
+    /*[Authorize(Roles = "Owner, Staff, Customer")]*/
     [HttpPut("mark-as-read")]
     public async Task<IActionResult> MarkAllMessagesAsRead([FromBody] MarkAsReadRequest request)
     {
@@ -362,7 +362,7 @@ public class ChatController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "Owner, Staff, Customer")]
+   /* [Authorize(Roles = "Owner, Staff, Customer")]*/
 
     [HttpPost("send-message")]
     public async Task<IActionResult> SendMessage([FromForm] SendMessageRequest request)
@@ -419,7 +419,7 @@ public class ChatController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
-    [Authorize(Roles = "Owner, Staff, Customer")]
+    /*[Authorize(Roles = "Owner, Staff, Customer")]*/
     [HttpPost("create-conversation")]
     public async Task<IActionResult> CreateConversation([FromBody] CreateConversationRequest request)
     {
