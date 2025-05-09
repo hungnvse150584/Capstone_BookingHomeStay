@@ -285,10 +285,27 @@ namespace Service.Service
                     if (servicesStatus == BookingServicesStatus.Cancelled)
                     {
                         var services = bookingServiceExist.BookingServicesDetails.FirstOrDefault();
-                        if (services?.Services != null)
+                        if (services?.Services != null && bookingExist.HomeStayID.HasValue)
                         {
-                            services.Services.Quantity += services.Quantity;
-                            await _serviceRepository.UpdateAsync(services.Services);
+                            var cancellationPolicy = await _cancelltaionRepository
+                            .GetCancellationPolicyByHomeStayAsync(bookingExist.HomeStayID.Value);
+
+                            var bookingDetail = bookingExist.BookingDetails.FirstOrDefault();
+                            if (bookingDetail != null && cancellationPolicy != null)
+                            {
+                                var now = DateTime.Now;
+                                var daysBeforeCheckIn = (bookingDetail.CheckInDate - now).TotalDays;
+
+                                bool isRefundAllowed = daysBeforeCheckIn >= cancellationPolicy.DayBeforeCancel &&
+                                                       (cancellationPolicy.RefundPercentage > 0 && cancellationPolicy.RefundPercentage <= 1);
+
+                                // Nếu không được hoàn tiền → trả lại số lượng dịch vụ
+                                if (!isRefundAllowed)
+                                {
+                                    services.Services.Quantity += services.Quantity;
+                                    await _serviceRepository.UpdateAsync(services.Services);
+                                }
+                            }
                         }
                     }
 
