@@ -139,5 +139,21 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
+        //[Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Route("adminDashBoard/GetTotalBookingsAndAmount")]
+        public async Task<BaseResponse<GetTotalBookingsAndAmount>> GetTotalBookingsAndAmount()
+        {
+            return await _bookingService.GetTotalBookingsAndAmount();
+        }
+
+        //[Authorize(Roles = "Owner, Staff")]
+        [HttpGet]
+        [Route("GetTotalBookingsAndAmountForHomeStay/{homeStayID}")]
+        public async Task<BaseResponse<GetTotalBookingsAndAmountForHomeStay>> GetTotalBookingsAndAmountForHomeStay(int homeStayID)
+        {
+            return await _bookingService.GetTotalBookingsAndAmountForHomeStay(homeStayID);
+        }
+
     }
 }

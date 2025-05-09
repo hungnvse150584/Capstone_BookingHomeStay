@@ -786,6 +786,101 @@ namespace DataAccessObject
             return result;
         }
 
+        public async Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmountForHomeStay(int homeStayID)
+        {
+            var homestay = await _context.HomeStays
+                .Include(h => h.CancelPolicy)
+                .FirstOrDefaultAsync(h => h.HomeStayID == homeStayID);
+
+            if (homestay == null)
+            {
+                throw new ArgumentException("Invalid HomeStayID");
+            }
+
+            var commissionRate = await _context.CommissionRates
+                .FirstOrDefaultAsync(c => c.HomeStayID == homeStayID);
+
+            if (commissionRate == null)
+            {
+                throw new Exception("Commission rate not found for the homestay.");
+            }
+
+            var bookings = _context.Bookings
+                .Where(o => o.HomeStayID == homeStayID)
+                .Where(o => o.Status == BookingStatus.Completed ||
+                            (o.Status == BookingStatus.Cancelled && o.paymentStatus == PaymentStatus.Refunded) ||
+                            (o.Status == BookingStatus.Cancelled && o.paymentStatus != PaymentStatus.Refunded &&
+                             o.paymentStatus != PaymentStatus.Pending));
+
+            int totalBookings = await bookings.CountAsync();
+
+            double completedBookingsAmount = await bookings
+                .Where(o => o.Status == BookingStatus.Completed)
+                .SumAsync(o => o.Total) * commissionRate.HostShare;
+
+            double refundedBookingsAmount = await bookings
+                .Where(o => o.Status == BookingStatus.Cancelled && o.paymentStatus == PaymentStatus.Refunded)
+                .SumAsync(o => o.Total * (1 - (o.HomeStay.CancelPolicy.RefundPercentage / 100.0)));
+
+            double nonRefundedBookingsAmount = await bookings
+                .Where(o => o.Status == BookingStatus.Cancelled &&
+                            o.paymentStatus != PaymentStatus.Refunded &&
+                            o.paymentStatus != PaymentStatus.Pending)
+                .SumAsync(o => o.Total) * commissionRate.HostShare;
+
+            double totalBookingsAmount = completedBookingsAmount + refundedBookingsAmount + nonRefundedBookingsAmount;
+
+            return (totalBookings, totalBookingsAmount);
+        }
+
+        public async Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmount()
+        {
+            var homestays = await _context.HomeStays
+               .Include(h => h.CommissionRate)
+               .Include(h => h.CancelPolicy)
+               .Where(h => h.Status == HomeStayStatus.Accepted)
+               .ToListAsync();
+
+            double totalBookingsAmount = 0;
+            int totalBookings = 0;
+
+            foreach (var homestay in homestays)
+            {
+                var commissionRate = homestay.CommissionRate;
+
+                var bookings = _context.Bookings
+                    .Where(o => o.HomeStayID == homestay.HomeStayID)
+                    .Where(o => o.BookingDetails
+                        .Any(d => d.CheckInDate != null || d.CheckOutDate != null));  // Bao gồm tất cả các booking, không phân biệt ngày
+
+                // Tính tổng bookings và tiền cho từng homestay trong ngày
+                totalBookings += await bookings
+                .Where(o => o.Status == BookingStatus.Completed ||
+                            (o.Status == BookingStatus.Cancelled && o.paymentStatus == PaymentStatus.Refunded) ||
+                            (o.Status == BookingStatus.Cancelled && o.paymentStatus != PaymentStatus.Refunded &&
+                            o.paymentStatus != PaymentStatus.Pending))
+                .CountAsync();
+
+                double completedBookingsAmount = await bookings
+                     .Where(o => o.Status == BookingStatus.Completed)
+                     .SumAsync(o => o.Total) * commissionRate.PlatformShare;
+
+                // Tính tổng tiền từ các booking bị hủy và có hoàn trả
+                double refundedBookingsAmount = await bookings
+                    .Where(o => o.Status == BookingStatus.Cancelled && o.paymentStatus == PaymentStatus.Refunded)
+                    .SumAsync(o => o.Total * (1 - (o.HomeStay.CancelPolicy.RefundPercentage / 100.0)));
+
+                double nonRefundedBookingsAmount = await bookings
+                    .Where(o => o.Status == BookingStatus.Cancelled
+                                && o.paymentStatus != PaymentStatus.Refunded
+                                && o.paymentStatus != PaymentStatus.Pending) // bỏ pending
+                    .SumAsync(o => o.Total) * commissionRate.PlatformShare;
+                double totalEachHomeStay = completedBookingsAmount + nonRefundedBookingsAmount;
+                totalBookingsAmount += totalEachHomeStay;
+            }
+            return (totalBookings, totalBookingsAmount);
+        }
+
         public async Task<IEnumerable<Booking>> GetBookingsByRoomIdAsync(int roomId)
         {
             return await _context.Bookings
