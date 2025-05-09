@@ -251,7 +251,6 @@ namespace GreenRoam.Controllers
             return await _homestayService.GetOwnersWithHomeStayStats();
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("GetTrendingHomeStays")]
         public async Task<BaseResponse<List<GetTrendingHomeStay>>> GetTrendingHomeStays(int top = 10)
         {
