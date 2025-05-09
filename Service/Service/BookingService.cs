@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Google.Cloud.Dialogflow.V2.Intent.Types.Message.Types.CarouselSelect.Types;
 using static Google.Rpc.Context.AttributeContext.Types;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -128,7 +129,8 @@ namespace Service.Service
                 bookingsCancell = booking.bookingsCancell,
                 bookingsComplete = booking.bookingsComplete,
                 bookingsReport = booking.bookingsReport,
-                bookingsReturnRefund = booking.bookingsReturnRefund
+                bookingsReturnRefund = booking.bookingsReturnRefund,
+                bookingConfirmed = booking.bookingConfirmed
             };
             if (response == null)
             {
@@ -605,7 +607,8 @@ namespace Service.Service
                 bookingsCancell = booking.bookingsCancell,
                 bookingsComplete = booking.bookingsComplete,
                 bookingsReport = booking.bookingsReport,
-                bookingsReturnRefund = booking.bookingsReturnRefund
+                bookingsReturnRefund = booking.bookingsReturnRefund,
+                bookingConfirmed = booking.bookingConfirmed
             };
             if (response == null)
             {
@@ -629,7 +632,8 @@ namespace Service.Service
                         bookingsCancell = item.bookingsCancell,
                         bookingsComplete = item.bookingsComplete,
                         bookingsReport = item.bookingsReport,
-                        bookingsReturnRefund = item.bookingsReturnRefund
+                        bookingsReturnRefund = item.bookingsReturnRefund,
+                        bookingConfirmed = item.bookingConfirmed
                     })
                     .ToList();
 

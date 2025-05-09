@@ -282,7 +282,7 @@ namespace Service.Service
                                  StatusCodeEnum.NotFound_404, null);
                     }
 
-                    if(servicesStatus == BookingServicesStatus.Cancelled)
+                    if (servicesStatus == BookingServicesStatus.Cancelled)
                     {
                         var services = bookingServiceExist.BookingServicesDetails.FirstOrDefault();
                         if (services?.Services != null)
