@@ -27,7 +27,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
-        [Authorize(Roles = "Admin, Owner, Staff")]
+        [Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet("GetByHomeStay/{homeStayID}")]
         public async Task<ActionResult<BaseResponse<GetAllCommissionRate>>> GetCommissionRateByHomeStay(int homeStayID)
         {

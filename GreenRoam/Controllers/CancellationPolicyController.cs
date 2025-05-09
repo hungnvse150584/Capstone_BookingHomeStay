@@ -60,7 +60,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)response.StatusCode, response);
         }
 
-        [Authorize(Roles = "Owner, Staff")]
+        [Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet("GetByHomeStayId/{homeStayID}")]
         public async Task<ActionResult<BaseResponse<GetAllCancellationPolicy>>> GetCancellationPolicyByHomeStay(int? homeStayID)
         {
