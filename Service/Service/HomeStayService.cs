@@ -1241,23 +1241,23 @@ namespace Service.Service
                 request.Status ??= true;
                 request.RentWhole ??= true;
 
-                // Kiểm tra RentWhole và Pricing
-                if (request.RentWhole.Value && (pricingList == null || !pricingList.Any()))
+                // Kiểm tra hợp lệ cho Pricing
+                if (pricingList != null && pricingList.Any())
                 {
-                    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
-                        "Pricing must be provided when RentWhole is true!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
-                }
-                if (!request.RentWhole.Value && pricingList != null && pricingList.Any())
-                {
-                    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
-                        "Pricing cannot be provided when RentWhole is false!",
-                        StatusCodeEnum.BadRequest_400,
-                        null);
+                    foreach (var pricingItem in pricingList)
+                    {
+                        // Kiểm tra UnitPrice và RentPrice cho Weekday
+                        if (pricingItem.DayType == DayType.Weekday && (pricingItem.UnitPrice <= 0 || pricingItem.RentPrice <= 0))
+                        {
+                            return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
+                                "UnitPrice and RentPrice are required and must be greater than 0 for Weekday pricing!",
+                                StatusCodeEnum.BadRequest_400,
+                                null);
+                        }
+                    }
                 }
 
-                // Step 3: Tạo HomeStay (tương tự RegisterHomeStay)
+                // Step 3: Tạo HomeStay
                 var homestay = new HomeStay
                 {
                     Name = request.Name,
@@ -1299,7 +1299,7 @@ namespace Service.Service
                     MaxAdults = request.MaxAdults,
                     MaxChildren = request.MaxChildren,
                     MaxPeople = request.MaxPeople,
-                    HomeStayID = homestay.HomeStayID, // Tự động gán HomeStayID từ HomeStay vừa tạo
+                    HomeStayID = homestay.HomeStayID,
                     numberBedRoom = request.numberBedRoom,
                     numberBathRoom = request.numberBathRoom,
                     numberKitchen = request.numberKitchen,
@@ -1338,25 +1338,9 @@ namespace Service.Service
                     await _imageHomeStayRepository.SaveChangesAsync();
                 }
 
-                // Step 5: Kiểm tra RentWhole và Pricing (tương tự CreateHomeStayType)
-                //if (rental.RentWhole && (pricingList == null || !pricingList.Any()))
-                //{
-                //    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
-                //        "Pricing must be provided when RentWhole is true!",
-                //        StatusCodeEnum.BadRequest_400,
-                //        null);
-                //}
-                //if (!rental.RentWhole && pricingList != null && pricingList.Any())
-                //{
-                //    return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
-                //        "Pricing cannot be provided when RentWhole is false!",
-                //        StatusCodeEnum.BadRequest_400,
-                //        null);
-                //}
-
-                // Step 6: Tạo Pricing nếu có
+                // Step 5: Xử lý Pricing nếu có (bất kể RentWhole là true hay false)
                 var pricings = new List<Pricing>();
-                if (rental.RentWhole && pricingList != null && pricingList.Any())
+                if (pricingList != null && pricingList.Any())
                 {
                     foreach (var pricingItem in pricingList)
                     {
@@ -1382,16 +1366,6 @@ namespace Service.Service
 
                             pricingItem.UnitPrice = (int)(weekdayPricing.UnitPrice * (1 + pricingItem.Percentage / 100));
                             pricingItem.RentPrice = (int)(weekdayPricing.RentPrice * (1 + pricingItem.Percentage / 100));
-                        }
-                        else
-                        {
-                            if (pricingItem.UnitPrice <= 0 || pricingItem.RentPrice <= 0)
-                            {
-                                return new BaseResponse<CreateHomeStayWithRentalsAndPricingResponse>(
-                                    "UnitPrice and RentPrice are required and must be greater than 0 for Weekday pricing!",
-                                    StatusCodeEnum.BadRequest_400,
-                                    null);
-                            }
                         }
 
                         var pricing = new Pricing
