@@ -594,5 +594,51 @@ namespace Service.Service
             }
             return new BaseResponse<GetTotalBookingsAndAmountForHomeStay>("Get All Success", StatusCodeEnum.OK_200, response);
         }
+
+        public async Task<BaseResponse<GetStaticBookingsForHomeStay>> GetStaticBookingsForHomeStay(int homestayId)
+        {
+            var booking = await _bookingRepository.GetStaticBookingsForHomeStay(homestayId);
+            var response = new GetStaticBookingsForHomeStay
+            {
+                bookings = booking.bookings,
+                bookingsReturnOrCancell = booking.bookingsReturnOrCancell,
+                bookingsCancell = booking.bookingsCancell,
+                bookingsComplete = booking.bookingsComplete,
+                bookingsReport = booking.bookingsReport,
+                bookingsReturnRefund = booking.bookingsReturnRefund
+            };
+            if (response == null)
+            {
+                return new BaseResponse<GetStaticBookingsForHomeStay>("Get All Fail", StatusCodeEnum.BadGateway_502, response);
+            }
+            return new BaseResponse<GetStaticBookingsForHomeStay>("Get All Success", StatusCodeEnum.OK_200, response);
+        }
+
+        public async Task<BaseResponse<List<GetStaticBookingsForAllHomestays>>> GetStaticBookingsForAllHomestays()
+        {
+            try
+            {
+                var staticBookings = await _bookingRepository.GetStaticBookingsForAllHomestays();
+
+                var result = staticBookings
+                    .Select(item => new GetStaticBookingsForAllHomestays
+                    {
+                        HomeStays = _mapper.Map<SingleHomeStayResponse>(item.homeStay),
+                        bookings = item.bookings,
+                        bookingsReturnOrCancell = item.bookingsReturnOrCancell,
+                        bookingsCancell = item.bookingsCancell,
+                        bookingsComplete = item.bookingsComplete,
+                        bookingsReport = item.bookingsReport,
+                        bookingsReturnRefund = item.bookingsReturnRefund
+                    })
+                    .ToList();
+
+                return new BaseResponse<List<GetStaticBookingsForAllHomestays>>("Get All Success", StatusCodeEnum.OK_200, result);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<GetStaticBookingsForAllHomestays>>($"Đã xảy ra lỗi: {ex.Message}", StatusCodeEnum.BadGateway_502, null);
+            }
+        }
     }
 }

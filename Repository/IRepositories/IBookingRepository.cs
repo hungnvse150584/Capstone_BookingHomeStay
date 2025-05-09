@@ -40,7 +40,7 @@ namespace Repository.IRepositories
         Task<Booking?> GetBookingByAccountAndHomeStayAsync(string accountId, int homeStayId);
         Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmount();
         Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmountForHomeStay(int homeStayID);
-
-
+        Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)> GetStaticBookingsForHomeStay(int homestayId);
+        Task<List<(HomeStay homeStay, int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)>> GetStaticBookingsForAllHomestays();
     }
 }

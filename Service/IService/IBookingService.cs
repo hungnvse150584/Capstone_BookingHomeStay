@@ -44,5 +44,7 @@ namespace Service.IService
         Task<BaseResponse<int>> GetBookingByAccountAndHomeStayAsync(string accountId, int homeStayId);
         Task<BaseResponse<GetTotalBookingsAndAmount>> GetTotalBookingsAndAmount();
         Task<BaseResponse<GetTotalBookingsAndAmountForHomeStay>> GetTotalBookingsAndAmountForHomeStay(int homeStayID);
+        Task<BaseResponse<GetStaticBookingsForHomeStay>> GetStaticBookingsForHomeStay(int homestayId);
+        Task<BaseResponse<List<GetStaticBookingsForAllHomestays>>> GetStaticBookingsForAllHomestays();
     }
 }
