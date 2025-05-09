@@ -44,7 +44,7 @@ namespace GreenRoam.Controllers
         }
 
 
-        [Authorize(Roles = "Admin, Owner")]
+        [Authorize(Roles = "Admin, Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetHomeStayDetail/{id}")]
         public async Task<ActionResult<BaseResponse<SimpleHomeStayResponse>>> GetHomeStayDetailById(int id)
@@ -251,7 +251,6 @@ namespace GreenRoam.Controllers
             return await _homestayService.GetOwnersWithHomeStayStats();
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("GetTrendingHomeStays")]
         public async Task<BaseResponse<List<GetTrendingHomeStay>>> GetTrendingHomeStays(int top = 10)
         {

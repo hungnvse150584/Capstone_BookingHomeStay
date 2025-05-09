@@ -67,7 +67,8 @@ namespace DataAccessObject
         {
             return await _context.Bookings
                 .Include(b => b.BookingServices)
-                .Where(b => b.ExpiredTime < DateTime.Now && b.Status == BookingStatus.Pending)
+                .Where(b => (b.ExpiredTime < DateTime.Now && b.Status == BookingStatus.Pending)||
+                       (b.BookingDetails.Any(d => d.CheckOutDate <= DateTime.Now) && b.Status == BookingStatus.Confirmed))
                 .ToListAsync();
         }
 

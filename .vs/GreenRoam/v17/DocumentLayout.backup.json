@@ -148,7 +148,7 @@
               "RelativeDocumentMoniker": "Service\\Service\\HomeStayService.cs",
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\HomeStayService.cs",
               "RelativeToolTip": "Service\\Service\\HomeStayService.cs",
-              "ViewState": "AgIAABsFAAAAAAAAAAAAwEoFAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAIcFAAAAAAAAAAAjwJkFAABwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-09T19:35:07.142Z",
               "EditorCaption": ""
@@ -163,8 +163,7 @@
               "RelativeToolTip": "Service\\Service\\HomeStayRentalService.cs",
               "ViewState": "AgIAACQBAAAAAAAAAAAiwDkBAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T19:26:41.732Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T19:26:41.732Z"
             },
             {
               "$type": "Document",
@@ -176,8 +175,7 @@
               "RelativeToolTip": "GreenRoam\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-09T18:58:36.049Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T18:58:36.049Z"
             },
             {
               "$type": "Document",
@@ -189,8 +187,7 @@
               "RelativeToolTip": "GreenRoam\\Program.cs",
               "ViewState": "AgIAAEEBAAAAAAAAAAAYwFABAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T18:54:26.471Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T18:54:26.471Z"
             },
             {
               "$type": "Document",
@@ -238,8 +235,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\HomeStayController.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T18:03:55.261Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T18:03:55.261Z"
             },
             {
               "$type": "Document",
@@ -251,8 +247,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\HomeStayRentalsController.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAQwEEAAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T18:03:57.007Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T18:03:57.007Z"
             },
             {
               "$type": "Document",
@@ -288,8 +283,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\RatingController.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAJ8AAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T18:07:46.94Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T18:07:46.94Z"
             },
             {
               "$type": "Document",
