@@ -5,6 +5,35 @@
     "version": "v1"
   },
   "paths": {
+    "/api/account/adminDashBoard/GetTotalAccount": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTotalAccountBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTotalAccountBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTotalAccountBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/account/login": {
       "post": {
         "tags": [
@@ -686,6 +715,75 @@
         }
       }
     },
+    "/api/booking-bookingservices/GetStaticBookingsForHomeStay/{homestayId}": {
+      "get": {
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "name": "homestayId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStaticBookingsForHomeStayBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStaticBookingsForHomeStayBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStaticBookingsForHomeStayBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/booking-bookingservices/adminDashBoard/GetStaticBookingsForAllHomeStay": {
+      "get": {
+        "tags": [
+          "Booking"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStaticBookingsForAllHomestaysListBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStaticBookingsForAllHomestaysListBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStaticBookingsForAllHomestaysListBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/booking-bookingservices/adminDashBoard/GetStaticBookings": {
       "get": {
         "tags": [
@@ -1036,6 +1134,75 @@
         }
       }
     },
+    "/api/booking-bookingservices/adminDashBoard/GetTotalBookingsAndAmount": {
+      "get": {
+        "tags": [
+          "Booking"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTotalBookingsAndAmountBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTotalBookingsAndAmountBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTotalBookingsAndAmountBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/booking-bookingservices/GetTotalBookingsAndAmountForHomeStay/{homeStayID}": {
+      "get": {
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "name": "homeStayID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTotalBookingsAndAmountForHomeStayBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTotalBookingsAndAmountForHomeStayBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTotalBookingsAndAmountForHomeStayBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/bookingservices/GetAllBookingServices": {
       "get": {
         "tags": [
@@ -1169,6 +1336,45 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GetBookingServiceByHomeStayIEnumerableBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookingservices/GetServiceStats": {
+      "get": {
+        "tags": [
+          "BookingForService"
+        ],
+        "parameters": [
+          {
+            "name": "homestayId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetServiceStatsListBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetServiceStatsListBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetServiceStatsListBaseResponse"
                 }
               }
             }
@@ -2242,6 +2448,45 @@
         }
       }
     },
+    "/api/booking-checkout/GetRoomTypeStats": {
+      "get": {
+        "tags": [
+          "CheckOut"
+        ],
+        "parameters": [
+          {
+            "name": "homestayId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRoomTypeStatsListBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRoomTypeStatsListBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRoomTypeStatsListBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/booking-checkout/UpdateBooking": {
       "put": {
         "tags": [
@@ -2658,6 +2903,25 @@
         }
       }
     },
+    "/api/health/hub": {
+      "get": {
+        "tags": [
+          "GreenRoam"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/homestay/GetAllRegisterHomeStay": {
       "get": {
         "tags": [
@@ -2892,6 +3156,46 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SimpleHomeStayResponseIEnumerableBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/homestay/adminDashBoard/GetTopLoyalOwners": {
+      "get": {
+        "tags": [
+          "HomeStay"
+        ],
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTopLoyalOwnersListBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTopLoyalOwnersListBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTopLoyalOwnersListBaseResponse"
                 }
               }
             }
@@ -11086,6 +11390,40 @@
         },
         "additionalProperties": false
       },
+      "GetRoomTypeStats": {
+        "type": "object",
+        "properties": {
+          "roomTypeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetRoomTypeStatsListBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetRoomTypeStats"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "GetRoomsResponse": {
         "type": "object",
         "properties": {
@@ -11172,6 +11510,40 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GetAllImageService"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetServiceStats": {
+        "type": "object",
+        "properties": {
+          "serviceName": {
+            "type": "string",
+            "nullable": true
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetServiceStatsListBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetServiceStats"
             },
             "nullable": true
           }
@@ -11584,6 +11956,105 @@
         },
         "additionalProperties": false
       },
+      "GetStaticBookingsForAllHomestays": {
+        "type": "object",
+        "properties": {
+          "homeStays": {
+            "$ref": "#/components/schemas/SingleHomeStayResponse"
+          },
+          "bookingsReturnOrCancell": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookings": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingsComplete": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingsCancell": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingsReturnRefund": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingsReport": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStaticBookingsForAllHomestaysListBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetStaticBookingsForAllHomestays"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStaticBookingsForHomeStay": {
+        "type": "object",
+        "properties": {
+          "bookingsReturnOrCancell": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookings": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingsComplete": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingsCancell": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingsReturnRefund": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingsReport": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetStaticBookingsForHomeStayBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GetStaticBookingsForHomeStay"
+          }
+        },
+        "additionalProperties": false
+      },
       "GetTopHomeStayBookingInMonth": {
         "type": "object",
         "properties": {
@@ -11647,6 +12118,142 @@
               "$ref": "#/components/schemas/GetTopLoyalCustomers"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTopLoyalOwners": {
+        "type": "object",
+        "properties": {
+          "accountID": {
+            "type": "string",
+            "nullable": true
+          },
+          "ownerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalHomeStays": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTopLoyalOwnersListBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetTopLoyalOwners"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTotalAccount": {
+        "type": "object",
+        "properties": {
+          "totalAccount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ownersAccount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customersAccount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "staffsAccount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTotalAccountBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GetTotalAccount"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTotalBookingsAndAmount": {
+        "type": "object",
+        "properties": {
+          "totalBookings": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalBookingsAmount": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTotalBookingsAndAmountBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GetTotalBookingsAndAmount"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTotalBookingsAndAmountForHomeStay": {
+        "type": "object",
+        "properties": {
+          "totalBookings": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalBookingsAmount": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetTotalBookingsAndAmountForHomeStayBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/GetTotalBookingsAndAmountForHomeStay"
           }
         },
         "additionalProperties": false
