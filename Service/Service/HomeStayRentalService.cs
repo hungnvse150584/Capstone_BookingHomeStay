@@ -344,7 +344,7 @@ namespace Service.Service
                 {
                     var hasBooking = rental.BookingDetails
                         .Any(bd => bd.Booking != null &&
-                                   bd.HomeStayTypesID == rental.HomeStayRentalID &&
+                                  bd.HomeStayRentalID == rental.HomeStayRentalID &&
                                    (bd.Booking.Status == BookingStatus.Pending ||
                                     bd.Booking.Status == BookingStatus.Confirmed ||
                                     bd.Booking.Status == BookingStatus.InProgress) &&

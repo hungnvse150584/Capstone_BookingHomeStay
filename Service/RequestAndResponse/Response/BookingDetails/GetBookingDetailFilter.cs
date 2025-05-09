@@ -20,7 +20,7 @@ namespace Service.RequestAndResponse.Response.BookingDetails
 
         public double TotalAmount { get; set; }
 
-        public int? HomeStayTypesID { get; set; }
+        public int? HomeStayRentalID { get; set; }
         public int? RoomID { get; set; }
         public GetAllHomeStayType? HomeStayTypes { get; set; }
 
