@@ -683,19 +683,17 @@ namespace Service.Service
 
             double totalAmount = booking.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
             double amountPaid = booking.Transactions.Sum(t => t.Amount); // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
-            var commissionrate = await _commissionRateRepository.GetCommissionByHomeStayAsync(booking.HomeStayID);
+            
             // Kiểm tra trạng thái thanh toán
             if (amountPaid >= totalAmount)
             {
                 booking.paymentStatus = PaymentStatus.FullyPaid; // Thanh toán đầy đủ
                 transaction.TransactionKind = TransactionKind.FullPayment;
-                transaction.AdminAmount = amountPaid * commissionrate.PlatformShare;
             }
             else if (amountPaid > 0)
             {
                 booking.paymentStatus = PaymentStatus.Deposited; // Đặt cọc
                 transaction.TransactionKind = TransactionKind.Deposited;
-                transaction.AdminAmount = amountPaid * commissionrate.PlatformShare;
             }
 
             if (bookingServiceID.HasValue && bookingServiceID.Value > 0)
@@ -849,18 +847,16 @@ namespace Service.Service
 
             double totalAmount = bookingService.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
             double amountPaid = bookingService.Transactions.Sum(t => t.Amount); // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
-            var commissionrate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingService.HomeStayID);                                                                          // Kiểm tra trạng thái thanh toán
+                                                                               // Kiểm tra trạng thái thanh toán
             if (amountPaid >= totalAmount)
             {
                 bookingService.PaymentServiceStatus = PaymentServicesStatus.FullyPaid; // Thanh toán đầy đủ
                 transaction.TransactionKind = TransactionKind.FullPayment;
-                transaction.AdminAmount = amountPaid * commissionrate.PlatformShare;
             }
             else if (amountPaid > 0)
             {
                 bookingService.PaymentServiceStatus = PaymentServicesStatus.Deposited; // Đặt cọc
                 transaction.TransactionKind = TransactionKind.Deposited;
-                transaction.AdminAmount = amountPaid * commissionrate.PlatformShare;
             }
 
             bookingService.Status = BookingServicesStatus.Confirmed;
