@@ -28,7 +28,7 @@ namespace Repository.IRepositories
 
 
         //For AdminDashBoard
-        Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)> GetStaticBookings();
+        Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport, int bookingConfirmed)> GetStaticBookings();
         Task<List<(string homeStayName, int QuantityOfBooking)>> GetTopHomeStayBookingInMonthAsync();
         Task<List<(object span, int totalBookings, double totalBookingsAmount)>> GetTotalBookingsTotalBookingsAmount
         (DateTime startDate, DateTime endDate, string? timeSpanType);
@@ -40,7 +40,7 @@ namespace Repository.IRepositories
         Task<Booking?> GetBookingByAccountAndHomeStayAsync(string accountId, int homeStayId);
         Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmount();
         Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmountForHomeStay(int homeStayID);
-        Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)> GetStaticBookingsForHomeStay(int homestayId);
-        Task<List<(HomeStay homeStay, int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)>> GetStaticBookingsForAllHomestays();
+        Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport, int bookingConfirmed)> GetStaticBookingsForHomeStay(int homestayId);
+        Task<List<(HomeStay homeStay, int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport, int bookingConfirmed)>> GetStaticBookingsForAllHomestays();
     }
 }

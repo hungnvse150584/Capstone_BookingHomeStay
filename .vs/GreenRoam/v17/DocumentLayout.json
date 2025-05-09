@@ -217,8 +217,7 @@
               "RelativeToolTip": "Service\\Service\\HomeStayService.cs",
               "ViewState": "AgIAAIQDAAAAAAAAAAAuwJEDAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T07:42:49.828Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T07:42:49.828Z"
             },
             {
               "$type": "Document",
@@ -230,8 +229,7 @@
               "RelativeToolTip": "Service\\Mapping\\MappingProfile.cs",
               "ViewState": "AgIAAI0AAAAAAAAAAAAAwKoAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T07:38:45.055Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T07:38:45.055Z"
             },
             {
               "$type": "Document",
@@ -243,8 +241,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\HomeStayType\\GetAllHomeStayTypeFilter.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T07:37:54.751Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T07:37:54.751Z"
             },
             {
               "$type": "Document",
@@ -256,8 +253,7 @@
               "RelativeToolTip": "DataAccessObject\\HomeStayRentalDAO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAYwHwAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T07:32:46.93Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T07:32:46.93Z"
             },
             {
               "$type": "Document",
@@ -282,8 +278,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\BookingDetails\\GetBookingDetailFilter.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAcwBYAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T07:44:49.37Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T07:44:49.37Z"
             },
             {
               "$type": "Document",
@@ -295,8 +290,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\BookingForServiceController.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T04:38:49.128Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T04:38:49.128Z"
             },
             {
               "$type": "Document",
@@ -308,8 +302,7 @@
               "RelativeToolTip": "Service\\Service\\ServicesService.cs",
               "ViewState": "AgIAAIgAAAAAAAAAAAA5wAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T04:38:20.37Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T04:38:20.37Z"
             },
             {
               "$type": "Document",
@@ -333,8 +326,7 @@
               "RelativeToolTip": "GreenRoam\\Program.cs",
               "ViewState": "AgIAAJsBAAAAAAAAAAAQwN0BAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T12:04:36.994Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-08T12:04:36.994Z"
             },
             {
               "$type": "Document",
@@ -358,8 +350,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\CheckOutController.cs",
               "ViewState": "AgIAAG4AAAAAAAAAAAAgwIwAAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T16:38:30.653Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-08T16:38:30.653Z"
             },
             {
               "$type": "Document",
@@ -371,8 +362,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\TransactionController.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-09T04:39:03.082Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-09T04:39:03.082Z"
             },
             {
               "$type": "Document",

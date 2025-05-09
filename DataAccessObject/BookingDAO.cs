@@ -187,72 +187,78 @@ namespace DataAccessObject
 
         //For Admin and Owner DashBoard
         //Admin DashBoard
-        public async Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)> GetStaticBookings()
+        public async Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport, int bookingConfirmed)> GetStaticBookings()
         {
-            // Lấy ngày hiện tại
+            /*// Lấy ngày hiện tại
             DateTime today = DateTime.Today;
 
             // Xác định ngày đầu tuần (ngày thứ Hai là ngày đầu tuần)
             DateTime startOfWeek = today.AddDays(-(int)today.DayOfWeek + (int)DayOfWeek.Monday);
 
             // Xác định ngày cuối tuần (ngày Chủ nhật là ngày cuối tuần)
-            DateTime endOfWeek = startOfWeek.AddDays(6);
+            DateTime endOfWeek = startOfWeek.AddDays(6);*/
 
             int bookingsReturnOrCancell = await _context.Bookings
                  .Where(o => o.BookingDetails
-                     .Any(d => (d.CheckInDate >= startOfWeek && d.CheckInDate <= endOfWeek)
-                            || (d.CheckOutDate >= startOfWeek && d.CheckOutDate <= endOfWeek)))
+                     .Any(d => d.CheckInDate != null 
+                            || d.CheckOutDate != null))
                  .Where(o => o.Status == BookingStatus.Cancelled
                           || o.paymentStatus == PaymentStatus.Refunded)
                  .CountAsync();
 
             int bookings = await _context.Bookings
                                 .Where(o => o.BookingDetails
-                                .Any(d => (d.CheckInDate >= startOfWeek && d.CheckInDate <= endOfWeek)
-                                        || (d.CheckOutDate >= startOfWeek && d.CheckOutDate <= endOfWeek)))
+                                .Any(d => d.CheckInDate != null
+                                       || d.CheckOutDate != null)) 
                                 .CountAsync();
 
             int bookingsComplete = await _context.Bookings
                                 .Where(o => o.BookingDetails
-                                .Any(d => (d.CheckInDate >= startOfWeek && d.CheckInDate <= endOfWeek)
-                                        || (d.CheckOutDate >= startOfWeek && d.CheckOutDate <= endOfWeek)))
+                                .Any(d => d.CheckInDate != null
+                                       || d.CheckOutDate != null))
                                 .Where(o => o.Status == BookingStatus.Completed)
                                 .CountAsync();
 
             int bookingsCancell = await _context.Bookings
                                 .Where(o => o.BookingDetails
-                                .Any(d => (d.CheckInDate >= startOfWeek && d.CheckInDate <= endOfWeek)
-                                        || (d.CheckOutDate >= startOfWeek && d.CheckOutDate <= endOfWeek)))
+                                .Any(d => d.CheckInDate != null
+                                       || d.CheckOutDate != null))
                                 .Where(o => o.Status == BookingStatus.Cancelled && o.paymentStatus != PaymentStatus.Refunded)
                                 .CountAsync();
 
             int bookingsReturnRefund = await _context.Bookings
                                 .Where(o => o.BookingDetails
-                                .Any(d => (d.CheckInDate >= startOfWeek && d.CheckInDate <= endOfWeek)
-                                        || (d.CheckOutDate >= startOfWeek && d.CheckOutDate <= endOfWeek)))
+                                .Any(d => d.CheckInDate != null
+                                       || d.CheckOutDate != null))
                                 .Where(o => o.paymentStatus == PaymentStatus.Refunded)
                                 .CountAsync();
 
             int bookingsReport = await _context.Bookings
                                .Where(o => o.BookingDetails
-                                .Any(d => (d.CheckInDate >= startOfWeek && d.CheckInDate <= endOfWeek)
-                                        || (d.CheckOutDate >= startOfWeek && d.CheckOutDate <= endOfWeek)))
+                                .Any(d => d.CheckInDate != null
+                                       || d.CheckOutDate != null))
                                 .Where(o => o.ReportID != null)
                                 .CountAsync();
-            return (bookingsReturnOrCancell, bookings, bookingsComplete, bookingsCancell, bookingsReturnRefund, bookingsReport);
+
+            int bookingConfirmed = await _context.Bookings
+                                .Where(o => o.BookingDetails
+                                .Any(d => d.CheckInDate != null
+                                       || d.CheckOutDate != null))
+                                .Where(o => o.Status == BookingStatus.Confirmed && (o.paymentStatus == PaymentStatus.Deposited || o.paymentStatus == PaymentStatus.FullyPaid))
+                                .CountAsync();
+            return (bookingsReturnOrCancell, bookings, bookingsComplete, bookingsCancell, bookingsReturnRefund, bookingsReport, bookingConfirmed);
         }
 
-        public async Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)> GetStaticBookingsForHomeStay(int homestayId)
+        public async Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport, int bookingConfirmed)> GetStaticBookingsForHomeStay(int homestayId)
         {
-            DateTime today = DateTime.Today;
+           /* DateTime today = DateTime.Today;
             DateTime startOfWeek = today.AddDays(-(int)today.DayOfWeek + (int)DayOfWeek.Monday);
-            DateTime endOfWeek = startOfWeek.AddDays(6);
+            DateTime endOfWeek = startOfWeek.AddDays(6);*/
 
             var baseQuery = _context.Bookings
                 .Where(o => o.HomeStayID == homestayId)
-                .Where(o => o.BookingDetails.Any(d =>
-                    (d.CheckInDate >= startOfWeek && d.CheckInDate <= endOfWeek) ||
-                    (d.CheckOutDate >= startOfWeek && d.CheckOutDate <= endOfWeek))
+                .Where(o => o.BookingDetails.Any(d => d.CheckInDate != null
+                            || d.CheckOutDate != null)
                 );
 
             int bookingsReturnOrCancell = await baseQuery
@@ -276,27 +282,31 @@ namespace DataAccessObject
             int bookingsReport = await baseQuery
                 .Where(o => o.ReportID != null)
                 .CountAsync();
+            
+            int bookingConfirmed = await baseQuery
+                 .Where(o => o.Status == BookingStatus.Confirmed && 
+                 (o.paymentStatus == PaymentStatus.Deposited ||
+                  o.paymentStatus == PaymentStatus.FullyPaid))
+                 .CountAsync();
 
-            return (bookingsReturnOrCancell, bookings, bookingsComplete, bookingsCancell, bookingsReturnRefund, bookingsReport);
+            return (bookingsReturnOrCancell, bookings, bookingsComplete, bookingsCancell, bookingsReturnRefund, bookingsReport, bookingConfirmed);
         }
 
-        public async Task<List<(HomeStay homeStay, int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)>> GetStaticBookingsForAllHomestays()
+        public async Task<List<(HomeStay homeStay, int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport, int bookingConfirmed)>> GetStaticBookingsForAllHomestays()
         {
-            DateTime today = DateTime.Today;
+           /* DateTime today = DateTime.Today;
             DateTime startOfWeek = today.AddDays(-(int)today.DayOfWeek + (int)DayOfWeek.Monday);
-            DateTime endOfWeek = startOfWeek.AddDays(6);
+            DateTime endOfWeek = startOfWeek.AddDays(6);*/
 
             var homestays = await _context.HomeStays.ToListAsync();
 
-            var results = new List<(HomeStay homeStay, int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)>();
+            var results = new List<(HomeStay homeStay, int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport, int bookingConfirmed)>();
 
             foreach (var homestay in homestays)
             {
                 var baseQuery = _context.Bookings
                 .Where(o => o.HomeStayID == homestay.HomeStayID)
-                .Where(o => o.BookingDetails.Any(d =>
-                    (d.CheckInDate >= startOfWeek && d.CheckInDate <= endOfWeek) ||
-                    (d.CheckOutDate >= startOfWeek && d.CheckOutDate <= endOfWeek)));
+                .Where(o => o.BookingDetails.Any(d => d.CheckInDate != null || d.CheckOutDate != null));
 
                 int bookingsReturnOrCancell = await baseQuery
                     .Where(o => o.Status == BookingStatus.Cancelled || o.paymentStatus == PaymentStatus.Refunded)
@@ -320,7 +330,13 @@ namespace DataAccessObject
                     .Where(o => o.ReportID != null)
                     .CountAsync();
 
-                results.Add((homestay, bookingsReturnOrCancell, bookings, bookingsComplete, bookingsCancell, bookingsReturnRefund, bookingsReport));
+                int bookingConfirmed = await baseQuery
+                 .Where(o => o.Status == BookingStatus.Confirmed &&
+                 (o.paymentStatus == PaymentStatus.Deposited ||
+                  o.paymentStatus == PaymentStatus.FullyPaid))
+                 .CountAsync();
+
+                results.Add((homestay, bookingsReturnOrCancell, bookings, bookingsComplete, bookingsCancell, bookingsReturnRefund, bookingsReport, bookingConfirmed));
             }
 
             return results;

@@ -69,7 +69,7 @@ namespace Repository.Repositories
             return await _bookingDao.GetBookingStatusByAccountId(accountId);
         }
 
-        public async Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)> GetStaticBookings()
+        public async Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport, int bookingConfirmed)> GetStaticBookings()
         {
             return await _bookingDao.GetStaticBookings();
         }
@@ -149,12 +149,12 @@ namespace Repository.Repositories
             return await _bookingDao.GetTotalBookingsAndAmountForHomeStay(homeStayID);
         }
 
-        public async Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)> GetStaticBookingsForHomeStay(int homestayId)
+        public async Task<(int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport, int bookingConfirmed)> GetStaticBookingsForHomeStay(int homestayId)
         {
             return await _bookingDao.GetStaticBookingsForHomeStay(homestayId);
         }
 
-        public async Task<List<(HomeStay homeStay, int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport)>> GetStaticBookingsForAllHomestays()
+        public async Task<List<(HomeStay homeStay, int bookingsReturnOrCancell, int bookings, int bookingsComplete, int bookingsCancell, int bookingsReturnRefund, int bookingsReport, int bookingConfirmed)>> GetStaticBookingsForAllHomestays()
         {
             return await _bookingDao.GetStaticBookingsForAllHomestays();
         }

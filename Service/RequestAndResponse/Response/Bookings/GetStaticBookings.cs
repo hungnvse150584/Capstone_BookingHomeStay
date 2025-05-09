@@ -14,5 +14,6 @@ namespace Service.RequestAndResponse.Response.Bookings
         public int bookingsCancell { get; set; }
         public int bookingsReturnRefund { get; set; }
         public int bookingsReport { get; set; }
+        public int bookingConfirmed { get; set; }
     }
 }
