@@ -344,6 +344,43 @@ namespace Service.Service
                         {
                             return new BaseResponse<Booking>("The booking does not belong to any HomeStay !", StatusCodeEnum.NotFound_404, null);
                         }
+
+                        if (bookingExist.BookingServices != null && bookingExist.BookingServices.Any())
+                        {
+                            foreach (var service in bookingExist.BookingServices)
+                            {
+                                if (service.Status == BookingServicesStatus.Completed && service.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
+                                {
+                                    var serviceTransaction = await _transactionRepository.GetTransactionByBookingServiceId(service.BookingServicesID);
+
+                                    if (serviceTransaction != null)
+                                    {
+                                        if (bookingExist.HomeStayID.HasValue)
+                                        {
+                                            var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingExist.HomeStayID.Value);
+                                            if (commissionRate != null)
+                                            {
+                                                var hostRate = commissionRate.HostShare;
+                                                var adminRate = commissionRate.PlatformShare;
+
+                                                if (serviceTransaction.TransactionKind == TransactionKind.Deposited || serviceTransaction.TransactionKind == TransactionKind.FullPayment)
+                                                {
+                                                    serviceTransaction.OwnerAmount = serviceTransaction.Amount * hostRate;
+                                                    serviceTransaction.AdminAmount = serviceTransaction.Amount * adminRate;
+                                                }
+                                                else if (serviceTransaction.TransactionKind == TransactionKind.Refund)
+                                                {
+                                                    serviceTransaction.OwnerAmount = serviceTransaction.Amount;
+                                                    serviceTransaction.AdminAmount = 0;
+                                                }
+
+                                                await _transactionRepository.UpdateAsync(serviceTransaction);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     else
                     {

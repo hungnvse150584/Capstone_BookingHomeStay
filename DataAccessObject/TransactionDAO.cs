@@ -69,5 +69,15 @@ namespace DataAccessObject
                 .Include(t => t.HomeStay)
                 .FirstOrDefaultAsync(t => t.Booking.BookingID == bookingID);
         }
+
+        public async Task<Transaction?> GetTransactionByBookingServiceId(int bookingID)
+        {
+            return await _context.Transactions
+                .Include(t => t.Account)
+                .Include(t => t.Booking)
+                .Include(t => t.BookingService)
+                .Include(t => t.HomeStay)
+                .FirstOrDefaultAsync(t => t.BookingService.BookingServicesID == bookingID);
+        }
     }
 }
