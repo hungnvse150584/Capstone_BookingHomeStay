@@ -26,7 +26,7 @@ namespace BusinessObject.Model;
         public DateTime? DeleteAt { get; set; }
 
         [Required]
-        public int numberBedRoom { get; set; }
+        public int numberBed { get; set; }
 
         [Required]
         public int numberBathRoom { get; set; }

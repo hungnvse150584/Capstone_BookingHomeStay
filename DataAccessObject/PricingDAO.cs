@@ -104,11 +104,11 @@ namespace DataAccessObject
             return DayType.Weekday;
         }
 
-        public async Task<(double totalRentPrice, double totalUnitPrice)> GetTotalPrice(
+        public async Task<double> GetTotalPrice(
     DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId = null)
         {
             double totalRentPrice = 0;
-            double totalUnitPrice = 0;
+            
 
             // Nếu cả hai đều null thì không đủ dữ liệu
             if (!homeStayRentalId.HasValue && !roomTypeId.HasValue)
@@ -175,11 +175,11 @@ namespace DataAccessObject
                 if (pricing != null)
                 {
                     totalRentPrice += pricing.RentPrice;
-                    totalUnitPrice += pricing.UnitPrice;
+                    
                 }
             }
 
-            return (totalRentPrice, totalUnitPrice);
+            return totalRentPrice;
         }
     }
 }

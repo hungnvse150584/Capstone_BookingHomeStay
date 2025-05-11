@@ -16,8 +16,6 @@ namespace BusinessObject.Model
         [Required]
         public string roomNumber { get; set; }
 
-        public bool isUsed { get; set; }
-
         public bool isActive { get; set; }
 
         public DateTime? DeleteAt { get; set; }

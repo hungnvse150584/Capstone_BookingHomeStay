@@ -21,9 +21,6 @@ namespace BusinessObject.Model
         public string Description { get; set; }
 
         [Required]
-        public double UnitPrice { get; set; }
-
-        [Required]
         public double RentPrice { get; set; }
 
         public double Percentage { get; set; }

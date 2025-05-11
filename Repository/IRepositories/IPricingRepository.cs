@@ -17,7 +17,6 @@ namespace Repository.IRepositories
         Task<Pricing> GetPricingByIdAsync(int id);
         Task<DayType> GetDayType(DateTime date);
         Task SaveChangesAsync();
-        Task<(double totalRentPrice, double totalUnitPrice)> GetTotalPrice(
-        DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId = null);
+        Task<double> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId);
     }
 }

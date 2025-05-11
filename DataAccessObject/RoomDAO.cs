@@ -40,7 +40,7 @@ namespace DataAccessObject
             }
 
             var availableRooms = await _context.Rooms
-                .Where(r => r.isActive == true && r.isUsed == false) // Phòng chưa bị chủ khóa và chưa có khách
+                .Where(r => r.isActive == true) // Phòng chưa bị chủ khóa và chưa có khách
                 .Where(r => !_context.BookingDetails
                     .Where(bd => bd.RoomID != null) // Đảm bảo RoomID không null
                     .Any(bd => bd.RoomID == r.RoomID &&
@@ -85,12 +85,12 @@ namespace DataAccessObject
             return entity;
         }
 
-        public async Task<Room?> ChangeRoomStatusAsync(int roomId, bool? isUsed, bool? isActive)
+        public async Task<Room?> ChangeRoomStatusAsync(int roomId, bool? isActive)
         {
             var room = await _context.Rooms.FindAsync(roomId);
             if (room != null)
             {
-                if (isUsed.HasValue) room.isUsed = isUsed.Value;
+                
                 if (isActive.HasValue) room.isActive = isActive.Value;
                 await _context.SaveChangesAsync();
             }
@@ -110,14 +110,14 @@ namespace DataAccessObject
             // Log danh sách phòng trước khi lọc
             var roomsBeforeFilter = await _context.Rooms
                 .Where(r => r.RoomTypesID == roomTypeId)
-                .Where(r => r.isActive == true && r.isUsed == false)
+                .Where(r => r.isActive == true)
                 .ToListAsync();
             Console.WriteLine($"Rooms before filter: {string.Join(", ", roomsBeforeFilter.Select(r => r.RoomID))}");
 
             // Thực hiện lọc phòng
             var availableRooms = await _context.Rooms
                 .Where(r => r.RoomTypesID == roomTypeId)
-                .Where(r => r.isActive == true && r.isUsed == false)
+                .Where(r => r.isActive == true)
                 .Where(r => !_context.BookingDetails
                     .Where(bd => bd.RoomID != null)
                     .Any(bd => bd.RoomID == r.RoomID &&
@@ -157,7 +157,7 @@ namespace DataAccessObject
                 .Where(r => r.RoomTypes != null)
                 .Where(r => r.RoomTypes.HomeStayRentals != null)
                 .Where(r => r.RoomTypes.HomeStayRentals.HomeStayID == homeStayID)
-                .Where(r => r.isActive == true && r.isUsed == false);
+                .Where(r => r.isActive == true);
 
             if (startDate.HasValue && endDate.HasValue)
             {

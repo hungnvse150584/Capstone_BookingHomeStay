@@ -142,9 +142,8 @@ namespace Service.Service
                     CheckOutDate = checkOutLocal,
                     HomeStayRentalID = detail.homeStayTypeID,
                     RoomID = detail.roomID,
-                    UnitPrice = total.totalUnitPrice,
-                    rentPrice = total.totalRentPrice,
-                    TotalAmount = total.totalRentPrice
+                    rentPrice = total,
+                    TotalAmount = total
                 });
             }
 
@@ -184,7 +183,7 @@ namespace Service.Service
                     var startDateLocal = s.StartDate.HasValue ? DateTimeHelper.ConvertToVietnamTime(s.StartDate.Value) : (DateTime?)null;
                     var endDateLocal = s.EndDate.HasValue ? DateTimeHelper.ConvertToVietnamTime(s.EndDate.Value) : (DateTime?)null;
 
-                    double unitPrice = service.UnitPrice;
+                    
                     double servicePrice = service.servicesPrice;
                     double totalAmount = 0;
 
@@ -220,12 +219,9 @@ namespace Service.Service
                     return new BookingServicesDetail
                     {
                         Quantity = s.Quantity,
-                        unitPrice = unitPrice,
                         TotalAmount = totalAmount,
                         ServicesID = s.ServicesID,
                         RentHour = service.ServiceType == ServiceType.Hour ? s.RentHour : null,
-                        StartDate = service.ServiceType == ServiceType.Day ? startDateLocal : null,
-                        EndDate = service.ServiceType == ServiceType.Day ? endDateLocal : null
                     };
                 }).ToList();
 
@@ -524,9 +520,8 @@ namespace Service.Service
                         existingDetail.RoomID = isRentWhole ? null : updatedBookingDetails.roomID;
                         existingDetail.CheckInDate = updatedBookingDetails.CheckInDate;
                         existingDetail.CheckOutDate = updatedBookingDetails.CheckOutDate;
-                        existingDetail.UnitPrice = pricing.totalUnitPrice;
-                        existingDetail.rentPrice = pricing.totalRentPrice;
-                        existingDetail.TotalAmount = pricing.totalRentPrice;
+                        existingDetail.rentPrice = pricing;
+                        existingDetail.TotalAmount = pricing;
                     }
                     else
                     {
@@ -536,9 +531,8 @@ namespace Service.Service
                             RoomID = isRentWhole ? null : updatedBookingDetails.roomID,
                             CheckInDate = updatedBookingDetails.CheckInDate,
                             CheckOutDate = updatedBookingDetails.CheckOutDate,
-                            UnitPrice = pricing.totalUnitPrice,
-                            rentPrice = pricing.totalRentPrice,
-                            TotalAmount = pricing.totalRentPrice
+                            rentPrice = pricing,
+                            TotalAmount = pricing
                         });
                     }
                 }

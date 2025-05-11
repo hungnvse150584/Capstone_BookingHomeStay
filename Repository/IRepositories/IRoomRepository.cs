@@ -14,7 +14,7 @@ namespace Repository.IRepositories
         Task<IEnumerable<Room>> GetAllRoomsByRoomTypeIdAsync(int roomTypeId);
         Task<IEnumerable<Room>> GetAvailableRoomFilter(DateTime checkInDate, DateTime checkOutDate);
         Task<Room> GetRoomByIdAsync(int? id);
-        Task<Room?> ChangeRoomStatusAsync(int roomId, bool? isUsed, bool? isActive);
+        Task<Room?> ChangeRoomStatusAsync(int roomId, bool? isActive);
         Task SaveChangesAsync();
         Task<IEnumerable<Room>> FilterRoomsByRoomTypeAndDates(int roomTypeId, DateTime checkInDate, DateTime checkOutDate);
         Task<IEnumerable<Room>> FilterAllRoomsByHomeStayIDAsync(int homeStayID, DateTime? startDate, DateTime? endDate);

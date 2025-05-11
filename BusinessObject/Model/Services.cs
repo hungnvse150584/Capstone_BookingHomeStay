@@ -28,9 +28,6 @@ namespace BusinessObject.Model;
         public int? Quantity { get; set; }
 
         [Required]
-        public double UnitPrice { get; set; }
-
-        [Required]
         public double servicesPrice { get; set; }
 
         public bool Status { get; set; }

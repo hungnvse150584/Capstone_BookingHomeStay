@@ -55,9 +55,9 @@ namespace Repository.Repositories
             return await _roomDao.DeleteAsync(entity);
         }
 
-        public async Task<Room?> ChangeRoomStatusAsync(int roomId, bool? isUsed, bool? isActive)
+        public async Task<Room?> ChangeRoomStatusAsync(int roomId, bool? isActive)
         {
-            return await _roomDao.ChangeRoomStatusAsync(roomId, isUsed, isActive);
+            return await _roomDao.ChangeRoomStatusAsync(roomId, isActive);
         }
         public async Task SaveChangesAsync()
         {

@@ -211,9 +211,6 @@ namespace DataAccessObject.Migrations
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
 
-                    b.Property<double>("UnitPrice")
-                        .HasColumnType("float");
-
                     b.Property<double>("rentPrice")
                         .HasColumnType("float");
 
@@ -292,9 +289,6 @@ namespace DataAccessObject.Migrations
                     b.Property<int?>("BookingServicesID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -304,11 +298,11 @@ namespace DataAccessObject.Migrations
                     b.Property<int?>("ServicesID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
+
+                    b.Property<int?>("dayRent")
+                        .HasColumnType("int");
 
                     b.Property<double>("unitPrice")
                         .HasColumnType("float");
@@ -375,6 +369,12 @@ namespace DataAccessObject.Migrations
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<double?>("WantedHostShare")
+                        .HasColumnType("float");
+
+                    b.Property<bool?>("isAccepted")
+                        .HasColumnType("bit");
 
                     b.HasKey("CommissionRateID");
 
@@ -500,9 +500,6 @@ namespace DataAccessObject.Migrations
 
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<double>("UnitPrice")
-                        .HasColumnType("float");
 
                     b.HasKey("HistoryPricingID");
 
@@ -909,9 +906,6 @@ namespace DataAccessObject.Migrations
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("UnitPrice")
-                        .HasColumnType("float");
-
                     b.HasKey("PricingID");
 
                     b.HasIndex("HomeStayRentalID");
@@ -1103,9 +1097,6 @@ namespace DataAccessObject.Migrations
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("isUsed")
-                        .HasColumnType("bit");
-
                     b.Property<string>("roomNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1196,7 +1187,7 @@ namespace DataAccessObject.Migrations
                     b.Property<int>("numberBathRoom")
                         .HasColumnType("int");
 
-                    b.Property<int>("numberBedRoom")
+                    b.Property<int>("numberBed")
                         .HasColumnType("int");
 
                     b.Property<int>("numberWifi")
@@ -1238,9 +1229,6 @@ namespace DataAccessObject.Migrations
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
-
-                    b.Property<double>("UnitPrice")
-                        .HasColumnType("float");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
