@@ -147,21 +147,12 @@ namespace Service.Service
 
                 else if (service.ServiceType == ServiceType.Day)
                 {
-                    if (serviceDetailRequest.StartDate == null || serviceDetailRequest.EndDate == null)
+                    if (serviceDetailRequest.dayRent <= 0 || serviceDetailRequest.dayRent == null)
                     {
-                        return new BaseResponse<BookingServices>("StartDate and EndDate must be valid dates.", StatusCodeEnum.BadRequest_400, null);
+                        return new BaseResponse<BookingServices>("Please input dayRent > 0", StatusCodeEnum.BadRequest_400, null);
                     }
 
-                    if (serviceDetailRequest.StartDate <= DateTime.Now)
-                    {
-                        return new BaseResponse<BookingServices>("StartDate must be a future date.", StatusCodeEnum.BadRequest_400, null);
-                    }
-
-                    var dayDiff = (serviceDetailRequest.EndDate.Value.Date - serviceDetailRequest.StartDate.Value.Date).Days;
-                    if (dayDiff <= 0)
-                        return new BaseResponse<BookingServices>("EndDate must be after StartDate.", StatusCodeEnum.BadRequest_400, null);
-
-                    totalServiceAmount = service.servicesPrice * serviceDetailRequest.Quantity * dayDiff;
+                    totalServiceAmount = service.servicesPrice * serviceDetailRequest.Quantity * serviceDetailRequest.dayRent.Value;
                 }
                 else
                 {
@@ -175,8 +166,8 @@ namespace Service.Service
                     TotalAmount = totalServiceAmount,
                     ServicesID = serviceDetailRequest.ServicesID,
                     RentHour = service.ServiceType == ServiceType.Hour ? serviceDetailRequest.RentHour : null,
-                    StartDate = service.ServiceType == ServiceType.Day ? serviceDetailRequest.StartDate : null,
-                    EndDate = service.ServiceType == ServiceType.Day ? serviceDetailRequest.EndDate : null
+                    dayRent = service.ServiceType == ServiceType.Day ? serviceDetailRequest.dayRent : null,
+
                 };
                 bookingServices.BookingServicesDetails.Add(bookingServiceDetail);
             }
@@ -277,6 +268,19 @@ namespace Service.Service
                     StatusCodeEnum.Conflict_409, null);
             }
 
+            var updatedDetailIds = request.BookingServicesDetails
+                                        .Select(d => d.ServiceDetailID)
+                                        .Where(id => id.HasValue)
+                                        .Select(id => id.Value)
+                                        .ToList();
+
+            var detailsToRemove = await _bookingServiceDetailRepository.GetBookingServiceDetailsToRemoveAsync(bookingServiceID, updatedDetailIds);
+
+            if (detailsToRemove.Any())
+            {
+                await _bookingServiceDetailRepository.DeleteBookingServiceDetailAsync(detailsToRemove);
+            }
+
             foreach (var updatedServiceDetails in request.BookingServicesDetails)
             {
                 var service = await _serviceRepository.GetByIdAsync(updatedServiceDetails.ServicesID);
@@ -290,6 +294,11 @@ namespace Service.Service
                     return new BaseResponse<UpdateBookingService>($"Quantity must be > 0, Please Check again!", StatusCodeEnum.BadRequest_400, null);
                 }
 
+                if (service.servicesPrice <= 0)
+                {
+                    return new BaseResponse<UpdateBookingService>($"Service with ID {service.ServicesID} is missing price info.", StatusCodeEnum.Conflict_409, null);
+                }
+
                 double totalServiceAmount = 0;
                 if (service.ServiceType == ServiceType.Hour)
                 {
@@ -300,17 +309,10 @@ namespace Service.Service
                 }
                 else if (service.ServiceType == ServiceType.Day)
                 {
-                    if (updatedServiceDetails.StartDate == null || updatedServiceDetails.EndDate == null)
-                        return new BaseResponse<UpdateBookingService>("StartDate and EndDate are required for Day service.", StatusCodeEnum.BadRequest_400, null);
+                    if (updatedServiceDetails.dayRent == null || updatedServiceDetails.dayRent <= 0)
+                        return new BaseResponse<UpdateBookingService>("Please input dayRent > 0", StatusCodeEnum.BadRequest_400, null);
 
-                    if (updatedServiceDetails.StartDate <= DateTime.Now)
-                        return new BaseResponse<UpdateBookingService>("StartDate must be in the future.", StatusCodeEnum.BadRequest_400, null);
-
-                    var days = (updatedServiceDetails.EndDate.Value.Date - updatedServiceDetails.StartDate.Value.Date).Days;
-                    if (days <= 0)
-                        return new BaseResponse<UpdateBookingService>("EndDate must be after StartDate.", StatusCodeEnum.BadRequest_400, null);
-
-                    totalServiceAmount = service.servicesPrice * updatedServiceDetails.Quantity * days;
+                    totalServiceAmount = service.servicesPrice * updatedServiceDetails.Quantity * updatedServiceDetails.dayRent.Value;
                 }
                 else
                 {
@@ -329,27 +331,13 @@ namespace Service.Service
                         return new BaseResponse<UpdateBookingService>($"Cannot find existing service detail with ID {updatedServiceDetails.ServiceDetailID}", StatusCodeEnum.BadRequest_400, null);
                     }
 
-                    var updatedDetailIds = request.BookingServicesDetails
-                                        .Select(d => d.ServiceDetailID)
-                                        .Where(id => id.HasValue)
-                                        .Select(id => id.Value)
-                                        .ToList();
-
-                    var detailsToRemove = await _bookingServiceDetailRepository.GetBookingServiceDetailsToRemoveAsync(bookingServiceID, updatedDetailIds);
-
-                    if (detailsToRemove.Any())
-                    {
-                        await _bookingServiceDetailRepository.DeleteBookingServiceDetailAsync(detailsToRemove);
-                    }
-
                     if (existingDetail != null)
                     {
                         existingDetail.Quantity = updatedServiceDetails.Quantity;
                         existingDetail.unitPrice = service.servicesPrice;
                         existingDetail.TotalAmount = totalServiceAmount;
                         existingDetail.RentHour = service.ServiceType == ServiceType.Hour ? updatedServiceDetails.RentHour : null;
-                        existingDetail.StartDate = service.ServiceType == ServiceType.Day ? updatedServiceDetails.StartDate : null;
-                        existingDetail.EndDate = service.ServiceType == ServiceType.Day ? updatedServiceDetails.EndDate : null;
+                        existingDetail.dayRent = service.ServiceType == ServiceType.Day ? updatedServiceDetails.dayRent : null;
                         existingDetail.ServicesID = updatedServiceDetails.ServicesID;
                     }
                 }
@@ -371,8 +359,7 @@ namespace Service.Service
                         unitPrice = service.servicesPrice,
                         Quantity = updatedServiceDetails.Quantity,
                         RentHour = service.ServiceType == ServiceType.Hour ? updatedServiceDetails.RentHour : null,
-                        StartDate = service.ServiceType == ServiceType.Day ? updatedServiceDetails.StartDate : null,
-                        EndDate = service.ServiceType == ServiceType.Day ? updatedServiceDetails.EndDate : null,
+                        dayRent = service.ServiceType == ServiceType.Day ? updatedServiceDetails.dayRent : null,
                         TotalAmount = totalServiceAmount,
                     });
                 }

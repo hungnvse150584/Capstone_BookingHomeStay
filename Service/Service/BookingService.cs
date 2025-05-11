@@ -250,35 +250,6 @@ namespace Service.Service
             return new BaseResponse<GetBookingResponse>("Get HomeStay as base success", StatusCodeEnum.OK_200, result);
         }
 
-        /*public (int? bookingId, int? serviceId) ParseOrderInfo(string orderInfo)
-        {
-            int? bookingId = null;
-            int? serviceId = null;
-
-            if (string.IsNullOrEmpty(orderInfo))
-                return (null, null);
-
-            var parts = orderInfo.Split(',', StringSplitOptions.TrimEntries);
-
-            foreach (var part in parts)
-            {
-                var keyValue = part.Split(':', StringSplitOptions.TrimEntries);
-                if (keyValue.Length == 2)
-                {
-                    if (keyValue[0] == "BookingID" && int.TryParse(keyValue[1], out int bId))
-                    {
-                        bookingId = bId;
-                    }
-                    else if (keyValue[0] == "ServiceID" && int.TryParse(keyValue[1], out int sId))
-                    {
-                        serviceId = sId;
-                    }
-                }
-            }
-
-            return (bookingId, serviceId);
-        }*/
-
         public (int? bookingId, int? serviceId, string? accountId) ParseOrderInfo(string orderInfo)
         {
             int? bookingId = null;
