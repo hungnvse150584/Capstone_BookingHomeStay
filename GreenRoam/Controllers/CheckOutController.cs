@@ -78,12 +78,11 @@ namespace GreenRoam.Controllers
                 return BadRequest("This booking already paid, cannot have a payment");
             }
             double amount = isFullPayment ? booking.Data.Total : booking.Data.bookingDeposit;
-            var bookingServiceID = booking.Data.BookingServices.SingleOrDefault()?.BookingServicesID;
 
             var vnPayModel = new VnPayRequestModel
             {
                 BookingID = booking.Data.BookingID,
-                BookingServiceID = bookingServiceID.HasValue ? bookingServiceID : null,
+                BookingServiceID = null,
                 HomeStayID = booking.Data.HomeStayID,
                 AccountID = booking.Data.AccountID,
                 Amount = amount,
@@ -122,7 +121,15 @@ namespace GreenRoam.Controllers
                 {
                     amount = booking.Data.Total * cancellation.Data.RefundPercentage;
                 }
-                foreach (var bookingService in booking.Data.BookingServices)
+
+                var bookingServiceID = booking.Data.BookingServices.FirstOrDefault()?.BookingServicesID;
+                
+                if (bookingServiceID != null)
+                {
+                    return BadRequest("Please Refund BookingService before refund Booking!");
+                }
+
+                /*foreach (var bookingService in booking.Data.BookingServices)
                 {
                     // Bỏ qua các service đã được thanh toán cùng booking
                     if (bookingService.isPaidWithBooking)
@@ -152,9 +159,9 @@ namespace GreenRoam.Controllers
                     }
 
                     amount += serviceRefundAmount;
-                }
+                }*/
 
-                var bookingServiceID = booking.Data.BookingServices.FirstOrDefault()?.BookingServicesID;
+                
 
                 var vnPayModel = new VnPayRequestModel
                 {

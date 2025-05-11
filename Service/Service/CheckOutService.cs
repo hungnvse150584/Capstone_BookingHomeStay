@@ -69,7 +69,6 @@ namespace Service.Service
             var nowVN = DateTimeHelper.NowVietnamTime();
             TimeZoneInfo vnZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
             
-
             var unpaidBooking = await _bookingRepository.GetBookingStatusByAccountId(createBookingRequest.AccountID);
             if (unpaidBooking != null)
                 return new BaseResponse<int>("There is an unpaid booking. Please complete it before creating a new one.", StatusCodeEnum.Conflict_409, 0);
@@ -122,6 +121,10 @@ namespace Service.Service
                 }
 
                 var total = await _pricingRepository.GetTotalPrice(checkInLocal, checkOutLocal, detail.homeStayTypeID, detail.roomTypeID);
+                if(total <= 0)
+                {
+                    return new BaseResponse<int>("Pricing not found or invalid.", StatusCodeEnum.Conflict_409, 0);
+                }
 
                 if (homeStayType?.RentWhole == true)
                 {
@@ -161,96 +164,14 @@ namespace Service.Service
                 BookingDetails = bookingDetails
             };
 
-            double totalPriceServices = 0;
-            if (createBookingRequest.BookingOfServices?.BookingServicesDetails?.Any() == true)
-            {
-                var serviceIds = createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s => s.ServicesID).ToList();
-
-                if (serviceIds.Count != serviceIds.Distinct().Count())
-                    return new BaseResponse<int>("Duplicate services are not allowed.", StatusCodeEnum.Conflict_409, 0);
-
-                var services = await _serviceRepository.GetServicesByIdsAsync(serviceIds);
-                if (services.Count() != createBookingRequest.BookingOfServices.BookingServicesDetails.Count)
-                    return new BaseResponse<int>("Some selected services are invalid.", StatusCodeEnum.NotFound_404, 0);
-
-                var bookingServiceDetails = createBookingRequest.BookingOfServices.BookingServicesDetails.Select(s =>
-                {
-                    var service = services.FirstOrDefault(x => x.ServicesID == s.ServicesID);
-                    if (service == null)
-                        throw new Exception($"Service with ID {s.ServicesID} not found.");
-                    if (s.Quantity <= 0)
-                        throw new Exception($"Service '{service.servicesName}' must have quantity greater than 0.");
-                    var startDateLocal = s.StartDate.HasValue ? DateTimeHelper.ConvertToVietnamTime(s.StartDate.Value) : (DateTime?)null;
-                    var endDateLocal = s.EndDate.HasValue ? DateTimeHelper.ConvertToVietnamTime(s.EndDate.Value) : (DateTime?)null;
-
-                    
-                    double servicePrice = service.servicesPrice;
-                    double totalAmount = 0;
-
-                   
-
-                    switch (service.ServiceType)
-                    {
-                        case ServiceType.Quantity:
-                            if (s.RentHour.HasValue || s.StartDate.HasValue || s.EndDate.HasValue)
-                                throw new Exception($"Service '{service.servicesName}' is type Quantity, must not have RentHour or Date.");
-                            totalAmount = servicePrice * s.Quantity;
-                            break;
-
-                        case ServiceType.Hour:
-                            if (!s.RentHour.HasValue)
-                                throw new Exception($"Service '{service.servicesName}' is type Hour, requires RentHour.");
-                            if (s.StartDate.HasValue || s.EndDate.HasValue)
-                                throw new Exception($"Service '{service.servicesName}' is type Hour, must not have StartDate or EndDate.");
-                            totalAmount = servicePrice * s.Quantity * s.RentHour.Value;
-                            break;
-
-                        case ServiceType.Day:
-                            if (!startDateLocal.HasValue || !endDateLocal.HasValue)
-                                throw new Exception($"Service '{service.servicesName}' is type Day, requires StartDate and EndDate.");
-                            if (startDateLocal.Value.Date >= endDateLocal.Value.Date)
-                                throw new Exception($"Service '{service.servicesName}' has invalid date range. EndDate must be after StartDate.");
-                            int rentalDays = (endDateLocal.Value.Date - startDateLocal.Value.Date).Days;
-                            if (rentalDays <= 0) rentalDays = 1;
-                            totalAmount = servicePrice * s.Quantity * rentalDays;
-                            break;
-                    }
-
-                    return new BookingServicesDetail
-                    {
-                        Quantity = s.Quantity,
-                        TotalAmount = totalAmount,
-                        ServicesID = s.ServicesID,
-                        RentHour = service.ServiceType == ServiceType.Hour ? s.RentHour : null,
-                    };
-                }).ToList();
-
-                totalPriceServices = bookingServiceDetails.Sum(d => d.TotalAmount);
-                var bookingServices = new BookingServices
-                {
-                    BookingServicesDate = nowVN,
-                    Status = BookingServicesStatus.Pending,
-                    PaymentServicesMethod = PaymentServicesMethod.VnPay,
-                    PaymentServiceStatus = PaymentServicesStatus.Pending,
-                    AccountID = createBookingRequest.AccountID,
-                    HomeStayID = createBookingRequest.HomeStayID,
-                    BookingServicesDetails = bookingServiceDetails,
-                    Total = totalPriceServices,
-                    isPaidWithBooking = true,
-                    bookingServiceDeposit = commissionRate.PlatformShare * totalPriceServices,
-                    remainingBalance = totalPriceServices - (commissionRate.PlatformShare * totalPriceServices)
-                };
-                booking.BookingServices = new List<BookingServices> { bookingServices };
-            }
-
             double totalPriceBooking = bookingDetails.Sum(d => d.TotalAmount);
-            double totalAmount = totalPriceBooking + totalPriceServices;
+            double totalAmount = totalPriceBooking;
 
             booking.TotalRentPrice = totalPriceBooking;
             var depositBooking = commissionRate.PlatformShare * totalPriceBooking;
             booking.Total = totalAmount;
-            double bookingServiceDeposit = booking.BookingServices?.FirstOrDefault()?.bookingServiceDeposit ?? 0;
-            booking.bookingDeposit = depositBooking + bookingServiceDeposit;
+        
+            booking.bookingDeposit = depositBooking;
             booking.remainingBalance = totalAmount - booking.bookingDeposit;
 
             await _bookingRepository.AddBookingAsync(booking);
@@ -543,13 +464,9 @@ namespace Service.Service
                 return new BaseResponse<UpdateBookingRequest>("Invalid commission setting!", StatusCodeEnum.Conflict_409, null);
 
             var totalPriceExistBooking = existingBooking.BookingDetails.Sum(detail => detail.TotalAmount);
-            var existService = await _bookingServiceRepository.GetBookingServicesByBookingIdAsync(existingBooking.BookingID);
-
-            var totalPriceExistService = existService != null ? existService.Total : 0;
-            var depositeExistService = existService != null ? existService.bookingServiceDeposit : 0;
-            var totalPriceAmount = totalPriceExistBooking + totalPriceExistService;
+            var totalPriceAmount = totalPriceExistBooking;
             var depositBooking = commissionrate.PlatformShare * totalPriceExistBooking;
-            var deposit = depositBooking + depositeExistService;
+            var deposit = depositBooking;
             var remaining = totalPriceAmount - deposit;
             existingBooking.bookingDeposit = deposit;
             existingBooking.remainingBalance = remaining;
@@ -725,51 +642,6 @@ namespace Service.Service
             {
                 booking.paymentStatus = PaymentStatus.Deposited; // Đặt cọc
                 transaction.TransactionKind = TransactionKind.Deposited;
-            }
-
-            if (bookingServiceID.HasValue && bookingServiceID.Value > 0)
-            {
-                var bookingService = await _bookingServiceRepository.GetBookingServiceByIdAsync(bookingServiceID);
-                if (bookingService == null)
-                {
-                    throw new Exception("BookingService not found");
-                }
-
-                if (amountPaid >= totalAmount)
-                {
-                    bookingService.PaymentServiceStatus = PaymentServicesStatus.FullyPaid; // Thanh toán đầy đủ
-                    transaction.TransactionKind = TransactionKind.FullPayment;
-                }
-                else if (amountPaid > 0)
-                {
-                    bookingService.PaymentServiceStatus = PaymentServicesStatus.Deposited; // Đặt cọc
-                    transaction.TransactionKind = TransactionKind.Deposited;
-
-                }
-
-                var detail = bookingService.BookingServicesDetails.FirstOrDefault();
-                if (detail != null)
-                {
-                    var service = detail.Services;
-                    if (service != null)
-                    {
-                        if (service.Quantity.HasValue && detail.Quantity >= 0)
-                        {
-                            service.Quantity -= detail.Quantity;
-                            await _serviceRepository.UpdateAsync(service);
-                        }
-                    }
-                }
-
-                bookingService.Status = BookingServicesStatus.Confirmed;
-
-                transaction.HomeStay = bookingService.HomeStay;
-                transaction.Account = bookingService.Account;
-
-                bookingService.Transactions ??= new List<Transaction>();
-
-                bookingService.Transactions.Add(transaction);
-                await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
             }
 
             booking.Status = BookingStatus.Confirmed;
