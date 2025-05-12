@@ -15,6 +15,8 @@ namespace Service.RequestAndResponse.Request.CommissionRates
 
         //public DateTime CreateAt { get; set; }
 
+        /*public bool? isAccepted { get; set; }*/
+
         public int HomeStayID { get; set; }
     }
 }

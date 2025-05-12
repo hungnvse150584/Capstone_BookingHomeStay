@@ -16,6 +16,12 @@ namespace Service.RequestAndResponse.Response.CommissionRate
 
         public double PlatformShare { get; set; }
 
+        public double? WantedHostShare { get; set; }
+
+        public bool? isAccepted { get; set; }
+
+        public bool? OwnerAccepted { get; set; }
+
         public DateTime CreateAt { get; set; }
 
         public DateTime UpdateAt { get; set; }

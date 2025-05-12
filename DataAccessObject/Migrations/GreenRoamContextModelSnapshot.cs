@@ -364,6 +364,9 @@ namespace DataAccessObject.Migrations
                     b.Property<double>("HostShare")
                         .HasColumnType("float");
 
+                    b.Property<bool?>("OwnerAccepted")
+                        .HasColumnType("bit");
+
                     b.Property<double>("PlatformShare")
                         .HasColumnType("float");
 
