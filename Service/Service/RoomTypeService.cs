@@ -145,7 +145,7 @@ namespace Service.Service
                             }
 
                             // Tính giá dựa trên phần trăm tăng so với Weekday
-                            pricingItem.UnitPrice = (int)(weekdayPricing.UnitPrice * (1 + pricingItem.Percentage / 100));
+                           /* pricingItem.UnitPrice = (int)(weekdayPricing.UnitPrice * (1 + pricingItem.Percentage / 100));*/
                             pricingItem.RentPrice = (int)(weekdayPricing.RentPrice * (1 + pricingItem.Percentage / 100));
                         }
                     }
@@ -346,7 +346,7 @@ namespace Service.Service
                     {
                         foreach (var price in roomType.Prices)
                         {
-                            Console.WriteLine($"Price: PricingID={price.PricingID}, UnitPrice={price.UnitPrice}, RentPrice={price.RentPrice}");
+                            Console.WriteLine($"Price: PricingID={price.PricingID}, RentPrice={price.RentPrice}");
                         }
                     }
                 }
@@ -385,7 +385,7 @@ namespace Service.Service
 
             updatedRoomType.Name = roomTypeExist.Name;
             updatedRoomType.Description = roomTypeExist.Description;
-            updatedRoomType.numberBedRoom = roomTypeExist.numberBedRoom;
+            updatedRoomType.numberBed = roomTypeExist.numberBed;
             updatedRoomType.numberBathRoom = roomTypeExist.numberBathRoom;
             updatedRoomType.numberWifi = roomTypeExist.numberWifi;
             updatedRoomType.Status = roomTypeExist.Status;

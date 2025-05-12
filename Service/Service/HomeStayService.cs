@@ -1364,14 +1364,12 @@ namespace Service.Service
                                     null);
                             }
 
-                            pricingItem.UnitPrice = (int)(weekdayPricing.UnitPrice * (1 + pricingItem.Percentage / 100));
                             pricingItem.RentPrice = (int)(weekdayPricing.RentPrice * (1 + pricingItem.Percentage / 100));
                         }
 
                         var pricing = new Pricing
                         {
                             Description = pricingItem.Description,
-                            UnitPrice = pricingItem.UnitPrice,
                             RentPrice = pricingItem.RentPrice,
                             Percentage = pricingItem.Percentage ?? 0,
                             StartDate = pricingItem.IsDefault ? null : pricingItem.StartDate,

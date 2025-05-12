@@ -28,7 +28,7 @@ namespace Service.IService
 
         Task<BaseResponse<UpdateRoomRequest>> UpdateRoom(int roomID, UpdateRoomRequest request);
 
-        Task<BaseResponse<GetAllRooms>> ChangeRoomStatus(int roomID, bool? isUsed, bool? isActive);
+        Task<BaseResponse<GetAllRooms>> ChangeRoomStatus(int roomID, bool? isActive);
         Task<BaseResponse<IEnumerable<GetAllRooms>>> FilterRoomsByRoomTypeAndDates(int roomTypeId, DateTime checkInDate, DateTime checkOutDate);
         Task<BaseResponse<IEnumerable<GetAllRooms>>> FilterAllRoomsByHomeStayIDAsync(int homeStayID, DateTime? startDate, DateTime? endDate);
     }

@@ -205,7 +205,6 @@ namespace Service.Service
                             }
 
                             // Tính giá dựa trên phần trăm tăng so với Weekday
-                            pricingItem.UnitPrice = (int)(weekdayPricing.UnitPrice * (1 + pricingItem.Percentage / 100));
                             pricingItem.RentPrice = (int)(weekdayPricing.RentPrice * (1 + pricingItem.Percentage / 100));
                         }
                     }

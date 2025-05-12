@@ -161,8 +161,6 @@ namespace GreenRoam.Controllers
                     amount += serviceRefundAmount;
                 }*/
 
-                
-
                 var vnPayModel = new VnPayRequestModel
                 {
                     BookingID = booking.Data.BookingID,

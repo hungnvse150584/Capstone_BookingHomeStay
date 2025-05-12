@@ -161,14 +161,12 @@ namespace Service.Service
                 }
 
                 // Tính giá dựa trên phần trăm tăng so với giá của Weekday
-                typeRequest.UnitPrice = weekdayPricing.UnitPrice * (1 + typeRequest.Percentage / 100);
                 typeRequest.RentPrice = weekdayPricing.RentPrice * (1 + typeRequest.Percentage / 100);
             }
 
             var pricing = new Pricing
             {
                 Description = typeRequest.Description,
-                UnitPrice = typeRequest.UnitPrice,
                 RentPrice = typeRequest.RentPrice,
                 Percentage = typeRequest.Percentage,
                 IsDefault = typeRequest.IsDefault,
@@ -240,13 +238,11 @@ namespace Service.Service
                 }
 
                 // Tính giá dựa trên phần trăm tăng so với giá của Weekday
-                request.UnitPrice = weekdayPricing.UnitPrice * (1 + request.Percentage / 100);
                 request.RentPrice = weekdayPricing.RentPrice * (1 + request.Percentage / 100);
             }
 
             // Cập nhật thông tin Pricing hiện tại
             pricingExist.Description = request.Description;
-            pricingExist.UnitPrice = request.UnitPrice;
             pricingExist.RentPrice = request.RentPrice;
             pricingExist.Percentage = request.Percentage; // Lưu phần trăm tăng
             pricingExist.IsDefault = request.IsDefault;
@@ -284,7 +280,6 @@ namespace Service.Service
                 {
                     if (relatedPricing.Percentage > 0) // Đảm bảo Percentage hợp lệ
                     {
-                        relatedPricing.UnitPrice = pricingExist.UnitPrice * (1 + relatedPricing.Percentage / 100);
                         relatedPricing.RentPrice = pricingExist.RentPrice * (1 + relatedPricing.Percentage / 100);
                         await _priceRepository.UpdateAsync(relatedPricing);
                     }
@@ -299,8 +294,7 @@ namespace Service.Service
             var prices = await _priceRepository.GetTotalPrice(checkInDate, checkOutDate, homeStayRentalId, roomTypeId);
             var response = new GetTotalPrice
             {
-                totalUnitPrice = prices.totalUnitPrice,
-                totalRentPrice = prices.totalRentPrice
+                totalRentPrice = prices
             };
             if (response == null)
             {

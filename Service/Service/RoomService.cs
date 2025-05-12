@@ -121,7 +121,6 @@ namespace Service.Service
             var updatedRoom = _mapper.Map(request, roomExist);
 
             updatedRoom.roomNumber = roomExist.roomNumber;
-            updatedRoom.isUsed = roomExist.isUsed;
             updatedRoom.isActive = roomExist.isActive;
             updatedRoom.RoomTypesID = roomExist.RoomTypesID;
 
@@ -131,7 +130,7 @@ namespace Service.Service
             return new BaseResponse<UpdateRoomRequest>("Update Room successfully", StatusCodeEnum.OK_200, updatedRoomResponse);
         }
 
-        public async Task<BaseResponse<GetAllRooms>> ChangeRoomStatus(int roomID, bool? isUsed, bool? isActive)
+        public async Task<BaseResponse<GetAllRooms>> ChangeRoomStatus(int roomID, bool? isActive)
         {
             var roomExist = await _roomRepository.GetRoomByIdAsync(roomID);
 
@@ -140,7 +139,7 @@ namespace Service.Service
                 return new BaseResponse<GetAllRooms>("Cannot find Room", StatusCodeEnum.NotFound_404, null);
             }
 
-            var room = await _roomRepository.ChangeRoomStatusAsync(roomExist.RoomID, isUsed,isActive);
+            var room = await _roomRepository.ChangeRoomStatusAsync(roomExist.RoomID,isActive);
             var roomResponse = _mapper.Map<GetAllRooms>(room);
 
             return new BaseResponse<GetAllRooms>("Update Room status successfully", StatusCodeEnum.OK_200, roomResponse);
