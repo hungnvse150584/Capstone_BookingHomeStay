@@ -124,5 +124,30 @@ namespace GreenRoam.Controllers
             var rooms = await _roomService.FilterAllRoomsByHomeStayIDAsync(homeStayID, startDate, endDate);
             return Ok(rooms);
         }
+        [Authorize(Roles = "Owner, Staff, Customer")]
+        [HttpGet]
+        [Route("FilterAllRoomsByHomeStayRental")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<GetAllRooms>>>> FilterAllRoomsByHomeStayRental(
+    int homeStayRentalID, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            if (homeStayRentalID <= 0)
+            {
+                return BadRequest(new BaseResponse<IEnumerable<GetAllRooms>>(
+                    "Invalid HomeStayRentalID!",
+                    StatusCodeEnum.BadRequest_400,
+                    null));
+            }
+
+            if (startDate.HasValue && endDate.HasValue && startDate >= endDate)
+            {
+                return BadRequest(new BaseResponse<IEnumerable<GetAllRooms>>(
+                    "End date must be after start date!",
+                    StatusCodeEnum.BadRequest_400,
+                    null));
+            }
+
+            var rooms = await _roomService.FilterAllRoomsByHomeStayRentalIDAsync(homeStayRentalID, startDate, endDate);
+            return Ok(rooms);
+        }
     }
 }

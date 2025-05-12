@@ -202,5 +202,65 @@ namespace DataAccessObject
 
             return rooms;
         }
+        public async Task<IEnumerable<Room>> FilterAllRoomsByHomeStayRentalIDAsync(int homeStayRentalID, DateTime? startDate, DateTime? endDate)
+        {
+            Console.WriteLine($"Current DateTime.UtcNow: {DateTime.UtcNow}");
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                if (startDate >= endDate)
+                {
+                    throw new ArgumentException("Ngày kết thúc phải sau ngày bắt đầu.");
+                }
+            }
+
+            IQueryable<Room> query = _context.Rooms
+                .Where(r => r.RoomTypes != null)
+                .Where(r => r.RoomTypes.HomeStayRentals != null)
+                .Where(r => r.RoomTypes.HomeStayRentals.HomeStayRentalID == homeStayRentalID)
+                .Where(r => r.isActive == true);
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                query = query.Where(r => !_context.BookingDetails
+                    .Where(bd => bd.RoomID != null)
+                    .Any(bd => bd.RoomID == r.RoomID &&
+                        (
+                            (bd.Booking.Status == BookingStatus.Confirmed &&
+                             (bd.Booking.paymentStatus == PaymentStatus.Deposited ||
+                              bd.Booking.paymentStatus == PaymentStatus.FullyPaid)) ||
+                            (bd.Booking.Status == BookingStatus.InProgress) ||
+                            (bd.Booking.Status == BookingStatus.Pending &&
+                             bd.Booking.ExpiredTime > DateTime.UtcNow) ||
+                            (bd.Booking.Status == BookingStatus.RequestRefund &&
+                             bd.Booking.paymentStatus != PaymentStatus.Refunded)
+                        ) &&
+                        (startDate < bd.CheckOutDate && endDate > bd.CheckInDate)));
+            }
+
+            query = query
+                .Include(r => r.RoomTypes)
+                .ThenInclude(rt => rt.HomeStayRentals)
+                .Include(r => r.RoomTypes)
+                .ThenInclude(rt => rt.Prices);
+
+            var rooms = await query.AsNoTracking().ToListAsync();
+
+            Console.WriteLine($"Phòng sau khi lọc cho HomeStayRentalID {homeStayRentalID}: {string.Join(", ", rooms.Select(r => r.RoomID))}");
+            foreach (var room in rooms)
+            {
+                Console.WriteLine($"RoomID: {room.RoomID}, RoomTypesID: {room.RoomTypesID}, RoomTypeName: {room.RoomTypes?.Name}");
+                if (room.RoomTypes?.Prices != null)
+                {
+                    Console.WriteLine($"Giá cho RoomTypesID {room.RoomTypesID}: {string.Join(", ", room.RoomTypes.Prices.Select(p => $"RentPrice: {p.RentPrice}, DayType: {p.DayType}, IsActive: {p.IsActive}"))}");
+                }
+                else
+                {
+                    Console.WriteLine($"Không tìm thấy giá cho RoomTypesID {room.RoomTypesID}");
+                }
+            }
+
+            return rooms;
+        }
     }
 }

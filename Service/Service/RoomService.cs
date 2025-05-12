@@ -224,5 +224,54 @@ namespace Service.Service
                     null);
             }
         }
+        public async Task<BaseResponse<IEnumerable<GetAllRooms>>> FilterAllRoomsByHomeStayRentalIDAsync(int homeStayRentalID, DateTime? startDate, DateTime? endDate)
+        {
+            try
+            {
+                var rooms = await _roomRepository.FilterAllRoomsByHomeStayRentalIDAsync(homeStayRentalID, startDate, endDate);
+
+                if (rooms == null || !rooms.Any())
+                {
+                    return new BaseResponse<IEnumerable<GetAllRooms>>(
+                        "Không tìm thấy phòng cho HomeStayRentalID này.",
+                        StatusCodeEnum.OK_200,
+                        new List<GetAllRooms>());
+                }
+
+                Console.WriteLine("Phòng trước khi ánh xạ:");
+                foreach (var room in rooms)
+                {
+                    Console.WriteLine($"RoomID: {room.RoomID}, RoomTypesID: {room.RoomTypesID}, RoomTypeName: {room.RoomTypes?.Name}");
+                    if (room.RoomTypes?.Prices != null)
+                    {
+                        Console.WriteLine($"Giá: {string.Join(", ", room.RoomTypes.Prices.Select(p => $"RentPrice: {p.RentPrice}, DayType: {p.DayType}, IsActive: {p.IsActive}"))}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Không có giá cho RoomTypes này.");
+                    }
+                }
+
+                var roomResponses = _mapper.Map<IEnumerable<GetAllRooms>>(rooms);
+
+                Console.WriteLine("Phòng sau khi ánh xạ:");
+                foreach (var roomResponse in roomResponses)
+                {
+                    Console.WriteLine($"RoomID: {roomResponse.RoomID}, RoomTypeName: {roomResponse.RoomTypeName ?? "null"}, RentPrice: {roomResponse.RentPrice?.ToString() ?? "null"}");
+                }
+
+                return new BaseResponse<IEnumerable<GetAllRooms>>(
+                    "Lấy danh sách phòng thành công!",
+                    StatusCodeEnum.OK_200,
+                    roomResponses);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<IEnumerable<GetAllRooms>>(
+                    $"Đã xảy ra lỗi khi lấy danh sách phòng: {ex.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
+            }
+        }
     }
 }
