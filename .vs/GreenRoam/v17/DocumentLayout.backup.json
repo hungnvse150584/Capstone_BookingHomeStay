@@ -122,8 +122,8 @@
               "Title": "AccountController.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "GreenRoam\\Controllers\\AccountController.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\AccountController.cs*",
-              "RelativeToolTip": "GreenRoam\\Controllers\\AccountController.cs*",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "GreenRoam\\Controllers\\AccountController.cs",
               "ViewState": "AgIAAE4BAAAAAAAAAADwv1wBAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-12T06:31:06.366Z",
@@ -139,8 +139,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\CommissionRate.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-12T06:19:50.402Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-12T06:19:50.402Z"
             },
             {
               "$type": "Document",
@@ -176,8 +175,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\RoomController.cs",
               "ViewState": "AgIAAGcAAAAAAAAAAAAQwHwAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-12T02:37:33.68Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-12T02:37:33.68Z"
             },
             {
               "$type": "Document",

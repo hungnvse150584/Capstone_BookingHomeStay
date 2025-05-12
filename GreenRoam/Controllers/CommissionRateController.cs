@@ -51,7 +51,7 @@ namespace GreenRoam.Controllers
             {
                 return BadRequest(new BaseResponse<CreateCommissionRateRequest>("Invalid request data!", StatusCodeEnum.BadRequest_400, null));
             }
-            var result = await _commissionService.CreateCommmisionRate(request);
+            var result = await _commissionService.CreateCommmissionRate(request);
             return StatusCode((int)result.StatusCode, result);
         }
 
@@ -67,7 +67,23 @@ namespace GreenRoam.Controllers
             {
                 return BadRequest(new BaseResponse<UpdateCommissionRateRequest>("Invalid request data!", StatusCodeEnum.BadRequest_400, null));
             }
-            var result = await _commissionService.UpdateCommmisionRate(request);
+            var result = await _commissionService.UpdateCommmissionRate(request);
+            return StatusCode((int)result.StatusCode, result);
+        }
+
+        [Authorize(Roles = "Owner")]
+        [HttpPut("UpdateWantedForOwner")]
+        public async Task<ActionResult<BaseResponse<UpdateWantedCommissionRateForOwner>>> UpdateWantedCommmisionRateForOwner(UpdateWantedCommissionRateForOwner request)
+        {
+            if (request == null)
+            {
+                return BadRequest(new BaseResponse<UpdateWantedCommissionRateForOwner>("Request body cannot be null!", StatusCodeEnum.BadRequest_400, null));
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new BaseResponse<UpdateWantedCommissionRateForOwner>("Invalid request data!", StatusCodeEnum.BadRequest_400, null));
+            }
+            var result = await _commissionService.UpdateWantedCommmisionRateForOwner(request);
             return StatusCode((int)result.StatusCode, result);
         }
 

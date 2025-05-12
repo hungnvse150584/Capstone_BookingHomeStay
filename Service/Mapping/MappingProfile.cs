@@ -307,6 +307,7 @@ namespace Service.Mapping
             CreateMap<GetAllCommissionRate, CommissionRate>().ReverseMap();
             CreateMap<CreateCommissionRateRequest, CommissionRate>().ReverseMap();
             CreateMap<CommissionRate, UpdateCommissionRateRequest>().ReverseMap();
+            CreateMap<CommissionRate, UpdateWantedCommissionRateForOwner>().ReverseMap();
 
             CreateMap<CancellationPolicy, CreateCancellationPolicyRequest>().ReverseMap();
             CreateMap<CancellationPolicy, UpdateCancellationPolicyRequest>().ReverseMap();

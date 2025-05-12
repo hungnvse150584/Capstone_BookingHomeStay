@@ -15,8 +15,9 @@ namespace Service.IService
     {
         Task<BaseResponse<IEnumerable<GetAllCommissionRate>>> GetAllCommissionRates();
         Task<BaseResponse<GetAllCommissionRate>> GetCommissionRateByHomeStay(int homeStayID);
-        Task<BaseResponse<CreateCommissionRateRequest>> CreateCommmisionRate(CreateCommissionRateRequest typeRequest);
-        Task<BaseResponse<UpdateCommissionRateRequest>> UpdateCommmisionRate(UpdateCommissionRateRequest typeRequest);
+        Task<BaseResponse<CreateCommissionRateRequest>> CreateCommmissionRate(CreateCommissionRateRequest typeRequest);
+        Task<BaseResponse<UpdateCommissionRateRequest>> UpdateCommmissionRate(UpdateCommissionRateRequest typeRequest);
+        Task<BaseResponse<UpdateWantedCommissionRateForOwner>> UpdateWantedCommmisionRateForOwner(UpdateWantedCommissionRateForOwner typeRequest);
         Task<BaseResponse<string>> DeleteCommissionRate(int id);
 
     }

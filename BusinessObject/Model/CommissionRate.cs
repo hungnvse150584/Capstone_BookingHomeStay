@@ -18,7 +18,9 @@ namespace BusinessObject.Model;
 
         public double? WantedHostShare { get; set; }
 
-        public bool? isAccepted {  get; set; } 
+        public bool? isAccepted {  get; set; }
+
+        public bool? OwnerAccepted { get; set; }
 
         public DateTime CreateAt { get; set; }
 
