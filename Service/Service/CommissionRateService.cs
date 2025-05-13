@@ -124,23 +124,26 @@ namespace Service.Service
 
         public async Task<BaseResponse<UpdateWantedCommissionRateForOwner>> UpdateWantedCommmisionRateForOwner(UpdateWantedCommissionRateForOwner typeRequest)
         {
-            var commissionRate = await _commissionRateRepository.GetCommissionRateByHomeStay(typeRequest.CommissionRateID);
+            var commissionRate = await _commissionRateRepository.GetCommissionRateByIDAsync(typeRequest.CommissionRateID);
             if (commissionRate == null)
             {
                 return new BaseResponse<UpdateWantedCommissionRateForOwner>("CommissionRate not found", StatusCodeEnum.NotFound_404, null);
             }
-            if (typeRequest.WantedHostShare >= 0 && typeRequest.WantedHostShare < 1)
+
+            if (typeRequest.WantedHostShare != null)
             {
+                if (typeRequest.WantedHostShare <= 0 && typeRequest.WantedHostShare >= 1)
+                {
+                    return new BaseResponse<UpdateWantedCommissionRateForOwner>("WantedHostShare must be higher 0 and lower than1", StatusCodeEnum.BadRequest_400, null);
+                }
                 commissionRate.WantedHostShare = typeRequest.WantedHostShare;
-            }
-            else
-            {
-                return new BaseResponse<UpdateWantedCommissionRateForOwner>("WantedHostShare must be between 0 and 1", StatusCodeEnum.BadRequest_400, null);
+                commissionRate.OwnerAccepted = false;
             }
 
-            if (typeRequest.ownerAccepted.HasValue)
+            if (typeRequest.ownerAccepted == true)
             {
-                commissionRate.OwnerAccepted = typeRequest.ownerAccepted.Value;
+                commissionRate.OwnerAccepted = true;
+                commissionRate.isAccepted = true;
             }
 
             commissionRate.UpdateAt = DateTime.UtcNow;

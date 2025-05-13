@@ -53,5 +53,10 @@ namespace Repository.Repositories
         {
             return await _commissionRateDao.GetCommissionByHomeStayAsync(homeStayID);
         }
+
+        public async Task<CommissionRate?> GetCommissionRateByIDAsync(int rateID)
+        {
+            return await _commissionRateDao.GetCommissionRateByIDAsync(rateID);
+        }
     }
 }
