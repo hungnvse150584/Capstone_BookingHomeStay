@@ -11,7 +11,7 @@ namespace Service.RequestAndResponse.Request.Pricing
 {
     public class PricingForHomeStayRental
     {
-        public int UnitPrice { get; set; }
+
         public int RentPrice { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }

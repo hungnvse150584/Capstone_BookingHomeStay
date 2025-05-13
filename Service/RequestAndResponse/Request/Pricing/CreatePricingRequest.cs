@@ -13,9 +13,6 @@ namespace Service.RequestAndResponse.Request.Pricing
         [Required]
         public string Description { get; set; }
 
-       
-        public double UnitPrice { get; set; }
-
         public double RentPrice { get; set; }
         public double Percentage { get; set; }
 

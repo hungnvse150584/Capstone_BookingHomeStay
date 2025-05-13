@@ -130,7 +130,7 @@ namespace Service.Service
             // Kiểm tra UnitPrice và RentPrice cho Weekday
             if (typeRequest.DayType == DayType.Weekday)
             {
-                if (typeRequest.UnitPrice <= 0 || typeRequest.RentPrice <= 0)
+                if (typeRequest.RentPrice <= 0)
                 {
                     return new BaseResponse<PricingResponse>("UnitPrice and RentPrice are required and must be greater than 0 for Weekday pricing!", StatusCodeEnum.BadGateway_502, null);
                 }
