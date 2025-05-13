@@ -145,7 +145,7 @@ namespace Service.Service
                     foreach (var pricingItem in pricingList)
                     {
                         // Kiểm tra UnitPrice và RentPrice cho Weekday
-                        if (pricingItem.DayType == DayType.Weekday && (pricingItem.UnitPrice <= 0 || pricingItem.RentPrice <= 0))
+                        if (pricingItem.DayType == DayType.Weekday && (pricingItem.RentPrice <= 0))
                         {
                             return new BaseResponse<HomeStayRentals>(
                                 "UnitPrice and RentPrice are required and must be greater than 0 for Weekday pricing!",
