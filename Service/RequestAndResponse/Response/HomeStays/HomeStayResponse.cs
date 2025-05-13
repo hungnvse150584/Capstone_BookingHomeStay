@@ -36,6 +36,8 @@ namespace Service.RequestAndResponse.Response.HomeStays
         public string? Area { get; set; }
 
         public int? CommissionRateID { get; set; }
+        public GetAllCommissionRate commissionRate { get; set; }
+
         public string AccountID { get; set; }
         public GetAccountUser Account { get; set; }
         public IEnumerable<ImageHomeStayResponse> ImageHomeStays { get; set; }

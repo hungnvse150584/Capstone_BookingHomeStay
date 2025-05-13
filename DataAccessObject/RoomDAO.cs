@@ -22,12 +22,14 @@ namespace DataAccessObject
         {
             return await _context.Rooms
                         .Include(r => r.RoomTypes)
+                        .Include(r => r.ImageRooms)
                         .ToListAsync();
         }
 
         public async Task<IEnumerable<Room>> GetRoomsByRoomTypeIdAsync(int roomTypeId)
         {
             return await _context.Rooms
+                .Include(r => r.ImageRooms)
                 .Where(r => r.RoomTypesID == roomTypeId)
                 .ToListAsync();
         }
@@ -40,6 +42,7 @@ namespace DataAccessObject
             }
 
             var availableRooms = await _context.Rooms
+                .Include(r => r.ImageRooms)
                 .Where(r => r.isActive == true) // Phòng chưa bị chủ khóa và chưa có khách
                 .Where(r => !_context.BookingDetails
                     .Where(bd => bd.RoomID != null) // Đảm bảo RoomID không null
@@ -77,6 +80,7 @@ namespace DataAccessObject
                 throw new ArgumentNullException($"id {id} not found");
             }
             var entity = await _context.Set<Room>()
+               .Include(r => r.ImageRooms)
                .SingleOrDefaultAsync(c => c.RoomID == id);
             if (entity == null)
             {
@@ -134,6 +138,7 @@ namespace DataAccessObject
                         ) &&
                         (checkInDate < bd.CheckOutDate && checkOutDate > bd.CheckInDate)))
                 .Include(r => r.RoomTypes)
+                .Include(r => r.ImageRooms)
                 .ToListAsync();
 
             // Log danh sách phòng sau khi lọc
@@ -182,7 +187,8 @@ namespace DataAccessObject
                 .Include(r => r.RoomTypes)
                 .ThenInclude(rt => rt.HomeStayRentals)
                 .Include(r => r.RoomTypes)
-                .ThenInclude(rt => rt.Prices);
+                .ThenInclude(rt => rt.Prices)
+                .Include(r => r.ImageRooms);
 
             var rooms = await query.AsNoTracking().ToListAsync();
 
@@ -242,7 +248,8 @@ namespace DataAccessObject
                 .Include(r => r.RoomTypes)
                 .ThenInclude(rt => rt.HomeStayRentals)
                 .Include(r => r.RoomTypes)
-                .ThenInclude(rt => rt.Prices);
+                .ThenInclude(rt => rt.Prices)
+                .Include(r => r.ImageRooms);
 
             var rooms = await query.AsNoTracking().ToListAsync();
 

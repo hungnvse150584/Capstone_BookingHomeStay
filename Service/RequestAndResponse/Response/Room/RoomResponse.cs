@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessObject.Model;
+using Service.RequestAndResponse.Response.ImageRooms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +16,7 @@ namespace Service.RequestAndResponse.Response.Room
         public bool IsActive { get; set; }
         public RoomTypeResponse RoomType { get; set; }
         public decimal? RentPrice { get; set; } // Giá thuê, có thể lấy từ HomeStayRental hoặc BookingDetails
+        public ICollection<ImageRoomResponse> ImageRooms { get; set; }
     }
 
     public class RoomTypeResponse

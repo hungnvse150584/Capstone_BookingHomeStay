@@ -31,6 +31,7 @@ using Service.RequestAndResponse.Response.HomeStayType;
 using Service.RequestAndResponse.Response.ImageHomeStay;
 using Service.RequestAndResponse.Response.ImageHomeStayTypes;
 using Service.RequestAndResponse.Response.ImageRating;
+using Service.RequestAndResponse.Response.ImageRooms;
 using Service.RequestAndResponse.Response.ImageService;
 using Service.RequestAndResponse.Response.Messages;
 using Service.RequestAndResponse.Response.Notifications;
@@ -303,6 +304,10 @@ namespace Service.Mapping
          
             CreateMap<CreateRoomRequest, Room>().ReverseMap();
             CreateMap<UpdateRoomRequest, Room>().ReverseMap();
+            CreateMap<ImageRoom, ImageRoomResponse>()
+                 .ForMember(dest => dest.ImageRoomID, opt => opt.MapFrom(src => src.ImageRoomID))
+                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image))
+                 .ForMember(dest => dest.RoomID, opt => opt.MapFrom(src => src.RoomID));
 
             CreateMap<GetAllCommissionRate, CommissionRate>().ReverseMap();
             CreateMap<CreateCommissionRateRequest, CommissionRate>().ReverseMap();

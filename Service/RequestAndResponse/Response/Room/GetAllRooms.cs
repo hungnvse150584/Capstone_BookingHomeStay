@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Service.RequestAndResponse.Response.RoomType;
 using Service.RequestAndResponse.Response.BookingDetails;
+using Service.RequestAndResponse.Response.ImageRooms;
 
 namespace Service.RequestAndResponse.Response.Room
 {
@@ -25,6 +26,7 @@ namespace Service.RequestAndResponse.Response.Room
         public string RoomTypeName { get; set; } // Chỉ lấy tên của RoomType
         public decimal? RentPrice { get; set; }
         public string? HomeStayRentalName {  get; set; }
+        public ICollection<ImageRoomResponse> ImageRooms { get; set; }
 
         //public GetAllRoomType? RoomTypes { get; set; }
 

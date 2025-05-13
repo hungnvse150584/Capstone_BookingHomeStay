@@ -733,6 +733,28 @@ namespace DataAccessObject.Migrations
                     b.ToTable("ImageRatings");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.ImageRoom", b =>
+                {
+                    b.Property<int>("ImageRoomID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageRoomID"));
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RoomID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ImageRoomID");
+
+                    b.HasIndex("RoomID");
+
+                    b.ToTable("ImageRooms");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.ImageRoomTypes", b =>
                 {
                     b.Property<int>("ImageRoomTypesID")
@@ -1752,6 +1774,15 @@ namespace DataAccessObject.Migrations
                     b.Navigation("Ratings");
                 });
 
+            modelBuilder.Entity("BusinessObject.Model.ImageRoom", b =>
+                {
+                    b.HasOne("BusinessObject.Model.Room", "Room")
+                        .WithMany("ImageRooms")
+                        .HasForeignKey("RoomID");
+
+                    b.Navigation("Room");
+                });
+
             modelBuilder.Entity("BusinessObject.Model.ImageRoomTypes", b =>
                 {
                     b.HasOne("BusinessObject.Model.RoomTypes", "RoomTypes")
@@ -2150,6 +2181,8 @@ namespace DataAccessObject.Migrations
             modelBuilder.Entity("BusinessObject.Model.Room", b =>
                 {
                     b.Navigation("BookingDetails");
+
+                    b.Navigation("ImageRooms");
                 });
 
             modelBuilder.Entity("BusinessObject.Model.RoomTypes", b =>

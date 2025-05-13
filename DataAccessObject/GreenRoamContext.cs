@@ -159,6 +159,7 @@ namespace DataAccessObject
         public DbSet<ImageServices> ImageServices { get; set; }
         public DbSet<ImageRating> ImageRatings { get; set; }
         public DbSet<ImageRoomTypes> ImageRoomTypes { get; set; }
+        public DbSet<ImageRoom> ImageRooms { get; set; }
         public DbSet<ImageCultureExperience> ImageCultureExperiences { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Rating> Rating { set; get; }

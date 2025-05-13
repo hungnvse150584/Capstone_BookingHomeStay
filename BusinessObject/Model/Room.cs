@@ -25,5 +25,7 @@ namespace BusinessObject.Model
         public RoomTypes? RoomTypes { get; set; }
 
         public ICollection<BookingDetail> BookingDetails { get; set; }
+
+        public ICollection<ImageRoom> ImageRooms { get; set; }
     }
 }
