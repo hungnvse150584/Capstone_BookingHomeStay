@@ -63,6 +63,7 @@
                 .Include(h => h.Reports)
                 .Include(h => h.ImageHomeStays)
                 .Include(h => h.CultureExperiences)
+                .Include(h => h.CommissionRate)
                 .Include(h => h.Services)
                 .Include(h => h.Ratings)
                     .ThenInclude(r => r.ImageRatings)

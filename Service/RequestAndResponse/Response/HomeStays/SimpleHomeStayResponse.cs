@@ -1,5 +1,6 @@
 ﻿using BusinessObject.Model;
 using Service.RequestAndResponse.Response.CancellationPolicyRequest;
+using Service.RequestAndResponse.Response.CommissionRate;
 using Service.RequestAndResponse.Response.CultureExperiences;
 using Service.RequestAndResponse.Response.ImageHomeStay;
 using Service.RequestAndResponse.Response.Ratings;
@@ -23,7 +24,7 @@ namespace Service.RequestAndResponse.Response.HomeStays
         public string Area { get; set; }
         public string AccountID { get; set; }
         public int? CommissionRateID { get; set; }
-        public object CommissionRate { get; set; }
+        public GetAllCommissionRate CommissionRate { get; set; }
         //public int? CancellationID { get; set; }
         public GetAllCancellationPolicy CancelPolicy { get; set; }
         public int TypeOfRental { get; set; }
