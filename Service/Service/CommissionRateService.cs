@@ -98,11 +98,10 @@ namespace Service.Service
             }
 
             // Nếu Admin chấp nhận thì gán WantedHostShare → HostShare
-            if (typeRequest.isAccepted == true && commissionRate.WantedHostShare.HasValue &&
-               (commissionRate.WantedHostShare.Value > 0 && commissionRate.WantedHostShare.Value < 1))
+            if (typeRequest.isAccepted == true)
             {
-                commissionRate.HostShare = commissionRate.WantedHostShare.Value;
-                commissionRate.PlatformShare = 100 - commissionRate.HostShare; // tự động tính lại
+                commissionRate.HostShare = typeRequest.HostShare;
+                commissionRate.PlatformShare = typeRequest.PlatformShare; // tự động tính lại
                 commissionRate.isAccepted = true;
                 commissionRate.OwnerAccepted = false;
             }
