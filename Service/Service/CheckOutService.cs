@@ -770,7 +770,7 @@ namespace Service.Service
                 throw new Exception("Duplicate transaction detected.");
             }
 
-            var service = bookingService.BookingServicesDetails.FirstOrDefault()?.Services;
+            /*var service = bookingService.BookingServicesDetails.FirstOrDefault()?.Services;
             if (service != null)
             {
                 if (service.Quantity < bookingService.BookingServicesDetails.FirstOrDefault()?.Quantity)
@@ -781,6 +781,22 @@ namespace Service.Service
                 // Trừ số lượng dịch vụ
                 service.Quantity -= bookingService.BookingServicesDetails.FirstOrDefault()?.Quantity ?? 0;
                 await _serviceRepository.UpdateAsync(service);  // Cập nhật lại số lượng dịch vụ
+            }*/
+
+            // Trừ số lượng cho tất cả các dịch vụ trong BookingServicesDetails
+            foreach (var detail in bookingService.BookingServicesDetails)
+            {
+                var service = detail.Services;
+                if (service != null)
+                {
+                    if (service.Quantity < detail.Quantity)
+                    {
+                        throw new Exception($"Not enough quantity available for service '{service.servicesName}'.");
+                    }
+
+                    service.Quantity -= detail.Quantity;
+                    await _serviceRepository.UpdateAsync(service);  // Cập nhật lại số lượng dịch vụ
+                }
             }
 
             bookingService.Transactions.Add(transaction);
@@ -856,11 +872,21 @@ namespace Service.Service
 
             bookingService.Transactions.Add(transaction);
 
-            var service = bookingService.BookingServicesDetails.FirstOrDefault()?.Services;
+            /*var service = bookingService.BookingServicesDetails.FirstOrDefault()?.Services;
             if (service != null)
             {
                 service.Quantity += bookingService.BookingServicesDetails.FirstOrDefault()?.Quantity ?? 0;  // Khôi phục số lượng dịch vụ
                 await _serviceRepository.UpdateAsync(service);  // Cập nhật lại dịch vụ
+            }*/
+
+            foreach (var detail in bookingService.BookingServicesDetails)
+            {
+                var service = detail.Services;
+                if (service != null)
+                {
+                    service.Quantity += detail.Quantity;
+                    await _serviceRepository.UpdateAsync(service);
+                }
             }
 
             /*if (bookingService.BookingID.HasValue)

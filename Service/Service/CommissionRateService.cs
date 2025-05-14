@@ -48,9 +48,9 @@ namespace Service.Service
                     null);
             }
 
-            if (typeRequest.HostShare + typeRequest.PlatformShare != 100.0)
+            if (typeRequest.HostShare + typeRequest.PlatformShare != 1.0)
             {
-                return new BaseResponse<CreateCommissionRateRequest>("Total share (Host + Platform) must be 100%", StatusCodeEnum.BadRequest_400, null);
+                return new BaseResponse<CreateCommissionRateRequest>("Total share (Host + Platform) must be equal 1", StatusCodeEnum.BadRequest_400, null);
             }
 
             // Ánh xạ và tạo CommissionRate
