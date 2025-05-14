@@ -229,6 +229,42 @@ namespace Service.Service
                     var bookingService = await _bookingServiceRepository.ChangeBookingServicesStatus(bookingServiceExist.BookingServicesID, servicesStatus, statusPayment);
                 }
 
+                if (status == BookingStatus.Cancelled)
+                {
+                    if (bookingExist.BookingServices != null && bookingExist.BookingServices.Any())
+                    {
+                        foreach (var service in bookingExist.BookingServices)
+                        {
+                            if (service.Status != BookingServicesStatus.Cancelled && service.PaymentServiceStatus != PaymentServicesStatus.Refunded)
+                            {
+                                var serviceDetail = service.BookingServicesDetails.FirstOrDefault();
+                                if (serviceDetail?.Services != null && bookingExist.HomeStayID.HasValue)
+                                {
+                                    var cancellationPolicy = await _cancelltaionRepository.GetCancellationPolicyByHomeStayAsync(bookingExist.HomeStayID.Value);
+
+                                    var bookingDetail = bookingExist.BookingDetails.FirstOrDefault();
+
+                                    if (bookingDetail != null && cancellationPolicy != null)
+                                    {
+                                        var now = DateTime.Now;
+                                        var daysBeforeCheckIn = (bookingDetail.CheckInDate - now).TotalDays;
+
+                                        bool isRefundAllowed = daysBeforeCheckIn >= cancellationPolicy.DayBeforeCancel &&
+                                            (cancellationPolicy.RefundPercentage > 0 && cancellationPolicy.RefundPercentage <= 1);
+
+                                        if (!isRefundAllowed)
+                                        {
+                                            serviceDetail.Services.Quantity += serviceDetail.Quantity;
+                                            await _serviceRepository.UpdateAsync(serviceDetail.Services);
+                                        }
+                                    }
+                                }
+                            }
+                           await _bookingServiceRepository.ChangeBookingServicesStatus(service.BookingServicesID, BookingServicesStatus.Cancelled, service.PaymentServiceStatus);
+                        }
+                    }
+                }
+
                 if (status == BookingStatus.Completed) // Điều kiện cho trạng thái checkout
                 {
                     var transaction = await _transactionRepository.GetTransactionByBookingId(bookingExist.BookingID);
@@ -296,6 +332,7 @@ namespace Service.Service
                                         }
                                     }
                                 }
+                                await _bookingServiceRepository.ChangeBookingServicesStatus(service.BookingServicesID, BookingServicesStatus.Completed, service.PaymentServiceStatus);
                             }
                         }
                     }
@@ -764,7 +801,7 @@ namespace Service.Service
 
             bookingService.Status = BookingServicesStatus.Confirmed;
 
-            if (bookingService.BookingID.HasValue)
+            /*if (bookingService.BookingID.HasValue)
             {
                 var booking = bookingService.Booking;
                 if (booking != null)
@@ -781,7 +818,7 @@ namespace Service.Service
                     }
                     await _bookingRepository.UpdateBookingAsync(booking);  // Cập nhật lại Booking
                 }
-            }
+            }*/
 
             transaction.HomeStay = bookingService.HomeStay;
             transaction.Account = bookingService.Account;
@@ -826,7 +863,7 @@ namespace Service.Service
                 await _serviceRepository.UpdateAsync(service);  // Cập nhật lại dịch vụ
             }
 
-            if (bookingService.BookingID.HasValue)
+            /*if (bookingService.BookingID.HasValue)
             {
                 var booking = bookingService.Booking;
                 if (booking != null)
@@ -843,7 +880,7 @@ namespace Service.Service
                     }
                     await _bookingRepository.UpdateBookingAsync(booking);  // Cập nhật lại Booking
                 }
-            }
+            }*/
 
             transaction.HomeStay = bookingService.HomeStay;
             

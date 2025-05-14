@@ -109,38 +109,36 @@ namespace GreenRoam.Controllers
                     return BadRequest("Cannot Find the Cancellation Policy Of the HomeStay");
                 }
 
-                var checkInDate = booking.Data.BookingDetails.FirstOrDefault()?.CheckInDate;
-
                 double amount = 0;
 
                 if (booking.Data.paymentStatus == PaymentStatus.Deposited)
                 {
                     amount = booking.Data.bookingDeposit;
                 }
-                if (booking.Data.paymentStatus == PaymentStatus.FullyPaid)
+                else if (booking.Data.paymentStatus == PaymentStatus.FullyPaid)
                 {
                     amount = booking.Data.Total * cancellation.Data.RefundPercentage;
                 }
 
                 var bookingServiceID = booking.Data.BookingServices.FirstOrDefault()?.BookingServicesID;
-                
-                if (bookingServiceID != null)
+
+                /*if (bookingServiceID != null)
                 {
                     return BadRequest("Please Refund BookingService before refund Booking!");
-                }
+                }*/
 
-                /*foreach (var bookingService in booking.Data.BookingServices)
+                foreach (var bookingService in booking.Data.BookingServices)
                 {
-                    // Bỏ qua các service đã được thanh toán cùng booking
+                    /*// Bỏ qua các service đã được thanh toán cùng booking
                     if (bookingService.isPaidWithBooking)
-                        continue;
+                        continue;*/
 
                     double serviceRefundAmount = 0;
 
                     if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited &&
                         booking.Data.paymentStatus == PaymentStatus.Deposited)
                     {
-                        serviceRefundAmount = 0;
+                        serviceRefundAmount = bookingService.bookingServiceDeposit;
                     }
                     else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited &&
                         booking.Data.paymentStatus == PaymentStatus.FullyPaid)
@@ -155,11 +153,11 @@ namespace GreenRoam.Controllers
                     else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid
                         && booking.Data.paymentStatus == PaymentStatus.FullyPaid)
                     {
-                        serviceRefundAmount = 0;
+                        serviceRefundAmount = bookingService.Total * cancellation.Data.RefundPercentage;
                     }
 
                     amount += serviceRefundAmount;
-                }*/
+                }
 
                 var vnPayModel = new VnPayRequestModel
                 {
@@ -308,8 +306,6 @@ namespace GreenRoam.Controllers
                 {
                     return BadRequest("No booking details found.");
                 }
-
-                var checkInDate = bookingService.Data.Booking.BookingDetails.FirstOrDefault()?.CheckInDate;
 
                 double amount = 0;
 
@@ -472,7 +468,7 @@ namespace GreenRoam.Controllers
             return booking;
         }
 
-        [Authorize(Roles = "Owner, Staff, Customer")]
+       /* [Authorize(Roles = "Owner, Staff, Customer")]*/
         [HttpPut]
         [Route("ChangeBookingStatus")]
         public async Task<ActionResult<BaseResponse<Booking>>> ChangeTheBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)
