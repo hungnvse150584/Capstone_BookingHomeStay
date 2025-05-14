@@ -91,7 +91,7 @@ namespace Service.Service
 
         public async Task<BaseResponse<UpdateCommissionRateRequest>> UpdateCommmissionRate(UpdateCommissionRateRequest typeRequest)
         {
-            var commissionRate = await _commissionRateRepository.GetCommissionRateByHomeStay(typeRequest.CommissionRateID);      
+            var commissionRate = await _commissionRateRepository.GetCommissionRateByIDAsync(typeRequest.CommissionRateID);      
             if (commissionRate == null)
             {
                 return new BaseResponse<UpdateCommissionRateRequest>("CommissionRate not found", StatusCodeEnum.NotFound_404, null);
