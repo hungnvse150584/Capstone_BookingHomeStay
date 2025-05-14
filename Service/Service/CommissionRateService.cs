@@ -57,7 +57,7 @@ namespace Service.Service
             CommissionRate commissionRate = _mapper.Map<CommissionRate>(typeRequest);
             commissionRate.CreateAt = DateTime.UtcNow; // Đảm bảo CreateAt được thiết lập
             commissionRate.UpdateAt = DateTime.UtcNow; // Đảm bảo UpdateAt được thiết lập
-            commissionRate.isAccepted = false;
+            commissionRate.isAccepted = true;
             commissionRate.OwnerAccepted = null;
             await _commissionRateRepository.AddAsync(commissionRate);
             await _commissionRateRepository.SaveChangesAsync(); // Lưu để sinh CommissionRateID
@@ -104,6 +104,7 @@ namespace Service.Service
                 commissionRate.HostShare = commissionRate.WantedHostShare.Value;
                 commissionRate.PlatformShare = 100 - commissionRate.HostShare; // tự động tính lại
                 commissionRate.isAccepted = true;
+                commissionRate.OwnerAccepted = false;
             }
             else if (typeRequest.isAccepted == false)
             {
@@ -138,6 +139,7 @@ namespace Service.Service
                 }
                 commissionRate.WantedHostShare = typeRequest.WantedHostShare;
                 commissionRate.OwnerAccepted = false;
+                commissionRate.isAccepted = false;
             }
 
             if (typeRequest.ownerAccepted == true)
