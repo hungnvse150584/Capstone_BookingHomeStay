@@ -53,6 +53,9 @@ namespace BusinessObject.Model
 
         [EnumDataType(typeof(TransactionKind))]
         public TransactionKind TransactionKind { get; set; }
+
+        [EnumDataType(typeof(StatusOfTransaction))]
+        public StatusOfTransaction StatusTransaction { get; set; }
     }
 
     public enum TransactionKind
@@ -60,5 +63,13 @@ namespace BusinessObject.Model
         Deposited = 0,
         FullPayment = 1,
         Refund = 2
+    }
+
+    public enum StatusOfTransaction
+    {
+        Pending = 0,
+        Completed = 1,
+        Cancelled = 2,
+        RequestRefund = 3
     }
 }

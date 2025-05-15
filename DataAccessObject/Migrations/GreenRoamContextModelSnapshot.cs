@@ -1372,6 +1372,9 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("StatusTransaction")
+                        .HasColumnType("int");
+
                     b.Property<string>("TmnCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

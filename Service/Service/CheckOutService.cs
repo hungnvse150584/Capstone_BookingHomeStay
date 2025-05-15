@@ -270,7 +270,7 @@ namespace Service.Service
                     var transaction = await _transactionRepository.GetTransactionByBookingId(bookingExist.BookingID);
                     if (transaction != null)
                     {
-                        if (bookingExist.HomeStayID.HasValue)
+                        /*if (bookingExist.HomeStayID.HasValue)
                         {
                             var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingExist.HomeStayID.Value);
                             if (commissionRate != null)
@@ -296,50 +296,61 @@ namespace Service.Service
                         else
                         {
                             return new BaseResponse<Booking>("The booking does not belong to any HomeStay !", StatusCodeEnum.NotFound_404, null);
-                        }
+                        }*/
 
-                        if (bookingExist.BookingServices != null && bookingExist.BookingServices.Any())
-                        {
-                            foreach (var service in bookingExist.BookingServices)
-                            {
-                                if (service.Status == BookingServicesStatus.Completed && service.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
-                                {
-                                    var serviceTransaction = await _transactionRepository.GetTransactionByBookingServiceId(service.BookingServicesID);
-
-                                    if (serviceTransaction != null)
-                                    {
-                                        if (bookingExist.HomeStayID.HasValue)
-                                        {
-                                            var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingExist.HomeStayID.Value);
-                                            if (commissionRate != null)
-                                            {
-                                                var hostRate = commissionRate.HostShare;
-                                                var adminRate = commissionRate.PlatformShare;
-
-                                                if (serviceTransaction.TransactionKind == TransactionKind.Deposited || serviceTransaction.TransactionKind == TransactionKind.FullPayment)
-                                                {
-                                                    serviceTransaction.OwnerAmount = serviceTransaction.Amount * hostRate;
-                                                    serviceTransaction.AdminAmount = serviceTransaction.Amount * adminRate;
-                                                }
-                                                else if (serviceTransaction.TransactionKind == TransactionKind.Refund)
-                                                {
-                                                    serviceTransaction.OwnerAmount = serviceTransaction.Amount;
-                                                    serviceTransaction.AdminAmount = 0;
-                                                }
-
-                                                await _transactionRepository.UpdateAsync(serviceTransaction);
-                                            }
-                                        }
-                                    }
-                                }
-                                await _bookingServiceRepository.ChangeBookingServicesStatus(service.BookingServicesID, BookingServicesStatus.Completed, service.PaymentServiceStatus);
-                            }
-                        }
+                        transaction.StatusTransaction = StatusOfTransaction.Completed;
+                        await _transactionRepository.UpdateAsync(transaction);
                     }
                     else
                     {
                         return new BaseResponse<Booking>("The booking does not have a transaction!",
                                      StatusCodeEnum.BadGateway_502, null);
+                    }
+
+                    if (bookingExist.BookingServices != null && bookingExist.BookingServices.Any())
+                    {
+                        foreach (var service in bookingExist.BookingServices)
+                        {
+                            /* if (service.Status == BookingServicesStatus.Completed && service.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
+                             {
+                                 var serviceTransaction = await _transactionRepository.GetTransactionByBookingServiceId(service.BookingServicesID);
+
+                                 if (serviceTransaction != null)
+                                 {
+                                     if (bookingExist.HomeStayID.HasValue)
+                                     {
+                                         var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingExist.HomeStayID.Value);
+                                         if (commissionRate != null)
+                                         {
+                                             var hostRate = commissionRate.HostShare;
+                                             var adminRate = commissionRate.PlatformShare;
+
+                                             if (serviceTransaction.TransactionKind == TransactionKind.Deposited || serviceTransaction.TransactionKind == TransactionKind.FullPayment)
+                                             {
+                                                 serviceTransaction.OwnerAmount = serviceTransaction.Amount * hostRate;
+                                                 serviceTransaction.AdminAmount = serviceTransaction.Amount * adminRate;
+                                             }
+                                             else if (serviceTransaction.TransactionKind == TransactionKind.Refund)
+                                             {
+                                                 serviceTransaction.OwnerAmount = serviceTransaction.Amount;
+                                                 serviceTransaction.AdminAmount = 0;
+                                             }
+
+                                             await _transactionRepository.UpdateAsync(serviceTransaction);
+                                         }
+                                     }
+                                 }
+                             }*/
+                            var serviceTransaction = await _transactionRepository.GetTransactionByBookingServiceId(service.BookingServicesID);
+
+                            if (serviceTransaction != null)
+                            {
+                                serviceTransaction.StatusTransaction = StatusOfTransaction.Completed;
+                                await _transactionRepository.UpdateAsync(serviceTransaction);
+                            }
+
+                            await _bookingServiceRepository.ChangeBookingServicesStatus(service.BookingServicesID, BookingServicesStatus.Completed, service.PaymentServiceStatus);
+                        }
                     }
                 }
                 var booking = await _bookingRepository.ChangeBookingStatus(bookingExist.BookingID, status, paymentStatus);
@@ -652,12 +663,17 @@ namespace Service.Service
             }
             booking.Transactions ??= new List<Transaction>();
 
-            bool alreadyExists = booking.Transactions.Any(t =>
-            t.ResponseId == transaction.ResponseId && transaction.ResponseId != null);
+            bool alreadyExists = booking.Transactions.Any(t => t.ResponseId == transaction.ResponseId && transaction.ResponseId != null);
 
             if (alreadyExists)
             {
                 throw new Exception("Duplicate transaction detected.");
+            }
+
+            var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(booking.HomeStayID);
+            if(commissionRate == null)
+            {
+                throw new Exception("commissionRate not found");
             }
 
             transaction.HomeStay = booking.HomeStay;
@@ -680,7 +696,9 @@ namespace Service.Service
                 booking.paymentStatus = PaymentStatus.Deposited; // Đặt cọc
                 transaction.TransactionKind = TransactionKind.Deposited;
             }
-
+            transaction.AdminAmount = commissionRate.PlatformShare * amountPaid;
+            transaction.OwnerAmount = commissionRate.HostShare * amountPaid;
+            transaction.StatusTransaction = StatusOfTransaction.Pending;
             booking.Status = BookingStatus.Confirmed;
 
             // Lưu booking vào cơ sở dữ liệu nếu cần
@@ -708,6 +726,7 @@ namespace Service.Service
 
             transaction.HomeStay = booking.HomeStay;
             transaction.TransactionKind = TransactionKind.Refund;
+            transaction.StatusTransaction = StatusOfTransaction.Cancelled;
 
             // Thêm transaction vào trong danh sách Transactions
             booking.Transactions.Add(transaction);
@@ -722,7 +741,6 @@ namespace Service.Service
                     {
                         service.Status = BookingServicesStatus.Cancelled;
                         service.PaymentServiceStatus = PaymentServicesStatus.Refunded;
-                        service.Status = BookingServicesStatus.Cancelled;
                         service.Transactions ??= new List<Transaction>();
                         transaction.HomeStay = service.HomeStay;
                         transaction.TransactionKind = TransactionKind.Refund;
@@ -772,6 +790,12 @@ namespace Service.Service
             if (alreadyExists)
             {
                 throw new Exception("Duplicate transaction detected.");
+            }
+
+            var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingService.HomeStayID);
+            if (commissionRate == null)
+            {
+                throw new Exception("commissionRate not found");
             }
 
             /*var service = bookingService.BookingServicesDetails.FirstOrDefault()?.Services;
@@ -839,7 +863,9 @@ namespace Service.Service
                     await _bookingRepository.UpdateBookingAsync(booking);  // Cập nhật lại Booking
                 }
             }*/
-
+            transaction.AdminAmount = commissionRate.PlatformShare * amountPaid;
+            transaction.OwnerAmount = commissionRate.HostShare * amountPaid;
+            transaction.StatusTransaction = StatusOfTransaction.Pending;
             transaction.HomeStay = bookingService.HomeStay;
             transaction.Account = bookingService.Account;
 
@@ -863,6 +889,7 @@ namespace Service.Service
             bookingService.Status = BookingServicesStatus.Cancelled;
 
             transaction.TransactionKind = TransactionKind.Refund;
+            transaction.StatusTransaction = StatusOfTransaction.Cancelled;
 
             bookingService.Transactions ??= new List<Transaction>();
 

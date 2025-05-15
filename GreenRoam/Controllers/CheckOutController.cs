@@ -52,7 +52,7 @@ namespace GreenRoam.Controllers
             return booking;
         }
 
-        [Authorize(Roles = "Customer")]
+        /*[Authorize(Roles = "Customer")]*/
         [HttpPost]
         [Route("BookingPayment")]
         public async Task<ActionResult<string>> CheckOutBooking(int bookingID, bool isFullPayment)
@@ -93,7 +93,7 @@ namespace GreenRoam.Controllers
             return _vpnPayService.CreatePaymentUrl(HttpContext, vnPayModel);
         }
 
-        /*[Authorize(Roles = "Owner, Staff")]*/
+        /*[Authorize(Roles = "Admin")]*/
         [HttpPost]
         [Route("BookingPayment-Refund")]
         public async Task<ActionResult<string>> CheckOutRefundBooking(int bookingID, string accountId)
@@ -257,7 +257,7 @@ namespace GreenRoam.Controllers
             }
         }*/
 
-        [Authorize(Roles = "Customer")]
+        /*[Authorize(Roles = "Customer")]*/
         [HttpPost]
         [Route("BookingServicePayment")]
         public async Task<ActionResult<string>> CheckOutBookingService(int bookingServiceId, bool isFullPayment)
@@ -289,7 +289,7 @@ namespace GreenRoam.Controllers
             return _vpnPayService.CreatePaymentUrl(HttpContext, vnPayModel);
         }
 
-        [Authorize(Roles = "Owner, Staff")]
+        /*[Authorize(Roles = "Admin")]*/
         [HttpPost]
         [Route("BookingPaymentService-Refund")]
         public async Task<ActionResult<string>> CheckOutRefundBookingService(int bookingServiceID, string accountId)
@@ -475,7 +475,7 @@ namespace GreenRoam.Controllers
             return booking;
         }
 
-        [Authorize(Roles = "Owner, Staff, Customer")]
+        /*[Authorize(Roles = "Owner, Staff, Customer")]*/
         [HttpPut]
         [Route("ChangeBookingStatus")]
         public async Task<ActionResult<BaseResponse<Booking>>> ChangeTheBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)
