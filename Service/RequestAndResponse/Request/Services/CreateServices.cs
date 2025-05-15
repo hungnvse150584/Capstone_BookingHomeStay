@@ -18,8 +18,6 @@ namespace Service.RequestAndResponse.Request.Services
         [Required]
         public string Description { get; set; }
 
-        [Required]
-        public double UnitPrice { get; set; }
 
         [Required]
         public double servicesPrice { get; set; }

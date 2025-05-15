@@ -24,7 +24,7 @@ namespace Service.RequestAndResponse.Response.Services
 
         public DateTime UpdateAt { get; set; }
 
-        public double UnitPrice { get; set; }
+   
 
         public double servicesPrice { get; set; }
 

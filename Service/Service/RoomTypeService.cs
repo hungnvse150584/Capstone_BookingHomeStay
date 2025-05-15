@@ -165,25 +165,10 @@ namespace Service.Service
                 }
 
                 // Xử lý Images nếu có
-                var imageRoomTypes = new List<ImageRoomTypes>();
-                if (request.Images != null && request.Images.Any())
-                {
-                    var imageUrls = await UploadImagesToCloudinary(request.Images);
-                    foreach (var url in imageUrls)
-                    {
-                        var imageRoomType = new ImageRoomTypes
-                        {
-                            Image = url,
-                            RoomTypesID = roomType.RoomTypesID
-                        };
-                        imageRoomTypes.Add(imageRoomType);
-                        await _imageRoomTypesRepository.AddImageAsync(imageRoomType);
-                    }
-                    await _imageRoomTypesRepository.SaveChangesAsync();
-                }
+               
 
                 // Cập nhật các collection cho roomType để ánh xạ vào response
-                roomType.ImageRoomTypes = imageRoomTypes;
+             
                 roomType.Prices = pricings;
 
                 // Ánh xạ RoomTypes sang CreateRoomTypeResponse
