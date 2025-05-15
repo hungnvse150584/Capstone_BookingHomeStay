@@ -76,7 +76,7 @@ namespace BusinessObject.Model;
         RequestRefund = 6
     }
 
-public enum PaymentStatus
+    public enum PaymentStatus
     {
         Pending = 0,       
         Deposited = 1,      
