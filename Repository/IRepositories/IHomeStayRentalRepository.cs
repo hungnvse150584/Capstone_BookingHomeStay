@@ -15,6 +15,7 @@ namespace Repository.IRepositories
         Task<IEnumerable<HomeStayRentals>> GetHomeStayTypesByIdsAsync(List<int?> homeStayTypeIds);
         Task SaveChangesAsync();
         Task AddRoomTypeAsync(RoomTypes roomType);
+       
         Task<IEnumerable<HomeStayRentals>> GetAllAsyncFilter(bool? rentWhole = null);
         Task<IEnumerable<HomeStayRentals>> GetAllHomeStayTypesAsyncFilter(int? homestayId, bool? rentWhole = null);
         Task<IEnumerable<HomeStayRentals>> FilterHomeStayRentalsAsync(

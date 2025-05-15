@@ -2863,6 +2863,59 @@
         }
       }
     },
+    "/api/CommissionRate/UpdateWantedForOwner": {
+      "put": {
+        "tags": [
+          "CommissionRate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWantedCommissionRateForOwner"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWantedCommissionRateForOwner"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWantedCommissionRateForOwner"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWantedCommissionRateForOwner"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateWantedCommissionRateForOwnerBaseResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateWantedCommissionRateForOwnerBaseResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateWantedCommissionRateForOwnerBaseResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/CommissionRate/Delete/{id}": {
       "delete": {
         "tags": [
@@ -3420,6 +3473,15 @@
                     "items": {
                       "$ref": "#/components/schemas/PricingForHomeStayRental"
                     }
+                  },
+                  "RoomTypesJson": {
+                    "type": "string"
+                  },
+                  "RoomTypes": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/CreateRoomTypeRequest"
+                    }
                   }
                 }
               },
@@ -3491,6 +3553,12 @@
                   "style": "form"
                 },
                 "Pricing": {
+                  "style": "form"
+                },
+                "RoomTypesJson": {
+                  "style": "form"
+                },
+                "RoomTypes": {
                   "style": "form"
                 }
               }
@@ -6705,7 +6773,7 @@
                   "Description": {
                     "type": "string"
                   },
-                  "numberBedRoom": {
+                  "numberBed": {
                     "type": "integer",
                     "format": "int32"
                   },
@@ -6732,13 +6800,6 @@
                     "type": "integer",
                     "format": "int32"
                   },
-                  "Images": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "format": "binary"
-                    }
-                  },
                   "PricingJson": {
                     "type": "string"
                   },
@@ -6757,7 +6818,7 @@
                 "Description": {
                   "style": "form"
                 },
-                "numberBedRoom": {
+                "numberBed": {
                   "style": "form"
                 },
                 "numberBathRoom": {
@@ -6776,9 +6837,6 @@
                   "style": "form"
                 },
                 "MaxPeople": {
-                  "style": "form"
-                },
-                "Images": {
                   "style": "form"
                 },
                 "PricingJson": {
@@ -8313,6 +8371,10 @@
             "type": "boolean",
             "nullable": true
           },
+          "ownerAccepted": {
+            "type": "boolean",
+            "nullable": true
+          },
           "createAt": {
             "type": "string",
             "format": "date-time",
@@ -8620,6 +8682,13 @@
               "$ref": "#/components/schemas/PricingResponse"
             },
             "nullable": true
+          },
+          "roomTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateRoomTypeResponse"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -8680,10 +8749,6 @@
           "description": {
             "minLength": 1,
             "type": "string"
-          },
-          "unitPrice": {
-            "type": "number",
-            "format": "double"
           },
           "rentPrice": {
             "type": "number",
@@ -8859,6 +8924,107 @@
           },
           "data": {
             "$ref": "#/components/schemas/CreateRoomRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateRoomTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberBed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberBathRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberWifi": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "maxAdults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxChildren": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxPeople": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pricingJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "pricing": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PricingForHomeStayRental"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateRoomTypeResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberBed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberBathRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberWifi": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "maxAdults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxChildren": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxPeople": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pricings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PricingForHomeStayRental"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -9328,6 +9494,19 @@
           "platformShare": {
             "type": "number",
             "format": "double"
+          },
+          "wantedHostShare": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "isAccepted": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "ownerAccepted": {
+            "type": "boolean",
+            "nullable": true
           },
           "createAt": {
             "type": "string",
@@ -9814,10 +9993,6 @@
             "type": "string",
             "nullable": true
           },
-          "unitPrice": {
-            "type": "number",
-            "format": "double"
-          },
           "rentPrice": {
             "type": "number",
             "format": "double"
@@ -10101,6 +10276,13 @@
           },
           "homeStayRentalName": {
             "type": "string",
+            "nullable": true
+          },
+          "imageRooms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageRoomResponse"
+            },
             "nullable": true
           }
         },
@@ -11476,6 +11658,13 @@
           "roomTypesID": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "imageRooms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageRoomResponse"
+            },
             "nullable": true
           }
         },
@@ -12910,6 +13099,9 @@
             "format": "int32",
             "nullable": true
           },
+          "commissionRate": {
+            "$ref": "#/components/schemas/GetAllCommissionRate"
+          },
           "accountID": {
             "type": "string",
             "nullable": true
@@ -13128,6 +13320,49 @@
             "nullable": true
           },
           "ratingID": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ImageRoom": {
+        "required": [
+          "image"
+        ],
+        "type": "object",
+        "properties": {
+          "imageRoomID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "image": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "roomID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "room": {
+            "$ref": "#/components/schemas/Room"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ImageRoomResponse": {
+        "type": "object",
+        "properties": {
+          "imageRoomID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "roomID": {
             "type": "integer",
             "format": "int32"
           }
@@ -13504,10 +13739,6 @@
       "PricingForHomeStayRental": {
         "type": "object",
         "properties": {
-          "unitPrice": {
-            "type": "integer",
-            "format": "int32"
-          },
           "rentPrice": {
             "type": "integer",
             "format": "int32"
@@ -13555,10 +13786,6 @@
           "description": {
             "type": "string",
             "nullable": true
-          },
-          "unitPrice": {
-            "type": "number",
-            "format": "double"
           },
           "rentPrice": {
             "type": "number",
@@ -13926,6 +14153,13 @@
               "$ref": "#/components/schemas/BookingDetail"
             },
             "nullable": true
+          },
+          "imageRooms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageRoom"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -14286,7 +14520,7 @@
             "nullable": true
           },
           "commissionRate": {
-            "nullable": true
+            "$ref": "#/components/schemas/GetAllCommissionRate"
           },
           "cancelPolicy": {
             "$ref": "#/components/schemas/GetAllCancellationPolicy"
@@ -15166,6 +15400,10 @@
             "type": "number",
             "format": "double"
           },
+          "isAccepted": {
+            "type": "boolean",
+            "nullable": true
+          },
           "createAt": {
             "type": "string",
             "format": "date-time",
@@ -15357,18 +15595,13 @@
       "UpdatePricingRequest": {
         "required": [
           "description",
-          "rentPrice",
-          "unitPrice"
+          "rentPrice"
         ],
         "type": "object",
         "properties": {
           "description": {
             "minLength": 1,
             "type": "string"
-          },
-          "unitPrice": {
-            "type": "number",
-            "format": "double"
           },
           "rentPrice": {
             "type": "number",
@@ -15529,6 +15762,41 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateWantedCommissionRateForOwner": {
+        "type": "object",
+        "properties": {
+          "commissionRateID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "wantedHostShare": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "ownerAccepted": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateWantedCommissionRateForOwnerBaseResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/StatusCodeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/UpdateWantedCommissionRateForOwner"
           }
         },
         "additionalProperties": false

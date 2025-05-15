@@ -14,14 +14,14 @@ namespace Service.RequestAndResponse.Request.RoomType
     {
         public string Name { get; set; }
         public string? Description { get; set; }
-        public int numberBedRoom { get; set; }
+        public int numberBed { get; set; }
         public int numberBathRoom { get; set; }
         public int numberWifi { get; set; }
         public bool Status { get; set; } = true;
         public int MaxAdults { get; set; }
         public int MaxChildren { get; set; }
         public int MaxPeople { get; set; }
-        public List<IFormFile> Images { get; set; }
+        //public List<IFormFile> Images { get; set; }
         public string? PricingJson { get; set; } 
         public List<PricingForHomeStayRental> Pricing { get; set; } 
         //public string? RoomsJson { get; set; }

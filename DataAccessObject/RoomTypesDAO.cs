@@ -73,5 +73,6 @@ namespace DataAccessObject
                 .Include(rt => rt.Rooms)
                 .FirstOrDefaultAsync(r => r.RoomTypesID == roomTypeId);
         }
+
     }
 }

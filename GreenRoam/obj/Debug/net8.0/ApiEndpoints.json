@@ -1748,6 +1748,32 @@
     ]
   },
   {
+    "ContainingType": "GreenRoam.Controllers.CommissionRateController",
+    "Method": "UpdateWantedCommmisionRateForOwner",
+    "RelativePath": "api/CommissionRate/UpdateWantedForOwner",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Service.RequestAndResponse.Request.CommissionRates.UpdateWantedCommissionRateForOwner",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.CommissionRates.UpdateWantedCommissionRateForOwner, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "Program\u002B\u003C\u003Ec",
     "Method": "\u003C\u003CMain\u003E$\u003Eb__0_13",
     "RelativePath": "api/health/hub",
@@ -2060,6 +2086,16 @@
       {
         "Name": "Pricing",
         "Type": "System.Collections.Generic.List\u00601[[Service.RequestAndResponse.Request.Pricing.PricingForHomeStayRental, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "RoomTypesJson",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "RoomTypes",
+        "Type": "System.Collections.Generic.List\u00601[[Service.RequestAndResponse.Request.RoomType.CreateRoomTypeRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": false
       }
     ],
@@ -4116,7 +4152,7 @@
         "IsRequired": false
       },
       {
-        "Name": "numberBedRoom",
+        "Name": "numberBed",
         "Type": "System.Int32",
         "IsRequired": false
       },
@@ -4148,11 +4184,6 @@
       {
         "Name": "MaxPeople",
         "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "Images",
-        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
         "IsRequired": false
       },
       {

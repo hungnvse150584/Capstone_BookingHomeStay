@@ -1,6 +1,7 @@
 ﻿using BusinessObject.Model;
 using Microsoft.AspNetCore.Http;
 using Service.RequestAndResponse.Request.Pricing;
+using Service.RequestAndResponse.Request.RoomType;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -59,5 +60,7 @@ namespace Service.RequestAndResponse.Request.HomeStay
         public string? PricingJson { get; set; }
 
         public List<PricingForHomeStayRental>? Pricing { get; set; }
+        public string? RoomTypesJson { get; set; }
+        public List<CreateRoomTypeRequest>? RoomTypes { get; set; }
     }
 }

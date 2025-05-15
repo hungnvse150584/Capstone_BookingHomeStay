@@ -276,8 +276,7 @@ namespace Service.Mapping
                 .ForMember(dest => dest.Rooms, opt => opt.Ignore());
 
             CreateMap<RoomTypes, CreateRoomTypeResponse>()
-                .ForMember(dest => dest.ImageRoomTypes, opt => opt.MapFrom(src => src.ImageRoomTypes))
-                .ForMember(dest => dest.Pricings, opt => opt.MapFrom(src => src.Prices));
+              .ForMember(dest => dest.Pricings, opt => opt.MapFrom(src => src.Prices));
             CreateMap<UpdateRoomTypeRequest, RoomTypes>().ReverseMap();
 
 
@@ -292,7 +291,15 @@ namespace Service.Mapping
                 .ForMember(dest => dest.DayType, opt => opt.MapFrom(src => src.DayType))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description ?? "Default description"));
 
-            CreateMap<Pricing, PricingForHomeStayRental>();
+            CreateMap<Pricing, PricingForHomeStayRental>()
+       .ForMember(dest => dest.RentPrice, opt => opt.MapFrom(src => src.RentPrice))
+       .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
+       .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
+       .ForMember(dest => dest.Percentage, opt => opt.MapFrom(src => src.Percentage))
+       .ForMember(dest => dest.IsDefault, opt => opt.MapFrom(src => src.IsDefault))
+       .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
+       .ForMember(dest => dest.DayType, opt => opt.MapFrom(src => src.DayType))
+       .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
 
             CreateMap<HomeStayRentals, GetHomeStayRentalDetailResponse>()
                 .ForMember(dest => dest.Pricing, opt => opt.MapFrom(src => src.Prices))
