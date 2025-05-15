@@ -93,7 +93,7 @@ namespace GreenRoam.Controllers
             return _vpnPayService.CreatePaymentUrl(HttpContext, vnPayModel);
         }
 
-        [Authorize(Roles = "Owner, Staff")]
+        /*[Authorize(Roles = "Owner, Staff")]*/
         [HttpPost]
         [Route("BookingPayment-Refund")]
         public async Task<ActionResult<string>> CheckOutRefundBooking(int bookingID, string accountId)
@@ -133,17 +133,24 @@ namespace GreenRoam.Controllers
                     if (bookingService.isPaidWithBooking)
                         continue;*/
 
+                    // Kiểm tra nếu dịch vụ có trạng thái là Complete hoặc Canceled
+                    if (bookingService.Status == BookingServicesStatus.Completed || bookingService.Status == BookingServicesStatus.Cancelled ||
+                        bookingService.Status == BookingServicesStatus.Pending)
+                    {
+                        continue; // Bỏ qua dịch vụ này, không tính hoàn tiền
+                    }
+
                     double serviceRefundAmount = 0;
 
                     if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited &&
                         booking.Data.paymentStatus == PaymentStatus.Deposited)
                     {
-                        serviceRefundAmount = bookingService.bookingServiceDeposit;
+                        serviceRefundAmount = bookingService.bookingServiceDeposit * cancellation.Data.RefundPercentage;
                     }
                     else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited &&
                         booking.Data.paymentStatus == PaymentStatus.FullyPaid)
                     {
-                        serviceRefundAmount = bookingService.bookingServiceDeposit;
+                        serviceRefundAmount = bookingService.bookingServiceDeposit * cancellation.Data.RefundPercentage;
                     }
                     else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid
                         && booking.Data.paymentStatus == PaymentStatus.Deposited)

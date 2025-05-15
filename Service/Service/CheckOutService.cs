@@ -717,30 +717,34 @@ namespace Service.Service
             {
                 foreach (var service in bookingServices)
                 {
-                    service.Status = BookingServicesStatus.Cancelled;
-                    service.PaymentServiceStatus = PaymentServicesStatus.Refunded;
-                    service.Status = BookingServicesStatus.Cancelled;
-                    service.Transactions ??= new List<Transaction>();
-                    transaction.HomeStay = service.HomeStay;
-                    transaction.TransactionKind = TransactionKind.Refund;
-                    service.Transactions.Add(transaction);
-                    await _bookingServiceRepository.UpdateBookingServicesAsync(service);
-                    if (service.BookingServicesDetails != null)
+                    if (service.Status != BookingServicesStatus.Completed && service.PaymentServiceStatus != PaymentServicesStatus.Refunded &&
+                             service.Status == BookingServicesStatus.Cancelled)
                     {
-                        foreach (var detail in service.BookingServicesDetails)
+                        service.Status = BookingServicesStatus.Cancelled;
+                        service.PaymentServiceStatus = PaymentServicesStatus.Refunded;
+                        service.Status = BookingServicesStatus.Cancelled;
+                        service.Transactions ??= new List<Transaction>();
+                        transaction.HomeStay = service.HomeStay;
+                        transaction.TransactionKind = TransactionKind.Refund;
+                        service.Transactions.Add(transaction);
+                        await _bookingServiceRepository.UpdateBookingServicesAsync(service);
+                        if (service.BookingServicesDetails != null)
                         {
-                            var s = detail.Services;
-                            if (s != null)
+                            foreach (var detail in service.BookingServicesDetails)
                             {
-                                // Kiểm tra xem dịch vụ có Quantity hợp lệ không (Có giá trị và không âm)
-                                if (s.Quantity.HasValue && detail.Quantity >= 0)
+                                var s = detail.Services;
+                                if (s != null)
                                 {
-                                    s.Quantity += detail.Quantity;  // Tăng số lượng dịch vụ
-                                    await _serviceRepository.UpdateAsync(s);  // Cập nhật dịch vụ trong cơ sở dữ liệu
+                                    // Kiểm tra xem dịch vụ có Quantity hợp lệ không (Có giá trị và không âm)
+                                    if (s.Quantity.HasValue && detail.Quantity >= 0)
+                                    {
+                                        s.Quantity += detail.Quantity;  // Tăng số lượng dịch vụ
+                                        await _serviceRepository.UpdateAsync(s);  // Cập nhật dịch vụ trong cơ sở dữ liệu
+                                    }
                                 }
                             }
                         }
-                    }
+                    } 
                 }
             }
 
