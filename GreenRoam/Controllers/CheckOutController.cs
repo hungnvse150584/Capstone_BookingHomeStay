@@ -100,7 +100,7 @@ namespace GreenRoam.Controllers
         {
             var booking = await _bookingService.GetBookingsById(bookingID);
 
-            if (booking.Data.Status == BookingStatus.RequestRefund)
+            if (booking.Data.Status == BookingStatus.AcceptedRefund)
             {
                 var cancellation = await _cancellationService.GetCancellationPolicyByHomeStay(booking.Data.HomeStayID);
 
@@ -122,17 +122,8 @@ namespace GreenRoam.Controllers
 
                 var bookingServiceID = booking.Data.BookingServices.FirstOrDefault()?.BookingServicesID;
 
-                /*if (bookingServiceID != null)
-                {
-                    return BadRequest("Please Refund BookingService before refund Booking!");
-                }*/
-
                 foreach (var bookingService in booking.Data.BookingServices)
                 {
-                    /*// Bỏ qua các service đã được thanh toán cùng booking
-                    if (bookingService.isPaidWithBooking)
-                        continue;*/
-
                     // Kiểm tra nếu dịch vụ có trạng thái là Complete hoặc Canceled
                     if (bookingService.Status == BookingServicesStatus.Completed || bookingService.Status == BookingServicesStatus.Cancelled ||
                         bookingService.Status == BookingServicesStatus.Pending)
@@ -300,7 +291,7 @@ namespace GreenRoam.Controllers
             {
                 return NotFound("Booking service not found.");
             }
-            if (bookingService.Data.Status == BookingServicesStatus.RequestRefund)
+            if (bookingService.Data.Status == BookingServicesStatus.AcceptedRefund)
             {
                 var cancellation = await _cancellationService.GetCancellationPolicyByHomeStay(bookingService.Data.HomeStayID);
 
