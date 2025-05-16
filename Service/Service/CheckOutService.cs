@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessObject.Model;
+using Google.Api;
 using GreenRoam.Ultilities;
 using Repository.IRepositories;
 using Repository.Repositories;
@@ -45,7 +46,7 @@ namespace Service.Service
                               ICommissionRateRepository commissionRateRepository,
                               IBookingDetailRepository bookingDetailRepository,
                               IBookingServiceDetailRepository bookingServiceDetailRepository,
-                              ICancellationPolicyRepository cancelltaionRepository, IRoomChangeHistoryRepository roomchangeHistoryRepository, 
+                              ICancellationPolicyRepository cancelltaionRepository, IRoomChangeHistoryRepository roomchangeHistoryRepository,
                               ITransactionRepository transactionRepository)
         {
             _mapper = mapper;
@@ -68,7 +69,7 @@ namespace Service.Service
         {
             var nowVN = DateTimeHelper.NowVietnamTime();
             TimeZoneInfo vnZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
-            
+
             var unpaidBooking = await _bookingRepository.GetBookingStatusByAccountId(createBookingRequest.AccountID);
             if (unpaidBooking != null)
                 return new BaseResponse<int>("There is an unpaid booking. Please complete it before creating a new one.", StatusCodeEnum.Conflict_409, 0);
@@ -121,7 +122,7 @@ namespace Service.Service
                 }
 
                 var total = await _pricingRepository.GetTotalPrice(checkInLocal, checkOutLocal, detail.homeStayTypeID, detail.roomTypeID);
-                if(total <= 0)
+                if (total <= 0)
                 {
                     return new BaseResponse<int>("Pricing not found or invalid.", StatusCodeEnum.Conflict_409, 0);
                 }
@@ -170,7 +171,7 @@ namespace Service.Service
             booking.TotalRentPrice = totalPriceBooking;
             var depositBooking = commissionRate.PlatformShare * totalPriceBooking;
             booking.Total = totalAmount;
-        
+
             booking.bookingDeposit = depositBooking;
             booking.remainingBalance = totalAmount - booking.bookingDeposit;
 
@@ -201,26 +202,26 @@ namespace Service.Service
 
                     if (servicesStatus == BookingServicesStatus.Cancelled)
                     {
-                        var services = bookingServiceExist.BookingServicesDetails.FirstOrDefault();
-                        if (services?.Services != null && bookingExist.HomeStayID.HasValue)
+                        foreach (var serviceDetail in bookingServiceExist.BookingServicesDetails)
                         {
-                            var cancellationPolicy = await _cancelltaionRepository
-                            .GetCancellationPolicyByHomeStayAsync(bookingExist.HomeStayID.Value);
-
-                            var bookingDetail = bookingExist.BookingDetails.FirstOrDefault();
-                            if (bookingDetail != null && cancellationPolicy != null)
+                            if (serviceDetail?.Services != null && bookingExist.HomeStayID.HasValue)
                             {
-                                var now = DateTime.Now;
-                                var daysBeforeCheckIn = (bookingDetail.CheckInDate - now).TotalDays;
+                                var cancellationPolicy = await _cancelltaionRepository.GetCancellationPolicyByHomeStayAsync(bookingExist.HomeStayID.Value);
+                                var bookingDetail = bookingExist.BookingDetails.FirstOrDefault();
 
-                                bool isRefundAllowed = daysBeforeCheckIn >= cancellationPolicy.DayBeforeCancel &&
-                                                       (cancellationPolicy.RefundPercentage > 0 && cancellationPolicy.RefundPercentage <= 1);
-
-                                // Nếu không được hoàn tiền → trả lại số lượng dịch vụ
-                                if (!isRefundAllowed)
+                                if (bookingDetail != null && cancellationPolicy != null)
                                 {
-                                    services.Services.Quantity += services.Quantity;
-                                    await _serviceRepository.UpdateAsync(services.Services);
+                                    var now = DateTime.Now;
+                                    var daysBeforeCheckIn = (bookingDetail.CheckInDate - now).TotalDays;
+
+                                    bool isRefundAllowed = daysBeforeCheckIn >= cancellationPolicy.DayBeforeCancel &&
+                                        (cancellationPolicy.RefundPercentage > 0 && cancellationPolicy.RefundPercentage <= 1);
+
+                                    if (!isRefundAllowed)
+                                    {
+                                        serviceDetail.Services.Quantity += serviceDetail.Quantity;
+                                        await _serviceRepository.UpdateAsync(serviceDetail.Services);
+                                    }
                                 }
                             }
                         }
@@ -237,30 +238,31 @@ namespace Service.Service
                         {
                             if (service.Status != BookingServicesStatus.Cancelled && service.PaymentServiceStatus != PaymentServicesStatus.Refunded)
                             {
-                                var serviceDetail = service.BookingServicesDetails.FirstOrDefault();
-                                if (serviceDetail?.Services != null && bookingExist.HomeStayID.HasValue)
+                                foreach (var serviceDetail in service.BookingServicesDetails)
                                 {
-                                    var cancellationPolicy = await _cancelltaionRepository.GetCancellationPolicyByHomeStayAsync(bookingExist.HomeStayID.Value);
-
-                                    var bookingDetail = bookingExist.BookingDetails.FirstOrDefault();
-
-                                    if (bookingDetail != null && cancellationPolicy != null)
+                                    if (serviceDetail?.Services != null && bookingExist.HomeStayID.HasValue)
                                     {
-                                        var now = DateTime.Now;
-                                        var daysBeforeCheckIn = (bookingDetail.CheckInDate - now).TotalDays;
+                                        var cancellationPolicy = await _cancelltaionRepository.GetCancellationPolicyByHomeStayAsync(bookingExist.HomeStayID.Value);
+                                        var bookingDetail = bookingExist.BookingDetails.FirstOrDefault();
 
-                                        bool isRefundAllowed = daysBeforeCheckIn >= cancellationPolicy.DayBeforeCancel &&
-                                            (cancellationPolicy.RefundPercentage > 0 && cancellationPolicy.RefundPercentage <= 1);
-
-                                        if (!isRefundAllowed)
+                                        if (bookingDetail != null && cancellationPolicy != null)
                                         {
-                                            serviceDetail.Services.Quantity += serviceDetail.Quantity;
-                                            await _serviceRepository.UpdateAsync(serviceDetail.Services);
+                                            var now = DateTime.Now;
+                                            var daysBeforeCheckIn = (bookingDetail.CheckInDate - now).TotalDays;
+
+                                            bool isRefundAllowed = daysBeforeCheckIn >= cancellationPolicy.DayBeforeCancel &&
+                                                (cancellationPolicy.RefundPercentage > 0 && cancellationPolicy.RefundPercentage <= 1);
+
+                                            if (!isRefundAllowed)
+                                            {
+                                                serviceDetail.Services.Quantity += serviceDetail.Quantity;
+                                                await _serviceRepository.UpdateAsync(serviceDetail.Services);
+                                            }
                                         }
                                     }
                                 }
                             }
-                           await _bookingServiceRepository.ChangeBookingServicesStatus(service.BookingServicesID, BookingServicesStatus.Cancelled, service.PaymentServiceStatus);
+                            await _bookingServiceRepository.ChangeBookingServicesStatus(service.BookingServicesID, BookingServicesStatus.Cancelled, service.PaymentServiceStatus);
                         }
                     }
                 }
@@ -270,33 +272,6 @@ namespace Service.Service
                     var transaction = await _transactionRepository.GetTransactionByBookingId(bookingExist.BookingID);
                     if (transaction != null)
                     {
-                        /*if (bookingExist.HomeStayID.HasValue)
-                        {
-                            var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingExist.HomeStayID.Value);
-                            if (commissionRate != null)
-                            {
-                                var hostRate = commissionRate.HostShare;
-                                var adminRate = commissionRate.PlatformShare;
-
-                                // Áp dụng theo loại giao dịch
-                                if (transaction.TransactionKind == TransactionKind.Deposited || transaction.TransactionKind == TransactionKind.FullPayment)
-                                {
-                                    transaction.OwnerAmount = transaction.Amount * hostRate;
-                                    transaction.AdminAmount = transaction.Amount * adminRate;
-                                }
-                                else if (transaction.TransactionKind == TransactionKind.Refund)
-                                {
-                                    transaction.OwnerAmount = transaction.Amount;
-                                    transaction.AdminAmount = 0;
-                                }
-
-                                await _transactionRepository.UpdateAsync(transaction);
-                            }
-                        }
-                        else
-                        {
-                            return new BaseResponse<Booking>("The booking does not belong to any HomeStay !", StatusCodeEnum.NotFound_404, null);
-                        }*/
 
                         transaction.StatusTransaction = StatusOfTransaction.Completed;
                         await _transactionRepository.UpdateAsync(transaction);
@@ -311,36 +286,6 @@ namespace Service.Service
                     {
                         foreach (var service in bookingExist.BookingServices)
                         {
-                            /* if (service.Status == BookingServicesStatus.Completed && service.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
-                             {
-                                 var serviceTransaction = await _transactionRepository.GetTransactionByBookingServiceId(service.BookingServicesID);
-
-                                 if (serviceTransaction != null)
-                                 {
-                                     if (bookingExist.HomeStayID.HasValue)
-                                     {
-                                         var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingExist.HomeStayID.Value);
-                                         if (commissionRate != null)
-                                         {
-                                             var hostRate = commissionRate.HostShare;
-                                             var adminRate = commissionRate.PlatformShare;
-
-                                             if (serviceTransaction.TransactionKind == TransactionKind.Deposited || serviceTransaction.TransactionKind == TransactionKind.FullPayment)
-                                             {
-                                                 serviceTransaction.OwnerAmount = serviceTransaction.Amount * hostRate;
-                                                 serviceTransaction.AdminAmount = serviceTransaction.Amount * adminRate;
-                                             }
-                                             else if (serviceTransaction.TransactionKind == TransactionKind.Refund)
-                                             {
-                                                 serviceTransaction.OwnerAmount = serviceTransaction.Amount;
-                                                 serviceTransaction.AdminAmount = 0;
-                                             }
-
-                                             await _transactionRepository.UpdateAsync(serviceTransaction);
-                                         }
-                                     }
-                                 }
-                             }*/
                             var serviceTransaction = await _transactionRepository.GetTransactionByBookingServiceId(service.BookingServicesID);
 
                             if (serviceTransaction != null)
@@ -585,7 +530,7 @@ namespace Service.Service
             {
                 if (updatedBookingDetails.roomTypeID > 0)
                 {
-                    
+
                     if (updatedBookingDetails.CheckOutDate <= today)
                     {
                         return new BaseResponse<UpdateBookingForRoomRequest>("Cannot change Room due to the nearly or over of checkout date", StatusCodeEnum.BadRequest_400, null);
@@ -628,7 +573,7 @@ namespace Service.Service
                             NewRoomID = updatedBookingDetails.roomID,
                             UsagedDate = updatedBookingDetails.CheckInDate,
                             ChangedDate = DateTime.UtcNow,
-                            AccountID =  request.AccountID,// bạn cần truyền field này từ request
+                            AccountID = request.AccountID,// bạn cần truyền field này từ request
                         };
                         await _roomchangeHistoryRepository.AddRoomHistory(roomChange);
                     }
@@ -637,7 +582,7 @@ namespace Service.Service
                     existingDetail.RoomID = updatedBookingDetails.roomID;
                     existingDetail.CheckInDate = updatedBookingDetails.CheckInDate;
                     existingDetail.CheckOutDate = updatedBookingDetails.CheckOutDate;
-                    
+
                 }
                 else
                 {
@@ -671,7 +616,7 @@ namespace Service.Service
             }
 
             var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(booking.HomeStayID);
-            if(commissionRate == null)
+            if (commissionRate == null)
             {
                 throw new Exception("commissionRate not found");
             }
@@ -684,7 +629,7 @@ namespace Service.Service
 
             double totalAmount = booking.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
             double amountPaid = booking.Transactions.Sum(t => t.Amount); // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
-            
+
             // Kiểm tra trạng thái thanh toán
             if (amountPaid >= totalAmount)
             {
@@ -714,6 +659,24 @@ namespace Service.Service
                 throw new Exception("Booking not found");
             }
 
+            var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(booking.HomeStayID);
+            if (commissionRate == null)
+            {
+                throw new Exception("CommissionRate not found");
+            }
+
+            var originalTransaction = booking.Transactions
+                      .FirstOrDefault(t => (t.TransactionKind == TransactionKind.FullPayment || t.TransactionKind == TransactionKind.Deposited)
+                      && t.StatusTransaction == StatusOfTransaction.Pending);
+
+            if (originalTransaction == null)
+                throw new Exception("No pending payment transaction found to refund.");
+
+            // Đổi trạng thái transaction thanh toán gốc thành Refunded
+            originalTransaction.StatusTransaction = StatusOfTransaction.Refunded;
+
+            await _transactionRepository.UpdateAsync(originalTransaction);
+
             booking.Transactions ??= new List<Transaction>();
 
             bool alreadyExists = booking.Transactions.Any(t =>
@@ -726,46 +689,58 @@ namespace Service.Service
 
             transaction.HomeStay = booking.HomeStay;
             transaction.TransactionKind = TransactionKind.Refund;
-            transaction.StatusTransaction = StatusOfTransaction.Cancelled;
+            transaction.StatusTransaction = StatusOfTransaction.Refunded;
 
             // Thêm transaction vào trong danh sách Transactions
             booking.Transactions.Add(transaction);
+            double amountPaid = transaction.Amount;
 
             var bookingServices = await _bookingServiceRepository.GetConfirmedBookingServiceByBookingId(bookingID);
             if (bookingServices != null)
             {
                 foreach (var service in bookingServices)
                 {
-                    if (service.Status != BookingServicesStatus.Completed && service.PaymentServiceStatus != PaymentServicesStatus.Refunded &&
-                             service.Status == BookingServicesStatus.Cancelled)
+                    var originalServiceTransaction = service.Transactions?
+                                .FirstOrDefault(t => (t.TransactionKind == TransactionKind.FullPayment || t.TransactionKind == TransactionKind.Deposited)
+                                 && t.StatusTransaction == StatusOfTransaction.Pending);
+
+                    if (originalServiceTransaction != null)
                     {
-                        service.Status = BookingServicesStatus.Cancelled;
-                        service.PaymentServiceStatus = PaymentServicesStatus.Refunded;
-                        service.Transactions ??= new List<Transaction>();
-                        transaction.HomeStay = service.HomeStay;
-                        transaction.TransactionKind = TransactionKind.Refund;
-                        service.Transactions.Add(transaction);
-                        await _bookingServiceRepository.UpdateBookingServicesAsync(service);
-                        if (service.BookingServicesDetails != null)
+                        originalServiceTransaction.StatusTransaction = StatusOfTransaction.Refunded;
+                        await _transactionRepository.UpdateAsync(originalServiceTransaction);
+                    }
+
+                    service.Status = BookingServicesStatus.Cancelled;
+                    service.PaymentServiceStatus = PaymentServicesStatus.Refunded;
+                    service.Transactions ??= new List<Transaction>();
+
+                    transaction.HomeStay = service.HomeStay;
+                    transaction.TransactionKind = TransactionKind.Refund;
+                    transaction.StatusTransaction = StatusOfTransaction.Refunded;
+
+                    service.Transactions.Add(transaction);
+
+                    await _bookingServiceRepository.UpdateBookingServicesAsync(service);
+                    if (service.BookingServicesDetails != null)
+                    {
+                        foreach (var detail in service.BookingServicesDetails)
                         {
-                            foreach (var detail in service.BookingServicesDetails)
+                            var s = detail.Services;
+                            if (s != null)
                             {
-                                var s = detail.Services;
-                                if (s != null)
+                                // Kiểm tra xem dịch vụ có Quantity hợp lệ không (Có giá trị và không âm)
+                                if (s.Quantity.HasValue && detail.Quantity >= 0)
                                 {
-                                    // Kiểm tra xem dịch vụ có Quantity hợp lệ không (Có giá trị và không âm)
-                                    if (s.Quantity.HasValue && detail.Quantity >= 0)
-                                    {
-                                        s.Quantity += detail.Quantity;  // Tăng số lượng dịch vụ
-                                        await _serviceRepository.UpdateAsync(s);  // Cập nhật dịch vụ trong cơ sở dữ liệu
-                                    }
+                                    s.Quantity += detail.Quantity;  // Tăng số lượng dịch vụ
+                                    await _serviceRepository.UpdateAsync(s);  // Cập nhật dịch vụ trong cơ sở dữ liệu
                                 }
                             }
                         }
-                    } 
+                    }
                 }
             }
-
+            transaction.AdminAmount = (-commissionRate.PlatformShare) * amountPaid;
+            transaction.OwnerAmount = (-commissionRate.HostShare) * amountPaid;
             booking.paymentStatus = PaymentStatus.Refunded;
             booking.Status = BookingStatus.Cancelled;
 
@@ -797,33 +772,22 @@ namespace Service.Service
             {
                 throw new Exception("commissionRate not found");
             }
-
-            /*var service = bookingService.BookingServicesDetails.FirstOrDefault()?.Services;
-            if (service != null)
+            if (bookingService.BookingServicesDetails != null)
             {
-                if (service.Quantity < bookingService.BookingServicesDetails.FirstOrDefault()?.Quantity)
+                // Trừ số lượng cho tất cả các dịch vụ trong BookingServicesDetails
+                foreach (var detail in bookingService.BookingServicesDetails)
                 {
-                    throw new Exception("Not enough service quantity available.");
-                }
-
-                // Trừ số lượng dịch vụ
-                service.Quantity -= bookingService.BookingServicesDetails.FirstOrDefault()?.Quantity ?? 0;
-                await _serviceRepository.UpdateAsync(service);  // Cập nhật lại số lượng dịch vụ
-            }*/
-
-            // Trừ số lượng cho tất cả các dịch vụ trong BookingServicesDetails
-            foreach (var detail in bookingService.BookingServicesDetails)
-            {
-                var service = detail.Services;
-                if (service != null)
-                {
-                    if (service.Quantity < detail.Quantity)
+                    var service = detail.Services;
+                    if (service != null)
                     {
-                        throw new Exception($"Not enough quantity available for service '{service.servicesName}'.");
-                    }
+                        if (service.Quantity < detail.Quantity)
+                        {
+                            throw new Exception($"Not enough quantity available for service '{service.servicesName}'.");
+                        }
 
-                    service.Quantity -= detail.Quantity;
-                    await _serviceRepository.UpdateAsync(service);  // Cập nhật lại số lượng dịch vụ
+                        service.Quantity -= detail.Quantity;
+                        await _serviceRepository.UpdateAsync(service);  // Cập nhật lại số lượng dịch vụ
+                    }
                 }
             }
 
@@ -831,7 +795,7 @@ namespace Service.Service
 
             double totalAmount = bookingService.Total;  // Thay bằng cách tính tổng số tiền thanh toán của booking
             double amountPaid = bookingService.Transactions.Sum(t => t.Amount); // Tính tổng số tiền đã thanh toán từ tất cả các giao dịch
-                                                                               // Kiểm tra trạng thái thanh toán
+                                                                                // Kiểm tra trạng thái thanh toán
             if (amountPaid >= totalAmount)
             {
                 bookingService.PaymentServiceStatus = PaymentServicesStatus.FullyPaid; // Thanh toán đầy đủ
@@ -845,24 +809,6 @@ namespace Service.Service
 
             bookingService.Status = BookingServicesStatus.Confirmed;
 
-            /*if (bookingService.BookingID.HasValue)
-            {
-                var booking = bookingService.Booking;
-                if (booking != null)
-                {
-
-                    if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
-                    {
-                        booking.Total += bookingService.Total;
-                    }
-                    if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited)
-                    {
-                        booking.Total += bookingService.Total;
-                        booking.bookingDeposit += bookingService.bookingServiceDeposit;
-                    }
-                    await _bookingRepository.UpdateBookingAsync(booking);  // Cập nhật lại Booking
-                }
-            }*/
             transaction.AdminAmount = commissionRate.PlatformShare * amountPaid;
             transaction.OwnerAmount = commissionRate.HostShare * amountPaid;
             transaction.StatusTransaction = StatusOfTransaction.Pending;
@@ -882,14 +828,33 @@ namespace Service.Service
             {
                 throw new Exception("BookingService not found");
             }
+
+            var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(bookingService.HomeStayID);
+            if (commissionRate == null)
+            {
+                throw new Exception("commissionRate not found");
+            }
+
+            var originalServiceTransaction = bookingService.Transactions?
+                                .FirstOrDefault(t => (t.TransactionKind == TransactionKind.FullPayment || t.TransactionKind == TransactionKind.Deposited)
+                                 && t.StatusTransaction == StatusOfTransaction.Pending);
+
+            if (originalServiceTransaction != null)
+            {
+                originalServiceTransaction.StatusTransaction = StatusOfTransaction.Refunded;
+                await _transactionRepository.UpdateAsync(originalServiceTransaction);
+            }
+
             var oldPaymentServiceStatus = bookingService.PaymentServiceStatus;
 
             bookingService.PaymentServiceStatus = PaymentServicesStatus.Refunded;
 
             bookingService.Status = BookingServicesStatus.Cancelled;
 
+            double amountPaid = transaction.Amount;
+
             transaction.TransactionKind = TransactionKind.Refund;
-            transaction.StatusTransaction = StatusOfTransaction.Cancelled;
+            transaction.StatusTransaction = StatusOfTransaction.Refunded;
 
             bookingService.Transactions ??= new List<Transaction>();
 
@@ -901,46 +866,25 @@ namespace Service.Service
                 throw new Exception("Duplicate transaction detected.");
             }
 
+            transaction.HomeStay = bookingService.HomeStay;
+            transaction.AdminAmount = (-commissionRate.PlatformShare) * amountPaid;
+            transaction.OwnerAmount = (-commissionRate.HostShare) * amountPaid;
+
             bookingService.Transactions.Add(transaction);
 
-            /*var service = bookingService.BookingServicesDetails.FirstOrDefault()?.Services;
-            if (service != null)
+            if (bookingService.BookingServicesDetails != null)
             {
-                service.Quantity += bookingService.BookingServicesDetails.FirstOrDefault()?.Quantity ?? 0;  // Khôi phục số lượng dịch vụ
-                await _serviceRepository.UpdateAsync(service);  // Cập nhật lại dịch vụ
-            }*/
-
-            foreach (var detail in bookingService.BookingServicesDetails)
-            {
-                var service = detail.Services;
-                if (service != null)
+                foreach (var detail in bookingService.BookingServicesDetails)
                 {
-                    service.Quantity += detail.Quantity;
-                    await _serviceRepository.UpdateAsync(service);
+                    var service = detail.Services;
+                    if (service != null)
+                    {
+                        service.Quantity += detail.Quantity;
+                        await _serviceRepository.UpdateAsync(service);
+                    }
                 }
             }
 
-            /*if (bookingService.BookingID.HasValue)
-            {
-                var booking = bookingService.Booking;
-                if (booking != null)
-                {
-                    // Cập nhật tổng tiền thanh toán cho Booking
-                    if (oldPaymentServiceStatus == PaymentServicesStatus.FullyPaid)
-                    {
-                        booking.Total -= bookingService.Total;
-                    }
-                    else if (oldPaymentServiceStatus == PaymentServicesStatus.Deposited)
-                    {
-                        booking.Total -= bookingService.Total;
-                        booking.bookingDeposit -= bookingService.bookingServiceDeposit;
-                    }
-                    await _bookingRepository.UpdateBookingAsync(booking);  // Cập nhật lại Booking
-                }
-            }*/
-
-            transaction.HomeStay = bookingService.HomeStay;
-            
             await _bookingServiceRepository.UpdateBookingServicesAsync(bookingService);
 
             return bookingService;
@@ -954,7 +898,7 @@ namespace Service.Service
             {
                 RoomTypeName = tuple.roomTypeName,
                 Count = tuple.count,
-                
+
             }).ToList();
 
             if (stats == null || !stats.Any())
@@ -964,6 +908,88 @@ namespace Service.Service
             }
             return new BaseResponse<List<GetRoomTypeStats>>("Get all bookings as base success",
                 StatusCodeEnum.OK_200, stats);
+        }
+
+        public async Task<BaseResponse<Transaction?>> OwnerAcceptRefundAsync(int? bookingId, int? bookingServiceId)
+        {
+            if (bookingId.HasValue)
+            {
+                var booking = await _bookingRepository.GetBookingsByIdAsync(bookingId.Value);
+
+                if (booking is null)
+                {
+                    return new BaseResponse<Transaction?>("Booking not found.", StatusCodeEnum.NotFound_404, null);
+                }
+
+                if (booking.Status != BookingStatus.RequestRefund)
+                {
+                    return new BaseResponse<Transaction?>("This booking is not requesting a refund.", StatusCodeEnum.BadRequest_400, null);
+                }
+
+                var transaction = await _transactionRepository.ChangeTransactionStatusForBooking(bookingId.Value, StatusOfTransaction.RequestRefund);
+
+                if (transaction is null)
+                {
+                    return new BaseResponse<Transaction?>("Failed to update transaction status.", StatusCodeEnum.InternalServerError_500, null);
+                }
+
+                if (booking.BookingServices?.Any() == true)
+                {
+                    foreach (var serviceBooking in booking.BookingServices)
+                    {
+                        var bookingService = await _bookingServiceRepository.GetBookingServiceByIdAsync(serviceBooking.BookingServicesID);
+
+                        if (bookingService == null)
+                        {
+                            continue;
+                        }
+
+                        if (bookingService.Status == BookingServicesStatus.Completed || bookingService.Status == BookingServicesStatus.Cancelled || bookingService.Status == BookingServicesStatus.Pending)
+                        {
+                            continue;
+                        }
+
+                        var transactionService = await _transactionRepository.ChangeTransactionStatusForBookingService(serviceBooking.BookingServicesID, StatusOfTransaction.RequestRefund);
+
+                        if (transactionService is null)
+                        {
+                            return new BaseResponse<Transaction?>("Failed to update transaction status.", StatusCodeEnum.InternalServerError_500, null);
+                        }
+                    }
+                }
+
+                await _bookingRepository.ChangeBookingStatus(booking.BookingID, BookingStatus.AcceptedRefund, booking.paymentStatus);
+
+                return new BaseResponse<Transaction?>("Transaction status updated to RequestRefund successfully.", StatusCodeEnum.OK_200, transaction);
+            }
+
+            if (bookingServiceId.HasValue)
+            {
+                var bookingService = await _bookingServiceRepository.GetBookingServiceByIdAsync(bookingServiceId.Value);
+
+                if (bookingService is null)
+                {
+                    return new BaseResponse<Transaction?>("Booking service not found.", StatusCodeEnum.NotFound_404, null);
+                }
+
+                if (bookingService.Status != BookingServicesStatus.RequestRefund)
+                {
+                    return new BaseResponse<Transaction?>("This booking service is not requesting a refund.", StatusCodeEnum.BadRequest_400, null);
+                }
+
+                var transaction = await _transactionRepository.ChangeTransactionStatusForBookingService(bookingServiceId.Value, StatusOfTransaction.RequestRefund);
+
+                if (transaction is null)
+                {
+                    return new BaseResponse<Transaction?>("Failed to update transaction status.", StatusCodeEnum.InternalServerError_500, null);
+                }
+
+                await _bookingServiceRepository.ChangeBookingServicesStatus(bookingService.BookingServicesID, BookingServicesStatus.AcceptedRefund, bookingService.PaymentServiceStatus);
+
+                return new BaseResponse<Transaction?>("Transaction status updated to RequestRefund successfully.", StatusCodeEnum.OK_200, transaction);
+            }
+
+            return new BaseResponse<Transaction?>("Either bookingId or bookingServiceId must be provided.", StatusCodeEnum.BadRequest_400, null);
         }
     }
 }

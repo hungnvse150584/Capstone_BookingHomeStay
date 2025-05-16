@@ -169,19 +169,6 @@
           "SelectedChildIndex": 11,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ImageRoomResponse.cs",
-              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\ImageRooms\\ImageRoomResponse.cs",
-              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\ImageRooms\\ImageRoomResponse.cs",
-              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\ImageRooms\\ImageRoomResponse.cs",
-              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\ImageRooms\\ImageRoomResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:29:59.018Z",
-              "EditorCaption": ""
-            },
-            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
@@ -203,6 +190,18 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ImageRoomResponse.cs",
+              "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\ImageRooms\\ImageRoomResponse.cs",
+              "RelativeDocumentMoniker": "Service\\RequestAndResponse\\Response\\ImageRooms\\ImageRoomResponse.cs",
+              "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\RequestAndResponse\\Response\\ImageRooms\\ImageRoomResponse.cs",
+              "RelativeToolTip": "Service\\RequestAndResponse\\Response\\ImageRooms\\ImageRoomResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-16T16:29:59.018Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 4,
               "Title": "IRoomService.cs",
               "DocumentMoniker": "D:\\FPT\\SEP490_Capstone\\Service\\IService\\IRoomService.cs",
@@ -211,8 +210,7 @@
               "RelativeToolTip": "Service\\IService\\IRoomService.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAmwBoAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:23:37.315Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:23:37.315Z"
             },
             {
               "$type": "Document",
@@ -224,8 +222,7 @@
               "RelativeToolTip": "Repository\\IRepositories\\IImageRoomTypesRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:21:08.009Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:21:08.009Z"
             },
             {
               "$type": "Document",
@@ -237,8 +234,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Room\\CreateRoomRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAkAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:28:53.985Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:28:53.985Z"
             },
             {
               "$type": "Document",
@@ -250,8 +246,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\Room\\GetAllRooms.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwBwAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:29:25.875Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:29:25.875Z"
             },
             {
               "$type": "Document",
@@ -263,8 +258,7 @@
               "RelativeToolTip": "Service\\Service\\RoomService.cs",
               "ViewState": "AgIAAHEAAAAAAAAAAAAAwIwAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T15:53:37.128Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-15T15:53:37.128Z"
             },
             {
               "$type": "Document",
@@ -274,7 +268,7 @@
               "RelativeDocumentMoniker": "Service\\Mapping\\MappingProfile.cs",
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Mapping\\MappingProfile.cs",
               "RelativeToolTip": "Service\\Mapping\\MappingProfile.cs",
-              "ViewState": "AgIAACMBAAAAAAAAAAAnwEIBAABWAAAAAAAAAA==",
+              "ViewState": "AgIAACABAAAAAAAAAAAnwEIBAABWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-15T16:01:49.47Z",
               "EditorCaption": ""
@@ -289,8 +283,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\RoomController.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAAhwDsAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:44:20.57Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:44:20.57Z"
             },
             {
               "$type": "Document",
@@ -302,8 +295,7 @@
               "RelativeToolTip": "Repository\\Repositories\\ImageRoomTypesRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:21:23.126Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:21:23.126Z"
             },
             {
               "$type": "Document",
@@ -315,8 +307,7 @@
               "RelativeToolTip": "DataAccessObject\\RoomDAO.cs",
               "ViewState": "AgIAANcAAAAAAAAAAAAowBEBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:27:08.145Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:27:08.145Z"
             },
             {
               "$type": "Document",
@@ -328,8 +319,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\RoomType\\CreateRoomTypeRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAwAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T16:00:25.774Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-15T16:00:25.774Z"
             },
             {
               "$type": "Document",
@@ -341,8 +331,7 @@
               "RelativeToolTip": "Service\\Service\\RoomTypeService.cs",
               "ViewState": "AgIAACcAAAAAAAAAAAAkwDYAAABkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T15:53:38.225Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-15T15:53:38.225Z"
             },
             {
               "$type": "Document",
@@ -354,8 +343,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\Room\\UpdateRoomRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwBIAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:29:02.177Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:29:02.177Z"
             },
             {
               "$type": "Document",
@@ -367,8 +355,7 @@
               "RelativeToolTip": "Repository\\ConfigureService.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAAnwEAAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:37:31.696Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:37:31.696Z"
             },
             {
               "$type": "Document",
@@ -380,8 +367,7 @@
               "RelativeToolTip": "DataAccessObject\\HomeStayDAO.cs",
               "ViewState": "AgIAAAoBAAAAAAAAAAAAwEQBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:28:02.232Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:28:02.232Z"
             },
             {
               "$type": "Document",
@@ -393,8 +379,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\HomeStay\\CreateHomeStayRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:25:08.127Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:25:08.127Z"
             },
             {
               "$type": "Document",
@@ -406,8 +391,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\ImageHomeStay\\UploadImageRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:25:03.694Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:25:03.694Z"
             },
             {
               "$type": "Document",
@@ -419,8 +403,7 @@
               "RelativeToolTip": "Service\\Service\\HomeStayService.cs",
               "ViewState": "AgIAACoBAAAAAAAAAAAAAEQBAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T15:53:41.15Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-15T15:53:41.15Z"
             },
             {
               "$type": "Document",
@@ -432,8 +415,7 @@
               "RelativeToolTip": "DataAccessObject\\ImageRoomDAO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:19:05.23Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:19:05.23Z"
             },
             {
               "$type": "Document",
@@ -445,8 +427,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\ImageRoom\\UploadImageRoomRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:18:23.909Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:18:23.909Z"
             },
             {
               "$type": "Document",
@@ -458,8 +439,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\RoomType\\GetSingleRoomType.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:16:10.228Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:16:10.228Z"
             },
             {
               "$type": "Document",
@@ -471,8 +451,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Request\\RoomType\\UpdateRoomTypeRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:15:52.985Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:15:52.985Z"
             },
             {
               "$type": "Document",
@@ -484,8 +463,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\ImageRoom.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T15:53:17.691Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-15T15:53:17.691Z"
             },
             {
               "$type": "Document",
@@ -497,8 +475,7 @@
               "RelativeToolTip": "BusinessObject\\Model\\Room.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T15:53:30.655Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-15T15:53:30.655Z"
             },
             {
               "$type": "Document",
@@ -510,8 +487,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomTypeByRental.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:15:44.269Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:15:44.269Z"
             },
             {
               "$type": "Document",
@@ -523,8 +499,7 @@
               "RelativeToolTip": "Service\\RequestAndResponse\\Response\\RoomType\\GetAllRoomType.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T16:14:28.578Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T16:14:28.578Z"
             },
             {
               "$type": "Document",

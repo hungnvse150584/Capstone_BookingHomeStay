@@ -19,6 +19,16 @@ namespace Repository.Repositories
             _transactionDao = transactionDao;
         }
 
+        public async Task<Transaction?> ChangeTransactionStatusForBooking(int? bookingId, StatusOfTransaction newStatus)
+        {
+            return await _transactionDao.ChangeTransactionStatusForBooking(bookingId, newStatus);
+        }
+
+        public async Task<Transaction?> ChangeTransactionStatusForBookingService(int? bookingId, StatusOfTransaction newStatus)
+        {
+            return await _transactionDao.ChangeTransactionStatusForBookingService(bookingId, newStatus);
+        }
+
         public async Task<IEnumerable<Transaction>> GetAllTransactions()
         {
             return await _transactionDao.GetAllTransactions();

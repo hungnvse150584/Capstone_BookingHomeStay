@@ -155,6 +155,7 @@ namespace DataAccessObject
                 .ThenInclude(o => o.BookingServicesDetails)
                 .ThenInclude(o => o.Services)
                 .Include(o => o.HomeStay)
+                .Include(o => o.Transactions)
                 .FirstOrDefaultAsync(o => o.BookingID == bookingId);
         }
 
@@ -170,6 +171,7 @@ namespace DataAccessObject
                 .ThenInclude(o => o.BookingServicesDetails)
                 .ThenInclude(o => o.Services)
                 .Include(o => o.HomeStay)
+                .Include(o => o.Transactions)
                 .FirstOrDefaultAsync(o => o.BookingID == bookingId);
         }
 

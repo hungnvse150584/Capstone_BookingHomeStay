@@ -21,5 +21,6 @@ namespace Service.IService
         Task<BookingServices> CreateBookingServiceRefundPayment(int? bookingServiceID, Transaction transaction);
         Task<BaseResponse<UpdateBookingForRoomRequest>> ChangeRoomForBooking(int bookingID, UpdateBookingForRoomRequest request);
         Task<BaseResponse<List<GetRoomTypeStats>>> GetRoomTypeUsageStatsAsync(int homestayId);
+        Task<BaseResponse<Transaction?>> OwnerAcceptRefundAsync(int? bookingId, int? bookingServiceId);
     }
 }

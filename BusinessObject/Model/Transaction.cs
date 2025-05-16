@@ -70,6 +70,7 @@ namespace BusinessObject.Model
         Pending = 0,
         Completed = 1,
         Cancelled = 2,
-        RequestRefund = 3
+        RequestRefund = 3,
+        Refunded = 4
     }
 }
