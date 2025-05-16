@@ -51,7 +51,7 @@ namespace Repository
             
             services.AddScoped<IImageServicesRepository, ImageServicesRepository>();
             services.AddScoped<IImageHomeStayTypesRepository, ImageHomeStayTypesRepository>();
-            services.AddScoped<IImageRoomTypesRepository, ImageRoomTypesRepository>();
+            services.AddScoped<IImageRoomRepository, ImageRoomRepository>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IConversationRepository, ConversationRepository>();
@@ -62,7 +62,7 @@ namespace Repository
             services.AddScoped<ConversationDAO>();
             services.AddScoped<AccountDAO>();
             services.AddScoped<StaffDAO>();
-            services.AddScoped<ImageRoomTypeDAO>();
+            services.AddScoped<ImageRoomDAO>();
             services.AddScoped<HomeStayDAO>();
             services.AddScoped<CommissionRateDAO>();
             services.AddScoped<HomeStayRentalDAO>();

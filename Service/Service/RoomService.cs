@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using BusinessObject.Model;
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
+using Microsoft.AspNetCore.Http;
 using Repository.IRepositories;
 using Repository.Repositories;
 using Service.IService;
@@ -22,31 +25,68 @@ namespace Service.Service
     {
         private readonly IMapper _mapper;
         private readonly IRoomRepository _roomRepository;
+        private readonly IImageRoomRepository _imageRoomRepository;
+        private readonly Cloudinary _cloudinary;
 
-        public RoomService(IMapper mapper, IRoomRepository roomRepository)
+        public RoomService(IMapper mapper, IRoomRepository roomRepository, IImageRoomRepository imageRoomRepository, Cloudinary cloudinary)
         {
             _mapper = mapper;
             _roomRepository = roomRepository;
+            _imageRoomRepository = imageRoomRepository;
+            _cloudinary = cloudinary;
         }
 
-        
+        private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> files)
+        {
+            if (files == null || !files.Any()) return new List<string>();
+            var urls = new List<string>();
+            foreach (var file in files)
+            {
+                if (file == null || file.Length == 0) continue;
+                using var stream = file.OpenReadStream();
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(file.FileName, stream),
+                    Folder = "RoomImages"
+                };
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    urls.Add(uploadResult.SecureUrl.ToString());
+                }
+                else
+                {
+                    throw new Exception($"Failed to upload image to Cloudinary: {uploadResult.Error.Message}");
+                }
+            }
+            return urls;
+        }
+
+        private string ExtractPublicIdFromUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url)) return null;
+            var parts = url.Split('/');
+            var fileNameWithExtension = parts.Last();
+            var publicId = fileNameWithExtension.Split('.').First();
+            return $"RoomImages/{publicId}";
+        }
 
         public async Task<BaseResponse<IEnumerable<GetAllRooms>>> GetAllRooms()
         {
-            IEnumerable<Room> room = await _roomRepository.GetAllRoomsAsync();
-            if (room == null)
+            try
             {
-                return new BaseResponse<IEnumerable<GetAllRooms>>("Something went wrong!",
-                StatusCodeEnum.BadGateway_502, null);
+                var rooms = await _roomRepository.GetAllRoomsAsync();
+                if (rooms == null || !rooms.Any())
+                {
+                    return new BaseResponse<IEnumerable<GetAllRooms>>("No rooms found!", StatusCodeEnum.OK_200, new List<GetAllRooms>());
+                }
+                var responses = _mapper.Map<IEnumerable<GetAllRooms>>(rooms);
+                return new BaseResponse<IEnumerable<GetAllRooms>>("Get all rooms successfully", StatusCodeEnum.OK_200, responses);
             }
-            var rooms = _mapper.Map<IEnumerable<GetAllRooms>>(room);
-            if (rooms == null)
+            catch (Exception ex)
             {
-                return new BaseResponse<IEnumerable<GetAllRooms>>("Something went wrong!",
-                StatusCodeEnum.BadGateway_502, null);
+                return new BaseResponse<IEnumerable<GetAllRooms>>($"Error getting rooms: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
             }
-            return new BaseResponse<IEnumerable<GetAllRooms>>("Get all Room as base success",
-                StatusCodeEnum.OK_200, rooms);
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllRooms>>> GetAllRoomsByRoomTypeId(int roomTypeId)
@@ -98,36 +138,63 @@ namespace Service.Service
             return new BaseResponse<GetAllRooms>("Get Room as base success", StatusCodeEnum.OK_200, result);
         }
 
-        public async Task<BaseResponse<CreateRoomRequest>> CreateRoom(CreateRoomRequest typeRequest)
+        public async Task<BaseResponse<GetAllRooms>> CreateRoom(CreateRoomRequest request)
         {
-            Room rooms = _mapper.Map<Room>(typeRequest);
-            await _roomRepository.AddAsync(rooms);
-
-            var response = _mapper.Map<CreateRoomRequest>(rooms);
-            response.isActive = true;
-            response.isUsed = true;
-            return new BaseResponse<CreateRoomRequest>("Add Room as base success", StatusCodeEnum.Created_201, response);
-        }
-
-        public async Task<BaseResponse<UpdateRoomRequest>> UpdateRoom(int roomID, UpdateRoomRequest request)
-        {
-            var roomExist = await _roomRepository.GetRoomByIdAsync(roomID);
-
-            if (roomExist == null)
+            try
             {
-                return new BaseResponse<UpdateRoomRequest>("Cannot find Room", StatusCodeEnum.BadGateway_502, null);
+                if (string.IsNullOrEmpty(request.roomNumber) || request.RoomTypesID <= 0)
+                {
+                    return new BaseResponse<GetAllRooms>("Room number and RoomTypesID are required!", StatusCodeEnum.BadRequest_400, null);
+                }
+
+                var room = _mapper.Map<Room>(request);
+                room.isActive = true;
+
+                await _roomRepository.AddAsync(room);
+                await _roomRepository.SaveChangesAsync();
+              
+                if (request.Images?.Any() == true)
+                {
+                    var imageUrls = await UploadImagesToCloudinary(request.Images);
+                    foreach (var url in imageUrls)
+                    {
+                        await _imageRoomRepository.AddImageAsync(new ImageRoom { Image = url, RoomID = room.RoomID });
+                    }
+                    await _imageRoomRepository.SaveChangesAsync();
+                }
+
+                // Ánh xạ sang GetAllRooms thay vì CreateRoomRequest
+                var response = _mapper.Map<GetAllRooms>(room);
+                return new BaseResponse<GetAllRooms>("Room created successfully", StatusCodeEnum.Created_201, response);
             }
+            catch (Exception ex)
+            {
+                return new BaseResponse<GetAllRooms>($"Error creating room: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
+            }
+        }
+        public async Task<BaseResponse<UpdateRoomRequest>> UpdateRoom(int roomId, UpdateRoomRequest request)
+        {
+            try
+            {
+                var room = await _roomRepository.GetRoomByIdAsync(roomId);
+                if (room == null)
+                {
+                    return new BaseResponse<UpdateRoomRequest>("Room not found!", StatusCodeEnum.NotFound_404, null);
+                }
 
-            var updatedRoom = _mapper.Map(request, roomExist);
+                _mapper.Map(request, room);
 
-            updatedRoom.roomNumber = roomExist.roomNumber;
-            updatedRoom.isActive = roomExist.isActive;
-            updatedRoom.RoomTypesID = roomExist.RoomTypesID;
+               
+                await _roomRepository.UpdateAsync(room);
+                await _roomRepository.SaveChangesAsync();
 
-            await _roomRepository.UpdateAsync(updatedRoom);
-            var updatedRoomResponse = _mapper.Map<UpdateRoomRequest>(roomExist);
-
-            return new BaseResponse<UpdateRoomRequest>("Update Room successfully", StatusCodeEnum.OK_200, updatedRoomResponse);
+                var response = _mapper.Map<UpdateRoomRequest>(room);
+                return new BaseResponse<UpdateRoomRequest>("Room updated successfully", StatusCodeEnum.OK_200, response);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<UpdateRoomRequest>($"Error updating room: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
+            }
         }
 
         public async Task<BaseResponse<GetAllRooms>> ChangeRoomStatus(int roomID, bool? isActive)

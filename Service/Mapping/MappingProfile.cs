@@ -194,7 +194,13 @@ namespace Service.Mapping
               .ForMember(dest => dest.RoomTypesID, opt => opt.MapFrom(src => src.RoomTypesID))
               .ForMember(dest => dest.RoomTypeName, opt => opt.MapFrom(src => src.RoomTypes != null ? src.RoomTypes.Name : null))
               .ForMember(dest => dest.RentPrice, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.Prices != null ? GetRentPriceFromPrices(src.RoomTypes.Prices) : null))
-              .ForMember(dest => dest.HomeStayRentalName, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.HomeStayRentals != null ? src.RoomTypes.HomeStayRentals.Name : null));
+              .ForMember(dest => dest.HomeStayRentalName, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.HomeStayRentals != null ? src.RoomTypes.HomeStayRentals.Name : null))
+              .ForMember(dest => dest.ImageRooms, opt => opt.MapFrom(src => src.ImageRooms != null ? src.ImageRooms.Select(ir => new ImageRoomResponse
+              {
+                  ImageRoomID = ir.ImageRoomID,
+                  Image = ir.Image
+              }).ToList() : new List<ImageRoomResponse>()));
+            CreateMap<ImageRoom, ImageRoomResponse>();
 
             CreateMap<Booking, GetAllBookings>().ReverseMap();
             CreateMap<ImageRoomTypes, ImageRoomTypeResponse>().ReverseMap();
@@ -307,14 +313,15 @@ namespace Service.Mapping
                 .ForMember(dest => dest.RoomTypes, opt => opt.MapFrom(src => src.RoomTypes))
                 .ForMember(dest => dest.BookingDetails, opt => opt.MapFrom(src => src.BookingDetails));
 
-            CreateMap<CreateRoomRequest, Room>().ReverseMap();
-         
+            CreateMap<CreateRoomRequest, Room>()
+                 .ForMember(dest => dest.ImageRooms, opt => opt.Ignore());
+
             CreateMap<CreateRoomRequest, Room>().ReverseMap();
             CreateMap<UpdateRoomRequest, Room>().ReverseMap();
             CreateMap<ImageRoom, ImageRoomResponse>()
                  .ForMember(dest => dest.ImageRoomID, opt => opt.MapFrom(src => src.ImageRoomID))
-                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image))
-                 .ForMember(dest => dest.RoomID, opt => opt.MapFrom(src => src.RoomID));
+                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));
+                
 
             CreateMap<GetAllCommissionRate, CommissionRate>().ReverseMap();
             CreateMap<CreateCommissionRateRequest, CommissionRate>().ReverseMap();

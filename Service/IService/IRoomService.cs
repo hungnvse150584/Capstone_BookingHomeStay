@@ -24,7 +24,7 @@ namespace Service.IService
 
         Task<BaseResponse<GetAllRooms>> GetRoomByIdAsync(int id);
 
-        Task<BaseResponse<CreateRoomRequest>> CreateRoom(CreateRoomRequest typeRequest);
+        Task<BaseResponse<GetAllRooms>> CreateRoom(CreateRoomRequest typeRequest);
 
         Task<BaseResponse<UpdateRoomRequest>> UpdateRoom(int roomID, UpdateRoomRequest request);
 

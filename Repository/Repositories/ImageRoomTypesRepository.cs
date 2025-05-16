@@ -10,23 +10,23 @@ using System.Threading.Tasks;
 
 namespace Repository.Repositories
 {
-    public class ImageRoomTypesRepository : BaseRepository<ImageRoomTypes>, IImageRoomTypesRepository
+    public class ImageRoomRepository : BaseRepository<ImageRoom>, IImageRoomRepository
     {
-        private readonly ImageRoomTypeDAO _roomTypeDao;
+        private readonly ImageRoomDAO _roomDao;
 
-        public ImageRoomTypesRepository(ImageRoomTypeDAO roomTypeDao) : base(roomTypeDao)
+        public ImageRoomRepository(ImageRoomDAO roomDao) : base(roomDao)
         {
-            _roomTypeDao = roomTypeDao;
+            _roomDao = roomDao;
         }
 
-        public async Task AddImageAsync(ImageRoomTypes image)
+        public async Task AddImageAsync(ImageRoom image)
         {
-             await _roomTypeDao.AddAsync(image);
+             await _roomDao.AddAsync(image);
         }
 
         public async Task SaveChangesAsync()
         {
-            await _roomTypeDao.SaveChangesAsync();
+            await _roomDao.SaveChangesAsync();
         }
     }
 }

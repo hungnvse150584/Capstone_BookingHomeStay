@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Repository.IRepositories
 {
-    public interface IImageRoomTypesRepository : IBaseRepository<ImageRoomTypes>
+    public interface IImageRoomRepository : IBaseRepository<ImageRoom>
     {
-        Task AddImageAsync(ImageRoomTypes image);
+        Task AddImageAsync(ImageRoom image);
         Task SaveChangesAsync();
     }
 }

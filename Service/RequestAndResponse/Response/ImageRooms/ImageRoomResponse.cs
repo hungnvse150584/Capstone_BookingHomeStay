@@ -10,6 +10,6 @@ namespace Service.RequestAndResponse.Response.ImageRooms
     {
         public int ImageRoomID { get; set; }
         public string Image { get; set; }
-        public int RoomID { get; set; }
+
     }
 }
