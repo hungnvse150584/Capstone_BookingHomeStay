@@ -169,7 +169,7 @@ namespace GreenRoam.Controllers
                 var vnPayModel = new VnPayRequestModel
                 {
                     BookingID = booking.Data.BookingID,
-                    BookingServiceID = bookingServiceID.HasValue ? bookingServiceID : null,
+                    BookingServiceID = null,
                     HomeStayID = booking.Data.HomeStayID,
                     AccountID = accountId,
                     Amount = amount,
@@ -482,6 +482,14 @@ namespace GreenRoam.Controllers
         {
             var booking = await _checkoutService.ChangeBookingStatus(bookingId, bookingServiceID, status, paymentStatus, servicesStatus, statusPayment);
             return Ok(booking);
+        }
+
+        [HttpPut]
+        [Route("RequestRefundToAdmin")]
+        public async Task<ActionResult<BaseResponse<Transaction?>>> OwnerAcceptRefundAsync(int? bookingId, int? bookingServiceId)
+        {
+            var transaction = await _checkoutService.OwnerAcceptRefundAsync(bookingId, bookingServiceId);
+            return Ok(transaction);
         }
     }
 }

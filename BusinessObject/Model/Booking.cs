@@ -72,7 +72,7 @@ namespace BusinessObject.Model;
         InProgress = 2,
         Completed = 3,
         Cancelled = 4,
-        NoShow = 5,
+        AcceptedRefund = 5,
         RequestRefund = 6
     }
 

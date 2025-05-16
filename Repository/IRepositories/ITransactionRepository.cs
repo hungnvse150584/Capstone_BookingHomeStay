@@ -16,5 +16,7 @@ namespace Repository.IRepositories
         Task<Transaction?> GetTransactionById(string transactionID);
         Task<Transaction?> GetTransactionByBookingId(int bookingID);
         Task<Transaction?> GetTransactionByBookingServiceId(int bookingID);
+        Task<Transaction?> ChangeTransactionStatusForBooking(int? bookingId, StatusOfTransaction newStatus);
+        Task<Transaction?> ChangeTransactionStatusForBookingService(int? bookingId, StatusOfTransaction newStatus);
     }
 }

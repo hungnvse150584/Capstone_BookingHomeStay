@@ -79,5 +79,37 @@ namespace DataAccessObject
                 .Include(t => t.HomeStay)
                 .FirstOrDefaultAsync(t => t.BookingService.BookingServicesID == bookingID);
         }
+
+        public async Task<Transaction?> ChangeTransactionStatusForBooking(int? bookingId, StatusOfTransaction newStatus)
+        {
+            var transaction = await _context.Transactions
+                .Where(t => t.Booking != null && t.Booking.BookingID == bookingId)
+                .OrderByDescending(t => t.PayDate) // chọn transaction mới nhất
+                .FirstOrDefaultAsync();
+
+            if (transaction is null || transaction.StatusTransaction == newStatus)
+                return transaction;
+
+            transaction.StatusTransaction = newStatus;
+            await _context.SaveChangesAsync();
+
+            return transaction;
+        }
+
+        public async Task<Transaction?> ChangeTransactionStatusForBookingService(int? bookingId, StatusOfTransaction newStatus)
+        {
+            var transaction = await _context.Transactions
+                .Where(t => t.BookingService != null && t.BookingService.BookingServicesID == bookingId)
+                .OrderByDescending(t => t.PayDate) // chọn transaction mới nhất
+                .FirstOrDefaultAsync();
+
+            if (transaction is null || transaction.StatusTransaction == newStatus)
+                return transaction;
+
+            transaction.StatusTransaction = newStatus;
+            await _context.SaveChangesAsync();
+
+            return transaction;
+        }
     }
 }
