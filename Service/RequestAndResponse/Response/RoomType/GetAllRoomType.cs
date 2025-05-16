@@ -19,7 +19,7 @@ namespace Service.RequestAndResponse.Response.RoomType
 
         public DateTime UpdateAt { get; set; }
 
-        public int numberBedRoom { get; set; }
+        public int numberBed { get; set; }
 
         public int numberBathRoom { get; set; }
 

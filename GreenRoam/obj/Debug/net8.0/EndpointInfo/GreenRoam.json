@@ -6363,24 +6363,48 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CreateRoomRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRoomRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRoomRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRoomRequest"
+                "type": "object",
+                "properties": {
+                  "roomNumber": {
+                    "type": "string"
+                  },
+                  "isUsed": {
+                    "type": "boolean"
+                  },
+                  "isActive": {
+                    "type": "boolean"
+                  },
+                  "RoomTypesID": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "roomNumber": {
+                  "style": "form"
+                },
+                "isUsed": {
+                  "style": "form"
+                },
+                "isActive": {
+                  "style": "form"
+                },
+                "RoomTypesID": {
+                  "style": "form"
+                },
+                "Images": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -6391,17 +6415,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateRoomRequestBaseResponse"
+                  "$ref": "#/components/schemas/GetAllRoomsBaseResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateRoomRequestBaseResponse"
+                  "$ref": "#/components/schemas/GetAllRoomsBaseResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateRoomRequestBaseResponse"
+                  "$ref": "#/components/schemas/GetAllRoomsBaseResponse"
                 }
               }
             }
@@ -6973,8 +6997,7 @@
                   "Images",
                   "servicesName",
                   "servicesPrice",
-                  "ServiceType",
-                  "UnitPrice"
+                  "ServiceType"
                 ],
                 "type": "object",
                 "properties": {
@@ -6983,10 +7006,6 @@
                   },
                   "Description": {
                     "type": "string"
-                  },
-                  "UnitPrice": {
-                    "type": "number",
-                    "format": "double"
                   },
                   "servicesPrice": {
                     "type": "number",
@@ -7020,9 +7039,6 @@
                   "style": "form"
                 },
                 "Description": {
-                  "style": "form"
-                },
-                "UnitPrice": {
                   "style": "form"
                 },
                 "servicesPrice": {
@@ -8891,43 +8907,6 @@
         },
         "additionalProperties": false
       },
-      "CreateRoomRequest": {
-        "type": "object",
-        "properties": {
-          "roomNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "isUsed": {
-            "type": "boolean"
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "roomTypesID": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateRoomRequestBaseResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "statusCode": {
-            "$ref": "#/components/schemas/StatusCodeEnum"
-          },
-          "data": {
-            "$ref": "#/components/schemas/CreateRoomRequest"
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateRoomTypeRequest": {
         "type": "object",
         "properties": {
@@ -10112,7 +10091,7 @@
             "format": "date-time",
             "example": "2025-05-10T00:00:00"
           },
-          "numberBedRoom": {
+          "numberBed": {
             "type": "integer",
             "format": "int32"
           },
@@ -10165,7 +10144,7 @@
             "type": "string",
             "nullable": true
           },
-          "numberBedRoom": {
+          "numberBed": {
             "type": "integer",
             "format": "int32"
           },
@@ -10349,10 +10328,6 @@
             "type": "string",
             "format": "date-time",
             "example": "2025-05-10T00:00:00"
-          },
-          "unitPrice": {
-            "type": "number",
-            "format": "double"
           },
           "servicesPrice": {
             "type": "number",
@@ -14832,6 +14807,16 @@
         "type": "integer",
         "format": "int32"
       },
+      "StatusOfTransaction": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "StringBaseResponse": {
         "type": "object",
         "properties": {
@@ -14949,6 +14934,9 @@
           },
           "transactionKind": {
             "$ref": "#/components/schemas/TransactionKind"
+          },
+          "statusTransaction": {
+            "$ref": "#/components/schemas/StatusOfTransaction"
           }
         },
         "additionalProperties": false
@@ -15693,7 +15681,7 @@
             "type": "string",
             "nullable": true
           },
-          "numberBedRoom": {
+          "numberBed": {
             "type": "integer",
             "format": "int32"
           },

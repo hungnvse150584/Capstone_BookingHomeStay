@@ -51,7 +51,7 @@ namespace GreenRoam.Controllers
         [Authorize(Roles = "Owner, Staff")]
         [HttpPost]
         [Route("CreateRoom")]
-        public async Task<ActionResult<BaseResponse<CreateRoomRequest>>> CreateRoom(CreateRoomRequest typeRequest)
+        public async Task<ActionResult<BaseResponse<GetAllRooms>>> CreateRoom([FromForm] CreateRoomRequest typeRequest)
         {
             if (typeRequest == null)
             {

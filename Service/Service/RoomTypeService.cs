@@ -31,7 +31,7 @@ namespace Service.Service
         private readonly IRoomTypeRepository _roomTypeRepository;
         private readonly IHomeStayRentalRepository _homeStayRentalRepository; // Thêm repository
         private readonly Cloudinary _cloudinary;
-        private readonly IImageRoomTypesRepository _imageRoomTypesRepository;
+        private readonly IImageRoomRepository _imageRoomTypesRepository;
         private readonly IPricingRepository _pricingRepository; 
         private readonly IRoomRepository _roomRepository;
         public RoomTypeService(
@@ -39,7 +39,7 @@ namespace Service.Service
              IRoomTypeRepository roomTypeRepository,
              IHomeStayRentalRepository homeStayRentalRepository,
              Cloudinary cloudinary,
-             IImageRoomTypesRepository imageRoomTypesRepository,
+             IImageRoomRepository imageRoomTypesRepository,
              IPricingRepository pricingRepository,
              IRoomRepository roomRepository)
         {

@@ -3905,14 +3905,34 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "typeRequest",
-        "Type": "Service.RequestAndResponse.Request.Room.CreateRoomRequest",
-        "IsRequired": true
+        "Name": "roomNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "isUsed",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "isActive",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "RoomTypesID",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Images",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Request.Room.CreateRoomRequest, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[Service.RequestAndResponse.Response.Room.GetAllRooms, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -4317,11 +4337,6 @@
       {
         "Name": "Description",
         "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "UnitPrice",
-        "Type": "System.Double",
         "IsRequired": false
       },
       {
