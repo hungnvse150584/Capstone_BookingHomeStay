@@ -21,7 +21,7 @@ namespace DataAccessObject
         {
             return await _context.HomeStayRentals
            .Where(c => c.HomeStayID == homestayId)
-           .Include(c => c.Prices)  
+           .Include(c => c.Prices)
            .Include(c => c.HomeStay)
            .Include(c => c.ImageHomeStayRentals)
            .Include(c => c.RoomTypes)
@@ -30,7 +30,7 @@ namespace DataAccessObject
            .ToListAsync();
 
         }
-       
+
         public async Task<IEnumerable<HomeStayRentals>> GetHomeStayTypesByIdsAsync(List<int?> homeStayTypeIds)
         {
             return await _context.HomeStayRentals.Where(h => homeStayTypeIds.Contains(h.HomeStayRentalID)).ToListAsync();
@@ -102,14 +102,16 @@ namespace DataAccessObject
             return entity;
         }
         public async Task<IEnumerable<HomeStayRentals>> FilterHomeStayRentalsAsync(
-     int homeStayId,
-     bool? rentWhole,
-     DateTime checkInDate,
-     DateTime checkOutDate,
-     int numberOfAdults,
-     int numberOfChildren)
+        int homeStayId,
+        bool? rentWhole,
+        DateTime checkInDate,
+        DateTime checkOutDate,
+        int numberOfAdults,
+        int numberOfChildren)
         {
-            Console.WriteLine($"DAO: Parameters received - HomeStayID: {homeStayId}, RentWhole: {rentWhole?.ToString() ?? "null"}, CheckInDate: {checkInDate}, CheckOutDate: {checkOutDate}, NumberOfAdults: {numberOfAdults}, NumberOfChildren: {numberOfChildren}");
+            Console.WriteLine($"DAO: Parameters received - HomeStayID: {homeStayId}, RentWhole: {rentWhole?.ToString() ?? "null"}, " +
+                              $"CheckInDate: {checkInDate}, CheckOutDate: {checkOutDate}, NumberOfAdults: {numberOfAdults}, " +
+                              $"NumberOfChildren: {numberOfChildren}");
 
             var query = _context.HomeStayRentals
                 .AsNoTracking()
@@ -133,6 +135,7 @@ namespace DataAccessObject
                 Console.WriteLine("DAO: No RentWhole filter applied.");
             }
 
+            // Include các quan hệ cần thiết
             query = query
                 .Include(h => h.RoomTypes)
                     .ThenInclude(rt => rt.Rooms)
@@ -146,13 +149,91 @@ namespace DataAccessObject
                 .Include(h => h.BookingDetails)
                     .ThenInclude(bd => bd.Booking);
 
+            // Thực thi truy vấn
             var result = await query.ToListAsync();
+
+            // Log số lượng HomeStayRentals trả về trước khi lọc
             Console.WriteLine($"DAO: Number of HomeStayRentals retrieved: {result.Count}");
-            foreach (var rental in result)
+
+            // Tính toán và lọc các HomeStayRentals dựa trên availability
+            var filteredResult = result.Select(rental =>
             {
-                Console.WriteLine($"DAO: HomeStayRentalID: {rental.HomeStayRentalID}, RentWhole: {rental.RentWhole}");
-            }
-            return result;
+                int availableRooms = 0;
+
+                if (rental.RentWhole)
+                {
+                    // Với RentWhole=true, kiểm tra có booking nào trong khoảng thời gian không
+                    var hasBooking = rental.BookingDetails
+                        .Any(bd => bd.Booking != null &&
+                                  (bd.Booking.Status == BookingStatus.Pending ||
+                                   bd.Booking.Status == BookingStatus.Confirmed ||
+                                   bd.Booking.Status == BookingStatus.InProgress) &&
+                                  bd.CheckInDate.Date <= checkOutDate &&
+                                  bd.CheckOutDate.Date >= checkInDate);
+
+                    availableRooms = hasBooking ? 0 : 1;
+                }
+                else
+                {
+                    // Với RentWhole=false, tính số phòng khả dụng dựa trên từng phòng
+                    var allRoomIds = rental.RoomTypes
+                        .SelectMany(rt => rt.Rooms)
+                        .Select(r => r.RoomID)
+                        .ToList();
+
+                    if (allRoomIds.Any())
+                    {
+                        var bookedRoomIds = rental.BookingDetails
+                            .Where(bd => bd.Booking != null &&
+                                        (bd.Booking.Status == BookingStatus.Pending ||
+                                         bd.Booking.Status == BookingStatus.Confirmed ||
+                                         bd.Booking.Status == BookingStatus.InProgress) &&
+                                        bd.CheckInDate.Date <= checkOutDate &&
+                                        bd.CheckOutDate.Date >= checkInDate &&
+                                        bd.RoomID.HasValue)
+                            .Select(bd => bd.RoomID.Value)
+                            .Distinct()
+                            .ToList();
+
+                        availableRooms = allRoomIds.Count - bookedRoomIds.Count;
+
+                        // Tính AvailableRoomsCount cho từng RoomType (dùng tạm thời trong logic)
+                        foreach (var roomType in rental.RoomTypes)
+                        {
+                            var roomTypeRoomIds = roomType.Rooms
+                                .Select(r => r.RoomID)
+                                .ToList();
+
+                            var bookedRoomTypeRoomIds = bookedRoomIds
+                                .Where(roomId => roomTypeRoomIds.Contains(roomId))
+                                .ToList();
+
+                            // Gán tạm giá trị AvailableRoomsCount (vì không sửa model, chỉ dùng trong logic)
+                            int availableRoomsForType = roomTypeRoomIds.Count - bookedRoomTypeRoomIds.Count;
+                            Console.WriteLine($"DAO: RoomTypeID: {roomType.RoomTypesID}, AvailableRoomsCount: {availableRoomsForType}");
+                        }
+                    }
+                    else
+                    {
+                        availableRooms = 0;
+                    }
+                }
+
+                // Log thông tin cho từng rental
+                Console.WriteLine($"DAO: HomeStayRentalID: {rental.HomeStayRentalID}, RentWhole: {rental.RentWhole}, " +
+                                  $"AvailableRooms: {availableRooms}");
+
+                // Chỉ giữ lại các rental có availableRooms > 0
+                return new { Rental = rental, AvailableRooms = availableRooms };
+            })
+            .Where(x => x.AvailableRooms > 0)
+            .Select(x => x.Rental)
+            .ToList();
+
+            // Log số lượng HomeStayRentals sau khi lọc
+            Console.WriteLine($"DAO: Number of HomeStayRentals after filtering: {filteredResult.Count}");
+
+            return filteredResult;
         }
     }
 }
