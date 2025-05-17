@@ -979,6 +979,37 @@
   },
   {
     "ContainingType": "GreenRoam.Controllers.CheckOutController",
+    "Method": "OwnerAcceptRefundAsync",
+    "RelativePath": "api/booking-checkout/RequestRefundToAdmin",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "bookingServiceId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[BusinessObject.Model.Transaction, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "GreenRoam.Controllers.CheckOutController",
     "Method": "UpdateBooking",
     "RelativePath": "api/booking-checkout/UpdateBooking",
     "HttpMethod": "PUT",
