@@ -226,16 +226,47 @@ namespace Service.Service
                             }
                         }
                     }
-
-                    var bookingService = await _bookingServiceRepository.ChangeBookingServicesStatus(bookingServiceExist.BookingServicesID, servicesStatus, statusPayment);
+                    await _bookingServiceRepository.ChangeBookingServicesStatus(bookingServiceExist.BookingServicesID, servicesStatus, statusPayment);
                 }
 
                 if (status == BookingStatus.Cancelled)
                 {
+                    var bookingDetails = bookingExist.BookingDetails.FirstOrDefault();
+                    if (bookingExist.HomeStayID.HasValue && bookingDetails != null)
+                    {
+                        var cancellationPolicy = await _cancelltaionRepository.GetCancellationPolicyByHomeStayAsync(bookingExist.HomeStayID.Value);
+
+                        if (cancellationPolicy != null)
+                        {
+                            var now = DateTime.Now;
+                            var daysBeforeCheckIn = (bookingDetails.CheckInDate - now).TotalDays;
+
+                            bool hasRefund = daysBeforeCheckIn >= cancellationPolicy.DayBeforeCancel &&
+                                        (cancellationPolicy.RefundPercentage > 0 && cancellationPolicy.RefundPercentage <= 1);
+
+                            // Nếu được hoàn tiền thì đổi sang trạng thái RequestRefund
+                            if (!hasRefund)
+                            {
+                                var transaction = await _transactionRepository.GetTransactionByBookingId(bookingExist.BookingID);
+                                if (transaction != null)
+                                {
+
+                                    transaction.StatusTransaction = StatusOfTransaction.Completed;
+                                    await _transactionRepository.UpdateAsync(transaction);
+                                }
+                            }
+                        }
+                    }
+
                     if (bookingExist.BookingServices != null && bookingExist.BookingServices.Any())
                     {
                         foreach (var service in bookingExist.BookingServices)
                         {
+                            if (service.Status == BookingServicesStatus.Completed)
+                            {
+                                continue;
+                            }
+                          
                             if (service.Status != BookingServicesStatus.Cancelled && service.PaymentServiceStatus != PaymentServicesStatus.Refunded)
                             {
                                 foreach (var serviceDetail in service.BookingServicesDetails)
@@ -257,6 +288,14 @@ namespace Service.Service
                                             {
                                                 serviceDetail.Services.Quantity += serviceDetail.Quantity;
                                                 await _serviceRepository.UpdateAsync(serviceDetail.Services);
+
+                                                var serviceTransaction = await _transactionRepository.GetTransactionByBookingServiceId(service.BookingServicesID);
+
+                                                if (serviceTransaction != null && serviceTransaction.StatusTransaction == StatusOfTransaction.Pending)
+                                                {
+                                                    serviceTransaction.StatusTransaction = StatusOfTransaction.Completed;
+                                                    await _transactionRepository.UpdateAsync(serviceTransaction);
+                                                }
                                             }
                                         }
                                     }
@@ -286,14 +325,28 @@ namespace Service.Service
                     {
                         foreach (var service in bookingExist.BookingServices)
                         {
+                            if (service.Status == BookingServicesStatus.Completed)
+                            {
+                                continue;
+                            }
+                            if (service.Status != BookingServicesStatus.Cancelled && service.PaymentServiceStatus != PaymentServicesStatus.Refunded)
+                            {
+                                foreach (var serviceDetail in service.BookingServicesDetails)
+                                {
+                                    if (serviceDetail?.Services != null && bookingExist.HomeStayID.HasValue) 
+                                    {
+                                        serviceDetail.Services.Quantity += serviceDetail.Quantity;
+                                        await _serviceRepository.UpdateAsync(serviceDetail.Services);
+                                    }
+                                }
+                            }
                             var serviceTransaction = await _transactionRepository.GetTransactionByBookingServiceId(service.BookingServicesID);
 
-                            if (serviceTransaction != null)
+                            if (serviceTransaction != null && serviceTransaction.StatusTransaction == StatusOfTransaction.Pending)
                             {
                                 serviceTransaction.StatusTransaction = StatusOfTransaction.Completed;
                                 await _transactionRepository.UpdateAsync(serviceTransaction);
                             }
-
                             await _bookingServiceRepository.ChangeBookingServicesStatus(service.BookingServicesID, BookingServicesStatus.Completed, service.PaymentServiceStatus);
                         }
                     }

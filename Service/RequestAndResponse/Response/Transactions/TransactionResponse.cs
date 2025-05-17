@@ -35,6 +35,8 @@ namespace Service.RequestAndResponse.Response.Transactions
 
         public TransactionKind TransactionKind { get; set; }
 
+        public StatusOfTransaction StatusTransaction { get; set; }
+
         public GetAccountUser? Account { get; set; }
 
         public HomeStayResponse? HomeStay { get; set; }
