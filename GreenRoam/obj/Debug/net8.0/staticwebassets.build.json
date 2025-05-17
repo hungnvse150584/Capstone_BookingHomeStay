@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "dfIVlTHX9CjYcyvX40pnopc8y7ez874gvSw6A3nLd0g=",
+  "Hash": "Dzxod9BYfuOhGQp/F75xEnlcwaWiWlqvZM/fugQ9hyk=",
   "Source": "GreenRoam",
   "BasePath": "_content/GreenRoam",
   "Mode": "Default",
@@ -10,30 +10,116 @@
     {
       "Name": "GreenRoam\\wwwroot",
       "Source": "GreenRoam",
-      "ContentRoot": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\",
+      "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
       "BasePath": "_content/GreenRoam",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\chat.html",
+      "Identity": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\chat.html",
       "SourceId": "GreenRoam",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Desktop\\GreenRoamHomeStay\\Capstone_BookingHomeStay\\GreenRoam\\wwwroot\\",
+      "ContentRoot": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\",
       "BasePath": "_content/GreenRoam",
-      "RelativePath": "chat.html",
+      "RelativePath": "chat#[.{fingerprint}]?.html",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "gd8ogt2jak",
+      "Integrity": "nDt5PpBkLLGyichwhEGV3wsCUANcMKiBCbXvZzyaI2s=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\chat.html"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "chat.gd8ogt2jak.html",
+      "AssetFile": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\chat.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6562"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"nDt5PpBkLLGyichwhEGV3wsCUANcMKiBCbXvZzyaI2s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 12:19:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "gd8ogt2jak"
+        },
+        {
+          "Name": "label",
+          "Value": "chat.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-nDt5PpBkLLGyichwhEGV3wsCUANcMKiBCbXvZzyaI2s="
+        }
+      ]
+    },
+    {
+      "Route": "chat.html",
+      "AssetFile": "D:\\FPT\\SEP490_Capstone\\GreenRoam\\wwwroot\\chat.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6562"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"nDt5PpBkLLGyichwhEGV3wsCUANcMKiBCbXvZzyaI2s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 12:19:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-nDt5PpBkLLGyichwhEGV3wsCUANcMKiBCbXvZzyaI2s="
+        }
+      ]
     }
   ]
 }

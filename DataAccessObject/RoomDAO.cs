@@ -137,8 +137,11 @@ namespace DataAccessObject
                              bd.Booking.paymentStatus != PaymentStatus.Refunded)
                         ) &&
                         (checkInDate < bd.CheckOutDate && checkOutDate > bd.CheckInDate)))
+             
                 .Include(r => r.RoomTypes)
+                .ThenInclude(r => r.Prices)
                 .Include(r => r.ImageRooms)
+              
                 .ToListAsync();
 
             // Log danh sách phòng sau khi lọc
