@@ -323,7 +323,7 @@ namespace Service.Service
 
                 var finalFilteredRentals = await _homeStayTypeRepository.FilterHomeStayRentalsAsync(
                     request.HomeStayID,
-                    rentWholeToPass, // Truyền trực tiếp giá trị gốc, không thay đổi
+                    rentWholeToPass,
                     checkInDate,
                     checkOutDate,
                     numberOfAdults,
@@ -339,15 +339,18 @@ namespace Service.Service
 
                 foreach (var rental in response)
                 {
-                    var hasBooking = rental.BookingDetails
-                        .Any(bd => bd.Booking != null &&
-                                  bd.HomeStayRentalID == rental.HomeStayRentalID &&
-                                   (bd.Booking.Status == BookingStatus.Pending ||
-                                    bd.Booking.Status == BookingStatus.Confirmed ||
-                                    bd.Booking.Status == BookingStatus.InProgress) &&
-                                   bd.CheckInDate.Date <= checkOutDate &&
-                                   bd.CheckOutDate.Date >= checkInDate);
+                    // Lấy danh sách booking trong khoảng thời gian
+                    var overlappingBookings = rental.BookingDetails
+                        .Where(bd => bd.Booking != null &&
+                                    bd.HomeStayRentalID == rental.HomeStayRentalID &&
+                                    (bd.Booking.Status == BookingStatus.Pending ||
+                                     bd.Booking.Status == BookingStatus.Confirmed ||
+                                     bd.Booking.Status == BookingStatus.InProgress) &&
+                                    bd.CheckInDate.Date <= checkOutDate &&
+                                    bd.CheckOutDate.Date >= checkInDate)
+                        .ToList();
 
+                    // Lấy danh sách phòng
                     var roomIds = rental.RoomTypes
                         .SelectMany(rt => rt.Rooms)
                         .Where(r => r.IsActive)
@@ -356,41 +359,48 @@ namespace Service.Service
 
                     if (rental.RentWhole)
                     {
-                        if (hasBooking)
-                        {
-                            rental.TotalAvailableRooms = 0;
-                        }
-                        else
-                        {
-                            rental.TotalAvailableRooms = 1;
-                        }
+                        // Với RentWhole=true, kiểm tra có booking nào trong khoảng thời gian không
+                        rental.TotalAvailableRooms = overlappingBookings.Any() ? 0 : 1;
                     }
                     else
                     {
                         if (!roomIds.Any())
                         {
                             rental.TotalAvailableRooms = 0;
-                            continue;
-                        }
-
-                        if (hasBooking)
-                        {
-                            rental.TotalAvailableRooms = 0;
                         }
                         else
                         {
-                            rental.TotalAvailableRooms = roomIds.Count;
+                            // Với RentWhole=false, tính số phòng khả dụng dựa trên số phòng đã đặt
+                            var bookedRoomIds = overlappingBookings
+                                .Where(bd => bd.RoomID.HasValue)
+                                .Select(bd => bd.RoomID.Value)
+                                .Distinct()
+                                .ToList();
+
+                            rental.TotalAvailableRooms = roomIds.Count - bookedRoomIds.Count;
+
+                            // Tính AvailableRoomsCount cho từng RoomType
                             foreach (var roomType in rental.RoomTypes)
                             {
                                 var roomTypeRoomIds = roomType.Rooms
                                     .Where(r => r.IsActive)
                                     .Select(r => r.RoomID)
                                     .ToList();
-                                roomType.AvailableRoomsCount = roomTypeRoomIds.Count;
+
+                                var bookedRoomTypeRoomIds = bookedRoomIds
+                                    .Where(roomId => roomTypeRoomIds.Contains(roomId))
+                                    .ToList();
+
+                                roomType.AvailableRoomsCount = roomTypeRoomIds.Count - bookedRoomTypeRoomIds.Count;
+                                Console.WriteLine($"Service: RoomTypeID: {roomType.RoomTypesID}, AvailableRoomsCount: {roomType.AvailableRoomsCount}");
                             }
                         }
                     }
 
+                    // Log giá trị TotalAvailableRooms
+                    Console.WriteLine($"Service: HomeStayRentalID: {rental.HomeStayRentalID}, TotalAvailableRooms: {rental.TotalAvailableRooms}");
+
+                    // Áp dụng lọc RentWhole nếu có
                     if (request.RentWhole.HasValue)
                     {
                         Console.WriteLine($"Service: Applying RentWhole filter: {request.RentWhole.Value} for HomeStayRentalID: {rental.HomeStayRentalID}");

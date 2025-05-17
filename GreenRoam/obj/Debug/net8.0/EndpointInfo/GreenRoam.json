@@ -15062,6 +15062,9 @@
           "transactionKind": {
             "$ref": "#/components/schemas/TransactionKind"
           },
+          "statusTransaction": {
+            "$ref": "#/components/schemas/StatusOfTransaction"
+          },
           "account": {
             "$ref": "#/components/schemas/GetAccountUser"
           },
