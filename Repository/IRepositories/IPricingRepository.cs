@@ -15,7 +15,7 @@ namespace Repository.IRepositories
         Task<IEnumerable<Pricing>> GetPricingByRoomTypeAsync(int roomTypeID);
         Task<List<Pricing>> GetPricingDetailsToRemoveAsync(int homeStayRentalID, List<int> updatedDetailIds);
         Task<Pricing> GetPricingByIdAsync(int id);
-        Task<DayType> GetDayType(DateTime date);
+        Task<DayType> GetDayType(DateTime date, int? homeStayRentalId, int? roomtypeId);
         Task SaveChangesAsync();
         Task<double> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId);
     }

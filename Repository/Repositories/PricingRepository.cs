@@ -54,9 +54,9 @@ namespace Repository.Repositories
             return await _pricingDao.DeleteAsync(entity);
         }
 
-        public async Task<DayType> GetDayType(DateTime date)
+        public async Task<DayType> GetDayType(DateTime date, int? homeStayRentalId, int? roomtypeId)
         {
-            return await _pricingDao.GetDayType(date);
+            return await _pricingDao.GetDayType(date, homeStayRentalId, roomtypeId);
         }
 
         public async Task<double> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId)

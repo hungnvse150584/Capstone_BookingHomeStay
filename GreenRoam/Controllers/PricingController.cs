@@ -66,9 +66,9 @@ namespace GreenRoam.Controllers
 
         [HttpGet]
         [Route("GetDateType")]
-        public async Task<ActionResult<DayType>> GetDayType(DateTime dateTime)
+        public async Task<ActionResult<DayType>> GetDayType(DateTime dateTime, int? homeStayRentalId, int? roomtypeId)
         {
-            var date = await _pricingService.GetDayType(dateTime);
+            var date = await _pricingService.GetDayType(dateTime, homeStayRentalId, roomtypeId);
             return Ok(date);
         }
 

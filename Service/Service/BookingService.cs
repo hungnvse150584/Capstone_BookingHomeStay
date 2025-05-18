@@ -239,16 +239,6 @@ namespace Service.Service
         }
         public async Task<BaseResponse<GetBookingResponse>> GetBookingById(int? bookingID)
         {
-            /*var booking = await _bookingRepository.GetBookingsByIdAsync(bookingID);
-            if (booking == null)
-            {
-                return new BaseResponse<GetBookingResponse>("Something went wrong!",
-                StatusCodeEnum.BadGateway_502, null);
-            }
-
-            return new BaseResponse<GetBookingResponse>("Get all bookings as base success",
-                StatusCodeEnum.OK_200, booking);*/
-
             Booking booking = await _bookingRepository.GetBookingsByIdAsync(bookingID);
             var result = _mapper.Map<GetBookingResponse>(booking);
             return new BaseResponse<GetBookingResponse>("Get HomeStay as base success", StatusCodeEnum.OK_200, result);
