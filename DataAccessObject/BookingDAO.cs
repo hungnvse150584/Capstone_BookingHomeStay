@@ -915,19 +915,65 @@ namespace DataAccessObject
             return (totalBookings, totalBookingsAmount);
         }
 
-        public async Task<IEnumerable<Booking>> GetBookingsByRoomIdAsync(int roomId)
+        public async Task<IEnumerable<Booking>> GetBookingsByRoomIdAsync(int roomId, DateTime? startDate = null, DateTime? endDate = null)
         {
-            return await _context.Bookings
+            if (startDate.HasValue && endDate.HasValue && startDate.Value > endDate.Value)
+            {
+                throw new ArgumentException("startDate must be less than or equal to endDate");
+            }
+
+            // Chuẩn hóa múi giờ
+            // Giả sử dữ liệu trong DB là UTC+7 (giờ Việt Nam), đảm bảo endDate cũng ở UTC+7
+            DateTime? adjustedStartDate = startDate.HasValue
+                ? startDate.Value.Kind == DateTimeKind.Utc
+                    ? startDate.Value.AddHours(7)
+                    : startDate.Value
+                : null;
+            DateTime? adjustedEndDate = endDate.HasValue
+                ? DateTime.SpecifyKind(endDate.Value.AddHours(7), DateTimeKind.Unspecified) // Luôn chuyển về UTC+7
+                : null;
+
+            // Log để kiểm tra
+            Console.WriteLine($"Adjusted startDate: {adjustedStartDate}, Adjusted endDate: {adjustedEndDate}");
+
+            var filteredDetailsQuery = _context.BookingDetails
+                .Where(bd => bd.RoomID == roomId &&
+                             (!adjustedStartDate.HasValue || bd.CheckInDate >= adjustedStartDate.Value) &&
+                             (!adjustedEndDate.HasValue || bd.CheckOutDate <= adjustedEndDate.Value));
+
+            var filteredDetails = await filteredDetailsQuery
+                .Select(bd => new { bd.BookingID, bd.BookingDetailID, bd.CheckInDate, bd.CheckOutDate })
+                .ToListAsync();
+            Console.WriteLine($"Filtered BookingDetails for roomId={roomId}, startDate={startDate}, endDate={endDate}:");
+            foreach (var detail in filteredDetails)
+            {
+                Console.WriteLine($"  BookingID: {detail.BookingID}, DetailID: {detail.BookingDetailID}, CheckIn: {detail.CheckInDate}, CheckOut: {detail.CheckOutDate}, CheckOut Kind: {detail.CheckOutDate.Kind}");
+            }
+
+            var filteredBookingIds = filteredDetails.Select(d => d.BookingID).Distinct().ToList();
+
+            var query = _context.Bookings
                 .Include(b => b.BookingDetails)
                     .ThenInclude(bd => bd.Rooms)
                 .Include(b => b.BookingDetails)
                     .ThenInclude(bd => bd.HomeStayRentals)
                 .Include(b => b.Account)
-                .Where(b => b.BookingDetails.Any(bd => bd.RoomID == roomId))
-                .Where(b => b.Status != BookingStatus.Pending) // Loại bỏ các booking có trạng thái Pending
-                .ToListAsync();
-        }
+                .Where(b => b.Status != BookingStatus.Pending && filteredBookingIds.Contains(b.BookingID));
 
+            var bookings = await query.ToListAsync();
+
+            Console.WriteLine($"Total bookings found for roomId={roomId}, startDate={startDate}, endDate={endDate}: {bookings.Count}");
+            foreach (var booking in bookings)
+            {
+                Console.WriteLine($"BookingID: {booking.BookingID}");
+                foreach (var detail in booking.BookingDetails.Where(bd => bd.RoomID == roomId))
+                {
+                    Console.WriteLine($"  DetailID: {detail.BookingDetailID}, RoomID: {detail.RoomID}, CheckIn: {detail.CheckInDate}, CheckOut: {detail.CheckOutDate}");
+                }
+            }
+
+            return bookings;
+        }
         public async Task<List<(Account Account, int TotalBooking)>> GetCustomersByHomeStayAsync(int homeStayId)
         {
             var result = await _context.Bookings

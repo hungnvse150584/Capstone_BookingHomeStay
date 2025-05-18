@@ -118,9 +118,9 @@ namespace Repository.Repositories
             return await _bookingDao.GetCurrentWeekRevenueForHomeStayAsync(homestayId);
         }
 
-        public async Task<IEnumerable<Booking>> GetBookingsByRoom(int roomId)
+        public async Task<IEnumerable<Booking>> GetBookingsByRoom(int roomId, DateTime? startDate = null, DateTime? endDate = null)
         {
-            return await _bookingDao.GetBookingsByRoomIdAsync(roomId);
+            return await _bookingDao.GetBookingsByRoomIdAsync(roomId, startDate, endDate);
         }
 
         public async Task<Booking?> GetBookingByAccountAndHomeStayAsync(string accountId, int homeStayId)

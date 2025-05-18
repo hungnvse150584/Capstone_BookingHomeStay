@@ -36,7 +36,7 @@ namespace Repository.IRepositories
         (int homeStayID, DateTime startDate, DateTime endDate, string? timeSpanType);
         Task<List<(string accountID, string CustomerName, int BookingCount)>> GetTopLoyalCustomersAsync(int homeStayId, int top = 5);
         Task<List<(Account Account, int TotalBooking)>> GetCustomersByHomeStay(int homeStayId);
-        Task<IEnumerable<Booking>> GetBookingsByRoom(int roomId);
+        Task<IEnumerable<Booking>> GetBookingsByRoom(int roomId, DateTime? startDate = null, DateTime? endDate = null);
         Task<Booking?> GetBookingByAccountAndHomeStayAsync(string accountId, int homeStayId);
         Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmount();
         Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmountForHomeStay(int homeStayID);
