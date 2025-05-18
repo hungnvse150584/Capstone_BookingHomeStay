@@ -612,7 +612,7 @@
   },
   {
     "ContainingType": "GreenRoam.Controllers.BookingController",
-    "Method": "GetBookingsByRoom",
+    "Method": "GetBookingByRoomID",
     "RelativePath": "api/booking-bookingservices/GetBookingByRoomID/{roomId}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -622,19 +622,19 @@
         "Name": "roomId",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "startDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "endDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "Service.RequestAndResponse.BaseResponse.BaseResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[Service.RequestAndResponse.Response.Bookings.GetBookingByRoom, Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "GreenRoam.Controllers.BookingController",

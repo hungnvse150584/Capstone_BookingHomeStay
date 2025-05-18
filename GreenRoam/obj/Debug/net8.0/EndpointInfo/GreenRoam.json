@@ -649,28 +649,29 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-05-10T00:00:00"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-05-10T00:00:00"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetBookingByRoomIEnumerableBaseResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetBookingByRoomIEnumerableBaseResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetBookingByRoomIEnumerableBaseResponse"
-                }
-              }
-            }
+            "description": "Success"
           }
         }
       }
@@ -10724,132 +10725,6 @@
               "$ref": "#/components/schemas/GetBookingByHomeStay"
             },
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetBookingByRoom": {
-        "type": "object",
-        "properties": {
-          "bookingID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "bookingDate": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2025-05-10T00:00:00"
-          },
-          "accountID": {
-            "type": "string",
-            "nullable": true
-          },
-          "account": {
-            "$ref": "#/components/schemas/GetAccountUser"
-          },
-          "numberOfChildren": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberOfAdults": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "$ref": "#/components/schemas/BookingStatus"
-          },
-          "paymentStatus": {
-            "$ref": "#/components/schemas/PaymentStatus"
-          },
-          "totalRentPrice": {
-            "type": "number",
-            "format": "double"
-          },
-          "total": {
-            "type": "number",
-            "format": "double"
-          },
-          "bookingDeposit": {
-            "type": "number",
-            "format": "double"
-          },
-          "remainingBalance": {
-            "type": "number",
-            "format": "double"
-          },
-          "paymentMethod": {
-            "$ref": "#/components/schemas/PaymentMethod"
-          },
-          "bookingDetails": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetBookingDetailForRoom"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetBookingByRoomIEnumerableBaseResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "statusCode": {
-            "$ref": "#/components/schemas/StatusCodeEnum"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetBookingByRoom"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetBookingDetailForRoom": {
-        "type": "object",
-        "properties": {
-          "bookingDetailID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "rentPrice": {
-            "type": "number",
-            "format": "double"
-          },
-          "checkInDate": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2025-05-10T00:00:00"
-          },
-          "checkOutDate": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2025-05-10T00:00:00"
-          },
-          "totalAmount": {
-            "type": "number",
-            "format": "double"
-          },
-          "homeStayRentalID": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "homeStayRentals": {
-            "$ref": "#/components/schemas/GetSimpleHomeStayType"
-          },
-          "roomID": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "rooms": {
-            "$ref": "#/components/schemas/GetAllRooms"
           }
         },
         "additionalProperties": false

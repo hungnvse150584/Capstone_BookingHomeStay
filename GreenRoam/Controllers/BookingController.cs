@@ -62,10 +62,11 @@ namespace GreenRoam.Controllers
         [Authorize(Roles = "Owner, Staff, Customer")]
         [HttpGet]
         [Route("GetBookingByRoomID/{roomId}")]
-        public async Task<ActionResult<BaseResponse<IEnumerable<GetBookingByRoom>>>> GetBookingsByRoom(int roomId)
+        public async Task<IActionResult> GetBookingByRoomID(int roomId, [FromQuery] DateTime? startDate = null, [FromQuery] DateTime? endDate = null)
         {
-            var bookings = await _bookingService.GetBookingsByRoom(roomId);
-            return Ok(bookings);
+            Console.WriteLine($"Controller: roomId={roomId}, startDate={startDate}, endDate={endDate}");
+            var response = await _bookingService.GetBookingsByRoom(roomId, startDate, endDate);
+            return StatusCode((int)response.StatusCode, response);
         }
 
         [Authorize(Roles = "Owner, Staff")]

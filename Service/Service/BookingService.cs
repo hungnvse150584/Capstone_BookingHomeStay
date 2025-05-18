@@ -215,24 +215,28 @@ namespace Service.Service
                 StatusCodeEnum.OK_200, bookings);
         }
 
-        public async Task<BaseResponse<IEnumerable<GetBookingByRoom>>> GetBookingsByRoom(int roomId)
+        public async Task<BaseResponse<IEnumerable<GetBookingByRoom>>> GetBookingsByRoom(int roomId, DateTime? startDate = null, DateTime? endDate = null)
         {
-            IEnumerable<Booking> booking = await _bookingRepository.GetBookingsByRoom(roomId);
-            if (booking == null || !booking.Any())
+            if (roomId <= 0)
             {
-                return new BaseResponse<IEnumerable<GetBookingByRoom>>("Something went wrong!",
-                StatusCodeEnum.BadGateway_502, null);
+                return new BaseResponse<IEnumerable<GetBookingByRoom>>("Invalid Room ID", StatusCodeEnum.BadRequest_400, null);
             }
-            var bookings = _mapper.Map<IEnumerable<GetBookingByRoom>>(booking);
+
+            IEnumerable<Booking> bookings = await _bookingRepository.GetBookingsByRoom(roomId, startDate, endDate);
             if (bookings == null || !bookings.Any())
             {
-                return new BaseResponse<IEnumerable<GetBookingByRoom>>("Something went wrong!",
-                StatusCodeEnum.BadGateway_502, null);
+                return new BaseResponse<IEnumerable<GetBookingByRoom>>("No bookings found!", StatusCodeEnum.NotFound_404, null);
             }
-            return new BaseResponse<IEnumerable<GetBookingByRoom>>("Get all bookings as base success",
-                StatusCodeEnum.OK_200, bookings);
-        }
 
+            var bookingResponses = _mapper.Map<IEnumerable<GetBookingByRoom>>(bookings, opt =>
+            {
+                opt.Items["roomId"] = roomId;
+                opt.Items["startDate"] = startDate;
+                opt.Items["endDate"] = endDate;
+            });
+
+            return new BaseResponse<IEnumerable<GetBookingByRoom>>("Get bookings by room success", StatusCodeEnum.OK_200, bookingResponses);
+        }
         public async Task<BaseResponse<GetBookingResponse>> GetBookingById(int? bookingID)
         {
             /*var booking = await _bookingRepository.GetBookingsByIdAsync(bookingID);

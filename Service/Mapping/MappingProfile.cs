@@ -369,7 +369,18 @@ namespace Service.Mapping
             CreateMap<Booking, GetCancellationBooking>();
             CreateMap<Booking, GetBookingByAccount>().ReverseMap();
             CreateMap<Booking, GetBookingByHomeStay>().ReverseMap();
-            CreateMap<Booking, GetBookingByRoom>().ReverseMap();
+            CreateMap<Booking, GetBookingByRoom>()
+      .ForMember(dest => dest.BookingDetails, opt => opt.MapFrom((src, dest, member, context) =>
+      {
+          var roomId = context.Items["roomId"] != null ? (int)context.Items["roomId"] : 0;
+          var startDate = context.Items["startDate"] as DateTime?;
+          var endDate = context.Items["endDate"] as DateTime?;
+
+          return src.BookingDetails.Where(bd =>
+              bd.RoomID == roomId &&
+              (!startDate.HasValue || bd.CheckInDate >= startDate.Value) &&
+              (!endDate.HasValue || bd.CheckOutDate <= endDate.Value)).ToList();
+      }));
             CreateMap<Booking, GetSimpleBooking>().ReverseMap();
             //Cho phép đổi phòng khi có sự cố
             CreateMap<BookingDetail, UpdateChangingRoomRequest>().ReverseMap();
