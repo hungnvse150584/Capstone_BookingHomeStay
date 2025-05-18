@@ -38,12 +38,16 @@ namespace Service.Service
         private readonly ITransactionRepository _transactionRepository;
         private readonly ICommissionRateRepository _commissionRateRepository;
         private readonly IHubContext<NotificationHubs> _notificationHub;
+        private readonly IServiceRepository _serviceRepository;
+        private readonly IBookingServiceRepository _bookingServiceRepository;
 
         public BookingService(IMapper mapper, IBookingRepository bookingRepository,
                               ICancellationPolicyRepository cancelltaionRepository,
                               IHubContext<NotificationHubs> notificationHub,
                               ITransactionRepository transactionRepository, 
-                              ICommissionRateRepository commissionRateRepository)
+                              ICommissionRateRepository commissionRateRepository,
+                              IServiceRepository serviceRepository,
+                              IBookingServiceRepository bookingServiceRepository)
         {
             _mapper = mapper;
             _bookingRepository = bookingRepository;
@@ -51,6 +55,8 @@ namespace Service.Service
             _notificationHub = notificationHub;
             _transactionRepository = transactionRepository;
             _commissionRateRepository = commissionRateRepository;
+            _serviceRepository = serviceRepository;
+            _bookingServiceRepository = bookingServiceRepository;
         }
 
         public async Task<BaseResponse<IEnumerable<GetAllBookings>>> GetAllBooking(string? search, DateTime? date = null, BookingStatus? status = null, PaymentStatus? paymentStatus = null)
@@ -421,19 +427,58 @@ namespace Service.Service
                 {
                     foreach (var service in booking.BookingServices)
                     {
-                        service.Status = BookingServicesStatus.Cancelled;
-                        service.PaymentServiceStatus = PaymentServicesStatus.Pending;
+                        if (service.Status == BookingServicesStatus.Completed)
+                        {
+                            continue;
+                        }
+
+                        if (service.Status != BookingServicesStatus.Cancelled &&
+                            service.PaymentServiceStatus != PaymentServicesStatus.Refunded &&
+                            service.Status != BookingServicesStatus.Pending)
+                        {
+                            foreach (var serviceDetail in service.BookingServicesDetails)
+                            {
+                                if (serviceDetail?.Services != null && booking.HomeStayID.HasValue)
+                                {
+                                    var cancellationPolicy = await _cancelltaionRepository.GetCancellationPolicyByHomeStayAsync(booking.HomeStayID.Value);
+                                    var bookingDetail = booking.BookingDetails.FirstOrDefault();
+
+                                    if (bookingDetail != null && cancellationPolicy != null)
+                                    {
+                                        var now = DateTime.Now;
+                                        var daysBeforeCheckIn = (bookingDetail.CheckInDate - now).TotalDays;
+
+                                        bool isRefundAllowed = daysBeforeCheckIn >= cancellationPolicy.DayBeforeCancel &&
+                                            (cancellationPolicy.RefundPercentage > 0 && cancellationPolicy.RefundPercentage <= 1);
+
+                                        if (!isRefundAllowed)
+                                        {
+                                            serviceDetail.Services.Quantity += serviceDetail.Quantity;
+                                            await _serviceRepository.UpdateAsync(serviceDetail.Services);
+
+                                            var serviceTransaction = await _transactionRepository.GetTransactionByBookingServiceId(service.BookingServicesID);
+
+                                            if (serviceTransaction != null && serviceTransaction.StatusTransaction == StatusOfTransaction.Pending)
+                                            {
+                                                serviceTransaction.StatusTransaction = StatusOfTransaction.Completed;
+                                                await _transactionRepository.UpdateAsync(serviceTransaction);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            service.Status = BookingServicesStatus.Cancelled;
+                            await _bookingServiceRepository.UpdateBookingServicesAsync(service);
+                        }
                     }
                 }
 
-                
-
-                if ((booking.paymentStatus == PaymentStatus.FullyPaid || booking.paymentStatus == PaymentStatus.Deposited) && booking.HomeStayID.HasValue)
+                if (booking.paymentStatus == PaymentStatus.FullyPaid || booking.paymentStatus == PaymentStatus.Deposited)
                 {
                     var transaction = await _transactionRepository.GetTransactionByBookingId(booking.BookingID);
-                    if (transaction != null)
+                    if (transaction != null && transaction.StatusTransaction == StatusOfTransaction.Pending)
                     {
-                        var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(booking.HomeStayID.Value);
+                        /*var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(booking.HomeStayID.Value);
                         if (commissionRate != null)
                         {
 
@@ -449,7 +494,10 @@ namespace Service.Service
                         else
                         {
                             throw new InvalidOperationException("There are no CommissionRate for Bookings!");
-                        }
+                        }*/
+
+                        transaction.StatusTransaction = StatusOfTransaction.Completed;
+                        await _transactionRepository.UpdateAsync(transaction);
                     }
                 }
 
@@ -500,9 +548,9 @@ namespace Service.Service
                 }
 
                 var transaction = await _transactionRepository.GetTransactionByBookingId(booking.BookingID);
-                if (transaction != null)
+                if (transaction != null && transaction.StatusTransaction == StatusOfTransaction.Pending)
                 {
-                    var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(booking.HomeStayID.Value);
+                    /*var commissionRate = await _commissionRateRepository.GetCommissionByHomeStayAsync(booking.HomeStayID.Value);
                     if (commissionRate != null)
                     {
                         var hostRate = commissionRate.HostShare;
@@ -521,13 +569,47 @@ namespace Service.Service
                         }
 
                         await _transactionRepository.UpdateAsync(transaction);
-                    }
+                    }*/
+                    transaction.StatusTransaction = StatusOfTransaction.Completed;
+                    await _transactionRepository.UpdateAsync(transaction);
                 }
                 else
                 {
                     throw new InvalidOperationException("The booking does not have a transaction!");
                 }
 
+                if(booking.BookingServices != null && booking.BookingServices.Any())
+                {
+                    foreach (var service in booking.BookingServices)
+                    {
+                        if (service.Status == BookingServicesStatus.Completed)
+                        {
+                            continue;
+                        }
+                        if (service.Status != BookingServicesStatus.Cancelled &&
+                            service.PaymentServiceStatus != PaymentServicesStatus.Refunded &&
+                            service.Status != BookingServicesStatus.Pending)
+                        {
+                            foreach (var serviceDetail in service.BookingServicesDetails)
+                            {
+                                if (serviceDetail?.Services != null && booking.HomeStayID.HasValue)
+                                {
+                                    serviceDetail.Services.Quantity += serviceDetail.Quantity;
+                                    await _serviceRepository.UpdateAsync(serviceDetail.Services);
+                                }
+                            }
+                            service.Status = BookingServicesStatus.Completed;
+                            await _bookingServiceRepository.UpdateBookingServicesAsync(service);
+                        }
+                        var serviceTransaction = await _transactionRepository.GetTransactionByBookingServiceId(service.BookingServicesID);
+
+                        if (serviceTransaction != null && serviceTransaction.StatusTransaction == StatusOfTransaction.Pending)
+                        {
+                            serviceTransaction.StatusTransaction = StatusOfTransaction.Completed;
+                            await _transactionRepository.UpdateAsync(serviceTransaction);
+                        }
+                    }
+                }
                     await _bookingRepository.UpdateBookingAsync(booking);
 
                 await _notificationHub.Clients.User(booking.AccountID).SendAsync(
