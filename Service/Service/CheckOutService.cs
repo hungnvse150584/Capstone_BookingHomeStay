@@ -267,7 +267,9 @@ namespace Service.Service
                                 continue;
                             }
                           
-                            if (service.Status != BookingServicesStatus.Cancelled && service.PaymentServiceStatus != PaymentServicesStatus.Refunded)
+                            if (service.Status != BookingServicesStatus.Cancelled &&
+                                service.PaymentServiceStatus != PaymentServicesStatus.Refunded &&
+                                service.Status != BookingServicesStatus.Pending)
                             {
                                 foreach (var serviceDetail in service.BookingServicesDetails)
                                 {
@@ -329,7 +331,9 @@ namespace Service.Service
                             {
                                 continue;
                             }
-                            if (service.Status != BookingServicesStatus.Cancelled && service.PaymentServiceStatus != PaymentServicesStatus.Refunded)
+                            if (service.Status != BookingServicesStatus.Cancelled &&
+                                service.PaymentServiceStatus != PaymentServicesStatus.Refunded &&
+                                service.Status != BookingServicesStatus.Pending)
                             {
                                 foreach (var serviceDetail in service.BookingServicesDetails)
                                 {

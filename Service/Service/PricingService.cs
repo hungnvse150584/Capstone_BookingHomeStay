@@ -303,9 +303,9 @@ namespace Service.Service
             return new BaseResponse<GetTotalPrice>("Get All Success", StatusCodeEnum.OK_200, response);
         }
 
-        public async Task<DayType> GetDayType(DateTime date)
+        public async Task<DayType> GetDayType(DateTime date, int? homeStayRentalId, int? roomtypeId)
         {
-            return await _priceRepository.GetDayType(date);
+            return await _priceRepository.GetDayType(date, homeStayRentalId, roomtypeId);
         }
     }
 }

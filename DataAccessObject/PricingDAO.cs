@@ -82,11 +82,15 @@ namespace DataAccessObject
                                  .ToListAsync();
         }
 
-        public async Task<DayType> GetDayType(DateTime date)
+        public async Task<DayType> GetDayType(DateTime date, int? homeStayRentalId, int? roomtypeId)
         {
             // Kiểm tra xem ngày có nằm trong một khoảng Holiday không
             bool isHoliday = await _context.Prices
             .AnyAsync(p => p.DayType == DayType.Holiday &&
+                           (
+                                (roomtypeId.HasValue && p.RoomTypesID == roomtypeId) ||
+                                (homeStayRentalId.HasValue && p.RoomTypesID == null && p.HomeStayRentalID == homeStayRentalId)
+                           ) &&
                            date.Date >= p.StartDate.Value.Date &&
                            date.Date <= p.EndDate.Value.Date);
 
@@ -167,7 +171,7 @@ namespace DataAccessObject
             // Duyệt từng ngày để tính tổng giá
             for (DateTime date = checkInDate.Date; date < checkOutDate.Date; date = date.AddDays(1))
             {
-                DayType dayType = await GetDayType(date);
+                DayType dayType = await GetDayType(date, homeStayRentalId, roomTypeId);
 
                 var pricing = priceList.FirstOrDefault(p => p.DayType == dayType)
                            ?? priceList.FirstOrDefault(p => p.DayType == DayType.Weekday); // fallback

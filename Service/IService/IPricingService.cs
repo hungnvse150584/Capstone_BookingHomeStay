@@ -22,7 +22,7 @@ namespace Service.IService
         Task<BaseResponse<PricingResponse>> CreatePricing(CreatePricingRequest typeRequest);
         Task<BaseResponse<Pricing>> UpdatePricing(int pricingID, UpdatePricingRequest request);
         Task<BaseResponse<GetTotalPrice>> GetTotalPrice(DateTime checkInDate, DateTime checkOutDate, int? homeStayRentalId, int? roomTypeId);
-        Task<DayType> GetDayType(DateTime date);
+        Task<DayType> GetDayType(DateTime date, int? homeStayRentalId, int? roomtypeId);
 
 
     }
