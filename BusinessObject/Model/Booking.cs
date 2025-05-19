@@ -13,6 +13,8 @@ namespace BusinessObject.Model;
         [Key]
         public int BookingID { get; set; }
 
+        public string BookingCode { get; set; }
+
         public DateTime BookingDate { get; set; }
     
         public DateTime ExpiredTime { get; set; }

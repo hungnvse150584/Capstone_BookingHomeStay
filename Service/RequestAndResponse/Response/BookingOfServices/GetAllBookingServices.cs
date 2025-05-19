@@ -20,6 +20,8 @@ namespace Service.RequestAndResponse.Response.BookingOfServices
         public int? BookingID { get; set; }
         public GetSimpleBooking? Booking { get; set; }
 
+        public string BookingServiceCode { get; set; }
+
         public DateTime BookingServicesDate { get; set; }
 
         public double Total { get; set; }

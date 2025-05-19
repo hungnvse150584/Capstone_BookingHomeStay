@@ -15,6 +15,8 @@ namespace Service.RequestAndResponse.Response.Bookings
     {
         public int BookingID { get; set; }
 
+        public string BookingCode { get; set; }
+
         public DateTime BookingDate { get; set; }
 
         public int numberOfChildren { get; set; }

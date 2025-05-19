@@ -15,7 +15,9 @@
 
             [ForeignKey("BookingID")]
             public int? BookingID { get; set; } 
-            public Booking? Booking { get; set; } 
+            public Booking? Booking { get; set; }
+
+            public string BookingServiceCode { get; set; }
 
             public DateTime BookingServicesDate { get; set; }
 

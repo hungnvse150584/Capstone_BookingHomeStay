@@ -98,6 +98,7 @@ namespace Service.Service
 
             var bookingServices = new BookingServices
             {
+                BookingServiceCode = Guid.NewGuid().ToString(),
                 BookingServicesDate = DateTime.Now,
                 AccountID = bookingServiceRequest.AccountID,
                 BookingID = bookingServiceRequest.BookingID,

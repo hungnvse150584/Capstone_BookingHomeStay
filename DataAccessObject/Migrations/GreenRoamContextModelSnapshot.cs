@@ -123,6 +123,10 @@ namespace DataAccessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("BookingCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
 
@@ -239,6 +243,10 @@ namespace DataAccessObject.Migrations
 
                     b.Property<int?>("BookingID")
                         .HasColumnType("int");
+
+                    b.Property<string>("BookingServiceCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("BookingServicesDate")
                         .HasColumnType("datetime2");

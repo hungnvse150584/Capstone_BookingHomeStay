@@ -153,6 +153,7 @@ namespace Service.Service
 
             var booking = new Booking
             {
+                BookingCode = Guid.NewGuid().ToString(),
                 BookingDate = nowVN,
                 ExpiredTime = nowVN.AddHours(1),
                 numberOfAdults = createBookingRequest.numberOfAdults,
