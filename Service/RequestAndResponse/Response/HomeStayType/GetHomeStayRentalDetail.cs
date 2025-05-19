@@ -55,7 +55,7 @@ namespace Service.RequestAndResponse.Response.HomeStayType
         public string? Description { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime UpdateAt { get; set; }
-        public int numberBedRoom { get; set; }
+        public int numberBed { get; set; }
         public int numberBathRoom { get; set; }
         public int numberWifi { get; set; }
         public bool Status { get; set; }
