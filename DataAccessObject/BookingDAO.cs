@@ -828,6 +828,7 @@ namespace DataAccessObject
             return result;
         }
 
+
         public async Task<(int totalBookings, double totalBookingsAmount)> GetTotalBookingsAndAmountForHomeStay(int homeStayID)
         {
             var homestay = await _context.HomeStays
@@ -888,32 +889,6 @@ namespace DataAccessObject
 
             foreach (var homestay in homestays)
             {
-                /*var commissionRate = homestay.CommissionRate;
-
-                var transactionsDay = await _context.Transactions
-                                .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
-                                .Where(t => (t.TransactionKind == TransactionKind.Deposited || t.TransactionKind == TransactionKind.FullPayment))
-                                .ToListAsync();
-
-                var transactionsRefundDay = await _context.Transactions
-                        .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
-                        .Where(t => (t.TransactionKind == TransactionKind.Refund))
-                        .ToListAsync();
-
-                totalBookings += (transactionsDay.Count - transactionsRefundDay.Count);
-
-                double paidAmount = transactionsDay
-                    .Where(t => t.TransactionKind == TransactionKind.Deposited || t.TransactionKind == TransactionKind.FullPayment)
-                    .Sum(t => t.Amount);
-
-                double refundAmount = transactionsRefundDay
-                    .Where(t => t.TransactionKind == TransactionKind.Refund)
-                    .Sum(t => t.Amount);
-
-                double adminAmount = transactionsDay.Sum(t => t.AdminAmount);
-
-                totalBookingsAmount += adminAmount;*/
-
                 var transactionsDayCompleted = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
@@ -1041,52 +1016,6 @@ namespace DataAccessObject
 
             return mergedResult.Select(x => (x.Account, x.TotalBooking)).ToList();
         }
-
-        /*public async Task<List<(string date, double totalBookingsAmount)>> GetCurrentWeekRevenueForHomeStayAsync(int homestayId)
-        {
-            var today = DateTime.Today;
-
-            // Tính ngày đầu tuần (Thứ 2) và cuối tuần (Chủ nhật)
-            var startOfWeek = today.AddDays(-(int)today.DayOfWeek + (int)DayOfWeek.Monday);
-            var endOfWeek = startOfWeek.AddDays(6);
-
-            // Lấy các bookings trong tuần của homestay cụ thể
-            var bookings = await _context.Bookings
-                .Include(b => b.HomeStay)
-                .ThenInclude(h => h.CancelPolicy)
-                .Where(b => b.HomeStayID == homestayId && b.BookingDate.Date >= startOfWeek && b.BookingDate.Date <= endOfWeek)
-                .ToListAsync();
-
-            // Gom nhóm theo ngày và tính doanh thu theo từng trạng thái
-            var revenueByDay = bookings
-                .GroupBy(b => b.BookingDate.Date)
-                .Select(g => (
-                    date: g.Key.ToString("yyyy-MM-dd"),
-                    totalBookingsAmount: g.Sum(b =>
-                        b.Status switch
-                        {
-                            BookingStatus.Completed when b.paymentStatus == PaymentStatus.FullyPaid => b.Total, // Thanh toán đầy đủ
-                            BookingStatus.Cancelled when b.paymentStatus == PaymentStatus.FullyPaid => b.Total, // Hủy + Đã thanh toán đầy đủ
-                            BookingStatus.Cancelled when b.paymentStatus == PaymentStatus.Deposited => b.bookingDeposit, // Hủy + Đặt cọc
-                            BookingStatus.Cancelled when b.paymentStatus == PaymentStatus.Refunded => b.Total * (1 - b.HomeStay.CancelPolicy.RefundPercentage), // Hủy + Hoàn tiền
-                            _ => 0 // Các trường hợp khác không tính doanh thu
-                        }
-                    )
-                ))
-                .ToList();
-
-            // Đảm bảo có đủ 7 ngày trong tuần, kể cả khi không có booking
-            var fullWeekRevenue = Enumerable.Range(0, 7)
-                .Select(offset =>
-                {
-                    var date = startOfWeek.AddDays(offset).ToString("yyyy-MM-dd");
-                    var matched = revenueByDay.FirstOrDefault(d => d.date == date);
-                    return matched != default ? matched : (date, 0.0);
-                })
-                .ToList();
-
-            return fullWeekRevenue;
-        }*/
 
         public async Task<List<(string date, double totalBookingsAmount)>> GetCurrentWeekRevenueForHomeStayAsync(int homestayId)
         {
