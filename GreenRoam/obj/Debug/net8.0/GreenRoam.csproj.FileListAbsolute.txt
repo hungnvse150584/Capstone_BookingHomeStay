@@ -140,3 +140,14 @@ C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.pdb
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\GreenRoam.genruntimeconfig.cache
 C:\Users\Admin\Desktop\GreenRoamHomeStay\Capstone_BookingHomeStay\GreenRoam\obj\Debug\net8.0\ref\GreenRoam.dll
+D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\Google.Apis.Auth.dll
+D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\Google.Cloud.Dialogflow.V2.dll
+D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\Hangfire.Core.dll
+D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\MailKit.dll
+D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\MimeKit.dll
+D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\FPT\SEP490_Capstone\GreenRoam\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
