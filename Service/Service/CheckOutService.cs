@@ -35,6 +35,7 @@ namespace Service.Service
         private readonly ICancellationPolicyRepository _cancelltaionRepository;
         private readonly IRoomChangeHistoryRepository _roomchangeHistoryRepository;
         private readonly ITransactionRepository _transactionRepository;
+        private readonly IAccountRepository _accountRepository;
 
         public CheckOutService(IMapper mapper, IBookingRepository bookingRepository,
                               IHomeStayRentalRepository homeStayTypeRepository,
@@ -47,7 +48,8 @@ namespace Service.Service
                               IBookingDetailRepository bookingDetailRepository,
                               IBookingServiceDetailRepository bookingServiceDetailRepository,
                               ICancellationPolicyRepository cancelltaionRepository, IRoomChangeHistoryRepository roomchangeHistoryRepository,
-                              ITransactionRepository transactionRepository)
+                              ITransactionRepository transactionRepository,
+                              IAccountRepository accountRepository)
         {
             _mapper = mapper;
             _bookingRepository = bookingRepository;
@@ -63,6 +65,7 @@ namespace Service.Service
             _cancelltaionRepository = cancelltaionRepository;
             _roomchangeHistoryRepository = roomchangeHistoryRepository;
             _transactionRepository = transactionRepository;
+            _accountRepository = accountRepository;
         }
 
         public async Task<BaseResponse<int>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod)
@@ -730,6 +733,8 @@ namespace Service.Service
             if (originalTransaction == null)
                 throw new Exception("No pending or request cancel payment transaction found to refund.");
 
+            bool wasRequestCancel = originalTransaction.StatusTransaction == StatusOfTransaction.RequestCancel;
+
             // Đổi trạng thái transaction thanh toán gốc thành Refunded
             originalTransaction.StatusTransaction = StatusOfTransaction.Refunded;
 
@@ -797,6 +802,31 @@ namespace Service.Service
                     }
                 }
             }
+
+            if (wasRequestCancel)
+            {
+                var recipientEmail = booking.Account?.Email;
+                if (!string.IsNullOrEmpty(recipientEmail))
+                {
+                    string subject = "Yêu cầu hủy đặt phòng đã được xử lý";
+                    string body = $@"
+                    <html>
+                    <body>
+                        <p>Xin chào {booking.Account?.Name ?? "quý khách"},</p>
+                        <p>Do sự cố phát sinh từ phía HomeStay <strong>{booking.HomeStay.Name}</strong>, 
+                        đơn đặt phòng của bạn (mã: <strong>{booking.BookingCode}</strong>) đã được hủy và hoàn tiền.</p>
+                        <p>Số tiền đã hoàn: <strong>{transaction.Amount:N0} VND</strong>.</p>
+                        <p>Chúng tôi rất lấy làm tiếc về sự việc này, rất mong quý khách thông cảm cho bên HomeStay</p>
+                        <br>
+                        <p>Trân trọng,</p>
+                        <p><strong>ChoTot-Travel-CTT</strong></p>
+                    </body>
+                    </html>";
+
+                    _accountRepository.SendEmail(recipientEmail, subject, body);
+                }
+            }
+
             transaction.AdminAmount = (-commissionRate.PlatformShare) * amountPaid;
             transaction.OwnerAmount = (-commissionRate.HostShare) * amountPaid;
             booking.paymentStatus = PaymentStatus.Refunded;

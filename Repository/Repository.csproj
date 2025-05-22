@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Cloud.Dialogflow.V2" Version="4.26.0" />
+    <PackageReference Include="MailKit" Version="4.11.0" />
+    <PackageReference Include="MimeKit" Version="4.11.0" />
 	  <ProjectReference Include="..\BusinessObject\BusinessObject.csproj" />
   </ItemGroup>
 

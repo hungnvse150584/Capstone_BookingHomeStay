@@ -62,7 +62,7 @@
           }
         }
       },
-      "BouncyCastle.Cryptography/2.5.0": {
+      "BouncyCastle.Cryptography/2.5.1": {
         "type": "package",
         "compile": {
           "lib/net6.0/BouncyCastle.Cryptography.dll": {
@@ -328,10 +328,10 @@
           }
         }
       },
-      "MailKit/4.8.0": {
+      "MailKit/4.11.0": {
         "type": "package",
         "dependencies": {
-          "MimeKit": "4.8.0",
+          "MimeKit": "4.11.0",
           "System.Formats.Asn1": "8.0.1"
         },
         "compile": {
@@ -1084,11 +1084,10 @@
           }
         }
       },
-      "MimeKit/4.9.0": {
+      "MimeKit/4.11.0": {
         "type": "package",
         "dependencies": {
-          "BouncyCastle.Cryptography": "2.5.0",
-          "System.Formats.Asn1": "8.0.1",
+          "BouncyCastle.Cryptography": "2.5.1",
           "System.Security.Cryptography.Pkcs": "8.0.1"
         },
         "compile": {
@@ -2395,7 +2394,9 @@
         "dependencies": {
           "BusinessObject": "1.0.0",
           "DataAccessObject": "1.0.0",
-          "Google.Cloud.Dialogflow.V2": "4.26.0"
+          "Google.Cloud.Dialogflow.V2": "4.26.0",
+          "MailKit": "4.11.0",
+          "MimeKit": "4.11.0"
         },
         "compile": {
           "bin/placeholder/Repository.dll": {}
@@ -2464,16 +2465,16 @@
         "lib/netstandard2.0/Azure.Identity.xml"
       ]
     },
-    "BouncyCastle.Cryptography/2.5.0": {
-      "sha512": "rc7vRCq/KD3GtIwSgRtjanGaBwTb9nLenFDZnEcauWlssuuEoxcbMfWA3QWWho6QDMSOSkWjs657McdHzEtEcw==",
+    "BouncyCastle.Cryptography/2.5.1": {
+      "sha512": "zy8TMeTP+1FH2NrLaNZtdRbBdq7u5MI+NFZQOBSM69u5RFkciinwzV2eveY6Kjf5MzgsYvvl6kTStsj3JrXqkg==",
       "type": "package",
-      "path": "bouncycastle.cryptography/2.5.0",
+      "path": "bouncycastle.cryptography/2.5.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.md",
         "README.md",
-        "bouncycastle.cryptography.2.5.0.nupkg.sha512",
+        "bouncycastle.cryptography.2.5.1.nupkg.sha512",
         "bouncycastle.cryptography.nuspec",
         "lib/net461/BouncyCastle.Cryptography.dll",
         "lib/net461/BouncyCastle.Cryptography.xml",
@@ -2862,10 +2863,10 @@
         "packageIcon.png"
       ]
     },
-    "MailKit/4.8.0": {
-      "sha512": "zZ1UoM4FUnSFUJ9fTl5CEEaejR0DNP6+FDt1OfXnjg4igZntcir1tg/8Ufd6WY5vrpmvToAjluYqjVM24A+5lA==",
+    "MailKit/4.11.0": {
+      "sha512": "JVoRxJ+QRqFMRtEM4veStj3pMLBPRulQGV+iZm6Tq1pnr66Dy6dFYOW9Uw02nxAVzdZAN8G+y3BsUPtgZcKXhA==",
       "type": "package",
-      "path": "mailkit/4.8.0",
+      "path": "mailkit/4.11.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2886,10 +2887,6 @@
         "lib/net48/MailKit.dll.config",
         "lib/net48/MailKit.pdb",
         "lib/net48/MailKit.xml",
-        "lib/net6.0/MailKit.dll",
-        "lib/net6.0/MailKit.dll.config",
-        "lib/net6.0/MailKit.pdb",
-        "lib/net6.0/MailKit.xml",
         "lib/net8.0/MailKit.dll",
         "lib/net8.0/MailKit.dll.config",
         "lib/net8.0/MailKit.pdb",
@@ -2902,7 +2899,7 @@
         "lib/netstandard2.1/MailKit.dll.config",
         "lib/netstandard2.1/MailKit.pdb",
         "lib/netstandard2.1/MailKit.xml",
-        "mailkit.4.8.0.nupkg.sha512",
+        "mailkit.4.11.0.nupkg.sha512",
         "mailkit.nuspec"
       ]
     },
@@ -3981,10 +3978,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "MimeKit/4.9.0": {
-      "sha512": "DZXXMZzmAABDxFhOSMb6SE8KKxcRd/sk1E6aJTUE5ys2FWOQhznYV2Gl3klaaSfqKn27hQ32haqquH1J8Z6kJw==",
+    "MimeKit/4.11.0": {
+      "sha512": "6p0RC1qwBGBHxf7hvzuR1GngzigF+Q6HQUTbD2RbmDrnS2m1qO2rgqOhYtn8n8JH7WGZ+7RthS8lfMuMzeg8AA==",
       "type": "package",
-      "path": "mimekit/4.9.0",
+      "path": "mimekit/4.11.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4012,7 +4009,7 @@
         "lib/netstandard2.1/MimeKit.dll.config",
         "lib/netstandard2.1/MimeKit.pdb",
         "lib/netstandard2.1/MimeKit.xml",
-        "mimekit.4.9.0.nupkg.sha512",
+        "mimekit.4.11.0.nupkg.sha512",
         "mimekit.nuspec"
       ]
     },
@@ -6966,8 +6963,8 @@
       "BusinessObject >= 1.0.0",
       "CloudinaryDotNet >= 1.27.4",
       "Google.Cloud.Dialogflow.V2 >= 4.26.0",
-      "MailKit >= 4.8.0",
-      "MimeKit >= 4.9.0",
+      "MailKit >= 4.11.0",
+      "MimeKit >= 4.11.0",
       "Newtonsoft.Json >= 13.0.3",
       "Repository >= 1.0.0"
     ]
@@ -7044,11 +7041,11 @@
           },
           "MailKit": {
             "target": "Package",
-            "version": "[4.8.0, )"
+            "version": "[4.11.0, )"
           },
           "MimeKit": {
             "target": "Package",
-            "version": "[4.9.0, )"
+            "version": "[4.11.0, )"
           },
           "Newtonsoft.Json": {
             "target": "Package",

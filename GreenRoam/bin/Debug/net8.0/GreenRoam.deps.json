@@ -1686,7 +1686,9 @@
         "dependencies": {
           "BusinessObject": "1.0.0",
           "DataAccessObject": "1.0.0",
-          "Google.Cloud.Dialogflow.V2": "4.26.0"
+          "Google.Cloud.Dialogflow.V2": "4.26.0",
+          "MailKit": "4.11.0",
+          "MimeKit": "4.11.0"
         },
         "runtime": {
           "Repository.dll": {}

@@ -1,10 +1,12 @@
 ﻿using BusinessObject.Model;
 using DataAccessObject;
+using MimeKit;
 using Repository.BaseRepository;
 using Repository.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MailKit.Net.Smtp;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -63,6 +65,22 @@ namespace Repository.Repositories
             }
             return null;
         }
-     
+
+        public string SendEmail(string recipientEmail, string subject, string htmlBody)
+        {
+            var message = new MimeMessage();
+            message.To.Add(MailboxAddress.Parse(recipientEmail));
+            message.From.Add(MailboxAddress.Parse("khanhvmse171632@fpt.edu.vn"));
+            message.Subject = subject;
+            message.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = htmlBody };
+
+            using var smtp = new SmtpClient();
+            smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Authenticate("khanhvmse171632@fpt.edu.vn", "qpvj xjhk eihq sptw");
+            smtp.Send(message);
+            smtp.Disconnect(true);
+
+            return "Email sent successfully";
+        }
     }
 }
