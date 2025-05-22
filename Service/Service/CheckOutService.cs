@@ -725,10 +725,10 @@ namespace Service.Service
 
             var originalTransaction = booking.Transactions
                       .FirstOrDefault(t => (t.TransactionKind == TransactionKind.FullPayment || t.TransactionKind == TransactionKind.Deposited)
-                      && t.StatusTransaction == StatusOfTransaction.Pending);
+                      && (t.StatusTransaction == StatusOfTransaction.Pending || t.StatusTransaction == StatusOfTransaction.RequestCancel));
 
             if (originalTransaction == null)
-                throw new Exception("No pending payment transaction found to refund.");
+                throw new Exception("No pending or request cancel payment transaction found to refund.");
 
             // Đổi trạng thái transaction thanh toán gốc thành Refunded
             originalTransaction.StatusTransaction = StatusOfTransaction.Refunded;
@@ -760,7 +760,7 @@ namespace Service.Service
                 {
                     var originalServiceTransaction = service.Transactions?
                                 .FirstOrDefault(t => (t.TransactionKind == TransactionKind.FullPayment || t.TransactionKind == TransactionKind.Deposited)
-                                 && t.StatusTransaction == StatusOfTransaction.Pending);
+                                 && (t.StatusTransaction == StatusOfTransaction.Pending || t.StatusTransaction == StatusOfTransaction.RequestCancel));
 
                     if (originalServiceTransaction != null)
                     {
@@ -1048,6 +1048,69 @@ namespace Service.Service
             }
 
             return new BaseResponse<Transaction?>("Either bookingId or bookingServiceId must be provided.", StatusCodeEnum.BadRequest_400, null);
+        }
+
+        public async Task<BaseResponse<Booking>> RequestCancelBookingStatus(int bookingId)
+        {
+            var bookingExist = await _bookingRepository.GetBookingByIdAsync(bookingId);
+            if (bookingExist == null)
+            {
+                return new BaseResponse<Booking>("Cannot find your Booking!",
+                         StatusCodeEnum.NotFound_404, null);
+            }
+            else
+            {
+                if (bookingExist.Status == BookingStatus.RequestRefund)
+                {
+                    return new BaseResponse<Booking>("This booking is requesting a refund, cannot cancel immediately", StatusCodeEnum.BadRequest_400, null);
+                }
+
+                if (bookingExist.Status == BookingStatus.Confirmed)
+                {
+                    await _bookingRepository.ChangeBookingStatus(bookingExist.BookingID, BookingStatus.RequestCancel, bookingExist.paymentStatus);
+
+                    var transaction = await _transactionRepository.ChangeTransactionStatusForBooking(bookingId, StatusOfTransaction.RequestCancel);
+
+                    if (transaction is null)
+                    {
+                        return new BaseResponse<Booking>("Failed to update transaction status.", StatusCodeEnum.InternalServerError_500, null);
+                    }
+
+                    if (bookingExist.BookingServices?.Any() == true)
+                    {
+                        foreach (var serviceBooking in bookingExist.BookingServices)
+                        {
+                            var bookingService = await _bookingServiceRepository.GetBookingServiceByIdAsync(serviceBooking.BookingServicesID);
+
+                            if (bookingService == null)
+                            {
+                                continue;
+                            }
+
+                            if (bookingService.Status == BookingServicesStatus.Completed || bookingService.Status == BookingServicesStatus.Cancelled || bookingService.Status == BookingServicesStatus.Pending)
+                            {
+                                continue;
+                            }
+
+                            var transactionService = await _transactionRepository.ChangeTransactionStatusForBookingService(serviceBooking.BookingServicesID, StatusOfTransaction.RequestCancel);
+
+                            if (transactionService is null)
+                            {
+                                return new BaseResponse<Booking>("Failed to update transaction status.", StatusCodeEnum.InternalServerError_500, null);
+                            }
+
+                            await _bookingServiceRepository.ChangeBookingServicesStatus(serviceBooking.BookingServicesID, BookingServicesStatus.RequestCancel, serviceBooking.PaymentServiceStatus);
+                        }
+                    }
+
+                    return new BaseResponse<Booking>("Booking and Transaction status updated to RequestCancel successfully.", StatusCodeEnum.OK_200, bookingExist);
+                }
+                else
+                {
+                    return new BaseResponse<Booking>("Cannot send request cancel!", StatusCodeEnum.OK_200, null);
+                }
+                 
+            }
         }
     }
 }

@@ -77,6 +77,7 @@
             Completed = 3,
             Cancelled = 4,
             RequestRefund =5,
-            AcceptedRefund = 6
+            AcceptedRefund = 6,
+            RequestCancel = 7
         }
     }
