@@ -728,7 +728,8 @@ namespace Service.Service
 
             var originalTransaction = booking.Transactions
                       .FirstOrDefault(t => (t.TransactionKind == TransactionKind.FullPayment || t.TransactionKind == TransactionKind.Deposited)
-                      && (t.StatusTransaction == StatusOfTransaction.Pending || t.StatusTransaction == StatusOfTransaction.RequestCancel));
+                      && (t.StatusTransaction == StatusOfTransaction.Pending || t.StatusTransaction == StatusOfTransaction.RequestCancel ||
+                      t.StatusTransaction == StatusOfTransaction.RequestRefund));
 
             if (originalTransaction == null)
                 throw new Exception("No pending or request cancel payment transaction found to refund.");
@@ -765,7 +766,8 @@ namespace Service.Service
                 {
                     var originalServiceTransaction = service.Transactions?
                                 .FirstOrDefault(t => (t.TransactionKind == TransactionKind.FullPayment || t.TransactionKind == TransactionKind.Deposited)
-                                 && (t.StatusTransaction == StatusOfTransaction.Pending || t.StatusTransaction == StatusOfTransaction.RequestCancel));
+                                 && (t.StatusTransaction == StatusOfTransaction.Pending || t.StatusTransaction == StatusOfTransaction.RequestCancel ||
+                                 t.StatusTransaction == StatusOfTransaction.RequestRefund));
 
                     if (originalServiceTransaction != null)
                     {
