@@ -789,6 +789,9 @@ namespace Service.Service
 
             bool wasRequestCancel = originalTransaction.StatusTransaction == StatusOfTransaction.RequestCancel;
 
+            originalTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
+            await _transactionRepository.UpdateAsync(originalTransaction);
+
             booking.Transactions ??= new List<Transaction>();
 
             bool alreadyExists = booking.Transactions.Any(t =>
@@ -819,17 +822,20 @@ namespace Service.Service
 
                     if (originalServiceTransaction != null)
                     {
-                        if (amountPaid < booking.Total + bookingServices.Sum(s => s.Total))
-                        {
-                            originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
-                            await _transactionRepository.UpdateAsync(originalServiceTransaction);
-                        }
+                        /* if (amountPaid < booking.Total + bookingServices.Sum(s => s.Total))
+                         {
+                             originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
+                             await _transactionRepository.UpdateAsync(originalServiceTransaction);
+                         }
 
-                        if (amountPaid == booking.Total + bookingServices.Sum(s => s.Total))
-                        {
-                            originalServiceTransaction.StatusTransaction = StatusOfTransaction.Completed;
-                            await _transactionRepository.UpdateAsync(originalServiceTransaction);
-                        }
+                         if (amountPaid == booking.Total + bookingServices.Sum(s => s.Total))
+                         {
+                             originalServiceTransaction.StatusTransaction = StatusOfTransaction.Completed;
+                             await _transactionRepository.UpdateAsync(originalServiceTransaction);
+                         }*/
+
+                        originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
+                        await _transactionRepository.UpdateAsync(originalServiceTransaction);
                     }
 
                     service.Status = BookingServicesStatus.Cancelled;
@@ -862,9 +868,7 @@ namespace Service.Service
                 }
             }
 
-            
-
-            if (amountPaid < booking.Total + bookingServices.Sum(s => s.Total))
+            /*if (amountPaid < booking.Total + bookingServices.Sum(s => s.Total))
             {
                 originalTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
                 await _transactionRepository.UpdateAsync(originalTransaction);
@@ -874,7 +878,7 @@ namespace Service.Service
             {
                 originalTransaction.StatusTransaction = StatusOfTransaction.Completed;
                 await _transactionRepository.UpdateAsync(originalTransaction);
-            }
+            }*/
 
             if (wasRequestCancel)
             {
@@ -1010,17 +1014,20 @@ namespace Service.Service
 
             if (originalServiceTransaction != null)
             {
-                if(amountPaid < bookingService.Total)
-                {
-                    originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
-                    await _transactionRepository.UpdateAsync(originalServiceTransaction);
-                }
+                /* if(amountPaid < bookingService.Total)
+                 {
+                     originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
+                     await _transactionRepository.UpdateAsync(originalServiceTransaction);
+                 }
 
-                if(amountPaid == bookingService.Total)
-                {
-                    originalServiceTransaction.StatusTransaction = StatusOfTransaction.Completed;
-                    await _transactionRepository.UpdateAsync(originalServiceTransaction);
-                } 
+                 if(amountPaid == bookingService.Total)
+                 {
+                     originalServiceTransaction.StatusTransaction = StatusOfTransaction.Completed;
+                     await _transactionRepository.UpdateAsync(originalServiceTransaction);
+                 } */
+
+                originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
+                await _transactionRepository.UpdateAsync(originalServiceTransaction);
             }
 
             var oldPaymentServiceStatus = bookingService.PaymentServiceStatus;
@@ -1135,7 +1142,7 @@ namespace Service.Service
                     return new BaseResponse<Transaction?>("Failed to update transaction status.", StatusCodeEnum.InternalServerError_500, null);
                 }
 
-                if (booking.BookingServices?.Any() == true)
+                /*if (booking.BookingServices?.Any() == true)
                 {
                     foreach (var serviceBooking in booking.BookingServices)
                     {
@@ -1151,14 +1158,14 @@ namespace Service.Service
                             continue;
                         }
 
-                        var transactionService = await _transactionRepository.ChangeTransactionStatusForBookingService(serviceBooking.BookingServicesID, StatusOfTransaction.RequestRefund);
+                        var transactionService = await _transactionRepository.ChangeTransactionStatusForBookingService(serviceBooking.BookingServicesID, StatusOfTransaction.Pending);
 
                         if (transactionService is null)
                         {
                             return new BaseResponse<Transaction?>("Failed to update transaction status.", StatusCodeEnum.InternalServerError_500, null);
                         }
                     }
-                }
+                }*/
 
                 await _bookingRepository.ChangeBookingStatus(booking.BookingID, BookingStatus.AcceptedRefund, booking.paymentStatus);
 
