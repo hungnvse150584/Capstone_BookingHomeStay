@@ -92,5 +92,10 @@ namespace Repository.Repositories
         {
             return await _bookingservicesDao.GetConfirmedBookingServiceByBookingId(bookingID);
         }
+
+        public async Task<bool> ExistsBookingServiceCodeAsync(string code)
+        {
+            return await _bookingservicesDao.ExistsBookingServiceCodeAsync(code);
+        }
     }
 }

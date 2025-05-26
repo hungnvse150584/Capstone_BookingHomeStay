@@ -176,14 +176,14 @@ namespace GreenRoam.Controllers
             }
         }
 
-        /*[Authorize(Roles = "Owner, Staff")]
+        
         [HttpPost]
-        [Route("BookingPayment-Refund-Emergency")]
-        public async Task<ActionResult<string>> CheckOutRefundBookingEmergency(int bookingID, string accountId)
+        [Route("BookingPayment-Refund-Full")]
+        public async Task<ActionResult<string>> CheckOutRefundBookingFull(int bookingID, string accountId)
         {
             var booking = await _bookingService.GetBookingsById(bookingID);
 
-            if (booking.Data.Status == BookingStatus.Confirmed)
+            if (booking.Data.Status == BookingStatus.RequestCancel)
             {
                 double amount = 0;
 
@@ -193,20 +193,16 @@ namespace GreenRoam.Controllers
                 }
                 if (booking.Data.paymentStatus == PaymentStatus.FullyPaid)
                 {
-                    amount = booking.Data.Total; 
+                    amount = booking.Data.Total;
                 }
                 foreach (var bookingService in booking.Data.BookingServices)
                 {
-                    // Bỏ qua các service đã được thanh toán cùng booking
-                    if (bookingService.isPaidWithBooking)
-                        continue;
-
                     double serviceRefundAmount = 0;
 
                     if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited &&
                         booking.Data.paymentStatus == PaymentStatus.Deposited)
                     {
-                        serviceRefundAmount = 0;
+                        serviceRefundAmount = bookingService.bookingServiceDeposit;
                     }
                     else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.Deposited &&
                         booking.Data.paymentStatus == PaymentStatus.FullyPaid)
@@ -221,18 +217,16 @@ namespace GreenRoam.Controllers
                     else if (bookingService.PaymentServiceStatus == PaymentServicesStatus.FullyPaid
                         && booking.Data.paymentStatus == PaymentStatus.FullyPaid)
                     {
-                        serviceRefundAmount = 0;
+                        serviceRefundAmount = bookingService.Total;
                     }
 
                     amount += serviceRefundAmount;
                 }
 
-                var bookingServiceID = booking.Data.BookingServices.FirstOrDefault()?.BookingServicesID;
-
                 var vnPayModel = new VnPayRequestModel
                 {
                     BookingID = booking.Data.BookingID,
-                    BookingServiceID = bookingServiceID.HasValue ? bookingServiceID : null,
+                    BookingServiceID = null,
                     HomeStayID = booking.Data.HomeStayID,
                     AccountID = accountId,
                     Amount = amount,
@@ -246,7 +240,7 @@ namespace GreenRoam.Controllers
             {
                 return BadRequest("Cannot Refunded");
             }
-        }*/
+        }
 
         /*[Authorize(Roles = "Customer")]*/
         [HttpPost]
@@ -481,6 +475,14 @@ namespace GreenRoam.Controllers
         {
             var transaction = await _checkoutService.OwnerAcceptRefundAsync(bookingId, bookingServiceId);
             return Ok(transaction);
+        }
+
+        [HttpPut]
+        [Route("RequestCancelToAdmin")]
+        public async Task<ActionResult<BaseResponse<Booking>>> RequestCancelBookingStatus(int bookingId)
+        {
+            var booking = await _checkoutService.RequestCancelBookingStatus(bookingId);
+            return Ok(booking);
         }
     }
 }

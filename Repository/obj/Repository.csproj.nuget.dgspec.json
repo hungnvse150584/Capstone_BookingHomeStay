@@ -266,6 +266,14 @@
             "Google.Cloud.Dialogflow.V2": {
               "target": "Package",
               "version": "[4.26.0, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.11.0, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.11.0, )"
             }
           },
           "imports": [

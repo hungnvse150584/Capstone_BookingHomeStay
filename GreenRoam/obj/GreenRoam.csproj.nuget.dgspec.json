@@ -382,6 +382,14 @@
             "Google.Cloud.Dialogflow.V2": {
               "target": "Package",
               "version": "[4.26.0, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.11.0, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.11.0, )"
             }
           },
           "imports": [
@@ -471,11 +479,11 @@
             },
             "MailKit": {
               "target": "Package",
-              "version": "[4.8.0, )"
+              "version": "[4.11.0, )"
             },
             "MimeKit": {
               "target": "Package",
-              "version": "[4.9.0, )"
+              "version": "[4.11.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

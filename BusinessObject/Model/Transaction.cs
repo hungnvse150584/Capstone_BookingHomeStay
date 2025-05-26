@@ -71,6 +71,7 @@ namespace BusinessObject.Model
         Completed = 1,
         Cancelled = 2,
         RequestRefund = 3,
-        Refunded = 4
+        Refunded = 4,
+        RequestCancel = 5
     }
 }

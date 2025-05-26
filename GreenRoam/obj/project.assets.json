@@ -3115,7 +3115,9 @@
         "dependencies": {
           "BusinessObject": "1.0.0",
           "DataAccessObject": "1.0.0",
-          "Google.Cloud.Dialogflow.V2": "4.26.0"
+          "Google.Cloud.Dialogflow.V2": "4.26.0",
+          "MailKit": "4.11.0",
+          "MimeKit": "4.11.0"
         },
         "compile": {
           "bin/placeholder/Repository.dll": {}
@@ -3132,8 +3134,8 @@
           "BusinessObject": "1.0.0",
           "CloudinaryDotNet": "1.27.4",
           "Google.Cloud.Dialogflow.V2": "4.26.0",
-          "MailKit": "4.8.0",
-          "MimeKit": "4.9.0",
+          "MailKit": "4.11.0",
+          "MimeKit": "4.11.0",
           "Newtonsoft.Json": "13.0.3",
           "Repository": "1.0.0"
         },

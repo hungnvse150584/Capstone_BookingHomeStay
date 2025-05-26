@@ -12,6 +12,8 @@ namespace Repository.IRepositories
     {
         Task<(int totalAccount, int ownersAccount, int customersAccount, int staffsAccount)> GetTotalAccount();
         Task<Account> GetByAccountIdAsync(string accountId);
-     
+        string SendEmail(string recipientEmail, string subject, string htmlBody);
+
+
     }
 }

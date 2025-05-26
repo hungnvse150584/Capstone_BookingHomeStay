@@ -287,7 +287,7 @@ namespace GreenRoam.Controllers
             emailMessage.Append("<p>If you did not request this, please ignore this email</p>");
             emailMessage.Append("<br>");
             emailMessage.Append("<p>Best regards,</p>");
-            emailMessage.Append("<p><strong>Marguds-2nd_hand-Ecommerce</strong></o>");
+            emailMessage.Append("<p><strong>ChoTot-Travel-CTT</strong></o>");
             emailMessage.Append("</body>");
             emailMessage.Append("</html>");
 

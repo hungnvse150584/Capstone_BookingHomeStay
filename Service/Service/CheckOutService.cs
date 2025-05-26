@@ -35,6 +35,7 @@ namespace Service.Service
         private readonly ICancellationPolicyRepository _cancelltaionRepository;
         private readonly IRoomChangeHistoryRepository _roomchangeHistoryRepository;
         private readonly ITransactionRepository _transactionRepository;
+        private readonly IAccountRepository _accountRepository;
 
         public CheckOutService(IMapper mapper, IBookingRepository bookingRepository,
                               IHomeStayRentalRepository homeStayTypeRepository,
@@ -47,7 +48,8 @@ namespace Service.Service
                               IBookingDetailRepository bookingDetailRepository,
                               IBookingServiceDetailRepository bookingServiceDetailRepository,
                               ICancellationPolicyRepository cancelltaionRepository, IRoomChangeHistoryRepository roomchangeHistoryRepository,
-                              ITransactionRepository transactionRepository)
+                              ITransactionRepository transactionRepository,
+                              IAccountRepository accountRepository)
         {
             _mapper = mapper;
             _bookingRepository = bookingRepository;
@@ -63,6 +65,34 @@ namespace Service.Service
             _cancelltaionRepository = cancelltaionRepository;
             _roomchangeHistoryRepository = roomchangeHistoryRepository;
             _transactionRepository = transactionRepository;
+            _accountRepository = accountRepository;
+        }
+
+        //Tạo mã code 8 ký tự ko trùng lập
+        private string GenerateShortBookingCode(int length = 8)
+        {
+            var guidBytes = Guid.NewGuid().ToByteArray();
+            var base64 = Convert.ToBase64String(guidBytes);
+
+            var safeCode = base64
+                .Replace("/", "")
+                .Replace("+", "")
+                .Replace("=", "")
+                .ToUpper();
+
+            return safeCode.Substring(0, length);
+        }
+
+        private async Task<string> GenerateUniqueBookingCodeAsync()
+        {
+            string code;
+            do
+            {
+                code = GenerateShortBookingCode();
+            }
+            while (await _bookingRepository.ExistsBookingCodeAsync(code));
+
+            return code;
         }
 
         public async Task<BaseResponse<int>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod)
@@ -153,7 +183,7 @@ namespace Service.Service
 
             var booking = new Booking
             {
-                BookingCode = Guid.NewGuid().ToString(),
+                BookingCode = await GenerateUniqueBookingCodeAsync(),
                 BookingDate = nowVN,
                 ExpiredTime = nowVN.AddHours(1),
                 numberOfAdults = createBookingRequest.numberOfAdults,
@@ -725,10 +755,13 @@ namespace Service.Service
 
             var originalTransaction = booking.Transactions
                       .FirstOrDefault(t => (t.TransactionKind == TransactionKind.FullPayment || t.TransactionKind == TransactionKind.Deposited)
-                      && t.StatusTransaction == StatusOfTransaction.Pending);
+                      && (t.StatusTransaction == StatusOfTransaction.Pending || t.StatusTransaction == StatusOfTransaction.RequestCancel ||
+                      t.StatusTransaction == StatusOfTransaction.RequestRefund));
 
             if (originalTransaction == null)
-                throw new Exception("No pending payment transaction found to refund.");
+                throw new Exception("No pending or request cancel payment transaction found to refund.");
+
+            bool wasRequestCancel = originalTransaction.StatusTransaction == StatusOfTransaction.RequestCancel;
 
             // Đổi trạng thái transaction thanh toán gốc thành Refunded
             originalTransaction.StatusTransaction = StatusOfTransaction.Refunded;
@@ -760,7 +793,8 @@ namespace Service.Service
                 {
                     var originalServiceTransaction = service.Transactions?
                                 .FirstOrDefault(t => (t.TransactionKind == TransactionKind.FullPayment || t.TransactionKind == TransactionKind.Deposited)
-                                 && t.StatusTransaction == StatusOfTransaction.Pending);
+                                 && (t.StatusTransaction == StatusOfTransaction.Pending || t.StatusTransaction == StatusOfTransaction.RequestCancel ||
+                                 t.StatusTransaction == StatusOfTransaction.RequestRefund));
 
                     if (originalServiceTransaction != null)
                     {
@@ -797,6 +831,31 @@ namespace Service.Service
                     }
                 }
             }
+
+            if (wasRequestCancel)
+            {
+                var recipientEmail = booking.Account?.Email;
+                if (!string.IsNullOrEmpty(recipientEmail))
+                {
+                    string subject = "Yêu cầu hủy đặt phòng đã được xử lý";
+                    string body = $@"
+                    <html>
+                    <body>
+                        <p>Xin chào {booking.Account?.Name ?? "quý khách"},</p>
+                        <p>Do sự cố phát sinh từ phía HomeStay <strong>{booking.HomeStay.Name}</strong>, 
+                        đơn đặt phòng của bạn (mã: <strong>{booking.BookingCode}</strong>) đã được hủy và hoàn tiền.</p>
+                        <p>Số tiền đã hoàn: <strong>{transaction.Amount:N0} VND</strong>.</p>
+                        <p>Chúng tôi rất lấy làm tiếc về sự việc này, rất mong quý khách thông cảm cho bên HomeStay</p>
+                        <br>
+                        <p>Trân trọng,</p>
+                        <p><strong>ChoTot-Travel-CTT</strong></p>
+                    </body>
+                    </html>";
+
+                    _accountRepository.SendEmail(recipientEmail, subject, body);
+                }
+            }
+
             transaction.AdminAmount = (-commissionRate.PlatformShare) * amountPaid;
             transaction.OwnerAmount = (-commissionRate.HostShare) * amountPaid;
             booking.paymentStatus = PaymentStatus.Refunded;
@@ -1048,6 +1107,69 @@ namespace Service.Service
             }
 
             return new BaseResponse<Transaction?>("Either bookingId or bookingServiceId must be provided.", StatusCodeEnum.BadRequest_400, null);
+        }
+
+        public async Task<BaseResponse<Booking>> RequestCancelBookingStatus(int bookingId)
+        {
+            var bookingExist = await _bookingRepository.GetBookingByIdAsync(bookingId);
+            if (bookingExist == null)
+            {
+                return new BaseResponse<Booking>("Cannot find your Booking!",
+                         StatusCodeEnum.NotFound_404, null);
+            }
+            else
+            {
+                if (bookingExist.Status == BookingStatus.RequestRefund)
+                {
+                    return new BaseResponse<Booking>("This booking is requesting a refund, cannot cancel immediately", StatusCodeEnum.BadRequest_400, null);
+                }
+
+                if (bookingExist.Status == BookingStatus.Confirmed)
+                {
+                    await _bookingRepository.ChangeBookingStatus(bookingExist.BookingID, BookingStatus.RequestCancel, bookingExist.paymentStatus);
+
+                    var transaction = await _transactionRepository.ChangeTransactionStatusForBooking(bookingId, StatusOfTransaction.RequestCancel);
+
+                    if (transaction is null)
+                    {
+                        return new BaseResponse<Booking>("Failed to update transaction status.", StatusCodeEnum.InternalServerError_500, null);
+                    }
+
+                    if (bookingExist.BookingServices?.Any() == true)
+                    {
+                        foreach (var serviceBooking in bookingExist.BookingServices)
+                        {
+                            var bookingService = await _bookingServiceRepository.GetBookingServiceByIdAsync(serviceBooking.BookingServicesID);
+
+                            if (bookingService == null)
+                            {
+                                continue;
+                            }
+
+                            if (bookingService.Status == BookingServicesStatus.Completed || bookingService.Status == BookingServicesStatus.Cancelled || bookingService.Status == BookingServicesStatus.Pending)
+                            {
+                                continue;
+                            }
+
+                            var transactionService = await _transactionRepository.ChangeTransactionStatusForBookingService(serviceBooking.BookingServicesID, StatusOfTransaction.RequestCancel);
+
+                            if (transactionService is null)
+                            {
+                                return new BaseResponse<Booking>("Failed to update transaction status.", StatusCodeEnum.InternalServerError_500, null);
+                            }
+
+                            await _bookingServiceRepository.ChangeBookingServicesStatus(serviceBooking.BookingServicesID, BookingServicesStatus.RequestCancel, serviceBooking.PaymentServiceStatus);
+                        }
+                    }
+
+                    return new BaseResponse<Booking>("Booking and Transaction status updated to RequestCancel successfully.", StatusCodeEnum.OK_200, bookingExist);
+                }
+                else
+                {
+                    return new BaseResponse<Booking>("Cannot send request cancel!", StatusCodeEnum.OK_200, null);
+                }
+                 
+            }
         }
     }
 }

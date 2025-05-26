@@ -75,7 +75,8 @@ namespace BusinessObject.Model;
         Completed = 3,
         Cancelled = 4,
         AcceptedRefund = 5,
-        RequestRefund = 6
+        RequestRefund = 6,
+        RequestCancel = 7
     }
 
     public enum PaymentStatus

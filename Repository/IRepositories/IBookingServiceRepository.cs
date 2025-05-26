@@ -24,6 +24,7 @@ namespace Repository.IRepositories
         Task<IEnumerable<BookingServices>> GetBookingServiceByAccountId(string accountId);
         Task<IEnumerable<BookingServices>> GetBookingServicesByHomeStayId(int homeStayID);
         Task<IEnumerable<BookingServices>> GetConfirmedBookingServiceByBookingId(int? bookingID);
+        Task<bool> ExistsBookingServiceCodeAsync(string code);
 
     }
 }
