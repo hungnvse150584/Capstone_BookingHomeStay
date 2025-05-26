@@ -1227,7 +1227,7 @@ namespace Service.Service
                         return new BaseResponse<Booking>("Failed to update transaction status.", StatusCodeEnum.InternalServerError_500, null);
                     }
 
-                    if (bookingExist.BookingServices?.Any() == true)
+                    /*if (bookingExist.BookingServices?.Any() == true)
                     {
                         foreach (var serviceBooking in bookingExist.BookingServices)
                         {
@@ -1252,7 +1252,7 @@ namespace Service.Service
 
                             await _bookingServiceRepository.ChangeBookingServicesStatus(serviceBooking.BookingServicesID, BookingServicesStatus.RequestCancel, serviceBooking.PaymentServiceStatus);
                         }
-                    }
+                    }*/
 
                     return new BaseResponse<Booking>("Booking and Transaction status updated to RequestCancel successfully.", StatusCodeEnum.OK_200, bookingExist);
                 }
