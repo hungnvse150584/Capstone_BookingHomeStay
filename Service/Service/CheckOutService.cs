@@ -612,21 +612,39 @@ namespace Service.Service
                     $"{string.Join(", ", duplicatedRoomIDs)}", StatusCodeEnum.Conflict_409, null);
             }
 
+
+            var originalBookingDetail = existingBooking.BookingDetails.FirstOrDefault();
+            if (originalBookingDetail == null)
+            {
+                return new BaseResponse<UpdateBookingForRoomRequest>("Booking detail not found.", StatusCodeEnum.BadRequest_400, null);
+            }
+            var originalCheckout = originalBookingDetail.CheckOutDate;
+
             var today = DateTime.UtcNow;
 
             foreach (var updatedBookingDetails in request.BookingDetails)
             {
                 if (updatedBookingDetails.roomTypeID > 0)
                 {
-
-                    if (updatedBookingDetails.CheckOutDate <= today)
+                    if (updatedBookingDetails.CheckOutDate != originalCheckout)
                     {
-                        return new BaseResponse<UpdateBookingForRoomRequest>("Cannot change Room due to the nearly or over of checkout date", StatusCodeEnum.BadRequest_400, null);
+                        if (updatedBookingDetails.CheckOutDate <= today)
+                        {
+                            return new BaseResponse<UpdateBookingForRoomRequest>("Cannot change room because the new CheckOutDate has already passed or is today.", StatusCodeEnum.BadRequest_400, null);
+                        }
+
+                        return new BaseResponse<UpdateBookingForRoomRequest>("Changing CheckOutDate is not allowed. Please use the original CheckOutDate.", StatusCodeEnum.BadRequest_400, null);
                     }
+                    
                     var roomType = await _roomTypeRepository.GetRoomTypesByIdAsync(updatedBookingDetails.roomTypeID);
                     if (roomType == null)
                     {
                         return new BaseResponse<UpdateBookingForRoomRequest>("Invalid RoomType.", StatusCodeEnum.BadRequest_400, null);
+                    }
+
+                    if (updatedBookingDetails.homeStayTypeID != roomType.HomeStayRentalID)
+                    {
+                        return new BaseResponse<UpdateBookingForRoomRequest>("RoomType does not belong to this HomeStayRental.", StatusCodeEnum.BadRequest_400, null);
                     }
 
                     var room = await _roomRepository.GetRoomByIdAsync(updatedBookingDetails.roomID.Value);
