@@ -781,11 +781,6 @@ namespace Service.Service
 
             bool wasRequestCancel = originalTransaction.StatusTransaction == StatusOfTransaction.RequestCancel;
 
-            // Đổi trạng thái transaction thanh toán gốc thành Cancelled
-            originalTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
-
-            await _transactionRepository.UpdateAsync(originalTransaction);
-
             booking.Transactions ??= new List<Transaction>();
 
             bool alreadyExists = booking.Transactions.Any(t =>
@@ -816,8 +811,17 @@ namespace Service.Service
 
                     if (originalServiceTransaction != null)
                     {
-                        originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
-                        await _transactionRepository.UpdateAsync(originalServiceTransaction);
+                        if (amountPaid < booking.Total + bookingServices.Sum(s => s.Total))
+                        {
+                            originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
+                            await _transactionRepository.UpdateAsync(originalServiceTransaction);
+                        }
+
+                        if (amountPaid == booking.Total + bookingServices.Sum(s => s.Total))
+                        {
+                            originalServiceTransaction.StatusTransaction = StatusOfTransaction.Completed;
+                            await _transactionRepository.UpdateAsync(originalServiceTransaction);
+                        }
                     }
 
                     service.Status = BookingServicesStatus.Cancelled;
@@ -848,6 +852,20 @@ namespace Service.Service
                         }
                     }
                 }
+            }
+
+            
+
+            if (amountPaid < booking.Total + bookingServices.Sum(s => s.Total))
+            {
+                originalTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
+                await _transactionRepository.UpdateAsync(originalTransaction);
+            }
+
+            if (amountPaid == booking.Total + bookingServices.Sum(s => s.Total))
+            {
+                originalTransaction.StatusTransaction = StatusOfTransaction.Completed;
+                await _transactionRepository.UpdateAsync(originalTransaction);
             }
 
             if (wasRequestCancel)
@@ -980,12 +998,22 @@ namespace Service.Service
 
             bool wasRequestCancel = originalServiceTransaction.StatusTransaction == StatusOfTransaction.RequestCancel;
 
+            double amountPaid = transaction.Amount;
+
             if (originalServiceTransaction != null)
             {
-                originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
-                await _transactionRepository.UpdateAsync(originalServiceTransaction);
+                if(amountPaid < bookingService.Total)
+                {
+                    originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
+                    await _transactionRepository.UpdateAsync(originalServiceTransaction);
+                }
+
+                if(amountPaid == bookingService.Total)
+                {
+                    originalServiceTransaction.StatusTransaction = StatusOfTransaction.Completed;
+                    await _transactionRepository.UpdateAsync(originalServiceTransaction);
+                } 
             }
-            
 
             var oldPaymentServiceStatus = bookingService.PaymentServiceStatus;
 
@@ -993,7 +1021,7 @@ namespace Service.Service
 
             bookingService.Status = BookingServicesStatus.Cancelled;
 
-            double amountPaid = transaction.Amount;
+           
 
             transaction.TransactionKind = TransactionKind.Refund;
             transaction.StatusTransaction = StatusOfTransaction.Refunded;
