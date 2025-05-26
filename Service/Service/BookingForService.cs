@@ -43,6 +43,33 @@ namespace Service.Service
             _bookingRepository = bookingRepository;
         }
 
+        //Tạo mã code 8 ký tự ko trùng lập
+        private string GenerateShortBookingCode(int length = 8)
+        {
+            var guidBytes = Guid.NewGuid().ToByteArray();
+            var base64 = Convert.ToBase64String(guidBytes);
+
+            var safeCode = base64
+                .Replace("/", "")
+                .Replace("+", "")
+                .Replace("=", "")
+                .ToUpper();
+
+            return safeCode.Substring(0, length);
+        }
+
+        private async Task<string> GenerateUniqueBookingServiceCodeAsync()
+        {
+            string code;
+            do
+            {
+                code = GenerateShortBookingCode();
+            }
+            while (await _bookingServiceRepository.ExistsBookingServiceCodeAsync(code));
+
+            return code;
+        }
+
         public async Task<BaseResponse<IEnumerable<GetAllBookingServices>>> GetAllBookingService(string? search, DateTime? date = null, BookingServicesStatus? status = null, PaymentServicesStatus? paymentStatus = null)
         {
             IEnumerable<BookingServices> booking = await _bookingServiceRepository.GetAllBookingServicesAsync(search, date, status, paymentStatus);
@@ -98,7 +125,7 @@ namespace Service.Service
 
             var bookingServices = new BookingServices
             {
-                BookingServiceCode = Guid.NewGuid().ToString(),
+                BookingServiceCode = await GenerateUniqueBookingServiceCodeAsync(),
                 BookingServicesDate = DateTime.Now,
                 AccountID = bookingServiceRequest.AccountID,
                 BookingID = bookingServiceRequest.BookingID,

@@ -68,6 +68,33 @@ namespace Service.Service
             _accountRepository = accountRepository;
         }
 
+        //Tạo mã code 8 ký tự ko trùng lập
+        private string GenerateShortBookingCode(int length = 8)
+        {
+            var guidBytes = Guid.NewGuid().ToByteArray();
+            var base64 = Convert.ToBase64String(guidBytes);
+
+            var safeCode = base64
+                .Replace("/", "")
+                .Replace("+", "")
+                .Replace("=", "")
+                .ToUpper();
+
+            return safeCode.Substring(0, length);
+        }
+
+        private async Task<string> GenerateUniqueBookingCodeAsync()
+        {
+            string code;
+            do
+            {
+                code = GenerateShortBookingCode();
+            }
+            while (await _bookingRepository.ExistsBookingCodeAsync(code));
+
+            return code;
+        }
+
         public async Task<BaseResponse<int>> CreateBooking(CreateBookingRequest createBookingRequest, PaymentMethod paymentMethod)
         {
             var nowVN = DateTimeHelper.NowVietnamTime();
@@ -156,7 +183,7 @@ namespace Service.Service
 
             var booking = new Booking
             {
-                BookingCode = Guid.NewGuid().ToString(),
+                BookingCode = await GenerateUniqueBookingCodeAsync(),
                 BookingDate = nowVN,
                 ExpiredTime = nowVN.AddHours(1),
                 numberOfAdults = createBookingRequest.numberOfAdults,

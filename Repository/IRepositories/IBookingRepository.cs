@@ -25,6 +25,7 @@ namespace Repository.IRepositories
         Task<Booking?> UpdateBookingWithReportAsync(int bookingId, Booking booking);
         Task<IEnumerable<Booking>> GetBookingsForCheckInReminderAsync();
         Task<List<(string date, double totalBookingsAmount)>> GetCurrentWeekRevenueForHomeStay(int homestayId);
+        Task<bool> ExistsBookingCodeAsync(string code);
 
 
         //For AdminDashBoard

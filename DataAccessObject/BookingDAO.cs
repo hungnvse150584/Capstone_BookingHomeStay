@@ -1096,5 +1096,10 @@ namespace DataAccessObject
                 .OrderByDescending(b => b.BookingDate) // Lấy booking gần nhất
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<bool> ExistsBookingCodeAsync(string code)
+        {
+            return await _context.Bookings.AnyAsync(b => b.BookingCode == code);
+        }
     }
 }

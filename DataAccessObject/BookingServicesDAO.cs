@@ -212,6 +212,11 @@ namespace DataAccessObject
                 .FirstOrDefaultAsync(b => b.AccountID == accountId && b.Status == BookingServicesStatus.Pending);
         }
 
+        public async Task<bool> ExistsBookingServiceCodeAsync(string code)
+        {
+            return await _context.BookingServices.AnyAsync(b => b.BookingServiceCode == code);
+        }
+
         /*public async Task<Booking?> UpdateBookingWithReportAsync(int bookingId, Booking booking)
         {
 

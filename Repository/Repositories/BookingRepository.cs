@@ -158,5 +158,10 @@ namespace Repository.Repositories
         {
             return await _bookingDao.GetStaticBookingsForAllHomestays();
         }
+
+        public async Task<bool> ExistsBookingCodeAsync(string code)
+        {
+            return await _bookingDao.ExistsBookingCodeAsync(code);
+        }
     }
 }
