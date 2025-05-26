@@ -252,6 +252,14 @@ namespace Service.Service
                                     {
                                         serviceDetail.Services.Quantity += serviceDetail.Quantity;
                                         await _serviceRepository.UpdateAsync(serviceDetail.Services);
+
+                                        var serviceTransaction = await _transactionRepository.GetTransactionByBookingServiceId(bookingServiceExist.BookingServicesID);
+
+                                        if (serviceTransaction != null && serviceTransaction.StatusTransaction == StatusOfTransaction.Pending)
+                                        {
+                                            serviceTransaction.StatusTransaction = StatusOfTransaction.Completed;
+                                            await _transactionRepository.UpdateAsync(serviceTransaction);
+                                        }
                                     }
                                 }
                             }
