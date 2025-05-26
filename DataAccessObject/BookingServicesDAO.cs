@@ -100,7 +100,7 @@ namespace DataAccessObject
                 .Include(b => b.Booking)
                 .ThenInclude(o => o.BookingDetails)
                 .Include(b => b.Transactions)
-                .Where(b => b.BookingID == bookingID && b.Status == BookingServicesStatus.Confirmed)
+                .Where(b => b.BookingID == bookingID && (b.Status == BookingServicesStatus.Confirmed || b.Status == BookingServicesStatus.AcceptedRefund))
                 .ToListAsync();
         }
 
