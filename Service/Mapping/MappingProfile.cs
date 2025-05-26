@@ -200,18 +200,19 @@ namespace Service.Mapping
 
             // Ánh xạ từ Room sang GetAllRooms
             CreateMap<Room, GetAllRooms>()
-              .ForMember(dest => dest.RoomID, opt => opt.MapFrom(src => src.RoomID))
-              .ForMember(dest => dest.roomNumber, opt => opt.MapFrom(src => src.roomNumber))
-              .ForMember(dest => dest.isActive, opt => opt.MapFrom(src => src.isActive))
-              .ForMember(dest => dest.RoomTypesID, opt => opt.MapFrom(src => src.RoomTypesID))
-              .ForMember(dest => dest.RoomTypeName, opt => opt.MapFrom(src => src.RoomTypes != null ? src.RoomTypes.Name : null))
-              .ForMember(dest => dest.RentPrice, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.Prices != null ? GetRentPriceFromPrices(src.RoomTypes.Prices) : null))
-              .ForMember(dest => dest.HomeStayRentalName, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.HomeStayRentals != null ? src.RoomTypes.HomeStayRentals.Name : null))
-              .ForMember(dest => dest.ImageRooms, opt => opt.MapFrom(src => src.ImageRooms != null ? src.ImageRooms.Select(ir => new ImageRoomResponse
-              {
-                  ImageRoomID = ir.ImageRoomID,
-                  Image = ir.Image
-              }).ToList() : new List<ImageRoomResponse>()));
+     .ForMember(dest => dest.RoomID, opt => opt.MapFrom(src => src.RoomID))
+     .ForMember(dest => dest.roomNumber, opt => opt.MapFrom(src => src.roomNumber))
+     .ForMember(dest => dest.isActive, opt => opt.MapFrom(src => src.isActive))
+     .ForMember(dest => dest.RoomTypesID, opt => opt.MapFrom(src => src.RoomTypesID))
+     .ForMember(dest => dest.RoomTypeName, opt => opt.MapFrom(src => src.RoomTypes != null ? src.RoomTypes.Name : null))
+     .ForMember(dest => dest.RentPrice, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.Prices != null ? GetRentPriceFromPrices(src.RoomTypes.Prices) : null))
+     .ForMember(dest => dest.HomeStayRentalName, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.HomeStayRentals != null ? src.RoomTypes.HomeStayRentals.Name : null))
+     .ForMember(dest => dest.HomeStayRentalID, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.HomeStayRentals != null ? src.RoomTypes.HomeStayRentals.HomeStayRentalID : (int?)null))
+     .ForMember(dest => dest.ImageRooms, opt => opt.MapFrom(src => src.ImageRooms != null ? src.ImageRooms.Select(ir => new ImageRoomResponse
+     {
+         ImageRoomID = ir.ImageRoomID,
+         Image = ir.Image
+     }).ToList() : new List<ImageRoomResponse>()));
             CreateMap<ImageRoom, ImageRoomResponse>();
 
             CreateMap<Booking, GetAllBookings>().ReverseMap();
