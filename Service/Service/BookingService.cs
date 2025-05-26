@@ -229,19 +229,21 @@ namespace Service.Service
             }
 
             IEnumerable<Booking> bookings = await _bookingRepository.GetBookingsByRoom(roomId, startDate, endDate);
-            if (bookings == null || !bookings.Any())
-            {
-                return new BaseResponse<IEnumerable<GetBookingByRoom>>("No bookings found!", StatusCodeEnum.NotFound_404, null);
-            }
 
-            var bookingResponses = _mapper.Map<IEnumerable<GetBookingByRoom>>(bookings, opt =>
+            // Ánh xạ bookings sang GetBookingByRoom, kể cả khi bookings rỗng
+            var bookingResponses = _mapper.Map<IEnumerable<GetBookingByRoom>>(bookings ?? new List<Booking>(), opt =>
             {
                 opt.Items["roomId"] = roomId;
                 opt.Items["startDate"] = startDate;
                 opt.Items["endDate"] = endDate;
             });
 
-            return new BaseResponse<IEnumerable<GetBookingByRoom>>("Get bookings by room success", StatusCodeEnum.OK_200, bookingResponses);
+            // Luôn trả về 200 OK, với data là mảng rỗng nếu không có booking
+            return new BaseResponse<IEnumerable<GetBookingByRoom>>(
+                bookings != null && bookings.Any() ? "Get bookings by room success" : "No bookings found for this room in the specified date range",
+                StatusCodeEnum.OK_200,
+                bookingResponses ?? new List<GetBookingByRoom>()
+            );
         }
         public async Task<BaseResponse<GetBookingResponse>> GetBookingById(int? bookingID)
         {
