@@ -108,7 +108,7 @@
               "RelativeDocumentMoniker": "Service\\Service\\BookingService.cs",
               "ToolTip": "D:\\FPT\\SEP490_Capstone\\Service\\Service\\BookingService.cs",
               "RelativeToolTip": "Service\\Service\\BookingService.cs",
-              "ViewState": "AgIAANoAAAAAAAAAAAAwwPYAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAANoAAAAAAAAAAAAwwPMAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-26T18:16:57.84Z",
               "EditorCaption": ""
@@ -123,8 +123,7 @@
               "RelativeToolTip": "Service\\Mapping\\MappingProfile.cs",
               "ViewState": "AgIAAMAAAAAAAAAAAADwv9YAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T12:39:56.346Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-26T12:39:56.346Z"
             },
             {
               "$type": "Document",
@@ -184,8 +183,7 @@
               "RelativeToolTip": "GreenRoam\\Controllers\\BookingController.cs",
               "ViewState": "AgIAACcAAAAAAAAAAAAswEMAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T18:09:05.05Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T18:09:05.05Z"
             },
             {
               "$type": "Document",
@@ -197,8 +195,7 @@
               "RelativeToolTip": "DataAccessObject\\BookingDAO.cs",
               "ViewState": "AgIAAHcDAAAAAAAAAAAIwJUDAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T16:11:01.581Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T16:11:01.581Z"
             },
             {
               "$type": "Document",
