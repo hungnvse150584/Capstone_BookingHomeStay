@@ -113,7 +113,7 @@ namespace GreenRoam.Controllers
 
                 if (booking.Data.paymentStatus == PaymentStatus.Deposited)
                 {
-                    amount = booking.Data.bookingDeposit;
+                    amount = booking.Data.bookingDeposit * cancellation.Data.RefundPercentage;
                 }
                 else if (booking.Data.paymentStatus == PaymentStatus.FullyPaid)
                 {
@@ -303,7 +303,7 @@ namespace GreenRoam.Controllers
 
                 if (bookingService.Data.PaymentServiceStatus == PaymentServicesStatus.Deposited)
                 {
-                    amount = bookingService.Data.bookingServiceDeposit;
+                    amount = bookingService.Data.bookingServiceDeposit * cancellation.Data.RefundPercentage;
                 }
                 if (bookingService.Data.PaymentServiceStatus == PaymentServicesStatus.FullyPaid)
                 {
