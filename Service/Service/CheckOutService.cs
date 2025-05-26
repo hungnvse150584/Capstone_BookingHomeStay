@@ -781,8 +781,8 @@ namespace Service.Service
 
             bool wasRequestCancel = originalTransaction.StatusTransaction == StatusOfTransaction.RequestCancel;
 
-            // Đổi trạng thái transaction thanh toán gốc thành Refunded
-            originalTransaction.StatusTransaction = StatusOfTransaction.Refunded;
+            // Đổi trạng thái transaction thanh toán gốc thành Cancelled
+            originalTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
 
             await _transactionRepository.UpdateAsync(originalTransaction);
 
@@ -816,7 +816,7 @@ namespace Service.Service
 
                     if (originalServiceTransaction != null)
                     {
-                        originalServiceTransaction.StatusTransaction = StatusOfTransaction.Refunded;
+                        originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
                         await _transactionRepository.UpdateAsync(originalServiceTransaction);
                     }
 
@@ -972,13 +972,20 @@ namespace Service.Service
 
             var originalServiceTransaction = bookingService.Transactions?
                                 .FirstOrDefault(t => (t.TransactionKind == TransactionKind.FullPayment || t.TransactionKind == TransactionKind.Deposited)
-                                 && t.StatusTransaction == StatusOfTransaction.Pending);
+                                 && (t.StatusTransaction == StatusOfTransaction.Pending || t.StatusTransaction == StatusOfTransaction.RequestCancel ||
+                                 t.StatusTransaction == StatusOfTransaction.RequestRefund));
+
+            if (originalServiceTransaction == null)
+                throw new Exception("No pending or request cancel payment transaction found to refund.");
+
+            bool wasRequestCancel = originalServiceTransaction.StatusTransaction == StatusOfTransaction.RequestCancel;
 
             if (originalServiceTransaction != null)
             {
-                originalServiceTransaction.StatusTransaction = StatusOfTransaction.Refunded;
+                originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
                 await _transactionRepository.UpdateAsync(originalServiceTransaction);
             }
+            
 
             var oldPaymentServiceStatus = bookingService.PaymentServiceStatus;
 
@@ -999,6 +1006,30 @@ namespace Service.Service
             if (alreadyExists)
             {
                 throw new Exception("Duplicate transaction detected.");
+            }
+
+            if (wasRequestCancel)
+            {
+                var recipientEmail = bookingService.Account?.Email;
+                if (!string.IsNullOrEmpty(recipientEmail))
+                {
+                    string subject = "Yêu cầu hủy đặt phòng đã được xử lý";
+                    string body = $@"
+                    <html>
+                    <body>
+                        <p>Xin chào {bookingService.Account?.Name ?? "quý khách"},</p>
+                        <p>Do sự cố phát sinh từ phía HomeStay <strong>{bookingService.HomeStay.Name}</strong>, 
+                        đơn đặt phòng của bạn (mã: <strong>{bookingService.BookingServiceCode}</strong>) đã được hủy và hoàn tiền.</p>
+                        <p>Số tiền đã hoàn: <strong>{transaction.Amount:N0} VND</strong>.</p>
+                        <p>Chúng tôi rất lấy làm tiếc về sự việc này, rất mong quý khách thông cảm cho bên HomeStay</p>
+                        <br>
+                        <p>Trân trọng,</p>
+                        <p><strong>ChoTot-Travel-CTT</strong></p>
+                    </body>
+                    </html>";
+
+                    _accountRepository.SendEmail(recipientEmail, subject, body);
+                }
             }
 
             transaction.HomeStay = bookingService.HomeStay;

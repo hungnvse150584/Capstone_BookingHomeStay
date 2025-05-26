@@ -441,7 +441,7 @@ namespace DataAccessObject
 
                         var transactionsDayCompleted = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
-                            .Where(t => t.StatusTransaction == StatusOfTransaction.Completed || t.StatusTransaction == StatusOfTransaction.Pending)
+                            .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
                             .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
                             .ToListAsync();
 
@@ -487,7 +487,7 @@ namespace DataAccessObject
 
                         var transactionsWeekCompleted = await _context.Transactions
                              .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
-                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed || t.StatusTransaction == StatusOfTransaction.Pending)
+                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
                              .Where(t => t.PayDate >= currentWeekStart && t.PayDate <= currentWeekEnd)
                              .ToListAsync();
 
@@ -530,7 +530,7 @@ namespace DataAccessObject
 
                         var transactionsMonthCompleted = await _context.Transactions
                              .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
-                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed || t.StatusTransaction == StatusOfTransaction.Pending)
+                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
                              .Where(t => t.PayDate >= currentMonthStart && t.PayDate <= currentMonthEnd)
                              .ToListAsync();
 
@@ -572,7 +572,7 @@ namespace DataAccessObject
 
                         var transactionsDayCompleted = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
-                            .Where(t => t.StatusTransaction == StatusOfTransaction.Completed || t.StatusTransaction == StatusOfTransaction.Pending)
+                            .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
                             .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
                             .ToListAsync();
 
@@ -652,7 +652,7 @@ namespace DataAccessObject
                         {
                             var transactionsDayCompleted = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
-                            .Where(t => t.StatusTransaction == StatusOfTransaction.Completed || t.StatusTransaction == StatusOfTransaction.Pending)
+                            .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
                             .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
                             .ToListAsync();
 
@@ -703,7 +703,7 @@ namespace DataAccessObject
                             var commissionRate = homestay.CommissionRate;
                             var transactionsWeekCompleted = await _context.Transactions
                              .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
-                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed || t.StatusTransaction == StatusOfTransaction.Pending)
+                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
                              .Where(t => t.PayDate >= currentWeekStart && t.PayDate <= currentWeekEnd)
                              .ToListAsync();
 
@@ -750,7 +750,7 @@ namespace DataAccessObject
                             var commissionRate = homestay.CommissionRate;
                             var transactionsMonthCompleted = await _context.Transactions
                              .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
-                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed || t.StatusTransaction == StatusOfTransaction.Pending)
+                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
                              .Where(t => t.PayDate >= currentMonthStart && t.PayDate <= currentMonthEnd)
                              .ToListAsync();
 
@@ -795,7 +795,7 @@ namespace DataAccessObject
                             var commissionRate = homestay.CommissionRate;
                             var transactionsDayCompleted = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
-                            .Where(t => t.StatusTransaction == StatusOfTransaction.Completed || t.StatusTransaction == StatusOfTransaction.Pending)
+                            .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
                             .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
                             .ToListAsync();
 
@@ -852,7 +852,7 @@ namespace DataAccessObject
 
             var transactionsDayCompleted = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
-                            .Where(t => t.StatusTransaction == StatusOfTransaction.Completed || t.StatusTransaction == StatusOfTransaction.Pending)
+                            .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
                             .ToListAsync();
 
             var transactionsDayRefunded = await _context.Transactions
@@ -891,7 +891,7 @@ namespace DataAccessObject
             {
                 var transactionsDayCompleted = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
-                            .Where(t => t.StatusTransaction == StatusOfTransaction.Completed || t.StatusTransaction == StatusOfTransaction.Pending)
+                            .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
                             .ToListAsync();
 
                 var transactionsDayRefunded = await _context.Transactions
