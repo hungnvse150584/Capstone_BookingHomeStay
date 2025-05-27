@@ -53,6 +53,6 @@ namespace Service.RequestAndResponse.Response.HomeStayType
        
         public IEnumerable<GetSimpleBookingDetail> BookingDetails { get; set; }
 
-        public ICollection<GetAllPricing> Pricing { get; set; }
+        public ICollection<PricingResponse> Pricing { get; set; }
     }
 }
