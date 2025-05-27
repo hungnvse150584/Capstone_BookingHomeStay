@@ -370,9 +370,9 @@ namespace Service.Service
 
             updatedRoomType.Name = roomTypeExist.Name;
             updatedRoomType.Description = roomTypeExist.Description;
-            updatedRoomType.numberBed = roomTypeExist.numberBed;
+            /*updatedRoomType.numberBed = roomTypeExist.numberBed;
             updatedRoomType.numberBathRoom = roomTypeExist.numberBathRoom;
-            updatedRoomType.numberWifi = roomTypeExist.numberWifi;
+            updatedRoomType.numberWifi = roomTypeExist.numberWifi;*/
             updatedRoomType.Status = roomTypeExist.Status;
             updatedRoomType.MaxAdults = roomTypeExist.MaxAdults;
             updatedRoomType.MaxChildren = roomTypeExist.MaxChildren;

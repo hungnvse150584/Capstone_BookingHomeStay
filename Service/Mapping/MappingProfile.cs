@@ -264,8 +264,7 @@ namespace Service.Mapping
                 .ForMember(dest => dest.Notifications, opt => opt.Ignore());
 
             CreateMap<Pricing, GetAllPricing>().ReverseMap();
-            CreateMap<Room, GetAllRooms>()
-                .ForMember(dest => dest.isActive, opt => opt.MapFrom(src => src.isActive));
+          
 
             // Thêm ánh xạ từ Room sang GetRoomResponse
             CreateMap<Room, GetRoomResponse>().ReverseMap();
@@ -292,6 +291,10 @@ namespace Service.Mapping
      .ForMember(dest => dest.RoomTypesID, opt => opt.MapFrom(src => src.RoomTypesID))
      .ForMember(dest => dest.RoomTypeName, opt => opt.MapFrom(src => src.RoomTypes != null ? src.RoomTypes.Name : null))
      .ForMember(dest => dest.RentPrice, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.Prices != null ? GetRentPriceFromPrices(src.RoomTypes.Prices) : null))
+      .ForMember(dest => dest.numberBed, opt => opt.MapFrom(src => src.numberBed)) // Ánh xạ NumberBed
+                .ForMember(dest => dest.numberBathRoom, opt => opt.MapFrom(src => src.numberBathRoom)) // Ánh xạ NumberBathRoom
+                .ForMember(dest => dest.numberWifi, opt => opt.MapFrom(src => src.numberWifi)) // Ánh xạ NumberWifi
+                .ForMember(dest => dest.RoomTypesID, opt => opt.MapFrom(src => src.RoomTypesID))
      .ForMember(dest => dest.HomeStayRentalName, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.HomeStayRentals != null ? src.RoomTypes.HomeStayRentals.Name : null))
      .ForMember(dest => dest.HomeStayRentalID, opt => opt.MapFrom(src => src.RoomTypes != null && src.RoomTypes.HomeStayRentals != null ? src.RoomTypes.HomeStayRentals.HomeStayRentalID : (int?)null))
      .ForMember(dest => dest.ImageRooms, opt => opt.MapFrom(src => src.ImageRooms != null ? src.ImageRooms.Select(ir => new ImageRoomResponse
