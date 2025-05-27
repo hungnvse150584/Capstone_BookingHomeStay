@@ -15,6 +15,8 @@ namespace Service.RequestAndResponse.Response.BookingOfServicesDetails
 
         public double unitPrice { get; set; }
 
+        public int? dayRent { get; set; }
+
         public double TotalAmount { get; set; }
 
         public int? ServicesID { get; set; }

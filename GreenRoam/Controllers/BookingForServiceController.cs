@@ -39,7 +39,7 @@ namespace GreenRoam.Controllers
             return Ok(bookings);
         }
 
-        [Authorize(Roles = "Owner, Staff")]
+       /* [Authorize(Roles = "Owner, Staff")]*/
         [HttpGet]
         [Route("GetBookingServicesByHomeStayID/{homeStayID}")]
         public async Task<ActionResult<BaseResponse<IEnumerable<GetBookingServiceByHomeStay>>>> GetBookingServicesByHomeStayId(int homeStayID)
