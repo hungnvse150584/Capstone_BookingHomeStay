@@ -869,9 +869,9 @@ namespace DataAccessObject
             totalBookings = transactionsDayCompleted.Count + transactionsDayRefunded.Count;
 
             // totalBookingsAmount là tổng OwnerAmount của Completed + Cancelled + Refunded
-            totalBookingsAmount = transactionsDayCompleted.Sum(t => t.AdminAmount)
-               + transactionsDayCancelled.Sum(t => t.AdminAmount)
-               + transactionsDayRefunded.Sum(t => t.AdminAmount);
+            totalBookingsAmount = transactionsDayCompleted.Sum(t => t.OwnerAmount)
+               + transactionsDayCancelled.Sum(t => t.OwnerAmount)
+               + transactionsDayRefunded.Sum(t => t.OwnerAmount);
 
             return (totalBookings, totalBookingsAmount);
         }
