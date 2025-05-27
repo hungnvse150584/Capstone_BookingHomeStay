@@ -16,6 +16,15 @@ namespace BusinessObject.Model
         [Required]
         public string roomNumber { get; set; }
 
+        [Required]
+        public int numberBed { get; set; }
+
+        [Required]
+        public int numberBathRoom { get; set; }
+
+        [Required]
+        public int numberWifi { get; set; }
+
         public bool isActive { get; set; }
 
         public DateTime? DeleteAt { get; set; }

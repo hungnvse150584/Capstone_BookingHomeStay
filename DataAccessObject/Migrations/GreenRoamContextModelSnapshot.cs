@@ -1130,6 +1130,15 @@ namespace DataAccessObject.Migrations
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
+                    b.Property<int>("numberBathRoom")
+                        .HasColumnType("int");
+
+                    b.Property<int>("numberBed")
+                        .HasColumnType("int");
+
+                    b.Property<int>("numberWifi")
+                        .HasColumnType("int");
+
                     b.Property<string>("roomNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1216,15 +1225,6 @@ namespace DataAccessObject.Migrations
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("numberBathRoom")
-                        .HasColumnType("int");
-
-                    b.Property<int>("numberBed")
-                        .HasColumnType("int");
-
-                    b.Property<int>("numberWifi")
-                        .HasColumnType("int");
 
                     b.HasKey("RoomTypesID");
 
