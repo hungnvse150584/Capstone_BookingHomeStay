@@ -9746,6 +9746,11 @@
             "type": "number",
             "format": "double"
           },
+          "dayRent": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "totalAmount": {
             "type": "number",
             "format": "double"
@@ -9858,7 +9863,7 @@
           "pricing": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/GetAllPricing"
+              "$ref": "#/components/schemas/PricingResponse"
             },
             "nullable": true
           }
@@ -11523,6 +11528,11 @@
             "format": "int32",
             "nullable": true
           },
+          "lowestPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
           "imageHomeStayRentals": {
             "type": "array",
             "items": {
@@ -12036,6 +12046,11 @@
             "type": "number",
             "format": "double"
           },
+          "dayRent": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "totalAmount": {
             "type": "number",
             "format": "double"
@@ -12122,6 +12137,11 @@
           "unitPrice": {
             "type": "number",
             "format": "double"
+          },
+          "dayRent": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "totalAmount": {
             "type": "number",
@@ -13186,6 +13206,11 @@
             "nullable": true
           },
           "defaultRentPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "lowestPrice": {
             "type": "number",
             "format": "double",
             "nullable": true
@@ -14735,6 +14760,11 @@
           "unitPrice": {
             "type": "number",
             "format": "double"
+          },
+          "dayRent": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "totalAmount": {
             "type": "number",

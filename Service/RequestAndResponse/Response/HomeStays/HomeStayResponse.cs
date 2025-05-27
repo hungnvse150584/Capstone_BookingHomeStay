@@ -43,5 +43,6 @@ namespace Service.RequestAndResponse.Response.HomeStays
         public IEnumerable<ImageHomeStayResponse> ImageHomeStays { get; set; }
         public double? SumRate { get; set; }
         public decimal? DefaultRentPrice { get; set; }
+        public decimal? LowestPrice { get; set; }
     }
 }

@@ -25,9 +25,10 @@ namespace Service.RequestAndResponse.Response.HomeStayType
         public int MaxPeople { get; set; }
         public int? HomeStayID { get; set; }
         public int TotalAvailableRooms { get; set; }
+        public decimal? LowestPrice { get; set; }
         public IEnumerable<GetAllImageHomeStayType> ImageHomeStayRentals { get; set; }
         public ICollection<GetAllRoomTypeForFilter> RoomTypes { get; set; }
         public IEnumerable<GetBookingDetailFilter> BookingDetails { get; set; } // Sửa kiểu thành GetBookingDetailFilter
-        public ICollection<GetAllPricing> Pricing { get; set; }
+        public ICollection<PricingResponse> Pricing { get; set; }
     }
 }

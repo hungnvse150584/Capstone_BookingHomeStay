@@ -63,6 +63,62 @@ namespace Service.Mapping
                          ?? prices.FirstOrDefault(p => p.IsActive);
             return pricing != null ? (decimal?)pricing.RentPrice : null;
         }
+        private decimal? GetLowestPrice(HomeStayRentals src)
+        {
+            var allPrices = new List<decimal>();
+
+            // Lấy giá từ HomeStayRentals
+            if (src.Prices != null)
+            {
+                var validPrices = src.Prices
+                    .Where(p => p.IsActive)
+                    .Select(p => (decimal)p.RentPrice);
+                allPrices.AddRange(validPrices);
+            }
+
+            // Lấy giá từ RoomTypes
+            if (src.RoomTypes != null)
+            {
+                var roomTypePrices = src.RoomTypes
+                    .SelectMany(rt => rt.Prices ?? new List<Pricing>())
+                    .Where(p => p.IsActive)
+                    .Select(p => (decimal)p.RentPrice);
+                allPrices.AddRange(roomTypePrices);
+            }
+
+            return allPrices.Any() ? allPrices.Min() : (decimal?)null;
+        }
+        private decimal? GetLowestPrice(HomeStay src)
+        {
+            var allPrices = new List<decimal>();
+
+            if (src.HomeStayRentals != null)
+            {
+                foreach (var rental in src.HomeStayRentals)
+                {
+                    // Giá từ HomeStayRentals
+                    if (rental.Prices != null)
+                    {
+                        var rentalPrices = rental.Prices
+                            .Where(p => p.IsActive)
+                            .Select(p => (decimal)p.RentPrice);
+                        allPrices.AddRange(rentalPrices);
+                    }
+
+                    // Giá từ RoomTypes của HomeStayRentals
+                    if (rental.RoomTypes != null)
+                    {
+                        var roomTypePrices = rental.RoomTypes
+                            .SelectMany(rt => rt.Prices ?? new List<Pricing>())
+                            .Where(p => p.IsActive)
+                            .Select(p => (decimal)p.RentPrice);
+                        allPrices.AddRange(roomTypePrices);
+                    }
+                }
+            }
+
+            return allPrices.Any() ? allPrices.Min() : (decimal?)null;
+        }
         private decimal? GetDefaultRentPriceFromPrices(ICollection<Pricing> prices)
         {
             if (prices == null) return null;
@@ -96,6 +152,7 @@ namespace Service.Mapping
                   .Select(p => (decimal?)p.RentPrice)
                   .FirstOrDefault()
               : null));
+      
 
 
             CreateMap<HomeStay, SimpleHomeStayResponse>()
@@ -149,11 +206,13 @@ namespace Service.Mapping
                 .ForMember(dest => dest.BookingDetails, opt => opt.MapFrom(src => src.BookingDetails))
                 .ForMember(dest => dest.Pricing, opt => opt.MapFrom(src => src.Prices));
 
+
             // Ánh xạ HomeStayRentals sang GetAllHomeStayTypeFilter
             CreateMap<HomeStayRentals, GetAllHomeStayTypeFilter>()
                 .ForMember(dest => dest.ImageHomeStayRentals, opt => opt.MapFrom(src => src.ImageHomeStayRentals))
                 .ForMember(dest => dest.RoomTypes, opt => opt.MapFrom(src => src.RoomTypes))
                 .ForMember(dest => dest.BookingDetails, opt => opt.MapFrom(src => src.BookingDetails))
+                .ForMember(dest => dest.LowestPrice, opt => opt.MapFrom(src => GetLowestPrice(src)))
                 .ForMember(dest => dest.Pricing, opt => opt.MapFrom(src => src.Prices));
 
             // Ánh xạ các kiểu con cho GetAllHomeStayTypeFilter
@@ -225,10 +284,12 @@ namespace Service.Mapping
             CreateMap<HomeStayRentals, GetSimpleHomeStayType>().ReverseMap();
 
             CreateMap<HomeStayRentals, GetHomeStayRentalDetailResponse>()
-                .ForMember(dest => dest.Pricing, opt => opt.MapFrom(src => src.Prices))
-                .ForMember(dest => dest.ImageHomeStayRentals, opt => opt.MapFrom(src => src.ImageHomeStayRentals))
-                .ForMember(dest => dest.RoomTypes, opt => opt.MapFrom(src => src.RoomTypes))
-                .ForMember(dest => dest.BookingDetails, opt => opt.MapFrom(src => src.BookingDetails));
+     .ForMember(dest => dest.Pricing, opt => opt.MapFrom(src => src.Prices))
+     .ForMember(dest => dest.ImageHomeStayRentals, opt => opt.MapFrom(src => src.ImageHomeStayRentals))
+     .ForMember(dest => dest.RoomTypes, opt => opt.MapFrom(src => src.RoomTypes))
+     .ForMember(dest => dest.BookingDetails, opt => opt.MapFrom(src => src.BookingDetails))
+     .ForMember(dest => dest.HomeStayName, opt => opt.MapFrom(src => src.HomeStay != null ? src.HomeStay.Name : null))
+     .ForMember(dest => dest.LowestPrice, opt => opt.MapFrom(src => GetLowestPrice(src)));
 
             CreateMap<RoomTypes, RoomTypeDetailResponse>()
                 .ForMember(dest => dest.Pricings, opt => opt.MapFrom(src => src.Prices))
@@ -320,11 +381,6 @@ namespace Service.Mapping
        .ForMember(dest => dest.DayType, opt => opt.MapFrom(src => src.DayType))
        .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
 
-            CreateMap<HomeStayRentals, GetHomeStayRentalDetailResponse>()
-                .ForMember(dest => dest.Pricing, opt => opt.MapFrom(src => src.Prices))
-                .ForMember(dest => dest.ImageHomeStayRentals, opt => opt.MapFrom(src => src.ImageHomeStayRentals))
-                .ForMember(dest => dest.RoomTypes, opt => opt.MapFrom(src => src.RoomTypes))
-                .ForMember(dest => dest.BookingDetails, opt => opt.MapFrom(src => src.BookingDetails));
 
             CreateMap<CreateRoomRequest, Room>()
                  .ForMember(dest => dest.ImageRooms, opt => opt.Ignore());

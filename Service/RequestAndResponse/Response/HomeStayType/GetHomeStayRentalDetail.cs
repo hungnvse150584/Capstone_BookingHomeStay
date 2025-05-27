@@ -39,6 +39,7 @@ namespace Service.RequestAndResponse.Response.HomeStayType
         public int MaxPeople { get; set; }
 
         public int? HomeStayID { get; set; }
+        public double? LowestPrice { get; set; }
         public IEnumerable<GetAllImageHomeStayType> ImageHomeStayRentals { get; set; }
         public ICollection<RoomTypeDetailResponse> RoomTypes { get; set; }
 
