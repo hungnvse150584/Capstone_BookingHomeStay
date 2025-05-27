@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessObject.Model;
 using CloudinaryDotNet;
+using GreenRoam.Ultilities;
 using Microsoft.Identity.Client;
 using Repository.IRepositories;
 using Repository.Repositories;
@@ -91,6 +92,9 @@ namespace Service.Service
 
         public async Task<BaseResponse<BookingServices>> CreateServiceBooking(CreateBookingServices bookingServiceRequest, PaymentServicesMethod paymentServicesMethod)
         {
+            var nowVN = DateTimeHelper.NowVietnamTime();
+            TimeZoneInfo vnZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+
             var bookingExist = await _bookingRepository.GetBookingByIdAsync(bookingServiceRequest.BookingID);
             if (bookingExist == null)
             {
@@ -126,7 +130,7 @@ namespace Service.Service
             var bookingServices = new BookingServices
             {
                 BookingServiceCode = await GenerateUniqueBookingServiceCodeAsync(),
-                BookingServicesDate = DateTime.Now,
+                BookingServicesDate = nowVN,
                 AccountID = bookingServiceRequest.AccountID,
                 BookingID = bookingServiceRequest.BookingID,
                 Status = BookingServicesStatus.Pending,
