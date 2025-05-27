@@ -14616,7 +14616,7 @@
             },
             "nullable": true
           },
-          "cheapestPrice": {
+          "lowestPrice": {
             "type": "number",
             "format": "double",
             "nullable": true

@@ -38,7 +38,7 @@ namespace Service.RequestAndResponse.Response.HomeStays
         public double? SumRate { get; set; }
         public int TotalRatings { get; set; } 
         public IEnumerable<CreateRatingResponse> LatestRatings { get; set; }
-        public decimal? CheapestPrice { get; set; }
+        public decimal? LowestPrice { get; set; }
         public string? StaffID { get; set; } 
         public string? StaffName { get; set; }
         public string? OwnerID { get; set; } 

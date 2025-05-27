@@ -89,8 +89,9 @@ namespace Service.Mapping
             return allPrices.Any() ? allPrices.Min() : 200000m; // Giá mặc định 200000 nếu không có giá hợp lệ
         }
 
-        private decimal? GetLowestPriceForMapping(HomeStay src)
+        private decimal GetLowestPriceForMapping(HomeStay src)
         {
+            Console.WriteLine($"Processing GetLowestPriceForMapping for HomeStayID: {src.HomeStayID}");
             var allPrices = new List<decimal>();
 
             // Lấy giá từ HomeStayRentals.Prices (RentWhole = true)
@@ -102,6 +103,11 @@ namespace Service.Mapping
                     .Where(p => p.IsActive)
                     .Select(p => (decimal)p.RentPrice);
                 allPrices.AddRange(rentalPrices);
+                Console.WriteLine($"HomeStayID: {src.HomeStayID}, Active HomeStayRentals Count: {src.HomeStayRentals.Count(r => r.Status)}, Rental Prices Count: {rentalPrices.Count()}");
+            }
+            else
+            {
+                Console.WriteLine($"HomeStayID: {src.HomeStayID}, HomeStayRentals is null");
             }
 
             // Lấy giá từ RoomTypes.Prices (RentWhole = false)
@@ -114,9 +120,12 @@ namespace Service.Mapping
                     .Where(p => p.IsActive)
                     .Select(p => (decimal)p.RentPrice);
                 allPrices.AddRange(roomTypePrices);
+                Console.WriteLine($"HomeStayID: {src.HomeStayID}, RoomTypes Count: {src.HomeStayRentals.SelectMany(r => r.RoomTypes ?? new List<RoomTypes>()).Count()}, RoomType Prices Count: {roomTypePrices.Count()}");
             }
 
-            return allPrices.Any() ? allPrices.Min() : 200000m; // Giá mặc định 200000 nếu không có giá hợp lệ
+            var result = allPrices.Any() ? allPrices.Min() : 200000m;
+            Console.WriteLine($"HomeStayID: {src.HomeStayID}, Total Prices Count: {allPrices.Count}, Lowest Price: {result}");
+            return result;
         }
 
         private decimal? GetDefaultRentPrice(HomeStay src)
@@ -195,7 +204,7 @@ namespace Service.Mapping
          .ForMember(dest => dest.SumRate, opt => opt.Ignore())
          .ForMember(dest => dest.TotalRatings, opt => opt.Ignore())
          .ForMember(dest => dest.LatestRatings, opt => opt.Ignore())
-         .ForMember(dest => dest.CheapestPrice, opt => opt.Ignore())
+          .ForMember(dest => dest.LowestPrice, opt => opt.MapFrom(src => GetLowestPriceForMapping(src)))
          .ForMember(dest => dest.StaffID, opt => opt.Ignore())
             .ForMember(dest => dest.StaffName, opt => opt.Ignore())
             .ForMember(dest => dest.OwnerID, opt => opt.Ignore());
@@ -270,7 +279,11 @@ namespace Service.Mapping
                   ImageRoomID = ir.ImageRoomID,
                   Image = ir.Image
               }).ToList() : new List<ImageRoomResponse>())); ;
-
+            CreateMap<IEnumerable<Room>, GetAllRoomsWithTotals>()
+        .ForMember(dest => dest.Rooms, opt => opt.MapFrom(src => src))
+        .ForMember(dest => dest.TotalRooms, opt => opt.Ignore())
+        .ForMember(dest => dest.TotalBathRooms, opt => opt.Ignore())
+        .ForMember(dest => dest.TotalWifis, opt => opt.Ignore());
 
             // Ánh xạ từ Room sang GetAllRooms
             CreateMap<Room, GetAllRooms>()
@@ -568,7 +581,7 @@ namespace Service.Mapping
             .ForMember(dest => dest.servicesName, opt => opt.MapFrom(src => src.servicesName))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.servicesPrice, opt => opt.MapFrom(src => src.servicesPrice))
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))  
             .ForMember(dest => dest.HomeStayID, opt => opt.MapFrom(src => src.HomeStayID))
             .ForMember(dest => dest.ServiceType, opt => opt.MapFrom(src => src.ServiceType));
 

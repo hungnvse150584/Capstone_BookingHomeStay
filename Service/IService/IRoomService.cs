@@ -31,6 +31,6 @@ namespace Service.IService
         Task<BaseResponse<GetAllRooms>> ChangeRoomStatus(int roomID, bool? isActive);
         Task<BaseResponse<IEnumerable<GetAllRooms>>> FilterRoomsByRoomTypeAndDates(int roomTypeId, DateTime checkInDate, DateTime checkOutDate);
         Task<BaseResponse<IEnumerable<GetAllRooms>>> FilterAllRoomsByHomeStayIDAsync(int homeStayID, DateTime? startDate, DateTime? endDate);
-        Task<BaseResponse<IEnumerable<GetAllRooms>>> FilterAllRoomsByHomeStayRentalIDAsync(int homeStayRentalID, DateTime? startDate, DateTime? endDate);
+        Task<BaseResponse<GetAllRoomsWithTotals>> FilterAllRoomsByHomeStayRentalIDAsync(int homeStayRentalID, DateTime? startDate, DateTime? endDate);
     }
 }
