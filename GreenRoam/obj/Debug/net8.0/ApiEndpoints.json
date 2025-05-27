@@ -4008,11 +4008,6 @@
         "IsRequired": false
       },
       {
-        "Name": "isUsed",
-        "Type": "System.Boolean",
-        "IsRequired": false
-      },
-      {
         "Name": "isActive",
         "Type": "System.Boolean",
         "IsRequired": false

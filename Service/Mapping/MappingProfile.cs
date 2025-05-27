@@ -86,43 +86,40 @@ namespace Service.Mapping
                 allPrices.AddRange(roomTypePrices);
             }
 
-            return allPrices.Any() ? allPrices.Min() : (decimal?)null;
+            return allPrices.Any() ? allPrices.Min() : 200000m; // Giá mặc định 200000 nếu không có giá hợp lệ
         }
-        private decimal? GetLowestPrice(HomeStay src, DateTime? checkInDate = null, DateTime? checkOutDate = null)
+
+        private decimal? GetLowestPriceForMapping(HomeStay src)
         {
             var allPrices = new List<decimal>();
 
-            // Lấy giá từ HomeStayRentals.Prices (cho RentWhole = true)
+            // Lấy giá từ HomeStayRentals.Prices (RentWhole = true)
             if (src.HomeStayRentals != null)
             {
                 var rentalPrices = src.HomeStayRentals
-                    .Where(r => r.Status && r.Prices != null)
-                    .SelectMany(r => r.Prices)
-                    .Where(p => p.IsActive &&
-                                (!p.StartDate.HasValue || (checkInDate.HasValue && p.StartDate.Value.Date <= checkOutDate.Value)) &&
-                                (!p.EndDate.HasValue || (checkOutDate.HasValue && p.EndDate.Value.Date >= checkInDate.Value)))
+                    .Where(r => r.Status)
+                    .SelectMany(r => r.Prices ?? new List<Pricing>())
+                    .Where(p => p.IsActive)
                     .Select(p => (decimal)p.RentPrice);
                 allPrices.AddRange(rentalPrices);
             }
 
-            // Lấy giá từ RoomTypes.Prices (cho RentWhole = false)
+            // Lấy giá từ RoomTypes.Prices (RentWhole = false)
             if (src.HomeStayRentals != null)
             {
                 var roomTypePrices = src.HomeStayRentals
                     .Where(r => r.Status && r.RoomTypes != null)
                     .SelectMany(r => r.RoomTypes)
                     .SelectMany(rt => rt.Prices ?? new List<Pricing>())
-                    .Where(p => p.IsActive &&
-                                (!p.StartDate.HasValue || (checkInDate.HasValue && p.StartDate.Value.Date <= checkOutDate.Value)) &&
-                                (!p.EndDate.HasValue || (checkOutDate.HasValue && p.EndDate.Value.Date >= checkInDate.Value)))
+                    .Where(p => p.IsActive)
                     .Select(p => (decimal)p.RentPrice);
                 allPrices.AddRange(roomTypePrices);
             }
 
-            return allPrices.Any() ? allPrices.Min() : (decimal?)null;
+            return allPrices.Any() ? allPrices.Min() : 200000m; // Giá mặc định 200000 nếu không có giá hợp lệ
         }
 
-        private decimal? GetDefaultRentPrice(HomeStay src, DateTime? checkInDate = null, DateTime? checkOutDate = null)
+        private decimal? GetDefaultRentPrice(HomeStay src)
         {
             var allPrices = new List<Pricing>();
 
@@ -132,9 +129,7 @@ namespace Service.Mapping
                 var rentalPrices = src.HomeStayRentals
                     .Where(r => r.Status && r.Prices != null)
                     .SelectMany(r => r.Prices)
-                    .Where(p => p.IsActive &&
-                                (!p.StartDate.HasValue || (checkInDate.HasValue && p.StartDate.Value.Date <= checkOutDate.Value)) &&
-                                (!p.EndDate.HasValue || (checkOutDate.HasValue && p.EndDate.Value.Date >= checkInDate.Value)));
+                    .Where(p => p.IsActive);
                 allPrices.AddRange(rentalPrices);
             }
 
@@ -145,9 +140,7 @@ namespace Service.Mapping
                     .Where(r => r.Status && r.RoomTypes != null)
                     .SelectMany(r => r.RoomTypes)
                     .SelectMany(rt => rt.Prices ?? new List<Pricing>())
-                    .Where(p => p.IsActive &&
-                                (!p.StartDate.HasValue || (checkInDate.HasValue && p.StartDate.Value.Date <= checkOutDate.Value)) &&
-                                (!p.EndDate.HasValue || (checkOutDate.HasValue && p.EndDate.Value.Date >= checkInDate.Value)));
+                    .Where(p => p.IsActive);
                 allPrices.AddRange(roomTypePrices);
             }
 
@@ -163,23 +156,19 @@ namespace Service.Mapping
             }
 
             // Nếu không có giá IsDefault, lấy giá thấp nhất
-            return allPrices.Any() ? (decimal?)allPrices.Min(p => p.RentPrice) : null;
+            return allPrices.Any() ? (decimal?)allPrices.Min(p => p.RentPrice) : 200000m; // Giá mặc định 200000 nếu không có giá hợp lệ
         }
         public MappingProfile()
         {
             CreateMap<HomeStay, HomeStayResponse>()
-      .ForMember(dest => dest.CommissionRateID, opt => opt.MapFrom(src => src.CommissionRateID))
-      .ForMember(dest => dest.SumRate, opt => opt.MapFrom(src => src.Ratings.Any() ? src.Ratings.Average(r => r.SumRate) : (double?)null))
-      .ForMember(dest => dest.DefaultRentPrice, opt => opt.MapFrom(src =>
-          src.HomeStayRentals != null && src.HomeStayRentals.Any()
-              ? src.HomeStayRentals.SelectMany(r => r.RoomTypes ?? new List<RoomTypes>())
-                  .SelectMany(rt => rt.Prices ?? new List<Pricing>())
-                  .Where(p => p.IsActive)
-                  .OrderBy(p => p.RentPrice)
-                  .Select(p => (decimal?)p.RentPrice)
-                  .FirstOrDefault()
-              : null));
-      
+                .ForMember(dest => dest.CommissionRateID, opt => opt.MapFrom(src => src.CommissionRateID))
+                .ForMember(dest => dest.SumRate, opt => opt.MapFrom(src => src.Ratings.Any() ? src.Ratings.Average(r => r.SumRate) : (double?)null))
+              .ForMember(dest => dest.DefaultRentPrice, opt => opt.MapFrom(src => GetDefaultRentPrice(src)))
+                .ForMember(dest => dest.LowestPrice, opt => opt.MapFrom(src => GetLowestPriceForMapping(src)));
+
+
+
+
 
 
             CreateMap<HomeStay, SimpleHomeStayResponse>()
