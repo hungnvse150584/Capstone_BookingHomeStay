@@ -88,55 +88,82 @@ namespace Service.Mapping
 
             return allPrices.Any() ? allPrices.Min() : (decimal?)null;
         }
-        private decimal? GetLowestPrice(HomeStay src)
+        private decimal? GetLowestPrice(HomeStay src, DateTime? checkInDate = null, DateTime? checkOutDate = null)
         {
             var allPrices = new List<decimal>();
 
+            // Lấy giá từ HomeStayRentals.Prices (cho RentWhole = true)
             if (src.HomeStayRentals != null)
             {
-                foreach (var rental in src.HomeStayRentals)
-                {
-                    // Giá từ HomeStayRentals
-                    if (rental.Prices != null)
-                    {
-                        var rentalPrices = rental.Prices
-                            .Where(p => p.IsActive)
-                            .Select(p => (decimal)p.RentPrice);
-                        allPrices.AddRange(rentalPrices);
-                    }
+                var rentalPrices = src.HomeStayRentals
+                    .Where(r => r.Status && r.Prices != null)
+                    .SelectMany(r => r.Prices)
+                    .Where(p => p.IsActive &&
+                                (!p.StartDate.HasValue || (checkInDate.HasValue && p.StartDate.Value.Date <= checkOutDate.Value)) &&
+                                (!p.EndDate.HasValue || (checkOutDate.HasValue && p.EndDate.Value.Date >= checkInDate.Value)))
+                    .Select(p => (decimal)p.RentPrice);
+                allPrices.AddRange(rentalPrices);
+            }
 
-                    // Giá từ RoomTypes của HomeStayRentals
-                    if (rental.RoomTypes != null)
-                    {
-                        var roomTypePrices = rental.RoomTypes
-                            .SelectMany(rt => rt.Prices ?? new List<Pricing>())
-                            .Where(p => p.IsActive)
-                            .Select(p => (decimal)p.RentPrice);
-                        allPrices.AddRange(roomTypePrices);
-                    }
-                }
+            // Lấy giá từ RoomTypes.Prices (cho RentWhole = false)
+            if (src.HomeStayRentals != null)
+            {
+                var roomTypePrices = src.HomeStayRentals
+                    .Where(r => r.Status && r.RoomTypes != null)
+                    .SelectMany(r => r.RoomTypes)
+                    .SelectMany(rt => rt.Prices ?? new List<Pricing>())
+                    .Where(p => p.IsActive &&
+                                (!p.StartDate.HasValue || (checkInDate.HasValue && p.StartDate.Value.Date <= checkOutDate.Value)) &&
+                                (!p.EndDate.HasValue || (checkOutDate.HasValue && p.EndDate.Value.Date >= checkInDate.Value)))
+                    .Select(p => (decimal)p.RentPrice);
+                allPrices.AddRange(roomTypePrices);
             }
 
             return allPrices.Any() ? allPrices.Min() : (decimal?)null;
         }
-        private decimal? GetDefaultRentPriceFromPrices(ICollection<Pricing> prices)
+
+        private decimal? GetDefaultRentPrice(HomeStay src, DateTime? checkInDate = null, DateTime? checkOutDate = null)
         {
-            if (prices == null) return null;
-            // Ưu tiên lấy giá IsDefault và IsActive
-            var defaultPricing = prices
-                .Where(p => p.IsDefault && p.IsActive)
-                .OrderBy(p => p.RentPrice)
-                .FirstOrDefault();
-            if (defaultPricing != null)
+            var allPrices = new List<Pricing>();
+
+            // Lấy giá từ HomeStayRentals.Prices (cho RentWhole = true)
+            if (src.HomeStayRentals != null)
             {
-                return (decimal?)defaultPricing.RentPrice;
+                var rentalPrices = src.HomeStayRentals
+                    .Where(r => r.Status && r.Prices != null)
+                    .SelectMany(r => r.Prices)
+                    .Where(p => p.IsActive &&
+                                (!p.StartDate.HasValue || (checkInDate.HasValue && p.StartDate.Value.Date <= checkOutDate.Value)) &&
+                                (!p.EndDate.HasValue || (checkOutDate.HasValue && p.EndDate.Value.Date >= checkInDate.Value)));
+                allPrices.AddRange(rentalPrices);
             }
-            // Nếu không có giá IsDefault, lấy giá rẻ nhất từ tất cả Prices với IsActive = true
-            var cheapestPricing = prices
-                .Where(p => p.IsActive)
+
+            // Lấy giá từ RoomTypes.Prices (cho RentWhole = false)
+            if (src.HomeStayRentals != null)
+            {
+                var roomTypePrices = src.HomeStayRentals
+                    .Where(r => r.Status && r.RoomTypes != null)
+                    .SelectMany(r => r.RoomTypes)
+                    .SelectMany(rt => rt.Prices ?? new List<Pricing>())
+                    .Where(p => p.IsActive &&
+                                (!p.StartDate.HasValue || (checkInDate.HasValue && p.StartDate.Value.Date <= checkOutDate.Value)) &&
+                                (!p.EndDate.HasValue || (checkOutDate.HasValue && p.EndDate.Value.Date >= checkInDate.Value)));
+                allPrices.AddRange(roomTypePrices);
+            }
+
+            // Ưu tiên giá có IsDefault = true
+            var defaultPrice = allPrices
+                .Where(p => p.IsDefault)
                 .OrderBy(p => p.RentPrice)
                 .FirstOrDefault();
-            return cheapestPricing != null ? (decimal?)cheapestPricing.RentPrice : null;
+
+            if (defaultPrice != null)
+            {
+                return (decimal?)defaultPrice.RentPrice;
+            }
+
+            // Nếu không có giá IsDefault, lấy giá thấp nhất
+            return allPrices.Any() ? (decimal?)allPrices.Min(p => p.RentPrice) : null;
         }
         public MappingProfile()
         {
