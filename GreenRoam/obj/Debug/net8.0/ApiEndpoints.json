@@ -4018,6 +4018,21 @@
         "IsRequired": false
       },
       {
+        "Name": "numberBed",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "numberBathRoom",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "numberWifi",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
         "Name": "RoomTypesID",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
@@ -4267,21 +4282,6 @@
       {
         "Name": "Description",
         "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "numberBed",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "numberBathRoom",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "numberWifi",
-        "Type": "System.Int32",
         "IsRequired": false
       },
       {

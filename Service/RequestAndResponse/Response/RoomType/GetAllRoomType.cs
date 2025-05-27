@@ -19,12 +19,7 @@ namespace Service.RequestAndResponse.Response.RoomType
 
         public DateTime UpdateAt { get; set; }
 
-        public int numberBed { get; set; }
-
-        public int numberBathRoom { get; set; }
-
-        public int numberWifi { get; set; }
-
+       
         public bool Status { get; set; }
 
         public int MaxAdults { get; set; }

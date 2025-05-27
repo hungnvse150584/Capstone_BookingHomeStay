@@ -1,4 +1,4 @@
-﻿    using BusinessObject.Model;
+﻿       using BusinessObject.Model;
     using BusinessObject.PaginatedLists;
     using DataAccessObject.BaseDAO;
     using Microsoft.EntityFrameworkCore;

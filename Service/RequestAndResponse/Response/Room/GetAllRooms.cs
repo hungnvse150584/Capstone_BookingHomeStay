@@ -21,7 +21,13 @@ namespace Service.RequestAndResponse.Response.Room
         //public bool isUsed { get; set; }
 
         public bool isActive { get; set; }
+        public int numberBed { get; set; }
 
+
+        public int numberBathRoom { get; set; }
+
+
+        public int numberWifi { get; set; }
         public int? RoomTypesID { get; set; }
         public string RoomTypeName { get; set; } // Chỉ lấy tên của RoomType
         public decimal? RentPrice { get; set; }

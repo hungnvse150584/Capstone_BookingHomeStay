@@ -6525,6 +6525,18 @@
                   "isActive": {
                     "type": "boolean"
                   },
+                  "numberBed": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "numberBathRoom": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "numberWifi": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
                   "RoomTypesID": {
                     "type": "integer",
                     "format": "int32"
@@ -6546,6 +6558,15 @@
                   "style": "form"
                 },
                 "isActive": {
+                  "style": "form"
+                },
+                "numberBed": {
+                  "style": "form"
+                },
+                "numberBathRoom": {
+                  "style": "form"
+                },
+                "numberWifi": {
                   "style": "form"
                 },
                 "RoomTypesID": {
@@ -6946,18 +6967,6 @@
                   "Description": {
                     "type": "string"
                   },
-                  "numberBed": {
-                    "type": "integer",
-                    "format": "int32"
-                  },
-                  "numberBathRoom": {
-                    "type": "integer",
-                    "format": "int32"
-                  },
-                  "numberWifi": {
-                    "type": "integer",
-                    "format": "int32"
-                  },
                   "Status": {
                     "type": "boolean"
                   },
@@ -6989,15 +6998,6 @@
                   "style": "form"
                 },
                 "Description": {
-                  "style": "form"
-                },
-                "numberBed": {
-                  "style": "form"
-                },
-                "numberBathRoom": {
-                  "style": "form"
-                },
-                "numberWifi": {
                   "style": "form"
                 },
                 "Status": {
@@ -9070,18 +9070,6 @@
             "type": "string",
             "nullable": true
           },
-          "numberBed": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberBathRoom": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberWifi": {
-            "type": "integer",
-            "format": "int32"
-          },
           "status": {
             "type": "boolean"
           },
@@ -9121,18 +9109,6 @@
           "description": {
             "type": "string",
             "nullable": true
-          },
-          "numberBed": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberBathRoom": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberWifi": {
-            "type": "integer",
-            "format": "int32"
           },
           "status": {
             "type": "boolean",
@@ -10256,18 +10232,6 @@
             "format": "date-time",
             "example": "2025-05-10T00:00:00"
           },
-          "numberBed": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberBathRoom": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberWifi": {
-            "type": "integer",
-            "format": "int32"
-          },
           "status": {
             "type": "boolean"
           },
@@ -10308,18 +10272,6 @@
           "description": {
             "type": "string",
             "nullable": true
-          },
-          "numberBed": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberBathRoom": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberWifi": {
-            "type": "integer",
-            "format": "int32"
           },
           "status": {
             "type": "boolean",
@@ -10403,6 +10355,18 @@
           },
           "isActive": {
             "type": "boolean"
+          },
+          "numberBed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberBathRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberWifi": {
+            "type": "integer",
+            "format": "int32"
           },
           "roomTypesID": {
             "type": "integer",
@@ -14203,6 +14167,9 @@
       },
       "Room": {
         "required": [
+          "numberBathRoom",
+          "numberBed",
+          "numberWifi",
           "roomNumber"
         ],
         "type": "object",
@@ -14214,6 +14181,18 @@
           "roomNumber": {
             "minLength": 1,
             "type": "string"
+          },
+          "numberBed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberBathRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberWifi": {
+            "type": "integer",
+            "format": "int32"
           },
           "isActive": {
             "type": "boolean"
@@ -14365,10 +14344,7 @@
       "RoomTypes": {
         "required": [
           "description",
-          "name",
-          "numberBathRoom",
-          "numberBed",
-          "numberWifi"
+          "name"
         ],
         "type": "object",
         "properties": {
@@ -14399,18 +14375,6 @@
             "format": "date-time",
             "nullable": true,
             "example": "2025-05-10T00:00:00"
-          },
-          "numberBed": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberBathRoom": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberWifi": {
-            "type": "integer",
-            "format": "int32"
           },
           "maxAdults": {
             "type": "integer",
@@ -15782,6 +15746,18 @@
           "isActive": {
             "type": "boolean"
           },
+          "numberBed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberBathRoom": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberWifi": {
+            "type": "integer",
+            "format": "int32"
+          },
           "roomTypesID": {
             "type": "integer",
             "format": "int32",
@@ -15816,18 +15792,6 @@
           "description": {
             "type": "string",
             "nullable": true
-          },
-          "numberBed": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberBathRoom": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "numberWifi": {
-            "type": "integer",
-            "format": "int32"
           },
           "status": {
             "type": "boolean"

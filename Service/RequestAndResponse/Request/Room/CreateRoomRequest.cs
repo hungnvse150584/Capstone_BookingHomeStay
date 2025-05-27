@@ -11,9 +11,16 @@ namespace Service.RequestAndResponse.Request.Room
     {
         public string roomNumber { get; set; }
 
-        public bool isUsed { get; set; } = true;
 
         public bool isActive { get; set; } = true;
+        public int numberBed { get; set; }
+
+
+        public int numberBathRoom { get; set; }
+
+
+        public int numberWifi { get; set; }
+
 
         public int? RoomTypesID { get; set; }
         public List<IFormFile>? Images { get; set; }
