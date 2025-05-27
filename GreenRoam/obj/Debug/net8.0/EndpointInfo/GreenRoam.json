@@ -6519,9 +6519,6 @@
                   "roomNumber": {
                     "type": "string"
                   },
-                  "isUsed": {
-                    "type": "boolean"
-                  },
                   "isActive": {
                     "type": "boolean"
                   },
@@ -6552,9 +6549,6 @@
               },
               "encoding": {
                 "roomNumber": {
-                  "style": "form"
-                },
-                "isUsed": {
                   "style": "form"
                 },
                 "isActive": {
@@ -15739,9 +15733,6 @@
           "roomNumber": {
             "type": "string",
             "nullable": true
-          },
-          "isUsed": {
-            "type": "boolean"
           },
           "isActive": {
             "type": "boolean"
