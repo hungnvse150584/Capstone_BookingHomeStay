@@ -10,6 +10,7 @@ using Service.RequestAndResponse.Enums;
 using Service.RequestAndResponse.Request.Services;
 using Service.RequestAndResponse.Response.Services;
 using System.Net;
+using GreenRoam.Ultilities;
 
 namespace Service.Service;
 
@@ -34,12 +35,16 @@ public class ServicesService : IServiceServices
 
     public async Task<BaseResponse<GetAllServices>> CreateService(CreateServices request)
     {
+        
         try
         {
+            var nowVN = DateTimeHelper.NowVietnamTime();
+            TimeZoneInfo vnZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+
             // Ánh xạ dữ liệu từ request sang entity
             var serviceEntity = _mapper.Map<Services>(request);
-            serviceEntity.CreateAt = DateTime.UtcNow;
-            serviceEntity.UpdateAt = DateTime.UtcNow;
+            serviceEntity.CreateAt = nowVN;
+            serviceEntity.UpdateAt = nowVN;
 
             // Lưu service
             await _servicesRepository.AddAsync(serviceEntity);
@@ -80,8 +85,12 @@ public class ServicesService : IServiceServices
 
     public async Task<BaseResponse<GetAllServices>> UpdateService(int serviceId, UpdateServices request)
     {
+       
         try
         {
+            var nowVN = DateTimeHelper.NowVietnamTime();
+            TimeZoneInfo vnZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+
             // Kiểm tra service có tồn tại không
             var serviceExist = await _servicesRepository.GetByIdAsync(serviceId);
             if (serviceExist == null)
@@ -95,7 +104,7 @@ public class ServicesService : IServiceServices
             // Ánh xạ dữ liệu từ request sang entity
             var updatedService = _mapper.Map(request, serviceExist);
             updatedService.CreateAt = serviceExist.CreateAt;
-            updatedService.UpdateAt = DateTime.UtcNow;
+            updatedService.UpdateAt = nowVN;
 
             // Lưu service
             await _servicesRepository.UpdateAsync(updatedService);
