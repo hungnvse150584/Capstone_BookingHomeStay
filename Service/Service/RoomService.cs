@@ -291,7 +291,7 @@ namespace Service.Service
                     null);
             }
         }
-        public async Task<BaseResponse<IEnumerable<GetAllRooms>>> FilterAllRoomsByHomeStayRentalIDAsync(int homeStayRentalID, DateTime? startDate, DateTime? endDate)
+        public async Task<BaseResponse<GetAllRoomsWithTotals>> FilterAllRoomsByHomeStayRentalIDAsync(int homeStayRentalID, DateTime? startDate, DateTime? endDate)
         {
             try
             {
@@ -299,10 +299,16 @@ namespace Service.Service
 
                 if (rooms == null || !rooms.Any())
                 {
-                    return new BaseResponse<IEnumerable<GetAllRooms>>(
+                    return new BaseResponse<GetAllRoomsWithTotals>(
                         "Không tìm thấy phòng cho HomeStayRentalID này.",
                         StatusCodeEnum.OK_200,
-                        new List<GetAllRooms>());
+                        new GetAllRoomsWithTotals
+                        {
+                            Rooms = new List<GetAllRooms>(),
+                            TotalRooms = 0,
+                            TotalBathRooms = 0,
+                            TotalWifis = 0
+                        });
                 }
 
                 Console.WriteLine("Phòng trước khi ánh xạ:");
@@ -327,14 +333,27 @@ namespace Service.Service
                     Console.WriteLine($"RoomID: {roomResponse.RoomID}, RoomTypeName: {roomResponse.RoomTypeName ?? "null"}, RentPrice: {roomResponse.RentPrice?.ToString() ?? "null"}");
                 }
 
-                return new BaseResponse<IEnumerable<GetAllRooms>>(
+                // Tính tổng
+                var totalRooms = rooms.Count();
+                var totalBathRooms = rooms.Sum(r => r.numberBathRoom);
+                var totalWifis = rooms.Sum(r => r.numberWifi);
+
+                var result = new GetAllRoomsWithTotals
+                {
+                    Rooms = roomResponses,
+                    TotalRooms = totalRooms,
+                    TotalBathRooms = totalBathRooms,
+                    TotalWifis = totalWifis
+                };
+
+                return new BaseResponse<GetAllRoomsWithTotals>(
                     "Lấy danh sách phòng thành công!",
                     StatusCodeEnum.OK_200,
-                    roomResponses);
+                    result);
             }
             catch (Exception ex)
             {
-                return new BaseResponse<IEnumerable<GetAllRooms>>(
+                return new BaseResponse<GetAllRoomsWithTotals>(
                     $"Đã xảy ra lỗi khi lấy danh sách phòng: {ex.Message}",
                     StatusCodeEnum.InternalServerError_500,
                     null);
