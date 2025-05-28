@@ -334,7 +334,7 @@ namespace Service.Service
                 Console.WriteLine("Phòng trước khi ánh xạ:");
                 foreach (var room in rooms)
                 {
-                    Console.WriteLine($"RoomID: {room.RoomID}, RoomTypesID: {room.RoomTypesID}, RoomTypeName: {room.RoomTypes?.Name}");
+                    Console.WriteLine($"RoomID: {room.RoomID}, RoomTypesID: {room.RoomTypesID}, RoomTypeName: {room.RoomTypes?.Name}, IsActive: {room.isActive}");
                     if (room.RoomTypes?.Prices != null)
                     {
                         Console.WriteLine($"Giá: {string.Join(", ", room.RoomTypes.Prices.Select(p => $"RentPrice: {p.RentPrice}, DayType: {p.DayType}, IsActive: {p.IsActive}"))}");
@@ -350,7 +350,7 @@ namespace Service.Service
                 Console.WriteLine("Phòng sau khi ánh xạ:");
                 foreach (var roomResponse in roomResponses)
                 {
-                    Console.WriteLine($"RoomID: {roomResponse.RoomID}, RoomTypeName: {roomResponse.RoomTypeName ?? "null"}, RentPrice: {roomResponse.RentPrice?.ToString() ?? "null"}");
+                    Console.WriteLine($"RoomID: {roomResponse.RoomID}, RoomTypeName: {roomResponse.RoomTypeName ?? "null"}, RentPrice: {roomResponse.RentPrice?.ToString() ?? "null"}, IsActive: {roomResponse.isActive}");
                 }
 
                 var result = new GetAllRoomsWithTotals

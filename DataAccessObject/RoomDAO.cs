@@ -226,8 +226,7 @@ namespace DataAccessObject
             IQueryable<Room> query = _context.Rooms
                 .Where(r => r.RoomTypes != null)
                 .Where(r => r.RoomTypes.HomeStayRentals != null)
-                .Where(r => r.RoomTypes.HomeStayRentals.HomeStayRentalID == homeStayRentalID)
-                .Where(r => r.isActive == true);
+                .Where(r => r.RoomTypes.HomeStayRentals.HomeStayRentalID == homeStayRentalID);
 
             if (startDate.HasValue && endDate.HasValue)
             {
@@ -249,9 +248,9 @@ namespace DataAccessObject
 
             query = query
                 .Include(r => r.RoomTypes)
-                .ThenInclude(rt => rt.HomeStayRentals)
+                    .ThenInclude(rt => rt.HomeStayRentals)
                 .Include(r => r.RoomTypes)
-                .ThenInclude(rt => rt.Prices)
+                    .ThenInclude(rt => rt.Prices)
                 .Include(r => r.ImageRooms);
 
             var rooms = await query.AsNoTracking().ToListAsync();
@@ -259,7 +258,7 @@ namespace DataAccessObject
             Console.WriteLine($"Phòng sau khi lọc cho HomeStayRentalID {homeStayRentalID}: {string.Join(", ", rooms.Select(r => r.RoomID))}");
             foreach (var room in rooms)
             {
-                Console.WriteLine($"RoomID: {room.RoomID}, RoomTypesID: {room.RoomTypesID}, RoomTypeName: {room.RoomTypes?.Name}");
+                Console.WriteLine($"RoomID: {room.RoomID}, RoomTypesID: {room.RoomTypesID}, RoomTypeName: {room.RoomTypes?.Name}, IsActive: {room.isActive}");
                 if (room.RoomTypes?.Prices != null)
                 {
                     Console.WriteLine($"Giá cho RoomTypesID {room.RoomTypesID}: {string.Join(", ", room.RoomTypes.Prices.Select(p => $"RentPrice: {p.RentPrice}, DayType: {p.DayType}, IsActive: {p.IsActive}"))}");
