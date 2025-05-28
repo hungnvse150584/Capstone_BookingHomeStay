@@ -281,7 +281,7 @@ namespace Service.Mapping
               }).ToList() : new List<ImageRoomResponse>())); ;
             CreateMap<IEnumerable<Room>, GetAllRoomsWithTotals>()
         .ForMember(dest => dest.Rooms, opt => opt.MapFrom(src => src))
-        .ForMember(dest => dest.TotalRooms, opt => opt.Ignore())
+        .ForMember(dest => dest.TotalBedRooms, opt => opt.Ignore())
         .ForMember(dest => dest.TotalBathRooms, opt => opt.Ignore())
         .ForMember(dest => dest.TotalWifis, opt => opt.Ignore());
 
