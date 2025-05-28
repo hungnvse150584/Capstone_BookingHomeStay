@@ -26,14 +26,16 @@ namespace Service.Service
         private readonly IMapper _mapper;
         private readonly IRoomRepository _roomRepository;
         private readonly IImageRoomRepository _imageRoomRepository;
+        private readonly IHomeStayRentalRepository _homeStayRentalRepository;
         private readonly Cloudinary _cloudinary;
 
-        public RoomService(IMapper mapper, IRoomRepository roomRepository, IImageRoomRepository imageRoomRepository, Cloudinary cloudinary)
+        public RoomService(IMapper mapper, IRoomRepository roomRepository, IImageRoomRepository imageRoomRepository, Cloudinary cloudinary, IHomeStayRentalRepository homeStayRentalRepository)
         {
             _mapper = mapper;
             _roomRepository = roomRepository;
             _imageRoomRepository = imageRoomRepository;
             _cloudinary = cloudinary;
+            _homeStayRentalRepository = homeStayRentalRepository;
         }
 
         private async Task<List<string>> UploadImagesToCloudinary(List<IFormFile> files)
@@ -295,19 +297,37 @@ namespace Service.Service
         {
             try
             {
+                // Lấy HomeStayRentals
+                var homeStayRental = await _homeStayRentalRepository.GetHomeStayTypesByIdAsync(homeStayRentalID);
+                if (homeStayRental == null || !homeStayRental.Status)
+                {
+                    Console.WriteLine($"HomeStayRentalID: {homeStayRentalID} not found or inactive.");
+                    return new BaseResponse<GetAllRoomsWithTotals>(
+                        "Không tìm thấy HomeStayRental hợp lệ.",
+                        StatusCodeEnum.OK_200,
+                        new GetAllRoomsWithTotals
+                        {
+                            Rooms = new List<GetAllRooms>(),
+                            TotalBedRooms = 0,
+                            TotalBathRooms = 0,
+                            TotalWifis = 0
+                        });
+                }
+
                 var rooms = await _roomRepository.FilterAllRoomsByHomeStayRentalIDAsync(homeStayRentalID, startDate, endDate);
 
                 if (rooms == null || !rooms.Any())
                 {
+                    Console.WriteLine($"No rooms found for HomeStayRentalID: {homeStayRentalID}");
                     return new BaseResponse<GetAllRoomsWithTotals>(
                         "Không tìm thấy phòng cho HomeStayRentalID này.",
                         StatusCodeEnum.OK_200,
                         new GetAllRoomsWithTotals
                         {
                             Rooms = new List<GetAllRooms>(),
-                            TotalRooms = 0,
-                            TotalBathRooms = 0,
-                            TotalWifis = 0
+                            TotalBedRooms = homeStayRental.numberBedRoom,
+                            TotalBathRooms = homeStayRental.numberBathRoom,
+                            TotalWifis = homeStayRental.numberWifi
                         });
                 }
 
@@ -333,18 +353,15 @@ namespace Service.Service
                     Console.WriteLine($"RoomID: {roomResponse.RoomID}, RoomTypeName: {roomResponse.RoomTypeName ?? "null"}, RentPrice: {roomResponse.RentPrice?.ToString() ?? "null"}");
                 }
 
-                // Tính tổng
-                var totalRooms = rooms.Count();
-                var totalBathRooms = rooms.Sum(r => r.numberBathRoom);
-                var totalWifis = rooms.Sum(r => r.numberWifi);
-
                 var result = new GetAllRoomsWithTotals
                 {
                     Rooms = roomResponses,
-                    TotalRooms = totalRooms,
-                    TotalBathRooms = totalBathRooms,
-                    TotalWifis = totalWifis
+                    TotalBedRooms = homeStayRental.numberBedRoom,
+                    TotalBathRooms = homeStayRental.numberBathRoom,
+                    TotalWifis = homeStayRental.numberWifi
                 };
+
+                Console.WriteLine($"HomeStayRentalID: {homeStayRentalID}, TotalBedRooms: {result.TotalBedRooms}, TotalBathRooms: {result.TotalBathRooms}, TotalWifis: {result.TotalWifis}");
 
                 return new BaseResponse<GetAllRoomsWithTotals>(
                     "Lấy danh sách phòng thành công!",
@@ -353,6 +370,7 @@ namespace Service.Service
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in FilterAllRoomsByHomeStayRentalIDAsync for HomeStayRentalID: {homeStayRentalID}, Message: {ex.Message}");
                 return new BaseResponse<GetAllRoomsWithTotals>(
                     $"Đã xảy ra lỗi khi lấy danh sách phòng: {ex.Message}",
                     StatusCodeEnum.InternalServerError_500,

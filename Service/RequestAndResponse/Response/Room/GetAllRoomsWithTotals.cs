@@ -9,8 +9,9 @@ namespace Service.RequestAndResponse.Response.Room
     public class GetAllRoomsWithTotals
     {
         public IEnumerable<GetAllRooms> Rooms { get; set; }
-        public int TotalRooms { get; set; }
+        public int TotalBedRooms { get; set; }
         public int TotalBathRooms { get; set; }
         public int TotalWifis { get; set; }
     }
 }
+    
