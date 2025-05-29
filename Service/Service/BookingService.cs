@@ -463,6 +463,7 @@ namespace Service.Service
                                             if (serviceTransaction != null && serviceTransaction.StatusTransaction == StatusOfTransaction.Pending)
                                             {
                                                 serviceTransaction.StatusTransaction = StatusOfTransaction.Completed;
+                                                serviceTransaction.FinishDate = DateTime.Now;
                                                 await _transactionRepository.UpdateAsync(serviceTransaction);
                                             }
                                         }
@@ -499,6 +500,7 @@ namespace Service.Service
                         }*/
 
                         transaction.StatusTransaction = StatusOfTransaction.Completed;
+                        transaction.FinishDate = DateTime.Now;
                         await _transactionRepository.UpdateAsync(transaction);
                     }
                 }
@@ -573,6 +575,7 @@ namespace Service.Service
                         await _transactionRepository.UpdateAsync(transaction);
                     }*/
                     transaction.StatusTransaction = StatusOfTransaction.Completed;
+                    transaction.FinishDate = DateTime.Now;
                     await _transactionRepository.UpdateAsync(transaction);
                 }
                 else
@@ -608,6 +611,7 @@ namespace Service.Service
                         if (serviceTransaction != null && serviceTransaction.StatusTransaction == StatusOfTransaction.Pending)
                         {
                             serviceTransaction.StatusTransaction = StatusOfTransaction.Completed;
+                            serviceTransaction.FinishDate = DateTime.Now;
                             await _transactionRepository.UpdateAsync(serviceTransaction);
                         }
                     }
