@@ -442,19 +442,19 @@ namespace DataAccessObject
                         var transactionsDayCompleted = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
-                            .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
+                            .Where(t => t.FinishDate >= currentDayStart && t.FinishDate <= currentDayEnd)
                             .ToListAsync();
 
                         var transactionsDayRefunded = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Refunded)
-                            .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
+                            .Where(t => t.FinishDate >= currentDayStart && t.FinishDate <= currentDayEnd)
                             .ToListAsync();
 
                         var transactionsDayCancelled = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Cancelled)
-                            .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
+                            .Where(t => t.FinishDate >= currentDayStart && t.FinishDate <= currentDayEnd)
                             .ToListAsync();
 
                         // totalBookings là tổng count của Completed + Refunded
@@ -488,19 +488,19 @@ namespace DataAccessObject
                         var transactionsWeekCompleted = await _context.Transactions
                              .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                              .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
-                             .Where(t => t.PayDate >= currentWeekStart && t.PayDate <= currentWeekEnd)
+                             .Where(t => t.FinishDate >= currentWeekStart && t.FinishDate <= currentWeekEnd)
                              .ToListAsync();
 
                         var transactionsWeekRefunded = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Refunded)
-                            .Where(t => t.PayDate >= currentWeekStart && t.PayDate <= currentWeekEnd)
+                            .Where(t => t.FinishDate >= currentWeekStart && t.FinishDate <= currentWeekEnd)
                             .ToListAsync();
 
                         var transactionsWeekCancelled = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Cancelled)
-                            .Where(t => t.PayDate >= currentWeekStart && t.PayDate <= currentWeekEnd)
+                            .Where(t => t.FinishDate >= currentWeekStart && t.FinishDate <= currentWeekEnd)
                             .ToListAsync();
 
                         // totalBookings là tổng count của Completed + Refunded
@@ -531,19 +531,19 @@ namespace DataAccessObject
                         var transactionsMonthCompleted = await _context.Transactions
                              .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                              .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
-                             .Where(t => t.PayDate >= currentMonthStart && t.PayDate <= currentMonthEnd)
+                             .Where(t => t.FinishDate >= currentMonthStart && t.FinishDate <= currentMonthEnd)
                              .ToListAsync();
 
                         var transactionsMonthRefunded = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Refunded)
-                            .Where(t => t.PayDate >= currentMonthStart && t.PayDate <= currentMonthEnd)
+                            .Where(t => t.FinishDate >= currentMonthStart && t.FinishDate <= currentMonthEnd)
                             .ToListAsync();
 
                         var transactionsMonthCancelled = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Cancelled)
-                            .Where(t => t.PayDate >= currentMonthStart && t.PayDate <= currentMonthEnd)
+                            .Where(t => t.FinishDate >= currentMonthStart && t.FinishDate <= currentMonthEnd)
                             .ToListAsync();
 
                         // totalBookings là tổng count của Completed + Refunded
@@ -573,19 +573,19 @@ namespace DataAccessObject
                         var transactionsDayCompleted = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
-                            .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
+                            .Where(t => t.FinishDate >= currentDayStart && t.FinishDate <= currentDayEnd)
                             .ToListAsync();
 
                         var transactionsDayRefunded = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Refunded)
-                            .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
+                            .Where(t => t.FinishDate >= currentDayStart && t.FinishDate <= currentDayEnd)
                             .ToListAsync();
 
                         var transactionsDayCancelled = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Cancelled)
-                            .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
+                            .Where(t => t.FinishDate >= currentDayStart && t.FinishDate <= currentDayEnd)
                             .ToListAsync();
 
                         // totalBookings là tổng count của Completed + Refunded
@@ -653,19 +653,19 @@ namespace DataAccessObject
                             var transactionsDayCompleted = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
-                            .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
+                            .Where(t => t.FinishDate >= currentDayStart && t.FinishDate <= currentDayEnd)
                             .ToListAsync();
 
                             var transactionsDayRefunded = await _context.Transactions
                                 .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                                 .Where(t => t.StatusTransaction == StatusOfTransaction.Refunded)
-                                .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
+                                .Where(t => t.FinishDate >= currentDayStart && t.FinishDate <= currentDayEnd)
                                 .ToListAsync();
 
                             var transactionsDayCancelled = await _context.Transactions
                                 .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                                 .Where(t => t.StatusTransaction == StatusOfTransaction.Cancelled)
-                                .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
+                                .Where(t => t.FinishDate >= currentDayStart && t.FinishDate <= currentDayEnd)
                                 .ToListAsync();
 
                             // totalBookings là tổng count của Completed + Refunded
@@ -704,19 +704,19 @@ namespace DataAccessObject
                             var transactionsWeekCompleted = await _context.Transactions
                              .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                              .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
-                             .Where(t => t.PayDate >= currentWeekStart && t.PayDate <= currentWeekEnd)
+                             .Where(t => t.FinishDate >= currentWeekStart && t.FinishDate <= currentWeekEnd)
                              .ToListAsync();
 
                             var transactionsWeekRefunded = await _context.Transactions
                                 .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                                 .Where(t => t.StatusTransaction == StatusOfTransaction.Refunded)
-                                .Where(t => t.PayDate >= currentWeekStart && t.PayDate <= currentWeekEnd)
+                                .Where(t => t.FinishDate >= currentWeekStart && t.FinishDate <= currentWeekEnd)
                                 .ToListAsync();
 
                             var transactionsWeekCancelled = await _context.Transactions
                                 .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                                 .Where(t => t.StatusTransaction == StatusOfTransaction.Cancelled)
-                                .Where(t => t.PayDate >= currentWeekStart && t.PayDate <= currentWeekEnd)
+                                .Where(t => t.FinishDate >= currentWeekStart && t.FinishDate <= currentWeekEnd)
                                 .ToListAsync();
 
                             // totalBookings là tổng count của Completed + Refunded
@@ -751,19 +751,19 @@ namespace DataAccessObject
                             var transactionsMonthCompleted = await _context.Transactions
                              .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                              .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
-                             .Where(t => t.PayDate >= currentMonthStart && t.PayDate <= currentMonthEnd)
+                             .Where(t => t.FinishDate >= currentMonthStart && t.FinishDate <= currentMonthEnd)
                              .ToListAsync();
 
                             var transactionsMonthRefunded = await _context.Transactions
                                 .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                                 .Where(t => t.StatusTransaction == StatusOfTransaction.Refunded)
-                                .Where(t => t.PayDate >= currentMonthStart && t.PayDate <= currentMonthEnd)
+                                .Where(t => t.FinishDate >= currentMonthStart && t.FinishDate <= currentMonthEnd)
                                 .ToListAsync();
 
                             var transactionsMonthCancelled = await _context.Transactions
                                 .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                                 .Where(t => t.StatusTransaction == StatusOfTransaction.Cancelled)
-                                .Where(t => t.PayDate >= currentMonthStart && t.PayDate <= currentMonthEnd)
+                                .Where(t => t.FinishDate >= currentMonthStart && t.FinishDate <= currentMonthEnd)
                                 .ToListAsync();
 
                             // totalBookings là tổng count của Completed + Refunded
@@ -796,19 +796,19 @@ namespace DataAccessObject
                             var transactionsDayCompleted = await _context.Transactions
                             .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                             .Where(t => t.StatusTransaction == StatusOfTransaction.Completed)
-                            .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
+                            .Where(t => t.FinishDate >= currentDayStart && t.FinishDate <= currentDayEnd)
                             .ToListAsync();
 
                             var transactionsDayRefunded = await _context.Transactions
                                 .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                                 .Where(t => t.StatusTransaction == StatusOfTransaction.Refunded)
-                                .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
+                                .Where(t => t.FinishDate >= currentDayStart && t.FinishDate <= currentDayEnd)
                                 .ToListAsync();
 
                             var transactionsDayCancelled = await _context.Transactions
                                 .Where(t => t.HomeStay.HomeStayID == homestay.HomeStayID)
                                 .Where(t => t.StatusTransaction == StatusOfTransaction.Cancelled)
-                                .Where(t => t.PayDate >= currentDayStart && t.PayDate <= currentDayEnd)
+                                .Where(t => t.FinishDate >= currentDayStart && t.FinishDate <= currentDayEnd)
                                 .ToListAsync();
 
                             // totalBookings là tổng count của Completed + Refunded

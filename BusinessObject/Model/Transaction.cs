@@ -37,6 +37,9 @@ namespace BusinessObject.Model
         public string BankTranNo { get; set; }
 
         public DateTime PayDate { get; set; }
+
+        public DateTime FinishDate { get; set; }
+
         public string BankCode { get; set; }
 
         public string TransactionNo { get; set; }
