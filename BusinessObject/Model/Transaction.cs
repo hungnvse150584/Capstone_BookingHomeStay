@@ -38,7 +38,7 @@ namespace BusinessObject.Model
 
         public DateTime PayDate { get; set; }
 
-        public DateTime FinishDate { get; set; }
+        public DateTime? FinishDate { get; set; }
 
         public string BankCode { get; set; }
 

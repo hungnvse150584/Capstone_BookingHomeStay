@@ -214,6 +214,9 @@ namespace Service.Service
 
         public async Task<BaseResponse<Booking>> ChangeBookingStatus(int bookingId, int? bookingServiceID, BookingStatus status, PaymentStatus paymentStatus, BookingServicesStatus servicesStatus, PaymentServicesStatus statusPayment)
         {
+            var nowVN = DateTimeHelper.NowVietnamTime();
+            TimeZoneInfo vnZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+
             var bookingExist = await _bookingRepository.GetBookingByIdAsync(bookingId);
             if (bookingExist == null)
             {
@@ -258,7 +261,7 @@ namespace Service.Service
                                         if (serviceTransaction != null && serviceTransaction.StatusTransaction == StatusOfTransaction.Pending)
                                         {
                                             serviceTransaction.StatusTransaction = StatusOfTransaction.Completed;
-                                            serviceTransaction.FinishDate = DateTime.Now;
+                                            serviceTransaction.FinishDate = nowVN;
                                             await _transactionRepository.UpdateAsync(serviceTransaction);
                                         }
                                     }
@@ -292,7 +295,7 @@ namespace Service.Service
                                 {
 
                                     transaction.StatusTransaction = StatusOfTransaction.Completed;
-                                    transaction.FinishDate = DateTime.Now;
+                                    transaction.FinishDate = nowVN;
                                     await _transactionRepository.UpdateAsync(transaction);
                                 }
                             }
@@ -337,7 +340,7 @@ namespace Service.Service
                                                 if (serviceTransaction != null && serviceTransaction.StatusTransaction == StatusOfTransaction.Pending)
                                                 {
                                                     serviceTransaction.StatusTransaction = StatusOfTransaction.Completed;
-                                                    serviceTransaction.FinishDate = DateTime.Now;
+                                                    serviceTransaction.FinishDate = nowVN;
                                                     await _transactionRepository.UpdateAsync(serviceTransaction);
                                                 }
                                             }
@@ -357,7 +360,7 @@ namespace Service.Service
                     {
 
                         transaction.StatusTransaction = StatusOfTransaction.Completed;
-                        transaction.FinishDate = DateTime.Now;
+                        transaction.FinishDate = nowVN;
                         await _transactionRepository.UpdateAsync(transaction);
                     }
                     else
@@ -392,7 +395,7 @@ namespace Service.Service
                             if (serviceTransaction != null && serviceTransaction.StatusTransaction == StatusOfTransaction.Pending)
                             {
                                 serviceTransaction.StatusTransaction = StatusOfTransaction.Completed;
-                                serviceTransaction.FinishDate = DateTime.Now;
+                                serviceTransaction.FinishDate = nowVN;
                                 await _transactionRepository.UpdateAsync(serviceTransaction);
                             }
                             await _bookingServiceRepository.ChangeBookingServicesStatus(service.BookingServicesID, BookingServicesStatus.Completed, service.PaymentServiceStatus);
@@ -772,6 +775,9 @@ namespace Service.Service
 
         public async Task<Booking> CreateBookingRefundPayment(int? bookingID, int? bookingServiceID, Transaction transaction)
         {
+            var nowVN = DateTimeHelper.NowVietnamTime();
+            TimeZoneInfo vnZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+
             var booking = await _bookingRepository.GetBookingsByIdAsync(bookingID);
             if (booking == null)
             {
@@ -795,7 +801,7 @@ namespace Service.Service
             bool wasRequestCancel = originalTransaction.StatusTransaction == StatusOfTransaction.RequestCancel;
 
             originalTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
-            originalTransaction.FinishDate = DateTime.Now;
+            originalTransaction.FinishDate = nowVN;
             await _transactionRepository.UpdateAsync(originalTransaction);
 
             booking.Transactions ??= new List<Transaction>();
@@ -811,7 +817,7 @@ namespace Service.Service
             transaction.HomeStay = booking.HomeStay;
             transaction.TransactionKind = TransactionKind.Refund;
             transaction.StatusTransaction = StatusOfTransaction.Refunded;
-            transaction.FinishDate = DateTime.Now;
+            transaction.FinishDate = nowVN;
 
             // Thêm transaction vào trong danh sách Transactions
             booking.Transactions.Add(transaction);
@@ -842,7 +848,7 @@ namespace Service.Service
                          }*/
 
                         originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
-                        originalServiceTransaction.FinishDate = DateTime.Now;
+                        originalServiceTransaction.FinishDate = nowVN;
                         await _transactionRepository.UpdateAsync(originalServiceTransaction);
                     }
 
@@ -853,7 +859,7 @@ namespace Service.Service
                     transaction.HomeStay = service.HomeStay;
                     transaction.TransactionKind = TransactionKind.Refund;
                     transaction.StatusTransaction = StatusOfTransaction.Refunded;
-                    transaction.FinishDate = DateTime.Now;
+                    transaction.FinishDate = nowVN;
 
                     service.Transactions.Add(transaction);
 
@@ -997,6 +1003,9 @@ namespace Service.Service
 
         public async Task<BookingServices> CreateBookingServiceRefundPayment(int? bookingServiceID, Transaction transaction)
         {
+            var nowVN = DateTimeHelper.NowVietnamTime();
+            TimeZoneInfo vnZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+
             var bookingService = await _bookingServiceRepository.GetBookingServiceByIdAsync(bookingServiceID);
             if (bookingService == null)
             {
@@ -1036,7 +1045,7 @@ namespace Service.Service
                  } */
 
                 originalServiceTransaction.StatusTransaction = StatusOfTransaction.Cancelled;
-                originalServiceTransaction.FinishDate = DateTime.Now;
+                originalServiceTransaction.FinishDate = nowVN;
                 await _transactionRepository.UpdateAsync(originalServiceTransaction);
             }
 
@@ -1050,7 +1059,7 @@ namespace Service.Service
 
             transaction.TransactionKind = TransactionKind.Refund;
             transaction.StatusTransaction = StatusOfTransaction.Refunded;
-            transaction.FinishDate = DateTime.Now;
+            transaction.FinishDate = nowVN;
 
             bookingService.Transactions ??= new List<Transaction>();
 

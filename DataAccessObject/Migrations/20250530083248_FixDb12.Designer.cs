@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessObject.Migrations
 {
     [DbContext(typeof(GreenRoamContext))]
-    [Migration("20250529092153_FixDb11")]
-    partial class FixDb11
+    [Migration("20250530083248_FixDb12")]
+    partial class FixDb12
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1358,7 +1358,7 @@ namespace DataAccessObject.Migrations
                     b.Property<int?>("BookingServicesID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FinishDate")
+                    b.Property<DateTime?>("FinishDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("HomeStayID")

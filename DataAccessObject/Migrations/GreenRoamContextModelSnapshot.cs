@@ -1355,7 +1355,7 @@ namespace DataAccessObject.Migrations
                     b.Property<int?>("BookingServicesID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FinishDate")
+                    b.Property<DateTime?>("FinishDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("HomeStayID")
