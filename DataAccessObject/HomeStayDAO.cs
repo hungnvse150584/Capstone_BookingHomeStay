@@ -26,6 +26,10 @@
                 if (homestay != null)
                 {
                     homestay.Status = status;
+                    if (commissionRateId.HasValue)
+                    {
+                        homestay.CommissionRateID = commissionRateId;
+                    }
                     await _context.SaveChangesAsync();
                 }
 
