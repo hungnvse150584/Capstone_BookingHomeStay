@@ -25,6 +25,8 @@ namespace Service.RequestAndResponse.Response.Transactions
 
         public DateTime PayDate { get; set; }
 
+        public DateTime FinishDate { get; set; }
+
         public string BankCode { get; set; }
 
         public string TransactionNo { get; set; }

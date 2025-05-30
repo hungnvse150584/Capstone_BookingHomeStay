@@ -34,7 +34,7 @@ namespace GreenRoam.Controllers
             var transaction = await _transactionsService.GetTransactionById(transactionID);
             return Ok(transaction);
         }
-     
+
         [Authorize(Roles = "Admin, Owner, Staff")]
         [HttpGet]
         [Route("GetTransactionByHomeStay/{homeStayID}")]
