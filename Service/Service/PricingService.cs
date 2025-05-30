@@ -172,8 +172,8 @@ namespace Service.Service
                 IsDefault = typeRequest.IsDefault,
                 IsActive = typeRequest.IsActive,
                 DayType = typeRequest.DayType,
-                HomeStayRentalID = typeRequest.HomeStayRentalID,
-                RoomTypesID = typeRequest.RoomTypesID,
+                HomeStayRentalID = homeStayRental.RentWhole ? typeRequest.HomeStayRentalID : null,
+                RoomTypesID = homeStayRental.RentWhole ? null : typeRequest.RoomTypesID,
                 StartDate = typeRequest.IsDefault ? null : typeRequest.StartDate,
                 EndDate = typeRequest.IsDefault ? null : typeRequest.EndDate
             };
@@ -248,8 +248,8 @@ namespace Service.Service
             pricingExist.IsDefault = request.IsDefault;
             pricingExist.IsActive = request.IsActive;
             pricingExist.DayType = request.DayType;
-            pricingExist.HomeStayRentalID = request.HomeStayRentalID;
-            pricingExist.RoomTypesID = request.RoomTypesID;
+            pricingExist.HomeStayRentalID = homeStayRental.RentWhole ? request.HomeStayRentalID : null;
+            pricingExist.RoomTypesID = homeStayRental.RentWhole ? null : request.RoomTypesID;
             pricingExist.StartDate = request.IsDefault ? null : request.StartDate;
             pricingExist.EndDate = request.IsDefault ? null : request.EndDate;
 
