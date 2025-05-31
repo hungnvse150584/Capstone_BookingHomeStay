@@ -480,7 +480,7 @@ namespace DataAccessObject
 
                         if (currentWeekEnd > endDate.Date)
                         {
-                            currentWeekEnd = endDate.Date.AddDays(-(int)endDate.DayOfWeek + 7);
+                            currentWeekEnd = endDate.Date.AddTicks(-(int)endDate.DayOfWeek + 7);
                         }
                         double totalBookingsAmount = 0;
                         int totalBookings = 0;
@@ -523,7 +523,7 @@ namespace DataAccessObject
 
                     while (currentMonthStart <= endDate.Date)
                     {
-                        DateTime currentMonthEnd = currentMonthStart.AddMonths(1).AddDays(-1);
+                        DateTime currentMonthEnd = currentMonthStart.AddMonths(1).AddTicks(-1);
 
                         double totalBookingsAmount = 0;
                         int totalBookings = 0;
@@ -692,7 +692,7 @@ namespace DataAccessObject
                         DateTime currentWeekEnd = currentWeekStart.AddDays(6);
                         if (currentWeekEnd > endDate.Date)
                         {
-                            currentWeekEnd = endDate.Date.AddDays(-(int)endDate.DayOfWeek + 7);
+                            currentWeekEnd = endDate.Date.AddTicks(-(int)endDate.DayOfWeek + 7);
                         }
 
                         double totalBookingsAmount = 0;
@@ -740,7 +740,7 @@ namespace DataAccessObject
 
                     while (currentMonthStart <= endDate.Date)
                     {
-                        DateTime currentMonthEnd = currentMonthStart.AddMonths(1).AddDays(-1);
+                        DateTime currentMonthEnd = currentMonthStart.AddMonths(1).AddTicks(-1);
 
                         double totalBookingsAmount = 0;
                         int totalBookings = 0;
