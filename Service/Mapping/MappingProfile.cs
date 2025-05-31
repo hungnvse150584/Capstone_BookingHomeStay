@@ -200,9 +200,10 @@ namespace Service.Mapping
          .ForMember(dest => dest.ImageHomeStays, opt => opt.MapFrom(src => src.ImageHomeStays))
          .ForMember(dest => dest.CultureExperiences, opt => opt.MapFrom(src => src.CultureExperiences))
          .ForMember(dest => dest.Services, opt => opt.MapFrom(src => src.Services))
-         // Bỏ qua các trường sẽ xử lý thủ công
-         .ForMember(dest => dest.SumRate, opt => opt.Ignore())
-         .ForMember(dest => dest.TotalRatings, opt => opt.Ignore())
+
+        // Bỏ qua các trường sẽ xử lý thủ công
+        .ForMember(dest => dest.SumRate, opt => opt.MapFrom(src => src.Ratings.Any() ? src.Ratings.Average(r => r.SumRate) : (double?)null))
+        .ForMember(dest => dest.TotalRatings, opt => opt.MapFrom(src => src.Ratings.Count()))
          .ForMember(dest => dest.LatestRatings, opt => opt.Ignore())
           .ForMember(dest => dest.LowestPrice, opt => opt.MapFrom(src => GetLowestPriceForMapping(src)))
          .ForMember(dest => dest.StaffID, opt => opt.Ignore())
@@ -501,7 +502,6 @@ namespace Service.Mapping
             CreateMap<Services, GetServiceForHomeStay>().ReverseMap();
             CreateMap<Services, GetSingleService>().ReverseMap();
             CreateMap<Services, GetServiceForAccount>().ReverseMap();
-            CreateMap<HomeStay, SimpleHomeStayResponse>().ReverseMap();
             CreateMap<HomeStay, GetHomeStayResponse>();
             CreateMap<HomeStay, GetAllHomeStayWithOwnerName>()
                 .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.Account.Name));
@@ -533,8 +533,7 @@ namespace Service.Mapping
                 .ForMember(dest => dest.CreateAt, opt => opt.MapFrom(src => src.CreateAt))
                 .ForMember(dest => dest.UpdateAt, opt => opt.MapFrom(src => src.UpdateAt))
                 .ForMember(dest => dest.HomeStayID, opt => opt.MapFrom(src => src.HomeStayID));
-            CreateMap<HomeStay, SimpleHomeStayResponse>()
-                .ForMember(dest => dest.CancelPolicy, opt => opt.MapFrom(src => src.CancelPolicy));
+           
             // Ánh xạ từ Message sang SimplifiedMessageResponse
             CreateMap<Message, SimplifiedMessageResponse>()
                 .ForMember(dest => dest.MessageID, opt => opt.MapFrom(src => src.MessageID))
