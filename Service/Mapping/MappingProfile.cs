@@ -479,8 +479,8 @@ namespace Service.Mapping
 
           return src.BookingDetails.Where(bd =>
               bd.RoomID == roomId &&
-              (!startDate.HasValue || bd.CheckInDate >= startDate.Value) &&
-              (!endDate.HasValue || bd.CheckOutDate <= endDate.Value)).ToList();
+              (!startDate.HasValue || !endDate.HasValue ||
+               (startDate.Value <= bd.CheckOutDate && endDate.Value >= bd.CheckInDate))).ToList();
       }));
             CreateMap<Booking, GetSimpleBooking>().ReverseMap();
             //Cho phép đổi phòng khi có sự cố

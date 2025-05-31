@@ -14979,6 +14979,12 @@
             "format": "date-time",
             "example": "2025-05-10T00:00:00"
           },
+          "finishDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2025-05-10T00:00:00"
+          },
           "bankCode": {
             "type": "string",
             "nullable": true
@@ -15069,6 +15075,11 @@
             "nullable": true
           },
           "payDate": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-05-10T00:00:00"
+          },
+          "finishDate": {
             "type": "string",
             "format": "date-time",
             "example": "2025-05-10T00:00:00"
