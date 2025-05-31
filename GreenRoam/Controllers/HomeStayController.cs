@@ -209,7 +209,7 @@ namespace GreenRoam.Controllers
             return StatusCode((int)result.StatusCode, result);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Owner")]
         [HttpPut]
         [Route("ChangeHomeStayStatus")]
         public async Task<ActionResult<BaseResponse<HomeStayResponse>>> ChangeHomeStayStatus(int homestayId, HomeStayStatus status, int? commissionRateID = null)

@@ -480,7 +480,7 @@ namespace DataAccessObject
 
                         if (currentWeekEnd > endDate.Date)
                         {
-                            currentWeekEnd = endDate.Date.AddDays(-(int)endDate.DayOfWeek + 7);
+                            currentWeekEnd = endDate.Date.AddTicks(-(int)endDate.DayOfWeek + 7);
                         }
                         double totalBookingsAmount = 0;
                         int totalBookings = 0;
@@ -523,7 +523,7 @@ namespace DataAccessObject
 
                     while (currentMonthStart <= endDate.Date)
                     {
-                        DateTime currentMonthEnd = currentMonthStart.AddMonths(1).AddDays(-1);
+                        DateTime currentMonthEnd = currentMonthStart.AddMonths(1).AddTicks(-1);
 
                         double totalBookingsAmount = 0;
                         int totalBookings = 0;
@@ -692,7 +692,7 @@ namespace DataAccessObject
                         DateTime currentWeekEnd = currentWeekStart.AddDays(6);
                         if (currentWeekEnd > endDate.Date)
                         {
-                            currentWeekEnd = endDate.Date.AddDays(-(int)endDate.DayOfWeek + 7);
+                            currentWeekEnd = endDate.Date.AddTicks(-(int)endDate.DayOfWeek + 7);
                         }
 
                         double totalBookingsAmount = 0;
@@ -740,7 +740,7 @@ namespace DataAccessObject
 
                     while (currentMonthStart <= endDate.Date)
                     {
-                        DateTime currentMonthEnd = currentMonthStart.AddMonths(1).AddDays(-1);
+                        DateTime currentMonthEnd = currentMonthStart.AddMonths(1).AddTicks(-1);
 
                         double totalBookingsAmount = 0;
                         int totalBookings = 0;
@@ -923,23 +923,23 @@ namespace DataAccessObject
             }
 
             // Chuẩn hóa múi giờ
-            // Giả sử dữ liệu trong DB là UTC+7 (giờ Việt Nam), đảm bảo endDate cũng ở UTC+7
             DateTime? adjustedStartDate = startDate.HasValue
                 ? startDate.Value.Kind == DateTimeKind.Utc
                     ? startDate.Value.AddHours(7)
                     : startDate.Value
                 : null;
             DateTime? adjustedEndDate = endDate.HasValue
-                ? DateTime.SpecifyKind(endDate.Value.AddHours(7), DateTimeKind.Unspecified) // Luôn chuyển về UTC+7
+                ? DateTime.SpecifyKind(endDate.Value.AddHours(7), DateTimeKind.Unspecified)
                 : null;
 
-            // Log để kiểm tra
             Console.WriteLine($"Adjusted startDate: {adjustedStartDate}, Adjusted endDate: {adjustedEndDate}");
 
+            // Lọc BookingDetails dựa trên giao của khoảng thời gian
             var filteredDetailsQuery = _context.BookingDetails
                 .Where(bd => bd.RoomID == roomId &&
-                             (!adjustedStartDate.HasValue || bd.CheckInDate >= adjustedStartDate.Value) &&
-                             (!adjustedEndDate.HasValue || bd.CheckOutDate <= adjustedEndDate.Value));
+                             // Nếu có startDate và endDate, kiểm tra giao nhau
+                             (!adjustedStartDate.HasValue || !adjustedEndDate.HasValue ||
+                              (adjustedStartDate.Value <= bd.CheckOutDate && adjustedEndDate.Value >= bd.CheckInDate)));
 
             var filteredDetails = await filteredDetailsQuery
                 .Select(bd => new { bd.BookingID, bd.BookingDetailID, bd.CheckInDate, bd.CheckOutDate })
