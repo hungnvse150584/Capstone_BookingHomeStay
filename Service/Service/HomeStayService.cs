@@ -302,28 +302,46 @@ namespace Service.Service
         {
             try
             {
+                if (string.IsNullOrEmpty(accountId))
+                {
+                    return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>(
+                        "AccountId cannot be empty",
+                        StatusCodeEnum.BadRequest_400,
+                        new List<SimpleHomeStayResponse>());
+                }
 
                 var allHomeStays = await _homeStayRepository.GetAllRegisterHomeStayAsync();
                 var filteredHomeStays = allHomeStays.Where(h => h.AccountID == accountId).ToList();
 
+                foreach (var homeStay in filteredHomeStays)
+                {
+                    Console.WriteLine($"HomeStayID: {homeStay.HomeStayID}, Ratings Count: {homeStay.Ratings?.Count ?? 0}");
+                }
+
                 if (!filteredHomeStays.Any())
                 {
-
-                    var emptyList = new List<SimpleHomeStayResponse>();
                     return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>(
                         "Account has not registered any homestay",
                         StatusCodeEnum.OK_200,
-                        emptyList
-                    );
+                        new List<SimpleHomeStayResponse>());
                 }
 
-
                 var response = _mapper.Map<IEnumerable<SimpleHomeStayResponse>>(filteredHomeStays);
-                return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>("Get HomeStays by account success", StatusCodeEnum.OK_200, response);
+                foreach (var item in response)
+                {
+                    Console.WriteLine($"HomeStayID: {item.HomeStayID}, SumRate: {item.SumRate}, TotalRatings: {item.TotalRatings}");
+                }
+                return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>(
+                    "Get HomeStays by account success",
+                    StatusCodeEnum.OK_200,
+                    response);
             }
             catch (Exception ex)
             {
-                return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>($"Something went wrong! Error: {ex.Message}", StatusCodeEnum.InternalServerError_500, null);
+                return new BaseResponse<IEnumerable<SimpleHomeStayResponse>>(
+                    $"Something went wrong! Error: {ex.Message}",
+                    StatusCodeEnum.InternalServerError_500,
+                    null);
             }
         }
 
