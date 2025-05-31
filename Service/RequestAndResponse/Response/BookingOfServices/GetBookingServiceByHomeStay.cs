@@ -18,7 +18,7 @@ namespace Service.RequestAndResponse.Response.BookingOfServices
         public string BookingServiceCode { get; set; }
 
         public DateTime BookingServicesDate { get; set; }
-
+        public string? homestayName { get; set; }
         public double Total { get; set; }
 
         public string AccountID { get; set; }

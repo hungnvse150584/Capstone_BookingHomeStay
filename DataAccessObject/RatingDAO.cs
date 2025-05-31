@@ -51,6 +51,7 @@ namespace DataAccessObject;
     public async Task<(IEnumerable<Rating> Data, int TotalCount)> GetRatingByHomeStayIdAsync(int homeStayId, bool includeAccount = false, int pageNumber = 1, int pageSize = 10)
     {
         var query = _context.Rating.AsQueryable();
+        query = query.Include(r => r.HomeStay);
         if (includeAccount)
         {            query = query.Include(r => r.Account);
         }

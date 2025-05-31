@@ -26,7 +26,7 @@ namespace Service.RequestAndResponse.Response.Room
 
         public int numberBathRoom { get; set; }
 
-
+        public string? homestayName { get; set; }
         public int numberWifi { get; set; }
         public int? RoomTypesID { get; set; }
         public string RoomTypeName { get; set; } // Chỉ lấy tên của RoomType

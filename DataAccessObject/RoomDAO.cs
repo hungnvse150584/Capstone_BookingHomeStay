@@ -21,6 +21,9 @@ namespace DataAccessObject
         public async Task<IEnumerable<Room>> GetAllRoomsAsync()
         {
             return await _context.Rooms
+                .Include(r => r.RoomTypes)
+            .ThenInclude(rt => rt.HomeStayRentals)
+                .ThenInclude(hsr => hsr.HomeStay)
                         .Include(r => r.RoomTypes)
                         .Include(r => r.ImageRooms)
                         .ToListAsync();

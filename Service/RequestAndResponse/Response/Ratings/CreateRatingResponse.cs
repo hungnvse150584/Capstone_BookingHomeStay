@@ -20,6 +20,7 @@ namespace Service.RequestAndResponse.Response.Ratings
         public string Username { get; set; }
         public int HomeStayID { get; set; }
         public int BookingID { get; set; }
+        public string? homestayName { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public ICollection<ImageRatingResponse> ImageRatings { get; set; }

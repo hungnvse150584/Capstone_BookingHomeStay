@@ -8997,6 +8997,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "homestayName": {
+            "type": "string",
+            "nullable": true
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
@@ -9809,6 +9813,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "homestayName": {
+            "type": "string",
+            "nullable": true
+          },
           "imageHomeStayRentals": {
             "type": "array",
             "items": {
@@ -10358,6 +10366,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "homestayName": {
+            "type": "string",
+            "nullable": true
+          },
           "numberWifi": {
             "type": "integer",
             "format": "int32"
@@ -10472,6 +10484,10 @@
           "quantity": {
             "type": "integer",
             "format": "int32"
+          },
+          "homestayName": {
+            "type": "string",
+            "nullable": true
           },
           "serviceType": {
             "$ref": "#/components/schemas/ServiceType"
@@ -10770,6 +10786,10 @@
           "remainingBalance": {
             "type": "number",
             "format": "double"
+          },
+          "homestayName": {
+            "type": "string",
+            "nullable": true
           },
           "paymentMethod": {
             "$ref": "#/components/schemas/PaymentMethod"
@@ -11143,6 +11163,10 @@
             "format": "date-time",
             "example": "2025-05-10T00:00:00"
           },
+          "homestayName": {
+            "type": "string",
+            "nullable": true
+          },
           "total": {
             "type": "number",
             "format": "double"
@@ -11394,6 +11418,10 @@
           "totalBooking": {
             "type": "integer",
             "format": "int32"
+          },
+          "homestayName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -15097,6 +15125,10 @@
             "nullable": true
           },
           "transactionStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "homestayName": {
             "type": "string",
             "nullable": true
           },

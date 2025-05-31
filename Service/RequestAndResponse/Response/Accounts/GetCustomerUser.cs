@@ -14,5 +14,6 @@ namespace Service.RequestAndResponse.Response.Accounts
         public string Phone { get; set; }
         public string Address { get; set; }
         public int TotalBooking { get; set; }
+        public string? homestayName { get; set; }
     }
 }

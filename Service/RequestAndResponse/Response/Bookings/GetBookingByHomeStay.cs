@@ -36,7 +36,7 @@ namespace Service.RequestAndResponse.Response.Bookings
         public double bookingDeposit { get; set; }
 
         public double remainingBalance { get; set; }
-
+        public string? homestayName { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public int? RatingID { get; set; }
 

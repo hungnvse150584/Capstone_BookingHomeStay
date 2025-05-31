@@ -47,6 +47,7 @@ namespace Service.RequestAndResponse.Response.HomeStayType
 
         public int? HomeStayID { get; set; }
         public int TotalAvailableRooms { get; set; }
+        public string? homestayName {  get; set; }
         public IEnumerable<GetAllImageHomeStayType> ImageHomeStayRentals { get; set; }
         public ICollection<GetAllRoomType> RoomTypes { get; set; }
 
