@@ -32,7 +32,7 @@ namespace Service.RequestAndResponse.Response.Services
 
         public int? HomeStayID { get; set; }
         public int Quantity { get; set; }
-
+        public string? homestayName { get; set; }
 
         public ServiceType ServiceType { get; set; }
         //public HomeStayResponse? HomeStay { get; set; }

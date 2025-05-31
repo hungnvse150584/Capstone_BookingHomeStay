@@ -23,7 +23,7 @@ namespace DataAccessObject
 
             //            .ToListAsync();
             return await _context.Services
-               
+               .Include(s => s.HomeStay)
                .Include(h => h.BookingServicesDetails)
                .Include(h => h.ImageServices)
                .ToListAsync();
@@ -33,6 +33,7 @@ namespace DataAccessObject
             if (homestayId == 0)
             {
                 return await _context.Services
+                    .Include(s => s.HomeStay)
                        .Include(h => h.BookingServicesDetails)
                        .Include(h => h.ImageServices)
                        .ToListAsync();
@@ -41,6 +42,7 @@ namespace DataAccessObject
             {
                 return await _context.Services
                     .Where(s => s.HomeStayID == homestayId)
+                    .Include(s => s.HomeStay)
                     .Include(s => s.ImageServices)
                     .Include(s => s.BookingServicesDetails)
                     .ToListAsync();

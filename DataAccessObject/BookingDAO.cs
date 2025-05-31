@@ -86,6 +86,7 @@ namespace DataAccessObject
         public async Task<IEnumerable<Booking>> GetBookingsByHomeStayId(int homeStayID)
         {
             return await _context.Bookings
+                .Include(b => b.HomeStay)
                 .Include(b => b.BookingDetails)
                 .ThenInclude(bd => bd.HomeStayRentals)
                 .Include(b => b.BookingDetails)

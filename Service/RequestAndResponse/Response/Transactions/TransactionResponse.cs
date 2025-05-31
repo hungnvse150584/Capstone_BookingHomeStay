@@ -34,6 +34,7 @@ namespace Service.RequestAndResponse.Response.Transactions
         public string TransactionType { get; set; }
 
         public string TransactionStatus { get; set; }
+        public string? homestayName { get; set; }
 
         public TransactionKind TransactionKind { get; set; }
 

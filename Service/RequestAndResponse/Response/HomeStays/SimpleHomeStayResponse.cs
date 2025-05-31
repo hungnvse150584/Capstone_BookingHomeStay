@@ -41,6 +41,7 @@ namespace Service.RequestAndResponse.Response.HomeStays
         public decimal? LowestPrice { get; set; }
         public string? StaffID { get; set; } 
         public string? StaffName { get; set; }
+       
         public string? OwnerID { get; set; } 
        
     }
