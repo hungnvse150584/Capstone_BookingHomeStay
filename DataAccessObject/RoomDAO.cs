@@ -192,6 +192,7 @@ namespace DataAccessObject
           
                 .Include(r => r.RoomTypes)
                 .ThenInclude(rt => rt.HomeStayRentals)
+                .ThenInclude(hsr => hsr.HomeStay)
                 .Include(r => r.RoomTypes)
                 .ThenInclude(rt => rt.Prices)
                 .Include(r => r.ImageRooms);
@@ -252,6 +253,7 @@ namespace DataAccessObject
             query = query
                 .Include(r => r.RoomTypes)
                     .ThenInclude(rt => rt.HomeStayRentals)
+                    
                 .Include(r => r.RoomTypes)
                     .ThenInclude(rt => rt.Prices)
                 .Include(r => r.ImageRooms);
